@@ -11,7 +11,8 @@
     <link rel="shortcut icon" href="{{asset('assets/images/favicon.png')}}" type="image/x-icon">
     <title>Cuba - Premium Admin Template @yield('title')</title>
     @include('layouts.light.css')
-    @yield('style')    
+    @stack('styles')
+    @bukStyles(true)
   </head>
   <body class="light-only" main-theme-layout="ltr">
     <!-- Loader starts-->
@@ -77,6 +78,8 @@
         @include('layouts.light.footer')        
       </div>
     </div>
-    @include('layouts.light.script')      
+    @include('layouts.light.js')
+    @stack('scripts')
+    @bukScripts(true)
   </body>
 </html>

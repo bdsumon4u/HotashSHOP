@@ -1,12 +1,6 @@
 @extends('layouts.light.master')
 @section('title', 'Sample Page')
 
-@section('css')
-@endsection
-
-@section('style')
-@endsection
-
 @section('breadcrumb-title')
 <h3>Default</h3>
 @endsection
@@ -73,7 +67,7 @@
 </div>
 @endsection
 
-@section('script')
+@push('scripts')
 <!-- <script src="{{asset('assets/js/prism/prism.min.js')}}"></script>
 <script src="{{asset('assets/js/clipboard/clipboard.min.js')}}"></script>
 <script src="{{asset('assets/js/counter/jquery.waypoints.min.js')}}"></script>
@@ -86,4 +80,4 @@
 <script src="{{asset('assets/js/owlcarousel/owl.carousel.js')}}"></script>
 <script src="{{asset('assets/js/general-widget.js')}}"></script>
 <!-- <script src="{{asset('assets/js/height-equal.js')}}"></script> -->
-@endsection
+@endpush

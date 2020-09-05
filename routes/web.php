@@ -21,6 +21,12 @@ Route::prefix('dashboard')->group(function () {
     Route::view('index', 'dashboard.index')->name('index');
 });
 
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'as' => 'admin.'], function () {
+    Route::resources([
+        'slides' => 'SlideController',
+    ]);
+});
+
 Route::get('/clear-cache', function() {
     Artisan::call('config:cache');
     Artisan::call('cache:clear');

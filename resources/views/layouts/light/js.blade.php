@@ -9,7 +9,7 @@
 <!-- Sidebar jquery-->
 <script src="{{asset('assets/js/sidebar-menu.js')}}"></script>
 <!-- Plugins JS start-->
-@yield('script')
+@stack('js')
 <script src="{{asset('assets/js/tooltip-init.js')}}"></script>
 <!-- Plugins JS Ends-->
 <!-- Theme js-->

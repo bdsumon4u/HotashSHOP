@@ -20,7 +20,12 @@
               <p class="lan-2">{{ trans('lang.Dashboards & layout.') }}</p>
             </div>
           </li>
-          <li class="dropdown"><a class="nav-link menu-title link-nav {{ Route::currentRouteName()=='index' ? 'active' : '' }}" href="{{route('index')}}"><i data-feather="home"> </i><span>{{ trans('lang.Dashboards') }}</span></a></li>
+          <li>
+            <a class="nav-link menu-title link-nav {{ Route::currentRouteName()=='index' ? 'active' : '' }}" href="{{route('index')}}">
+              <i data-feather="home"> </i>
+              <span>{{ trans('lang.Dashboards') }}</span>
+            </a>
+          </li>
 
           <li class="dropdown">
             <a class="nav-link menu-title {{request()->route()->getPrefix() == '/starter-kit' ? 'active' : '' }}" href="#">
@@ -29,51 +34,15 @@
             </a>
 
             <ul class="nav-submenu menu-content" style="display: {{ request()->route()->getPrefix() == '/starter-kit' ? 'block;' : 'none;' }}">
-              <li>
-                <a class="submenu-title {{ in_array(Route::currentRouteName(), ['layout-light', 'layout-dark']) ? 'active' : '' }}" href="#">
-                  Color Version
-                  <div class="according-menu"><i class="fa fa-angle-{{ in_array(Route::currentRouteName(), ['layout-light', 'layout-dark']) ? 'down' : 'right' }}"></i></div>
-                </a>
-                <ul class="nav-sub-childmenu submenu-content" style="display: {{ in_array(Route::currentRouteName(), ['layout-light', 'layout-dark']) ? 'block' : 'none;' }};">
-                    <li><a href="{{route('layout-light')}}" class="{{ Route::currentRouteName()=='layout-light' ? 'active' : '' }}">Layout Light</a></li>
-                    <li><a href="{{route('layout-dark')}}" class="{{ Route::currentRouteName()=='layout-dark' ? 'active' : '' }}">Layout Dark</a></li>
-                </ul>
-              </li>
-
-              <li>
-                <a class="submenu-title {{ in_array(Route::currentRouteName(), ['layout-rtl', 'dark-rtl-layout', 'semi-dark', 'semi-dark-rtl', 'compact-layout', 'compact-rtl-layout', 'layout-box', 'vertical-layout', 'vertical-rtl-layout', 'dark-box-layout', 'vertical-box-layout', 'compact-dark-layout', 'compact-dark-rtl-layout']) ? 'active' : '' }}" href="#">
-                  Page layout
-                  <div class="according-menu"><i class="fa fa-angle-{{ in_array(Route::currentRouteName(), ['layout-rtl', 'dark-rtl-layout', 'semi-dark', 'semi-dark-rtl', 'compact-layout', 'compact-rtl-layout', 'layout-box', 'vertical-layout', 'vertical-rtl-layout', 'dark-box-layout', 'vertical-box-layout', 'compact-dark-layout', 'compact-dark-rtl-layout']) ? 'down' : 'right' }}"></i></div>
-                </a>
-                <ul class="nav-sub-childmenu submenu-content" style="display: {{ in_array(Route::currentRouteName(), ['layout-rtl', 'dark-rtl-layout', 'semi-dark', 'semi-dark-rtl', 'compact-layout', 'compact-rtl-layout', 'layout-box', 'vertical-layout', 'vertical-rtl-layout', 'dark-box-layout', 'vertical-box-layout', 'compact-dark-layout', 'compact-dark-rtl-layout']) ? 'block' : 'none;' }};">
-                    <li><a href="{{route('layout-rtl')}}" class="{{ Route::currentRouteName()=='layout-rtl' ? 'active' : '' }}">RTL Layout</a></li>
-                    <li><a href="{{route('dark-rtl-layout')}}" class="{{ Route::currentRouteName()=='dark-rtl-layout' ? 'active' : '' }}">Dark & RTL Layout</a></li>
-                    <li><a href="{{route('semi-dark')}}" class="{{ Route::currentRouteName()=='semi-dark' ? 'active' : '' }}">Semi Dark</a></li>
-                    <li><a href="{{route('semi-dark-rtl')}}" class="{{ Route::currentRouteName()=='semi-dark-rtl' ? 'active' : '' }}">Semi Dark & RTL</a></li>
-                    <li><a href="{{route('compact-layout')}}" class="{{ Route::currentRouteName()=='compact-layout' ? 'active' : '' }}">Compact Layout</a></li>
-                    <li><a href="{{route('compact-rtl-layout')}}" class="{{ Route::currentRouteName()=='compact-rtl-layout' ? 'active' : '' }}">Compact & RTL Layout</a></li>
-                    <li><a href="{{route('layout-box')}}" class="{{ Route::currentRouteName()=='layout-box' ? 'active' : '' }}">Box Layout</a></li>
-                    <li><a href="{{route('vertical-layout')}}" class="{{ Route::currentRouteName()=='vertical-layout' ? 'active' : '' }}">Vertical Layout</a></li>
-                    <li><a href="{{route('vertical-rtl-layout')}}" class="{{ Route::currentRouteName()=='vertical-rtl-layout' ? 'active' : '' }}">Vertical & RTL Layout</a></li>
-                    <li><a href="{{route('dark-box-layout')}}" class="{{ Route::currentRouteName()=='dark-box-layout' ? 'active' : '' }}">Dark & box Layout</a></li>
-                    <li><a href="{{route('vertical-box-layout')}}" class="{{ Route::currentRouteName()=='vertical-box-layout' ? 'active' : '' }}">Vetical Box Layout</a></li>
-                    <li><a href="{{route('compact-dark-layout')}}" class="{{ Route::currentRouteName()=='compact-dark-layout' ? 'active' : '' }}">Compact Dark Layout</a></li>
-                    <li><a href="{{route('compact-dark-rtl-layout')}}" class="{{ Route::currentRouteName()=='compact-dark-rtl-layout' ? 'active' : '' }}">Compact Dark & RTL Layout</a></li>
-                </ul>
-              </li>
-
-              <li>
-                <a class="submenu-title {{ in_array(Route::currentRouteName(), ['footer-light', 'footer-dark', 'footer-fixed']) ? 'active' : '' }}" href="#">
-                  Footers
-                  <div class="according-menu"><i class="fa fa-angle-{{ in_array(Route::currentRouteName(), ['footer-light', 'footer-dark', 'footer-fixed']) ? 'down' : 'right' }}"></i></div>
-                </a>
-                <ul class="nav-sub-childmenu submenu-content" style="display: {{ in_array(Route::currentRouteName(), ['footer-light', 'footer-dark', 'footer-fixed']) ? 'block' : 'none;' }};">
-                    <li><a href="{{route('footer-light')}}" class="{{ Route::currentRouteName()=='footer-light' ? 'active' : '' }}">Footer Light</a></li>
-                    <li><a href="{{route('footer-dark')}}" class="{{ Route::currentRouteName()=='footer-dark' ? 'active' : '' }}">Footer Dark</a></li>
-                    <li><a href="{{route('footer-fixed')}}" class="{{ Route::currentRouteName()=='footer-fixed' ? 'active' : '' }}">Footer Fixed</a></li>
-                </ul>
-              </li>
+              
             </ul>
+          </li>
+
+          <li>
+            <a class="nav-link menu-title link-nav {{ Route::currentRouteName()=='admin.slides.index' ? 'active' : '' }}" href="{{route('admin.slides.index')}}">
+              <i data-feather="image"> </i>
+              <span>Slides</span>
+            </a>
           </li>
         </ul>
       </div>
