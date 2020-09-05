@@ -79,6 +79,26 @@
       </div>
     </div>
     @include('layouts.light.js')
+    <script>
+      window.slugify = function (src) {
+        return src.toLowerCase()
+            .replace(/e|é|è|ẽ|ẻ|ẹ|ê|ế|ề|ễ|ể|ệ/gi, 'e')
+            .replace(/a|á|à|ã|ả|ạ|ă|ắ|ằ|ẵ|ẳ|ặ|â|ấ|ầ|ẫ|ẩ|ậ/gi, 'a')
+            .replace(/o|ó|ò|õ|ỏ|ọ|ô|ố|ồ|ỗ|ổ|ộ|ơ|ớ|ờ|ỡ|ở|ợ/gi, 'o')
+            .replace(/u|ú|ù|ũ|ủ|ụ|ư|ứ|ừ|ữ|ử|ự/gi, 'u')
+            .replace(/đ/gi, 'd')
+            .replace(/\s*$/g, '')
+            .replace(/\s+/g, '-')
+            .replace(/[\[,!:;{}=+%^()\/\\?><`~|\]]/g, '')
+            .replace(/@/g, '-at-')
+            .replace(/\$/g, '-dollar-')
+            .replace(/#/g, '-hash-')
+            .replace(/\*/g, '-star-')
+            .replace(/&/g, '-and-')
+            .replace(/-+/g, '-')
+            .replace(/\.+/g, '');
+    }
+    </script>
     @stack('scripts')
     @bukScripts(true)
   </body>

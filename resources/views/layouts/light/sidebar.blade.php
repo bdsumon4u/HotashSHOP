@@ -44,6 +44,12 @@
               <span>Slides</span>
             </a>
           </li>
+          <li>
+            <a class="nav-link menu-title link-nav {{ Route::currentRouteName()=='admin.categories.index' ? 'active' : '' }}" href="{{route('admin.categories.index')}}">
+              <i data-feather="server"> </i>
+              <span>Categories</span>
+            </a>
+          </li>
         </ul>
       </div>
       <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>
