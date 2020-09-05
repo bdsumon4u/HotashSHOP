@@ -23,8 +23,9 @@ Route::prefix('dashboard')->group(function () {
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'as' => 'admin.'], function () {
     Route::resources([
-        'slides' => 'SlideController',
+        'slides'     => 'SlideController',
         'categories' => 'CategoryController',
+        'brands'     => 'BrandController',
     ]);
 });
 
