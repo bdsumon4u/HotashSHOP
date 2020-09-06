@@ -27,4 +27,9 @@ class Category extends Model
                 $category->with('childrens');
             }])->get();
     }
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class);
+    }
 }

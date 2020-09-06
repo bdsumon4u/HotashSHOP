@@ -27,12 +27,12 @@
                         <div class="form-group">
                             <x-label for="title" />
                             <x-input name="title" :value="$slide->title" />
-                            <x-error field="title" class="invalid-feedback" />
+                            <x-error field="title" />
                         </div>
                         <div class="form-group">
                             <x-label for="text" />
                             <x-textarea name="text">{{ $slide->text }}</x-textarea>
-                            <x-error field="title" class="invalid-feedback" />
+                            <x-error field="title" />
                         </div>
                         <div class="form-group">
                             <div class="checkbox checkbox-secondary">

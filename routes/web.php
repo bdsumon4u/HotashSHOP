@@ -26,6 +26,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'as' => 'admin.'], fu
         'slides'     => 'SlideController',
         'categories' => 'CategoryController',
         'brands'     => 'BrandController',
+        'products'   => 'ProductController',
     ]);
 });
 
