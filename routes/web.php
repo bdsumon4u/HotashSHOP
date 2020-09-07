@@ -14,7 +14,10 @@ Route::get('lang/{locale}', function ($locale) {
 })->name('lang');
 
 Route::get('/', 'HomeController')->name('/');
-Route::get('/categories/{category:slug}/products', 'CategoryProductController')->name('category.products');
+Route::get('/products', 'ProductController@index')->name('products.index');
+Route::get('/products/{product:slug}', 'ProductController@show')->name('products.show');
+Route::get('/categories/{category:slug}/products', 'CategoryProductController')->name('categories.products');
+Route::get('/brands/{brand:slug}/products', 'BrandProductController')->name('brands.products');
 
 Route::prefix('dashboard')->group(function () {
     Route::view('index', 'dashboard.index')->name('index');

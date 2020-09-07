@@ -25,6 +25,6 @@ class ManageProductCategories
      */
     public function handle($event)
     {
-        $event->product->categories()->attach($event->data['categories']);
+        $event->product->categories()->sync($event->data['categories']);
     }
 }

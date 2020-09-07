@@ -210,8 +210,8 @@
                                                                     <i class="fa fa-image fa-4x text-secondary"></i>
                                                                 </button>
                                                                 <img src="{{ old('base_image_src', $product->base_image->src) }}" alt="Base Image" data-toggle="modal" data-target="#single-picker" id="base_image-preview" class="img-thumbnail img-responsive" style="display: {{ old('base_image_src', $product->base_image->src) ? '' : 'none' }}; height: 150px; width: 150px; cursor: pointer;">
-                                                                <input type="hidden" name="base_image_src" value="{{ old('base_image_src') }}">
-                                                                <input type="hidden" name="base_image" value="{{ old('base_image') }}" class="@error('base_image') is-invalid @enderror" id="base-image" class="form-control">
+                                                                <input type="hidden" name="base_image_src" value="{{ old('base_image_src', $product->base_image->src) }}">
+                                                                <input type="hidden" name="base_image" value="{{ old('base_image', $product->base_image->id) }}" class="@error('base_image') is-invalid @enderror" id="base-image" class="form-control">
                                                                 @error('base_image')
                                                                     <span class="invalid-feedback">{{ $message }}</span>
                                                                 @enderror
