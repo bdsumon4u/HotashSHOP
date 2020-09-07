@@ -13,9 +13,8 @@ Route::get('lang/{locale}', function ($locale) {
     return redirect()->back();
 })->name('lang');
 
-Route::get('/', function () {
-    return redirect()->route('index');
-})->name('/');
+Route::get('/', 'HomeController')->name('/');
+Route::get('/categories/{category:slug}/products', 'CategoryProductController')->name('category.products');
 
 Route::prefix('dashboard')->group(function () {
     Route::view('index', 'dashboard.index')->name('index');

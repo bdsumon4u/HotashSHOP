@@ -20,12 +20,17 @@ class Category extends Model
         return $this->belongsTo(static::class, 'parent_id');
     }
 
-    public static function nested()
+    public static function nested($count = 0)
     {
-        return self::whereNull('parent_id')
+        $query = self::whereNull('parent_id')
             ->with(['childrens' => function ($category) {
                 $category->with('childrens');
-            }])->get();
+            }])
+            ->withCount('childrens')
+            ->orderBy('childrens_count', 'desc');
+        $count && $query->take($count);
+
+        return $query->get();
     }
 
     public function products()
