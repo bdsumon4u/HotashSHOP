@@ -72,7 +72,8 @@
             </div>
           </div>
           <!-- Container-fluid starts-->
-          @yield('content')          
+          <x-alert-box />
+          @yield('content')
           <!-- Container-fluid Ends-->
         </div>
         <!-- footer start-->

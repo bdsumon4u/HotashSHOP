@@ -181,14 +181,14 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <x-label for="sku" />
-                                                        <x-input name="sku" value="1asdjfla" />
+                                                        <x-label for="sku" /><span class="text-danger">*</span>
+                                                        <x-input name="sku" />
                                                         <x-error field="sku" />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group stock-count" @if(!old('should_track', 0)) style="display: none;" @endif>
-                                                        <x-label for="stock_count" />
+                                                        <x-label for="stock_count" /><span class="text-danger">*</span>
                                                         <x-input name="stock_count" />
                                                         <x-error field="stock_count" />
                                                     </div>
@@ -206,12 +206,11 @@
                                                             <div class="form-group">
                                                                 <!-- Button to Open the Modal -->
                                                                 <label for="base_image" class="d-block"><strong>Base Image</strong></label>
-                                                                <button type="button" class="btn single btn-primary" data-toggle="modal" data-target="#select-images-modal" style="height: 150px; width: 150px; background: transparent;">
-                                                                    <i class="fa fa-image fa-4x text-primary"></i>
+                                                                <button type="button" class="btn single @if(old('base_image_src')) d-none @endif btn-light" data-toggle="modal" data-target="#single-picker" style="height: 150px; width: 150px; background: transparent;">
+                                                                    <i class="fa fa-image fa-4x text-secondary"></i>
                                                                 </button>
-                                                                
-                                                                <img src="" alt="Base Image" id="base_image-preview" class="img-thumbnail img-responsive" style="display: none; height: 150px; width: 150px; cursor: pointer;">
-                                                                
+                                                                <img src="{{ old('base_image_src') }}" alt="Base Image" data-toggle="modal" data-target="#single-picker" id="base_image-preview" class="img-thumbnail img-responsive" style="display: {{ old('base_image_src') ? '' : 'none' }}; height: 150px; width: 150px; cursor: pointer;">
+                                                                <input type="hidden" name="base_image_src" value="{{ old('base_image_src') }}">
                                                                 <input type="hidden" name="base_image" value="{{ old('base_image') }}" class="@error('base_image') is-invalid @enderror" id="base-image" class="form-control">
                                                                 @error('base_image')
                                                                     <span class="invalid-feedback">{{ $message }}</span>
@@ -221,12 +220,21 @@
                                                         <div class="col-sm-12">
                                                             <div class="form-group">
                                                                 <label for="additional_images" class="d-block"><strong>Additional Images</strong></label>
-                                                                <button type="button" class="btn multiple btn-primary" data-toggle="modal" data-target="#select-images-modal" style="height: 150px; width: 150px; background: transparent;">
-                                                                    <i class="fa fa-image fa-4x text-primary"></i>
+                                                                <button type="button" class="btn multiple btn-light" data-toggle="modal" data-target="#multi-picker" style="height: 150px; width: 150px; background: transparent; float: left; margin: 5px;">
+                                                                    <i class="fa fa-image fa-4x text-secondary"></i>
                                                                 </button>
-
-                                                                <input type="hidden" name="additional_images" value="{{ old('additional_images') }}" class="@error('additional_images') is-invalid @enderror" id="additional-images" class="form-control">
-
+                                                                <div class="additional_images-previews">
+                                                                    @foreach(old('additional_images_srcs', []) as $additional_image)
+                                                                        <img src="{{ $additional_image }}" alt="Additional Image" id="additional_image-preview" class="img-thumbnail img-responsive" style="height: 150px; width: 150px; margin: 5px;">
+                                                                    <input type="hidden" name="additional_images_srcs[]" value="{{ $additional_image }}" style="margin: 5px;">
+                                                                    @endforeach
+                                                                </div>
+                                                                <div class="clearfix"></div>
+                                                                <div class="additional-images @error('additional_images') is-invalid @enderror" id="additional-images">
+                                                                    @foreach(old('additional_images', []) as $additional_image)
+                                                                    <input type="hidden" name="additional_images[]" value="{{ $additional_image }}" style="margin: 5px;">
+                                                                    @endforeach
+                                                                </div>
                                                                 @error('additional_images')
                                                                     <span class="invalid-feedback">{{ $message }}</span>
                                                                 @enderror
@@ -255,59 +263,8 @@
     </div>
 </div>
 
-<!-- The Modal -->
-<div class="modal" id="select-images-modal">
-  <div class="modal-dialog modal-xl">
-    <div class="modal-content">
-
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Image Picker</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-
-      <!-- Modal body -->
-      <div class="modal-body">
-      <div class="row">
-        <div class="col-sm-12">
-            <div class="card rounded-0">
-                <div class="card-body">
-                    <form method="POST" action="" id="drop-imgs" class="dropzone" enctype="multipart/form-data">
-                        @csrf
-                    </form>
-                </div>
-            </div>
-            <div class="card rounded-0">
-                <div class="card-body">
-                    <div class="table-responive">
-                        <table class="table table-bordered table-striped table-hover datatable w-100" style="width: 100%;">
-                            <thead>
-                                <tr>
-                                    <!-- <th></th> -->
-                                    <th width="5">ID</th>
-                                    <th width="150">Preview</th>
-                                    <th>Filename</th>
-                                    <th>Mime</th>
-                                    <th>Size</th>
-                                    <th width="10">Action</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-      </div>
-
-      <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-      </div>
-
-    </div>
-  </div>
-</div>
+@include('admin.images.single-picker', ['selected' => old('base_image', 0)])
+@include('admin.images.multi-picker', ['selected' => old('additional_images', [])])
 @endsection
 
 @push('js')
@@ -317,62 +274,10 @@
 
 @push('scripts')
 <script>
-    $(document).ready(function () {
+    $(document).ready(function(){
         $('[name="name"]').keyup(function () {
             $($(this).data('target')).val(slugify($(this).val()));
         });
-    });
-</script>
-<script>
-    $(document).ready(function(){
-
-        $('#base_image-preview').click(function(){
-            $(this).parent().find('[data-target="#select-images-modal"]').click();
-        })
-        var ID;
-        var IDs = [];
-        $('[data-target="#select-images-modal"]').click(function(){
-            $(this).attr('opened', 'true');
-        })
-        $(document).on('click', '#select-images-modal .select-item', function(e){
-            e.preventDefault();
-            var btn = $('[data-target="#select-images-modal"][opened="true"]');
-            if(btn.hasClass('single')) {
-                ID = $(this).parents('tr').data('entry-id');
-                // console.log('ID', ID)
-                $('[name="base_image"]').val(ID);
-                $(this).parents('#select-images-modal').modal('hide');
-                btn.hide();
-
-                src = $(this).parents('tr').find('.img-preview').attr('src');
-                $('#base_image-preview').show().attr('src', src);
-            } else {
-                var theID = $(this).parents('tr').data('entry-id');
-                if(jQuery.inArray(theID, IDs) != -1) {
-                    // IDs.splice(IDs.indexOf(theID),1);
-                } else {
-                    src = $(this).parents('tr').find('.img-preview').attr('src');
-                    btn.after('<div class="previewer"><img src="'+src+'" alt="Additional Image" id="additional_images-preview-'+theID+'" class="img-thumbnail img-responsive" style="height: 150px; width: 150px;"><i data-remove="'+theID+'" class="fa fa-close"></i></div>')
-                    IDs.push(theID);
-                }
-                // console.log('IDs', IDs)
-                $('[name="additional_images"]').val(IDs.join(','));
-            }
-        })
-        $('#select-images-modal').on('hidden.bs.modal', function(e) {
-            var btn = $('[data-target="#select-images-modal"][opened="true"]');
-            // console.log('closing');
-            btn.removeAttr('opened');
-        })
-        $(document).on('click', 'i[data-remove]', function(){
-            var theID = $(this).data('remove');
-            IDs.splice(IDs.indexOf(theID),1);
-            // console.log(IDs);
-            $('[name="additional_images"]').val(IDs.join(','));
-            $(this).parents('.previewer').fadeOut(300, function(){
-                $(this).remove();
-            });
-        })
 
         $('#should_track').change(function() {
             if($(this).is(':checked')) {

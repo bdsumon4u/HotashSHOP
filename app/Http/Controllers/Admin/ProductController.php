@@ -52,6 +52,16 @@ class ProductController extends Controller
 
         $product->categories()->attach($data['categories']);
 
+        
+        $images = [ $data['base_image'] => ['img_type' => 'base'] ];
+        foreach($data['additional_images'] ?? [] as $additional_image) {
+            $additional_image != $data['base_image'] && (
+                $images[$additional_image] = ['img_type' => 'additional']
+            );
+        }
+
+        $product->images()->sync($images);
+
         return back()->with('success', 'Product Has Been Created.');
     }
 
@@ -74,6 +84,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
+        // dd($product->base_image);
         return $this->view(compact('product'), '', [
             'categories' => Category::nested(),
             'brands' => Brand::all(),
@@ -96,6 +107,15 @@ class ProductController extends Controller
         $product->update($data);
         
         $product->categories()->attach($data['categories']);
+        
+        $images = [ $data['base_image'] => ['img_type' => 'base'] ];
+        foreach($data['additional_images'] ?? [] as $additional_image) {
+            $additional_image != $data['base_image'] && (
+                $images[$additional_image] = ['img_type' => 'additional']
+            );
+        }
+
+        $product->images()->sync($images);
 
         return back()->with('success', 'Product Has Been Updated.');
     }

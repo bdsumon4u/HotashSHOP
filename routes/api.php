@@ -18,7 +18,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['namespace' => 'Api', 'as' => 'api.'], function ()
-{
+Route::group(['namespace' => 'Api', 'as' => 'api.'], function () {
     Route::get('products', 'ProductController')->name('products');
+    Route::get('images', 'ImageController@index')->name('images.index');
+    Route::get('images/single', 'ImageController@single')->name('images.single');
+    Route::get('images/multiple', 'ImageController@multiple')->name('images.multiple');
 });

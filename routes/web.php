@@ -27,6 +27,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'as' => 'admin.'], fu
         'categories' => 'CategoryController',
         'brands'     => 'BrandController',
         'products'   => 'ProductController',
+        'images'     => 'ImageController',
     ]);
 });
 

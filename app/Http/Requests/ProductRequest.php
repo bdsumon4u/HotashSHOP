@@ -25,21 +25,23 @@ class ProductRequest extends FormRequest
     {
         $rules = [
             'name' => 'required|max:255',
-            'slug' => 'required|max:255|unique:products,id,'.$this->route('product')->id,
+            'slug' => 'required|max:255|unique:products',
             'description' => 'required',
             'categories' => 'required|array',
             'brand' => 'required|integer',
             'price' => 'required|integer',
             'selling_price' => 'required|integer',
-            'sku' => 'required|unique:products,id,'.$this->route('product')->id,
+            'sku' => 'required|unique:products',
             'should_track' => 'sometimes|integer',
             'stock_count' => 'nullable|required_if:should_track,1|integer',
             'is_active' => 'sometimes|boolean',
+            'base_image' => 'required|integer',
+            'additional_images' => 'sometimes|array',
         ];
 
-        if ($this->isMethod('POST')) {
-            $rules['slug'] = 'required|max:255|unique:products';
-            $rules['sku'] = 'required|unique:products';
+        if (! $this->isMethod('POST')) {
+            $rules['slug'] = 'required|max:255|unique:products,id,'.$this->route('product')->id;
+            $rules['sku'] = 'required|unique:products,id,'.$this->route('product')->id;
         }
 
         return $rules;

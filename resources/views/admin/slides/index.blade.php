@@ -89,8 +89,7 @@
         init: function () {
             this.on('complete', function(){
                 if(this.getQueuedFiles().length == 0 && this.getUploadingFiles().length == 0) {
-                    // $('.datatable').DataTable().ajax.reload();
-                    console.log('done');
+                    $('.datatable').DataTable().ajax.reload();
                 }
             })
         }

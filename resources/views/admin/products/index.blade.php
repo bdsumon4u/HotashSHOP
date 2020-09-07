@@ -3,8 +3,6 @@
 
 @push('css')
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/datatables.css')}}">
-<link rel="stylesheet" type="text/css" href="{{asset('assets/css/owlcarousel.css')}}">
-<link rel="stylesheet" type="text/css" href="{{asset('assets/css/rating.css')}}">
 @endpush
 
 @section('breadcrumb-title')
@@ -47,9 +45,5 @@
 
 @push('js')
 <script src="{{asset('assets/js/datatable/datatables/jquery.dataTables.min.js')}}"></script>
-<script src="{{asset('assets/js/rating/jquery.barrating.js')}}"></script>
-<script src="{{asset('assets/js/rating/rating-script.js')}}"></script>
-<script src="{{asset('assets/js/owlcarousel/owl.carousel.js')}}"></script>
-<script src="{{asset('assets/js/ecommerce.js')}}"></script>
 <script src="{{asset('assets/js/product-list-custom.js')}}"></script>
 @endpush
