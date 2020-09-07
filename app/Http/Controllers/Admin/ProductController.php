@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Brand;
 use App\Product;
 use App\Category;
+use App\Events\ProductCreated;
+use App\Events\ProductUpdated;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
@@ -48,19 +50,7 @@ class ProductController extends Controller
         $data['brand_id']    = $data['brand'];
         $data['stock_count'] = intval($data['stock_count']);
 
-        $product = Product::create($data);
-
-        $product->categories()->attach($data['categories']);
-
-        
-        $images = [ $data['base_image'] => ['img_type' => 'base'] ];
-        foreach($data['additional_images'] ?? [] as $additional_image) {
-            $additional_image != $data['base_image'] && (
-                $images[$additional_image] = ['img_type' => 'additional']
-            );
-        }
-
-        $product->images()->sync($images);
+        event(new ProductCreated(Product::create($data), $data));
 
         return back()->with('success', 'Product Has Been Created.');
     }
@@ -84,7 +74,6 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        // dd($product->base_image);
         return $this->view(compact('product'), '', [
             'categories' => Category::nested(),
             'brands' => Brand::all(),
@@ -105,17 +94,7 @@ class ProductController extends Controller
         $data['stock_count'] = intval($data['stock_count']);
 
         $product->update($data);
-        
-        $product->categories()->attach($data['categories']);
-        
-        $images = [ $data['base_image'] => ['img_type' => 'base'] ];
-        foreach($data['additional_images'] ?? [] as $additional_image) {
-            $additional_image != $data['base_image'] && (
-                $images[$additional_image] = ['img_type' => 'additional']
-            );
-        }
-
-        $product->images()->sync($images);
+        event(new ProductUpdated($product, $data));
 
         return back()->with('success', 'Product Has Been Updated.');
     }
