@@ -597,19 +597,10 @@
                                 <!-- .nav-links -->
                                 <div class="nav-panel__nav-links nav-links">
                                     <ul class="nav-links__list">
-                                        <li class="nav-links__item nav-links__item--with-submenu"><a
-                                                href="index.html"><span>Home <svg class="nav-links__arrow" width="9px"
-                                                        height="6px">
-                                                        <use xlink:href="{{ asset('strokya/images/sprite.svg#arrow-rounded-down-9x6') }}">
-                                                        </use>
-                                                    </svg></span></a>
-                                            <div class="nav-links__menu">
-                                                <!-- .menu -->
-                                                <ul class="menu menu--layout--classic">
-                                                    <li><a href="index.html">Home 1</a></li>
-                                                    <li><a href="index-2.html">Home 2</a></li>
-                                                </ul><!-- .menu / end -->
-                                            </div>
+                                        <li class="nav-links__item nav-links__item--with-submenu">
+                                            <a href="{{ route('products.index') }}">
+                                                <span>Products</span>
+                                            </a>
                                         </li>
                                         <li class="nav-links__item nav-links__item--with-submenu"><a
                                                 href="#"><span>Megamenu <svg class="nav-links__arrow" width="9px"

@@ -10,11 +10,18 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $per_page = $request->get('per_page', 15);
+        $products = Product::whereIsActive(1)
+            ->paginate($per_page)->appends(request()->query());
+        return $this->view([
+            'products' => $products,
+            'per_page' => $per_page,
+        ]);
     }
 
     /**
@@ -54,7 +61,7 @@ class ProductController extends Controller
             $query->where('products.id', $product->id)->where('products.brand_id', $product->brand->id);
         })->where('id', '!=', $product->id)->get();
 
-        return view('product', compact('product'), [
+        return $this->view(compact('product'), '', [
             'relatedProducts'
                 => $productsFromSameCategoriesAndBrand->count() >= 5
                 ? $productsFromSameCategoriesAndBrand->take(10)

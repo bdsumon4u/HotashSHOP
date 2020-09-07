@@ -2,7 +2,7 @@
 
 @section('content')
 
-@include('partials.breadcrumb', [
+@include('partials.page-header', [
     'paths' => [
         url('/')                      => 'Home',
         route('products.index') => 'Products',

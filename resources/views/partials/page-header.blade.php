@@ -14,5 +14,10 @@
                 </ol>
             </nav>
         </div>
+        @if(isset($page_title))
+        <div class="page-header__title">
+            <h1>{{ $page_title }}</h1>
+        </div>
+        @endif
     </div>
 </div>
