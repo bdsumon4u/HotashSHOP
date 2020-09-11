@@ -45,7 +45,7 @@
                         <div class="products-list__body">
                             @foreach($products as $product)
                             <div class="products-list__item">
-                                <div class="product-card">
+                                <div class="product-card" data-id="{{ $product->id }}" data-max="{{ $product->should_track ? $product->stock_count : -1 }}">
                                     <div class="product-card__image">
                                         <a href="{{ route('products.show', $product) }}">
                                             <img src="{{ $product->base_image->src }}" alt="Base Image">
@@ -60,7 +60,14 @@
                                         <div class="product-card__availability">Availability:
                                             <span class="text-success">In Stock</span>
                                         </div>
-                                        <div class="product-card__prices">$749.00</div>
+                                        <div class="product-card__prices {{$product->selling_price == $product->price ? '' : 'has-special'}}">
+                                            @if($product->selling_price == $product->price)
+                                            $ <span>{{ $product->price }}</span>
+                                            @else
+                                            <span class="product-card__new-price">$ <span>{{ $product->selling_price }}</span></span>
+                                            <span class="product-card__old-price">$ <span>{{ $product->price }}</span></span>
+                                            @endif
+                                        </div>
                                         <div class="product-card__buttons">
                                             <button class="btn btn-primary product-card__addtocart" type="button">Add To Cart</button>
                                             <button class="btn btn-secondary product-card__addtocart product-card__addtocart--list" type="button">Add To Cart</button>

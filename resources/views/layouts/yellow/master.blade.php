@@ -13,6 +13,27 @@
     <!-- font - fontawesome -->
     <link rel="stylesheet" href="vendor/fontawesome-5.6.1/css/all.min.css"><!-- font - stroyka -->
     <link rel="stylesheet" href="fonts/stroyka/stroyka.css">
+    <style>
+        .page-header__container {
+            padding-bottom: 12px;
+        }
+        .products-list__item {
+            justify-content: space-between;
+        }
+        @media (max-width: 479px) {
+            .products-list[data-layout=grid-5-full] .products-list__item {
+                width: 46%;
+                margin: 8px 6px;
+            }
+            .products-list[data-layout^=grid-] .product-card .product-card__info {
+                padding: 0 14px;
+            }
+            .products-list[data-layout^=grid-] .product-card .product-card__actions {
+                padding: 0 14px 14px 14px;
+            }
+        }
+    </style>
+    @stack('styles')
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-97489509-6"></script>
     <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'UA-97489509-6');</script>
 </head>
@@ -310,66 +331,6 @@
                             </ul>
                         </div>
                     </li>
-                    <li class="mobile-links__item" data-collapse-item>
-                        <div class="mobile-links__item-title"><a data-collapse-trigger
-                                class="mobile-links__item-link">Currency</a> <button class="mobile-links__item-toggle"
-                                type="button" data-collapse-trigger><svg class="mobile-links__item-arrow" width="12px"
-                                    height="7px">
-                                    <use xlink:href="{{ asset('strokya/images/sprite.svg#arrow-rounded-down-12x7') }}"></use>
-                                </svg></button></div>
-                        <div class="mobile-links__item-sub-links" data-collapse-content>
-                            <ul class="mobile-links mobile-links--level--1">
-                                <li class="mobile-links__item" data-collapse-item>
-                                    <div class="mobile-links__item-title"><a href="#" class="mobile-links__item-link">€
-                                            Euro</a></div>
-                                </li>
-                                <li class="mobile-links__item" data-collapse-item>
-                                    <div class="mobile-links__item-title"><a href="#" class="mobile-links__item-link">£
-                                            Pound Sterling</a></div>
-                                </li>
-                                <li class="mobile-links__item" data-collapse-item>
-                                    <div class="mobile-links__item-title"><a href="#" class="mobile-links__item-link">$
-                                            US Dollar</a></div>
-                                </li>
-                                <li class="mobile-links__item" data-collapse-item>
-                                    <div class="mobile-links__item-title"><a href="#" class="mobile-links__item-link">₽
-                                            Russian Ruble</a></div>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="mobile-links__item" data-collapse-item>
-                        <div class="mobile-links__item-title"><a data-collapse-trigger
-                                class="mobile-links__item-link">Language</a> <button class="mobile-links__item-toggle"
-                                type="button" data-collapse-trigger><svg class="mobile-links__item-arrow" width="12px"
-                                    height="7px">
-                                    <use xlink:href="{{ asset('strokya/images/sprite.svg#arrow-rounded-down-12x7') }}"></use>
-                                </svg></button></div>
-                        <div class="mobile-links__item-sub-links" data-collapse-content>
-                            <ul class="mobile-links mobile-links--level--1">
-                                <li class="mobile-links__item" data-collapse-item>
-                                    <div class="mobile-links__item-title"><a href="#"
-                                            class="mobile-links__item-link">English</a></div>
-                                </li>
-                                <li class="mobile-links__item" data-collapse-item>
-                                    <div class="mobile-links__item-title"><a href="#"
-                                            class="mobile-links__item-link">French</a></div>
-                                </li>
-                                <li class="mobile-links__item" data-collapse-item>
-                                    <div class="mobile-links__item-title"><a href="#"
-                                            class="mobile-links__item-link">German</a></div>
-                                </li>
-                                <li class="mobile-links__item" data-collapse-item>
-                                    <div class="mobile-links__item-title"><a href="#"
-                                            class="mobile-links__item-link">Russian</a></div>
-                                </li>
-                                <li class="mobile-links__item" data-collapse-item>
-                                    <div class="mobile-links__item-title"><a href="#"
-                                            class="mobile-links__item-link">Italian</a></div>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -475,22 +436,29 @@
                 <div class="site-header__topbar topbar">
                     <div class="topbar__container container">
                         <div class="topbar__row">
-                            <div class="topbar__item topbar__item--link"><a class="topbar-link"
-                                    href="about-us.html">About Us</a></div>
-                            <div class="topbar__item topbar__item--link"><a class="topbar-link"
-                                    href="contact-us.html">Contacts</a></div>
-                            <div class="topbar__item topbar__item--link"><a class="topbar-link" href="#">Store
-                                    Location</a></div>
-                            <div class="topbar__item topbar__item--link"><a class="topbar-link"
-                                    href="track-order.html">Track Order</a></div>
-                            <div class="topbar__item topbar__item--link"><a class="topbar-link"
-                                    href="blog-classic.html">Blog</a></div>
+                            <div class="topbar__item topbar__item--link">
+                                <a class="topbar-link" href="about-us.html">About Us</a>
+                            </div>
+                            <div class="topbar__item topbar__item--link">
+                                <a class="topbar-link" href="contact-us.html">Contacts</a>
+                            </div>
+                            <div class="topbar__item topbar__item--link">
+                                <a class="topbar-link" href="#">Store Location</a>
+                            </div>
+                            <div class="topbar__item topbar__item--link">
+                                <a class="topbar-link" href="track-order.html">Track Order</a>
+                            </div>
+                            <div class="topbar__item topbar__item--link">
+                                <a class="topbar-link" href="blog-classic.html">Blog</a>
+                            </div>
                             <div class="topbar__spring"></div>
                             <div class="topbar__item">
-                                <div class="topbar-dropdown"><button class="topbar-dropdown__btn" type="button">My
-                                        Account <svg width="7px" height="5px">
+                                <div class="topbar-dropdown">
+                                    <button class="topbar-dropdown__btn" type="button">My Account
+                                        <svg width="7px" height="5px">
                                             <use xlink:href="{{ asset('strokya/images/sprite.svg#arrow-rounded-down-7x5') }}"></use>
-                                        </svg></button>
+                                        </svg>
+                                    </button>
                                     <div class="topbar-dropdown__body">
                                         <!-- .menu -->
                                         <ul class="menu menu--layout--topbar">
@@ -498,61 +466,6 @@
                                             <li><a href="account.html">Register</a></li>
                                             <li><a href="#">Orders</a></li>
                                             <li><a href="#">Addresses</a></li>
-                                        </ul><!-- .menu / end -->
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="topbar__item">
-                                <div class="topbar-dropdown"><button class="topbar-dropdown__btn"
-                                        type="button">Currency: <span class="topbar__item-value">USD</span> <svg
-                                            width="7px" height="5px">
-                                            <use xlink:href="{{ asset('strokya/images/sprite.svg#arrow-rounded-down-7x5') }}"></use>
-                                        </svg></button>
-                                    <div class="topbar-dropdown__body">
-                                        <!-- .menu -->
-                                        <ul class="menu menu--layout--topbar">
-                                            <li><a href="#">€ Euro</a></li>
-                                            <li><a href="#">£ Pound Sterling</a></li>
-                                            <li><a href="#">$ US Dollar</a></li>
-                                            <li><a href="#">₽ Russian Ruble</a></li>
-                                        </ul><!-- .menu / end -->
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="topbar__item">
-                                <div class="topbar-dropdown"><button class="topbar-dropdown__btn"
-                                        type="button">Language: <span class="topbar__item-value">EN</span> <svg
-                                            width="7px" height="5px">
-                                            <use xlink:href="{{ asset('strokya/images/sprite.svg#arrow-rounded-down-7x5') }}"></use>
-                                        </svg></button>
-                                    <div class="topbar-dropdown__body">
-                                        <!-- .menu -->
-                                        <ul class="menu menu--layout--topbar menu--with-icons">
-                                            <li><a href="#">
-                                                    <div class="menu__icon"><img
-                                                            srcset="images/languages/language-1.png, images/languages/language-1@2x.png 2x"
-                                                            src="{{ asset('strokya/images/languages/language-1.png') }}" alt=""></div>English
-                                                </a></li>
-                                            <li><a href="#">
-                                                    <div class="menu__icon"><img
-                                                            srcset="images/languages/language-2.png, images/languages/language-2@2x.png 2x"
-                                                            src="{{ asset('strokya/images/languages/language-2.png') }}" alt=""></div>French
-                                                </a></li>
-                                            <li><a href="#">
-                                                    <div class="menu__icon"><img
-                                                            srcset="images/languages/language-3.png, images/languages/language-3@2x.png 2x"
-                                                            src="{{ asset('strokya/images/languages/language-3.png') }}" alt=""></div>German
-                                                </a></li>
-                                            <li><a href="#">
-                                                    <div class="menu__icon"><img
-                                                            srcset="images/languages/language-4.png, images/languages/language-4@2x.png 2x"
-                                                            src="{{ asset('strokya/images/languages/language-4.png') }}" alt=""></div>Russian
-                                                </a></li>
-                                            <li><a href="#">
-                                                    <div class="menu__icon"><img
-                                                            srcset="images/languages/language-5.png, images/languages/language-5@2x.png 2x"
-                                                            src="{{ asset('strokya/images/languages/language-5.png') }}" alt=""></div>Italian
-                                                </a></li>
                                         </ul><!-- .menu / end -->
                                     </div>
                                 </div>
@@ -790,102 +703,43 @@
                                     </ul>
                                 </div><!-- .nav-links / end -->
                                 <div class="nav-panel__indicators">
-                                    <div class="indicator"><a href="wishlist.html" class="indicator__button"><span
-                                                class="indicator__area"><svg width="20px" height="20px">
+                                    <div class="indicator">
+                                        <a href="wishlist.html" class="indicator__button">
+                                            <span class="indicator__area">
+                                                <svg width="20px" height="20px">
                                                     <use xlink:href="{{ asset('strokya/images/sprite.svg#heart-20') }}"></use>
-                                                </svg> <span class="indicator__value">0</span></span></a></div>
-                                    <div class="indicator indicator--trigger--click"><a href="cart.html"
-                                            class="indicator__button"><span class="indicator__area"><svg width="20px"
-                                                    height="20px">
+                                                </svg>
+                                                <span class="indicator__value">0</span>
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="indicator indicator--trigger--click">
+                                        <a href="#" class="indicator__button">
+                                            <span class="indicator__area">
+                                                <svg width="20px" height="20px">
                                                     <use xlink:href="{{ asset('strokya/images/sprite.svg#cart-20') }}"></use>
-                                                </svg> <span class="indicator__value">3</span></span></a>
+                                                </svg>
+                                                <span class="indicator__value cart-count"></span>
+                                            </span>
+                                        </a>
                                         <div class="indicator__dropdown">
                                             <!-- .dropcart -->
                                             <div class="dropcart">
                                                 <div class="dropcart__products-list">
-                                                    <div class="dropcart__product">
-                                                        <div class="dropcart__product-image"><a href="product.html"><img
-                                                                    src="{{ asset('strokya/images/products/product-1.jpg') }}" alt=""></a>
-                                                        </div>
-                                                        <div class="dropcart__product-info">
-                                                            <div class="dropcart__product-name"><a
-                                                                    href="product.html">Electric Planer Brandix
-                                                                    KL370090G 300 Watts</a></div>
-                                                            <ul class="dropcart__product-options">
-                                                                <li>Color: Yellow</li>
-                                                                <li>Material: Aluminium</li>
-                                                            </ul>
-                                                            <div class="dropcart__product-meta"><span
-                                                                    class="dropcart__product-quantity">2</span> x <span
-                                                                    class="dropcart__product-price">$699.00</span></div>
-                                                        </div><button type="button"
-                                                            class="dropcart__product-remove btn btn-light btn-sm btn-svg-icon"><svg
-                                                                width="10px" height="10px">
-                                                                <use xlink:href="{{ asset('strokya/images/sprite.svg#cross-10') }}"></use>
-                                                            </svg></button>
-                                                    </div>
-                                                    <div class="dropcart__product">
-                                                        <div class="dropcart__product-image"><a href="product.html"><img
-                                                                    src="{{ asset('strokya/images/products/product-2.jpg') }}" alt=""></a>
-                                                        </div>
-                                                        <div class="dropcart__product-info">
-                                                            <div class="dropcart__product-name"><a
-                                                                    href="product.html">Undefined Tool IRadix DPS3000SY
-                                                                    2700 watts</a></div>
-                                                            <div class="dropcart__product-meta"><span
-                                                                    class="dropcart__product-quantity">1</span> x <span
-                                                                    class="dropcart__product-price">$849.00</span></div>
-                                                        </div><button type="button"
-                                                            class="dropcart__product-remove btn btn-light btn-sm btn-svg-icon"><svg
-                                                                width="10px" height="10px">
-                                                                <use xlink:href="{{ asset('strokya/images/sprite.svg#cross-10') }}"></use>
-                                                            </svg></button>
-                                                    </div>
-                                                    <div class="dropcart__product">
-                                                        <div class="dropcart__product-image"><a href="product.html"><img
-                                                                    src="{{ asset('strokya/images/products/product-5.jpg') }}" alt=""></a>
-                                                        </div>
-                                                        <div class="dropcart__product-info">
-                                                            <div class="dropcart__product-name"><a
-                                                                    href="product.html">Brandix Router Power Tool
-                                                                    2017ERXPK</a></div>
-                                                            <ul class="dropcart__product-options">
-                                                                <li>Color: True Red</li>
-                                                            </ul>
-                                                            <div class="dropcart__product-meta"><span
-                                                                    class="dropcart__product-quantity">3</span> x <span
-                                                                    class="dropcart__product-price">$1,210.00</span>
-                                                            </div>
-                                                        </div><button type="button"
-                                                            class="dropcart__product-remove btn btn-light btn-sm btn-svg-icon"><svg
-                                                                width="10px" height="10px">
-                                                                <use xlink:href="{{ asset('strokya/images/sprite.svg#cross-10') }}"></use>
-                                                            </svg></button>
-                                                    </div>
+                                                    
                                                 </div>
                                                 <div class="dropcart__totals">
                                                     <table>
                                                         <tr>
                                                             <th>Subtotal</th>
-                                                            <td>$5,877.00</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Shipping</th>
-                                                            <td>$25.00</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Tax</th>
-                                                            <td>$0.00</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Total</th>
-                                                            <td>$5,902.00</td>
+                                                            <td class="cart-subtotal">$ <span>0</span></td>
                                                         </tr>
                                                     </table>
                                                 </div>
-                                                <div class="dropcart__buttons"><a class="btn btn-secondary"
-                                                        href="cart.html">View Cart</a> <a class="btn btn-primary"
-                                                        href="checkout.html">Checkout</a></div>
+                                                <div class="dropcart__buttons">
+                                                    <a class="btn btn-secondary" href="{{ route('cart') }}">View Cart</a>
+                                                    <a class="btn btn-primary" href="{{ route('checkout') }}">Checkout</a>
+                                                </div>
                                             </div><!-- .dropcart / end -->
                                         </div>
                                     </div>
@@ -1015,6 +869,188 @@
         </footer><!-- site__footer / end -->
     </div><!-- site / end -->
     @include('layouts.yellow.js')
+    <script>
+        $(document).ready(function () {
+            // localStorage.removeItem('product-cart');
+            function renderCart() {
+                var cart = cartContent();
+                $('.cart-count').text(cart.length);
+                var cartProducts = cart.length ? cart.map(function (v, i) {
+                    return `<div class="dropcart__product" data-id="${v.id}">
+                        <div class="dropcart__product-image">
+                            <a href="${v.detail}">
+                                <img src="${v.image}" alt="">
+                            </a>
+                        </div>
+                        <div class="dropcart__product-info">
+                            <div class="dropcart__product-name">
+                                <a href="${v.detail}">${v.name}</a>
+                            </div>
+                            <div class="dropcart__product-meta">
+                                <span class="dropcart__product-quantity">${v.quantity}</span> x <span class="dropcart__product-price">$ ${v.price}</span>
+                            </div>
+                        </div>
+                        <button type="button" class="dropcart__product-remove btn btn-light btn-sm btn-svg-icon" remove-cart-item data-id="${v.id}">
+                            <svg width="10px" height="10px">
+                                <use xlink:href="{{ asset('strokya/images/sprite.svg#cross-10') }}"></use>
+                            </svg>
+                        </button>
+                    </div>`;
+                }) : '<strong>No Items In Cart.</strong>';
+                $('.dropcart__products-list').html(cartProducts);
+                $('.cart-subtotal span, .checkout-subtotal span').text(cart.length ? cart.reduce(function (acc, v) {
+                    return acc += Number(v.price) * Number(v.quantity);
+                }, 0) : 0);
+            }
+
+            renderCart();
+        
+            function renderCartPage() {
+                var cart = cartContent();
+                $('.cart-count').text(cart.length);
+                var cartProducts = cart.length ? cart.map(function (v, i) {
+                    return `<tr class="cart-table__row" data-id="${v.id}">
+                        <td class="cart-table__column cart-table__column--image">
+                            <a href="${v.detail}">
+                                <img src="${v.image}" alt=""></a>
+                            </td>
+                        <td class="cart-table__column cart-table__column--product">
+                            <a href="${v.detail}" class="cart-table__product-name">${v.name}</a>
+                        </td>
+                        <td class="cart-table__column cart-table__column--price" data-title="Price">$ ${v.price}</td>
+                        <td class="cart-table__column cart-table__column--quantity" data-title="Quantity">
+                            <div class="input-number">
+                                <input class="form-control input-number__input" type="number" min="1" value="${v.quantity}" `+(v.max != -1 ? 'max="'+v.max+'"' : '')+`>
+                                <div class="input-number__add"></div>
+                                <div class="input-number__sub"></div>
+                            </div>
+                        </td>
+                        <td class="cart-table__column cart-table__column--total" data-title="Total">$ ${Number(v.price) * Number(v.quantity)}</td>
+                        <td class="cart-table__column cart-table__column--remove">
+                            <button type="button" class="btn btn-light btn-sm btn-svg-icon" remove-cart-item data-id="${v.id}">
+                                <svg width="12px" height="12px">
+                                    <use xlink:href="{{ asset('strokya/images/sprite.svg#cross-12') }}"></use>
+                                </svg>
+                            </button>
+                        </td>
+                    </tr>`;
+                }) : '<tr class="bg-danger"><td colspan="6" class="text-center py-2">No Items In Cart.</td></tr>';
+                $('.cart-table__body').html(cartProducts);
+                $('.cart-subtotal span, .checkout-subtotal span').text(cart.length ? cart.reduce(function (acc, v) {
+                    return acc += Number(v.price) * Number(v.quantity);
+                }, 0) : 0);
+            }
+
+            renderCartPage();
+
+            $('.product-card__addtocart').on('click', function (ev) {
+                ev.preventDefault();
+                var card = $(this).parents('.product-card');
+                var prices = card.find('.product-card__prices');
+                var price = prices.hasClass('has-special')
+                ? prices.find('.product-card__new-price span').text()
+                : prices.find('span').text();
+
+                var product = {
+                    id: card.data('id'),
+                    max: card.data('max'),
+                    name: card.find('.product-card__info a').text(),
+                    image: card.find('.product-card__image img').attr('src'),
+                    detail: card.find('.product-card__name a').attr('href'),
+                    quantity: 1,
+                    price: price,
+                }
+
+                addToCart(product);
+            });
+
+            function addToCart(product) {
+                var cart = cartContent();
+                cart.push(product);
+                localStorage.setItem('product-cart', JSON.stringify(cart));
+                renderCart();
+            }
+
+            function cartContent() {
+                var cart = JSON.parse(localStorage.getItem('product-cart'));
+                return cart == null ? [] : cart;
+            }
+
+            $(document).on('click', '[remove-cart-item]', function (ev) {
+                ev.preventDefault();
+                removeFromCart($(this).data('id'));
+                renderCart();
+                renderCartPage();
+            });
+
+            function removeFromCart(id) {
+                var cart = cartContent();
+                cart = cart.filter(function (v, i) {
+                    return v.id != id;
+                });
+                localStorage.setItem('product-cart', JSON.stringify(cart));
+            }
+
+            $('.cart__update-button').on('click', function(ev) {
+                ev.preventDefault();
+                updateCart();
+            });
+
+            function updateCart() {
+                var cart = cartContent();
+                cart.filter(function (item) {
+                    item.quantity = $('.cart-table__body tr[data-id="'+item.id+'"] .input-number input').val();
+                    return item;
+                });
+                localStorage.setItem('product-cart', JSON.stringify(cart));
+                renderCart();
+                renderCartPage();
+            }
+
+            $(document).on('click', '.input-number__add', function (ev) {
+                ev.preventDefault();
+
+                var input = $(this).siblings('input');
+                if (input.attr('max') == undefined || input.attr('max') > input.val()) {
+                    input.val(Number(input.val()) + 1);
+                    updateCart();
+                }
+            })
+
+            $(document).on('click', '.input-number__sub', function (ev) {
+                ev.preventDefault();
+
+                var input = $(this).siblings('input');
+                if (input.val() > 1) {
+                    input.val(Number(input.val()) - 1);
+                    updateCart();
+                }
+            })
+
+            if (localStorage.getItem('shipping')) {
+                $('#'+localStorage.getItem('shipping')).prop('checked', true);
+                var shipping = Number($('#'+localStorage.getItem('shipping')).data('val'));
+                $('.shipping span').text(shipping)
+                $('.cart__totals-footer span').text(Number($('.cart__totals-header .cart-subtotal span').text()) + shipping);
+                $('.checkout__totals-footer span').text(Number($('.checkout__totals-subtotals .checkout-subtotal span').text()) + shipping);
+            } else {
+                $('.cart__totals-footer span').text($('.cart__totals-header .cart-subtotal span').text());
+                $('.checkout__totals-footer span').text($('.checkout__totals-subtotals .checkout-subtotal span').text());
+            }
+            $('[name="shipping"]').on('change', function (ev) {
+                localStorage.setItem('shipping', $(this).attr('id'));
+                var shipping = Number($('#'+localStorage.getItem('shipping')).data('val'));
+                $('.shipping span').text(shipping)
+                $('.cart__totals-footer span').text(Number($('.cart__totals-header .cart-subtotal span').text()) + shipping);
+                $('.checkout__totals-footer span').text(Number($('.checkout__totals-subtotals .checkout-subtotal span').text()) + shipping);
+            });
+
+            for (var index = 0, cart = cartContent(); index < cart.length; index++) {
+                $('.ordered-products').append('<input type="hidden" name="products['+cart[index].id+']" value="'+cart[index].quantity+'" />');
+            }
+        });
+    </script>
+    @stack('scripts')
 </body>
 
 </html>

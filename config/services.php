@@ -30,4 +30,9 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'shipping' => [
+        'Inside Dhaka' => 50,
+        'Outside Dhaka' => 100,
+    ],
+
 ];

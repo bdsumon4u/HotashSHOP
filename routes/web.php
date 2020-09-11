@@ -18,6 +18,10 @@ Route::get('/products', 'ProductController@index')->name('products.index');
 Route::get('/products/{product:slug}', 'ProductController@show')->name('products.show');
 Route::get('/categories/{category:slug}/products', 'CategoryProductController')->name('categories.products');
 Route::get('/brands/{brand:slug}/products', 'BrandProductController')->name('brands.products');
+Route::view('/cart', 'cart')->name('cart');
+Route::view('/checkout', 'checkout')->name('checkout');
+Route::post('post-checkout', 'CheckoutController')->name('post-checkout');
+Route::get('post-checkout/phone/{phone}/order/{order}', 'CheckoutController@done')->name('checkout.done');
 
 Route::prefix('dashboard')->group(function () {
     Route::view('index', 'dashboard.index')->name('index');

@@ -17,6 +17,7 @@ class ProductController extends Controller
     {
         $per_page = $request->get('per_page', 15);
         $products = Product::whereIsActive(1)
+            ->latest('id')
             ->paginate($per_page)->appends(request()->query());
         return $this->view([
             'products' => $products,
