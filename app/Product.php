@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Events\ProductCreated;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
@@ -11,6 +12,34 @@ class Product extends Model
     protected $fillable = [
         'brand_id', 'name', 'slug', 'description', 'price', 'selling_price', 'sku', 'should_track', 'stock_count', 'is_active'
     ];
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::saved(function ($product) {
+            if ($product->categories->isEmpty() || $product->images->isEmpty()) {
+                $categories = range(1, 30);
+                $categories = array_map(function ($key) use ($categories) {
+                    return $categories[$key];
+                }, array_rand($categories, mt_rand(4, 7)));
+
+                $additionals = range(1, 30);
+                $additionals = array_map(function ($key) use ($additionals) {
+                    return $additionals[$key];
+                }, array_rand($additionals, mt_rand(4, 7)));
+
+                ProductCreated::dispatch($product, [
+                    'categories' => $categories,
+                    'base_image' => mt_rand(1, 23),
+                    'additional_images' => $additionals,
+                ]);
+            };
+        });
+    }
 
     public function getInStockAttribute()
     {

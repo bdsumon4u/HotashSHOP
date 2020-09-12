@@ -20,6 +20,12 @@
         .products-list__item {
             justify-content: space-between;
         }
+        .product-card__old-price {
+            color: #ff0000;
+        }
+        .product-card__new-price {
+            color: #ffd333;
+        }
         @media (max-width: 479px) {
             .products-list[data-layout=grid-5-full] .products-list__item {
                 width: 46%;
@@ -30,6 +36,11 @@
             }
             .products-list[data-layout^=grid-] .product-card .product-card__actions {
                 padding: 0 14px 14px 14px;
+            }
+        }
+        @media (max-width: 575px) {
+            .block-products-carousel[data-layout=grid-4] .product-card .product-card__buttons .btn {
+                height: auto;
             }
         }
     </style>
@@ -957,7 +968,7 @@
                     name: card.find('.product-card__info a').text(),
                     image: card.find('.product-card__image img').attr('src'),
                     detail: card.find('.product-card__name a').attr('href'),
-                    quantity: 1,
+                    quantity: Number(1),
                     price: price,
                 }
 
@@ -965,11 +976,40 @@
             });
 
             function addToCart(product) {
-                var cart = cartContent();
-                cart.push(product);
+                var cart = cartContent(), updated = false;
+                cart.filter(function (item) {
+                    if (product.id == item.id) {
+                        item.quantity = product.quantity;
+                        updated = true;
+                    }
+                    return item;
+                });
+                updated || cart.push(product);
                 localStorage.setItem('product-cart', JSON.stringify(cart));
+                console.log(cart);
                 renderCart();
             }
+            
+            $('.product__actions-item--addtocart').on('click', function (ev) {
+                ev.preventDefault();
+                var card = $(this).parents('.product__content');
+                var prices = card.find('.product__prices');
+                var price = prices.hasClass('has-special')
+                ? prices.find('.product-card__new-price span').text()
+                : prices.find('span').text();
+
+                var product = {
+                    id: card.data('id'),
+                    max: card.data('max'),
+                    name: card.find('.product__name').text(),
+                    image: card.find('.product-base__image').attr('src'),
+                    detail: card.find('.product-base__image').data('detail'),
+                    quantity: Number($('#product-quantity').val()),
+                    price: price,
+                }
+
+                addToCart(product);
+            })
 
             function cartContent() {
                 var cart = JSON.parse(localStorage.getItem('product-cart'));

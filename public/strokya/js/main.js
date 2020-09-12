@@ -17,9 +17,9 @@
     /*
     // initialize custom numbers
     */
-    $(function () {
-        $('.input-number').customNumber();
-    });
+    // $(function () {
+    //     $('.input-number').customNumber();
+    // });
 
 
     /*

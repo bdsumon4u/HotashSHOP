@@ -1,5 +1,16 @@
 @extends('layouts.yellow.master')
 
+@push('styles')
+<style>
+    .product-card__buttons .btn {
+        height: auto;
+        font-size: 70%;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+</style>
+@endpush
+
 @section('content')
 
 @include('partials.page-header', [
@@ -70,7 +81,7 @@
                                         </div>
                                         <div class="product-card__buttons">
                                             <button class="btn btn-primary product-card__addtocart" type="button">Add To Cart</button>
-                                            <button class="btn btn-secondary product-card__addtocart product-card__addtocart--list" type="button">Add To Cart</button>
+                                            <button class="btn btn-primary product-card__ordernow" type="button">Order Now</button>
                                         </div>
                                     </div>
                                 </div>

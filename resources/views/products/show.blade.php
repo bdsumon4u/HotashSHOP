@@ -13,14 +13,14 @@
 <div class="block">
     <div class="container">
         <div class="product product--layout--standard" data-layout="standard">
-            <div class="product__content">
+            <div class="product__content" data-id="{{ $product->id }}" data-max="{{ $product->should_track ? $product->stock_count : -1 }}">
                 <!-- .product__gallery -->
                 <div class="product__gallery">
                     <div class="product-gallery">
                         <div class="product-gallery__featured">
                             <div class="owl-carousel" id="product-image">
                                 <a href="{{ asset($product->base_image->src) }}" target="_blank">
-                                    <img src="{{ asset($product->base_image->src) }}" alt="Base Image">
+                                    <img class="product-base__image" data-detail="{{ route('products.show', $product) }}" src="{{ asset($product->base_image->src) }}" alt="Base Image">
                                 </a>
                                 @foreach($product->additional_images as $image)
                                 <a href="{{ asset($image->src) }}" target="_blank">
@@ -60,7 +60,15 @@
                 </div><!-- .product__info / end -->
                 <!-- .product__sidebar -->
                 <div class="product__sidebar">
-                    <div class="product__prices">$1,499.00</div><!-- .product__options -->
+                    <div class="product__prices {{$product->selling_price == $product->price ? '' : 'has-special'}}">
+                        @if($product->selling_price == $product->price)
+                        $ <span>{{ $product->price }}</span>
+                        @else
+                        <span class="product-card__new-price">$ <span>{{ $product->selling_price }}</span></span>
+                        <span class="product-card__old-price">$ <span>{{ $product->price }}</span></span>
+                        @endif
+                    </div>
+                    <!-- .product__options -->
                     <form class="product__options">
                         <div class="form-group product__option">
                             <label class="product__option-label" for="product-quantity">Quantity</label>

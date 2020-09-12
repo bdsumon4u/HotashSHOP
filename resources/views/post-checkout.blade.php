@@ -132,6 +132,9 @@
                 </tr>
               </tbody>
             </table>
+            <div style="text-align: left;">
+              <strong>Note:</strong><br>{{ $order->note }}
+            </div>
             <table class="order-detail" border="0" cellpadding="0" cellspacing="0" align="left" style="width: 100%;    margin-bottom: 50px;">
               <tbody>
                 <tr align="left">
