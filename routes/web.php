@@ -29,11 +29,12 @@ Route::prefix('dashboard')->group(function () {
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'as' => 'admin.'], function () {
     Route::resources([
-        'slides'     => 'SlideController',
-        'categories' => 'CategoryController',
-        'brands'     => 'BrandController',
-        'products'   => 'ProductController',
-        'images'     => 'ImageController',
+        'slides'        => 'SlideController',
+        'categories'    => 'CategoryController',
+        'brands'        => 'BrandController',
+        'products'      => 'ProductController',
+        'images'        => 'ImageController',
+        'home-sections' => 'HomeSectionController',
     ]);
 });
 

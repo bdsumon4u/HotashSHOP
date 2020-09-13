@@ -50,7 +50,7 @@
                                 <tr>
                                     <th>
                                         <div class="custom-control custom-radio">
-                                            <input type="radio" class="custom-control-input" id="inside-dhaka" name="shipping" value="50">
+                                            <input type="radio" class="custom-control-input" id="inside-dhaka" name="shipping" value="Inside Dhaka" data-val="50">
                                             <label class="custom-control-label" for="inside-dhaka">Inside Dhaka</label>
                                         </div>
                                     </th>
@@ -59,7 +59,7 @@
                                 <tr>
                                     <th>
                                         <div class="custom-control custom-radio">
-                                            <input type="radio" class="custom-control-input" id="outside-dhaka" name="shipping" value="100">
+                                            <input type="radio" class="custom-control-input" id="outside-dhaka" name="shipping" value="Outside Dhaka" data-val="100">
                                             <label class="custom-control-label" for="outside-dhaka">Outside Dhaka</label>
                                         </div>
                                     </th>

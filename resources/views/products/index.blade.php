@@ -69,7 +69,11 @@
                                     </div>
                                     <div class="product-card__actions">
                                         <div class="product-card__availability">Availability:
+                                            @if(! $product->should_track)
                                             <span class="text-success">In Stock</span>
+                                            @else
+                                            <span class="text-{{ $product->stock_count ? 'success' : 'danger' }}">{{ $product->stock_count }} In Stock</span>
+                                            @endif
                                         </div>
                                         <div class="product-card__prices {{$product->selling_price == $product->price ? '' : 'has-special'}}">
                                             @if($product->selling_price == $product->price)

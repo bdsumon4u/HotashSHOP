@@ -915,7 +915,7 @@
             }
 
             renderCart();
-        
+
             function renderCartPage() {
                 var cart = cartContent();
                 $('.cart-count').text(cart.length);
@@ -986,8 +986,8 @@
                 });
                 updated || cart.push(product);
                 localStorage.setItem('product-cart', JSON.stringify(cart));
-                console.log(cart);
                 renderCart();
+                renderTotal();
             }
             
             $('.product__actions-item--addtocart').on('click', function (ev) {
@@ -1021,6 +1021,7 @@
                 removeFromCart($(this).data('id'));
                 renderCart();
                 renderCartPage();
+                renderTotal();
             });
 
             function removeFromCart(id) {
@@ -1045,6 +1046,7 @@
                 localStorage.setItem('product-cart', JSON.stringify(cart));
                 renderCart();
                 renderCartPage();
+                renderTotal();
             }
 
             $(document).on('click', '.input-number__add', function (ev) {
@@ -1067,22 +1069,23 @@
                 }
             })
 
-            if (localStorage.getItem('shipping')) {
-                $('#'+localStorage.getItem('shipping')).prop('checked', true);
-                var shipping = Number($('#'+localStorage.getItem('shipping')).data('val'));
-                $('.shipping span').text(shipping)
-                $('.cart__totals-footer span').text(Number($('.cart__totals-header .cart-subtotal span').text()) + shipping);
-                $('.checkout__totals-footer span').text(Number($('.checkout__totals-subtotals .checkout-subtotal span').text()) + shipping);
-            } else {
-                $('.cart__totals-footer span').text($('.cart__totals-header .cart-subtotal span').text());
-                $('.checkout__totals-footer span').text($('.checkout__totals-subtotals .checkout-subtotal span').text());
+            function renderTotal() {
+                if (localStorage.getItem('shipping')) {
+                    $('#'+localStorage.getItem('shipping')).prop('checked', true);
+                    var shipping = Number($('#'+localStorage.getItem('shipping')).data('val'));
+                    $('.shipping span').text(shipping)
+                    $('.cart__totals-footer span').text(Number($('.cart__totals-header .cart-subtotal span').text()) + shipping);
+                    $('.checkout__totals-footer span').text(Number($('.checkout__totals-subtotals .checkout-subtotal span').text()) + shipping);
+                } else {
+                    $('.cart__totals-footer span').text($('.cart__totals-header .cart-subtotal span').text());
+                    $('.checkout__totals-footer span').text($('.checkout__totals-subtotals .checkout-subtotal span').text());
+                }
             }
+
+            renderTotal();
             $('[name="shipping"]').on('change', function (ev) {
                 localStorage.setItem('shipping', $(this).attr('id'));
-                var shipping = Number($('#'+localStorage.getItem('shipping')).data('val'));
-                $('.shipping span').text(shipping)
-                $('.cart__totals-footer span').text(Number($('.cart__totals-header .cart-subtotal span').text()) + shipping);
-                $('.checkout__totals-footer span').text(Number($('.checkout__totals-subtotals .checkout-subtotal span').text()) + shipping);
+                renderTotal();
             });
 
             for (var index = 0, cart = cartContent(); index < cart.length; index++) {

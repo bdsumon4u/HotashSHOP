@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\HomeSection;
+use App\Product;
 use App\Slide;
 use Illuminate\Http\Request;
 
@@ -18,7 +20,7 @@ class HomeController extends Controller
     {
         $categories = Category::nested(11);
         $slides = Slide::whereIsActive(1)->get();
-        // dd($categories);
-        return view('index', compact('slides', 'categories'));
+        $sections = HomeSection::with('categories.products')->orderBy('order', 'asc')->get();
+        return view('index', compact('slides', 'categories', 'sections'));
     }
 }

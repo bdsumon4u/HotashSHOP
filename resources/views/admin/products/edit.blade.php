@@ -81,6 +81,9 @@
         display: flex;
         align-items: center;
     }
+    .select2-container .select2-selection--single {
+        border-color: #ced4da !important;
+    }
 </style>
 @endpush
 
