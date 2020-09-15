@@ -102,6 +102,13 @@
               </li>
             </ul>
           </li>
+          
+          <li>
+            <a class="nav-link menu-title link-nav {{ Route::currentRouteName()=='admin.menus.index' ? 'active' : '' }}" href="{{route('admin.menus.index')}}">
+              <i data-feather="menu"> </i>
+              <span>Menus</span>
+            </a>
+          </li>
         </ul>
       </div>
       <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>

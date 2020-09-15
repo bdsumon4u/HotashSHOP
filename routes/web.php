@@ -35,6 +35,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'as' => 'admin.'], fu
         'products'      => 'ProductController',
         'images'        => 'ImageController',
         'home-sections' => 'HomeSectionController',
+        'menus'         => 'MenuController',
+        'menu-items'    => 'MenuItemController',
     ]);
 });
 
