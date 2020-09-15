@@ -2,15 +2,38 @@
 
 namespace App;
 
+use Laravel\Scout\Searchable;
 use App\Events\ProductCreated;
 use Illuminate\Database\Eloquent\Model;
+use Nicolaslopezj\Searchable\SearchableTrait;
 
 class Product extends Model
 {
+    use Searchable, SearchableTrait;
+
     protected $with = ['categories', 'brand', 'images'];
 
     protected $fillable = [
         'brand_id', 'name', 'slug', 'description', 'price', 'selling_price', 'sku', 'should_track', 'stock_count', 'is_active'
+    ];
+
+    /**
+     * Searchable rules.
+     *
+     * @var array
+     */
+    protected $searchable = [
+        /**
+         * Columns and their priority in search results.
+         * Columns with higher values are more important.
+         * Columns with equal values have equal importance.
+         *
+         * @var array
+         */
+        'columns' => [
+            'products.name' => 10,
+            'products.description' => 5,
+        ],
     ];
 
     /**
@@ -77,5 +100,23 @@ class Product extends Model
         return $this->images->filter(function (Image $image) {
             return $image->pivot->img_type == 'additional';
         });
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        return array_merge($this->toArray(), [
+            'categories' => $this->categories->pluck('name')->toArray(),
+            'base_image' => $this->base_image->src,
+        ]);
+    }
+
+    public function shouldBeSearchable()
+    {
+        return $this->is_active;
     }
 }

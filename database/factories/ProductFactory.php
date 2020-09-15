@@ -18,6 +18,6 @@ $factory->define(Product::class, function (Faker $faker) {
         'sku' => $faker->unique()->word,
         'should_track' => $faker->boolean,
         'stock_count' => mt_rand(1, 5),
-        'is_active' => $faker->boolean,
+        'is_active' => $faker->boolean(90),
     ];
 });

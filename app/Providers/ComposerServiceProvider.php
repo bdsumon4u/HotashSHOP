@@ -25,7 +25,7 @@ class ComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::composer('partials.departments', function ($view) {
+        View::composer(['partials.departments', 'partials.mobile-menu-categories'], function ($view) {
             $view->with('categories', Category::nested(10));
         });
     }

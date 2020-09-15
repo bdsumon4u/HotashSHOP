@@ -28,7 +28,13 @@
                 <div class="products-view">
                     <div class="products-view__options">
                         <div class="view-options">
-                            <div class="view-options__legend">Showing {{ count($products->items()) }} of {{ $products->total() }} products</div>
+                            <div class="view-options__legend">
+                                @if(request('search'))
+                                Found {{ $products->total() }} result(s) for "{{ request('search', 'NULL') }}"
+                                @else
+                                Showing {{ $products->count() }} of {{ $products->total() }} products
+                                @endif
+                            </div>
                             <div class="view-options__divider"></div>
                             <!-- <div class="view-options__control">
                                 <label for="">Sort By</label>

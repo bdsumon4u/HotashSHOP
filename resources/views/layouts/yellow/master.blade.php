@@ -43,6 +43,43 @@
                 height: auto;
             }
         }
+        .product-card:before,
+        .owl-carousel {
+            z-index: 0;
+        }
+        .aa-input-container {
+            width: 100%;
+        }
+        .algolia-autocomplete {
+            width: 100%;
+            display: flex !important;
+        }
+        .mobile-header__search.mobile-header__search--opened {
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+        .mobile-header__search-form {
+            width: 100%;
+        }
+        .mobile-header__search-form .aa-input-container {
+            display: flex;
+        }
+        .mobile-header__search-form .aa-input-search {
+            box-shadow: none;
+        }
+        .mobile-header__search-form .aa-hint,
+        .mobile-header__search-form .aa-input {
+            height: 54px;
+            padding-right: 32px;
+        }
+        .mobile-header__search-form .aa-input-icon {
+            right: 62px;
+        }
+        .mobile-header__search-form .aa-dropdown-menu {
+            background-color: #f7f8f9;
+            z-index: 9999 !important;
+        }
     </style>
     @stack('styles')
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-97489509-6"></script>
@@ -69,105 +106,8 @@
                 </button>
             </div>
             <div class="mobilemenu__content">
-                <ul class="mobile-links mobile-links--level--0" data-collapse
-                    data-collapse-opened-class="mobile-links__item--open">
-                    <li class="mobile-links__item" data-collapse-item>
-                        <div class="mobile-links__item-title">
-                            <a href="index.html" class="mobile-links__item-link">Home</a>
-                            <button class="mobile-links__item-toggle" type="button" data-collapse-trigger>
-                                <svg class="mobile-links__item-arrow" width="12px" height="7px">
-                                    <use xlink:href="{{ asset('strokya/images/sprite.svg#arrow-rounded-down-12x7') }}"></use>
-                                </svg>
-                            </button>
-                        </div>
-                        <div class="mobile-links__item-sub-links" data-collapse-content>
-                            <ul class="mobile-links mobile-links--level--1">
-                                <li class="mobile-links__item" data-collapse-item>
-                                    <div class="mobile-links__item-title"><a href="index.html"
-                                            class="mobile-links__item-link">Home 1</a></div>
-                                </li>
-                                <li class="mobile-links__item" data-collapse-item>
-                                    <div class="mobile-links__item-title"><a href="index-2.html"
-                                            class="mobile-links__item-link">Home 2</a></div>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="mobile-links__item" data-collapse-item>
-                        <div class="mobile-links__item-title"><a href="#" class="mobile-links__item-link">Categories</a>
-                            <button class="mobile-links__item-toggle" type="button" data-collapse-trigger><svg
-                                    class="mobile-links__item-arrow" width="12px" height="7px">
-                                    <use xlink:href="{{ asset('strokya/images/sprite.svg#arrow-rounded-down-12x7') }}"></use>
-                                </svg></button></div>
-                        <div class="mobile-links__item-sub-links" data-collapse-content>
-                            <ul class="mobile-links mobile-links--level--1">
-                                <li class="mobile-links__item" data-collapse-item>
-                                    <div class="mobile-links__item-title"><a href="#"
-                                            class="mobile-links__item-link">Power Tools</a> <button
-                                            class="mobile-links__item-toggle" type="button" data-collapse-trigger><svg
-                                                class="mobile-links__item-arrow" width="12px" height="7px">
-                                                <use xlink:href="{{ asset('strokya/images/sprite.svg#arrow-rounded-down-12x7') }}"></use>
-                                            </svg></button></div>
-                                    <div class="mobile-links__item-sub-links" data-collapse-content>
-                                        <ul class="mobile-links mobile-links--level--2">
-                                            <li class="mobile-links__item" data-collapse-item>
-                                                <div class="mobile-links__item-title"><a href="#"
-                                                        class="mobile-links__item-link">Engravers</a></div>
-                                            </li>
-                                            <li class="mobile-links__item" data-collapse-item>
-                                                <div class="mobile-links__item-title"><a href="#"
-                                                        class="mobile-links__item-link">Wrenches</a></div>
-                                            </li>
-                                            <li class="mobile-links__item" data-collapse-item>
-                                                <div class="mobile-links__item-title"><a href="#"
-                                                        class="mobile-links__item-link">Wall Chaser</a></div>
-                                            </li>
-                                            <li class="mobile-links__item" data-collapse-item>
-                                                <div class="mobile-links__item-title"><a href="#"
-                                                        class="mobile-links__item-link">Pneumatic Tools</a></div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li class="mobile-links__item" data-collapse-item>
-                                    <div class="mobile-links__item-title"><a href="#"
-                                            class="mobile-links__item-link">Machine Tools</a> <button
-                                            class="mobile-links__item-toggle" type="button" data-collapse-trigger><svg
-                                                class="mobile-links__item-arrow" width="12px" height="7px">
-                                                <use xlink:href="{{ asset('strokya/images/sprite.svg#arrow-rounded-down-12x7') }}"></use>
-                                            </svg></button></div>
-                                    <div class="mobile-links__item-sub-links" data-collapse-content>
-                                        <ul class="mobile-links mobile-links--level--2">
-                                            <li class="mobile-links__item" data-collapse-item>
-                                                <div class="mobile-links__item-title"><a href="#"
-                                                        class="mobile-links__item-link">Thread Cutting</a></div>
-                                            </li>
-                                            <li class="mobile-links__item" data-collapse-item>
-                                                <div class="mobile-links__item-title"><a href="#"
-                                                        class="mobile-links__item-link">Chip Blowers</a></div>
-                                            </li>
-                                            <li class="mobile-links__item" data-collapse-item>
-                                                <div class="mobile-links__item-title"><a href="#"
-                                                        class="mobile-links__item-link">Sharpening Machines</a></div>
-                                            </li>
-                                            <li class="mobile-links__item" data-collapse-item>
-                                                <div class="mobile-links__item-title"><a href="#"
-                                                        class="mobile-links__item-link">Pipe Cutters</a></div>
-                                            </li>
-                                            <li class="mobile-links__item" data-collapse-item>
-                                                <div class="mobile-links__item-title"><a href="#"
-                                                        class="mobile-links__item-link">Slotting machines</a></div>
-                                            </li>
-                                            <li class="mobile-links__item" data-collapse-item>
-                                                <div class="mobile-links__item-title"><a href="#"
-                                                        class="mobile-links__item-link">Lathes</a></div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
+                <ul class="mobile-links mobile-links--level--0" data-collapse data-collapse-opened-class="mobile-links__item--open">
+                    @include('partials.mobile-menu-categories')
                     <li class="mobile-links__item" data-collapse-item>
                         <div class="mobile-links__item-title"><a href="shop-grid-3-columns-sidebar.html"
                                 class="mobile-links__item-link">Shop</a> <button class="mobile-links__item-toggle"
@@ -383,7 +323,22 @@
                                 </svg>
                             </a>
                             <div class="mobile-header__search">
-                                <form class="mobile-header__search-form" action="#">
+                                <div class="search mobile-header__search-form">
+                                    <!-- HTML Markup -->
+                                    <div class="aa-input-container" id="bb-input-container">
+                                        <input type="search" id="bb-search-input" class="aa-input-search mobile-header__search-input" placeholder="Search for products..." name="search" value="{{ request('search') }}" autocomplete="off" />
+                                        <svg class="aa-input-icon" viewBox="654 -372 1664 1664">
+                                            <path d="M1806,332c0-123.3-43.8-228.8-131.5-316.5C1586.8-72.2,1481.3-116,1358-116s-228.8,43.8-316.5,131.5  C953.8,103.2,910,208.7,910,332s43.8,228.8,131.5,316.5C1129.2,736.2,1234.7,780,1358,780s228.8-43.8,316.5-131.5  C1762.2,560.8,1806,455.3,1806,332z M2318,1164c0,34.7-12.7,64.7-38,90s-55.3,38-90,38c-36,0-66-12.7-90-38l-343-342  c-119.3,82.7-252.3,124-399,124c-95.3,0-186.5-18.5-273.5-55.5s-162-87-225-150s-113-138-150-225S654,427.3,654,332  s18.5-186.5,55.5-273.5s87-162,150-225s138-113,225-150S1262.7-372,1358-372s186.5,18.5,273.5,55.5s162,87,225,150s113,138,150,225  S2062,236.7,2062,332c0,146.7-41.3,279.7-124,399l343,343C2305.7,1098.7,2318,1128.7,2318,1164z" />
+                                        </svg>
+                                        <button
+                                            class="mobile-header__search-button mobile-header__search-button--close"
+                                            type="button"><svg width="20px" height="20px">
+                                                <use xlink:href="{{ asset('strokya/images/sprite.svg#cross-20') }}"></use>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <!-- <form class="mobile-header__search-form" action="#">
                                     <input
                                         class="mobile-header__search-input" name="search"
                                         placeholder="Search over 10,000 products" aria-label="Site search" type="text"
@@ -402,7 +357,7 @@
                                         </svg>
                                     </button>
                                     <div class="mobile-header__search-body"></div>
-                                </form>
+                                </form> -->
                             </div>
                             <div class="mobile-header__indicators">
                                 <div class="indicator indicator--mobile-search indicator--mobile d-sm-none">
@@ -496,16 +451,13 @@
                     </div>
                     <div class="site-header__search">
                         <div class="search">
-                            <form class="search__form" action="#">
-                                <input class="search__input" name="search" placeholder="Search over 10,000 products" aria-label="Site search" type="text"
-                                    autocomplete="off">
-                                    <button class="search__button" type="submit">
-                                        <svg width="20px" height="20px">
-                                        <use xlink:href="{{ asset('strokya/images/sprite.svg#search-20') }}"></use>
-                                    </svg>
-                                </button>
-                                <div class="search__border"></div>
-                            </form>
+                            <!-- HTML Markup -->
+                            <div class="aa-input-container" id="aa-input-container">
+                                <input type="search" id="aa-search-input" class="aa-input-search" placeholder="Search for products..." name="search" value="{{ request('search') }}" autocomplete="off" />
+                                <svg class="aa-input-icon" viewBox="654 -372 1664 1664">
+                                    <path d="M1806,332c0-123.3-43.8-228.8-131.5-316.5C1586.8-72.2,1481.3-116,1358-116s-228.8,43.8-316.5,131.5  C953.8,103.2,910,208.7,910,332s43.8,228.8,131.5,316.5C1129.2,736.2,1234.7,780,1358,780s228.8-43.8,316.5-131.5  C1762.2,560.8,1806,455.3,1806,332z M2318,1164c0,34.7-12.7,64.7-38,90s-55.3,38-90,38c-36,0-66-12.7-90-38l-343-342  c-119.3,82.7-252.3,124-399,124c-95.3,0-186.5-18.5-273.5-55.5s-162-87-225-150s-113-138-150-225S654,427.3,654,332  s18.5-186.5,55.5-273.5s87-162,150-225s138-113,225-150S1262.7-372,1358-372s186.5,18.5,273.5,55.5s162,87,225,150s113,138,150,225  S2062,236.7,2062,332c0,146.7-41.3,279.7-124,399l343,343C2305.7,1098.7,2318,1128.7,2318,1164z" />
+                                </svg>
+                            </div>
                         </div>
                     </div>
                     <div class="site-header__phone">
@@ -714,16 +666,6 @@
                                     </ul>
                                 </div><!-- .nav-links / end -->
                                 <div class="nav-panel__indicators">
-                                    <div class="indicator">
-                                        <a href="wishlist.html" class="indicator__button">
-                                            <span class="indicator__area">
-                                                <svg width="20px" height="20px">
-                                                    <use xlink:href="{{ asset('strokya/images/sprite.svg#heart-20') }}"></use>
-                                                </svg>
-                                                <span class="indicator__value">0</span>
-                                            </span>
-                                        </a>
-                                    </div>
                                     <div class="indicator indicator--trigger--click">
                                         <a href="#" class="indicator__button">
                                             <span class="indicator__area">
@@ -954,7 +896,7 @@
 
             renderCartPage();
 
-            $('.product-card__addtocart').on('click', function (ev) {
+            $('.product-card__addtocart, .product-card__ordernow').on('click', function (ev) {
                 ev.preventDefault();
                 var card = $(this).parents('.product-card');
                 var prices = card.find('.product-card__prices');
@@ -973,6 +915,10 @@
                 }
 
                 addToCart(product);
+
+                if ($(this).hasClass('product-card__ordernow')) {
+                    window.location = "{{ route('checkout') }}";
+                }
             });
 
             function addToCart(product) {
