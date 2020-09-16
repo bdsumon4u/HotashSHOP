@@ -35,10 +35,13 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'as' => 'admin.'], fu
         'products'      => 'ProductController',
         'images'        => 'ImageController',
         'home-sections' => 'HomeSectionController',
+        'pages'         => 'PageController',
         'menus'         => 'MenuController',
         'menu-items'    => 'MenuItemController',
     ]);
 });
+
+pageRoutes();
 
 Route::get('/clear-cache', function() {
     Artisan::call('config:cache');

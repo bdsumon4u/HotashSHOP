@@ -1,10 +1,6 @@
 @extends('layouts.light.master')
 @section('title', 'Menus')
 
-@push('css')
-<link rel="stylesheet" type="text/css" href="{{asset('assets/css/datatables.css')}}">
-@endpush
-
 @section('breadcrumb-title')
 <h3>Menus</h3>
 @endsection

@@ -103,6 +103,26 @@
             </ul>
           </li>
           
+          <li class="dropdown">
+            <a class="nav-link menu-title {{request()->is('admin/pages*') ? 'active' : '' }}" href="#">
+              <i data-feather="layers"> </i><span>Pages</span>
+              <div class="according-menu"><i class="fa fa-angle-{{request()->is('admin/pages*') ? 'down' : 'right' }}"></i></div>
+            </a>
+
+            <ul class="nav-submenu menu-content" style="display: {{ request()->is('admin/pages*') ? 'block;' : 'none;' }}">
+              <li>
+                <a class="nav-link menu-title link-nav {{ Route::currentRouteName()=='admin.pages.index' ? 'active' : '' }}" href="{{route('admin.pages.index')}}">
+                  <span>All Pages</span>
+                </a>
+              </li>
+              <li>
+                <a class="nav-link menu-title link-nav {{ Route::currentRouteName()=='admin.pages.create' ? 'active' : '' }}" href="{{route('admin.pages.create')}}">
+                  <span>Create Page</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          
           <li>
             <a class="nav-link menu-title link-nav {{ Route::currentRouteName()=='admin.menus.index' ? 'active' : '' }}" href="{{route('admin.menus.index')}}">
               <i data-feather="menu"> </i>
