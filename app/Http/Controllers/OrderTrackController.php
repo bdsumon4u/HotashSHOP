@@ -18,7 +18,10 @@ class OrderTrackController extends Controller
         if (! $request->has('order')) {
             return view('track-order');
         }
-        $order = Order::find($request->order);
-        return $order->phone == $request->phone ? view('order-status', compact('order')) : abort(404);
+        $order = Order::where(['id' => $request->order, 'phone' => $request->phone])
+            ->first();
+        return $order instanceof Order
+            ? view('order-status', compact('order'))
+            : back()->withDanger('Invalid Tracking Info Or Order Record Was Deleted.');
     }
 }

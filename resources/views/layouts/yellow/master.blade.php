@@ -311,6 +311,9 @@
         <!-- desktop site__header / end -->
         <!-- site__body -->
         <div class="site__body">
+            <div class="container">
+                <x-alert-box class="row mt-2" />
+            </div>
             @yield('content')
         </div>
         <!-- site__body / end -->

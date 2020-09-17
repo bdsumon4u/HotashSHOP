@@ -20,9 +20,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return $this->view([
-            'products' => Product::all(),
-        ]);
+        return $this->view();
     }
 
     /**

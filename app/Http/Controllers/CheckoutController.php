@@ -50,6 +50,7 @@ class CheckoutController extends Controller
                     return [
                         'id' => $id,
                         'name' => $product->name,
+                        'slug' => $product->slug,
                         'image' => $product->base_image->src,
                         'price' => $product->price,
                         'quantity' => $product->stock_count >= $quantity ? $quantity : $product->stock_count,

@@ -98,7 +98,7 @@
     </style>
   </head>
   <body style="margin: 20px auto;">
-    @php $data = json_decode($order->data) @endphp
+    @php $data = $order->data @endphp
     <table align="center" border="0" cellpadding="0" cellspacing="0" style="padding: 0 30px;background-color: #fff; -webkit-box-shadow: 0px 0px 14px -4px rgba(0, 0, 0, 0.2705882353);box-shadow: 0px 0px 14px -4px rgba(0, 0, 0, 0.2705882353);width: 100%;">
       <tbody>
         <tr>
@@ -127,7 +127,7 @@
                   <td><img src="http://laravel.pixelstrap.com/cuba/assets/images/email-template/space.jpg" alt=" " height="25" width="30"></td>
                   <td style="background-color: #fafafa;border: 1px solid #ddd;padding: 15px;letter-spacing: 0.3px;width: 50%;">
                     <h5 style="font-size: 16px;font-weight: 600;color: #000; line-height: 16px; padding-bottom: 13px; border-bottom: 1px solid #e6e8eb; letter-spacing: -0.65px; margin-top:0; margin-bottom: 13px;">Your Contacts:</h5>
-                    <p style="text-align: left;font-weight: normal; font-size: 14px; color: #000000;line-height: 21px;    margin-top: 0;">{{ $order['phone'] }},<br> {{ $order['email'] }}</p>
+                    <p style="text-align: left;font-weight: normal; font-size: 14px; color: #000000;line-height: 21px;    margin-top: 0;">{{ $order['phone'] }}<br />{{ $order['email'] }}</p>
                   </td>
                 </tr>
               </tbody>
@@ -144,7 +144,7 @@
                   <th>QUANTITY</th>
                   <th>TOTAL </th>
                 </tr>
-                @foreach(json_decode($order->products) as $product)
+                @foreach($order->products as $product)
                 <tr>
                   <td><img src="{{ $product->image }}" alt="" width="80"></td>
                   <td valign="top" style="padding-left: 15px;">

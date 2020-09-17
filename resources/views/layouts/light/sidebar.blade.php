@@ -44,6 +44,34 @@
               <span>Slides</span>
             </a>
           </li>
+
+          <li>
+            <a class="nav-link menu-title link-nav {{ request()->is('admin/orders*') ? 'active' : '' }}" href="{{route('admin.orders.index')}}">
+              <i data-feather="check"> </i>
+              <span>Orders</span>
+            </a>
+          </li>
+
+          <li class="dropdown">
+            <a class="nav-link menu-title {{request()->is('admin/products*') ? 'active' : '' }}" href="#">
+              <i data-feather="shopping-cart"> </i><span>Products</span>
+              <div class="according-menu"><i class="fa fa-angle-{{request()->is('admin/products*') ? 'down' : 'right' }}"></i></div>
+            </a>
+
+            <ul class="nav-submenu menu-content" style="display: {{ request()->is('admin/products*') ? 'block;' : 'none;' }}">
+              <li>
+                <a class="nav-link menu-title link-nav {{ Route::currentRouteName()=='admin.products.index' ? 'active' : '' }}" href="{{route('admin.products.index')}}">
+                  <span>All Products</span>
+                </a>
+              </li>
+              <li>
+                <a class="nav-link menu-title link-nav {{ Route::currentRouteName()=='admin.products.create' ? 'active' : '' }}" href="{{route('admin.products.create')}}">
+                  <span>Create Product</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          
           <li>
             <a class="nav-link menu-title link-nav {{ Route::currentRouteName()=='admin.categories.index' ? 'active' : '' }}" href="{{route('admin.categories.index')}}">
               <i data-feather="server"> </i>

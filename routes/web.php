@@ -36,6 +36,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'as' => 'admin.'], fu
         'brands'        => 'BrandController',
         'products'      => 'ProductController',
         'images'        => 'ImageController',
+        'orders'        => 'OrderController',
         'home-sections' => 'HomeSectionController',
         'pages'         => 'PageController',
         'menus'         => 'MenuController',

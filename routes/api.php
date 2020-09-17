@@ -24,4 +24,5 @@ Route::group(['namespace' => 'Api', 'as' => 'api.'], function () {
     Route::get('images/single', 'ImageController@single')->name('images.single');
     Route::get('images/multiple', 'ImageController@multiple')->name('images.multiple');
     Route::post('menu/{menu}/sort-items', 'MenuItemSortController')->name('menu-items.sort');
+    Route::get('orders', 'OrderController')->name('orders');
 });

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\App;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -30,5 +32,36 @@ class Controller extends BaseController
         );
 
         return view("{$this->viewPath}.{$view}", $data, $mergeData);
+    }
+
+    protected function delete()
+    {
+        $route = request()->route();
+        $App = App::getNamespace();
+
+        # Model Name & Key Name
+        $Name = Str::beforeLast(Str::afterLast(\get_called_class(), '\\'), 'Controller');
+        $keyName = Str::lower($Name);
+
+        # Class & Object
+        $class = class_exists($App.'Models\\'.$Name) ? $App.'Models\\'.$Name : $App.$Name;
+        $object = new $class;
+
+        # Model Binder
+        $ModelBinder = data_get(
+            $route->bindingFields(),
+            $keyName,
+            $object->getRouteKeyName()
+        );
+
+        # The Model
+        $model = data_get($route->parameters(), $keyName);
+        if (! $model instanceof Model) {
+            $model = $class::where($ModelBinder, $model)->firstOrFail();
+        }
+
+        # Deleting The Model
+        $model->delete();
+        return back()->withSuccess("{$Name} Has Been Deleted.");
     }
 }

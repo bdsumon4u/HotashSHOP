@@ -15,28 +15,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        return $this->view();
     }
 
     /**
@@ -47,7 +26,7 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        //
+        return $this->view();
     }
 
     /**
@@ -58,7 +37,9 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        //
+        return $this->view([
+            'statuses' => config('app.orders', [])
+        ]);
     }
 
     /**
@@ -70,7 +51,17 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required',
+            'phone' => 'required|regex:/^\+8801\d{9}$/',
+            'email' => 'nullable',
+            'address' => 'required',
+            'note' => 'nullable',
+            'status' => 'required',
+        ]);
+
+        $order->update($data);
+        return redirect(route('admin.orders.show', $order))->withSuccess('Order Has Been Updated.');
     }
 
     /**
@@ -81,6 +72,6 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        //
+        return $this->delete();
     }
 }
