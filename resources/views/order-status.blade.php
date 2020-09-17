@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Received</title>
+    <title>Order {{ $order->status }}</title>
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -110,9 +110,9 @@
                 </tr>
                 <tr>
                   <td>
-                    <p style="font-size: 14px;"><b>Hi {{ $order['name'] }},</b></p>
-                    <p style="font-size: 14px;">Order Is Successfully Placed And Will Be Delivered Soon,</p>
+                    <p style="font-size: 14px;"><b>Hi, {{ $order['name'] }},</b></p>
                     <p style="font-size: 14px;">Order ID : <strong>{{ $order['id'] }}</strong>,</p>
+                    <p style="font-size: 14px;">Order Status: <strong>{{ $order->status }}</strong>,</p>
                   </td>
                 </tr>
               </tbody>
@@ -133,7 +133,7 @@
               </tbody>
             </table>
             <div style="text-align: left;">
-              <strong>Note:</strong><br>{{ $order->note }}
+              <strong>Note:</strong><br>{{ $order->note ?? 'N/A' }}
             </div>
             <table class="order-detail" border="0" cellpadding="0" cellspacing="0" align="left" style="width: 100%;    margin-bottom: 50px;">
               <tbody>

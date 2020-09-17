@@ -15,6 +15,13 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'orders' => [
+        'PROCESSING',
+        'SHIPPING',
+        'COMPLETED',
+        'RETURNED',
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

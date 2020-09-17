@@ -7,8 +7,8 @@
         url('/')                => 'Home',
         route('products.index') => 'Products',
     ],
-    'active' => 'Cart',
-    'page_title' => 'Cart'
+    'active' => 'Cart Details',
+    'page_title' => 'Cart Details'
 ])
 
 <div class="cart block">

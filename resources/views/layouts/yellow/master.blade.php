@@ -20,20 +20,16 @@
         .products-list__item {
             justify-content: space-between;
         }
-        .product-card__old-price {
-            color: #ff0000;
-        }
-        .product-card__new-price {
-            color: #ffd333;
-        }
         @media (max-width: 479px) {
             .products-list[data-layout=grid-5-full] .products-list__item {
                 width: 46%;
                 margin: 8px 6px;
             }
+            .block-products-carousel[data-layout^=grid-] .product-card .product-card__info,
             .products-list[data-layout^=grid-] .product-card .product-card__info {
                 padding: 0 14px;
             }
+            .block-products-carousel[data-layout^=grid-] .product-card .product-card__actions,
             .products-list[data-layout^=grid-] .product-card .product-card__actions {
                 padding: 0 14px 14px 14px;
             }
@@ -56,6 +52,12 @@
         .product-card:before,
         .owl-carousel {
             z-index: 0;
+        }
+        .product-card__buttons .btn {
+            height: auto !important;
+            font-size: 70% !important;
+            padding-left: 0.5rem !important;
+            padding-right: 0.5rem !important;
         }
         .aa-input-container {
             width: 100%;
@@ -206,26 +208,19 @@
                                         </span>
                                     </button>
                                 </div>
-                                <div class="indicator indicator--mobile d-sm-flex d-none">
-                                    <a href="wishlist.html" class="indicator__button">
-                                        <span class="indicator__area">
-                                            <svg width="20px" height="20px">
-                                                <use xlink:href="{{ asset('strokya/images/sprite.svg#heart-20') }}"></use>
-                                            </svg>
-                                            <span class="indicator__value">0</span>
-                                        </span>
-                                    </a>
-                                </div>
                                 <div class="indicator indicator--mobile">
-                                    <a href="cart.html" class="indicator__button">
+                                    <a href="{{ route('cart') }}" class="indicator__button">
                                         <span class="indicator__area">
-                                            <svg width="20px" height="20px">
-                                                <use xlink:href="{{ asset('strokya/images/sprite.svg#cart-20') }}"></use>
+                                            <svg width="20" height="20">
+                                                <circle cx="7" cy="17" r="2"></circle>
+                                                <circle cx="15" cy="17" r="2"></circle>
+                                                <path d="M20,4.4V5l-1.8,6.3c-0.1,0.4-0.5,0.7-1,0.7H6.7c-0.4,0-0.8-0.3-1-0.7L3.3,3.9C3.1,3.3,2.6,3,2.1,3H0.4C0.2,3,0,2.8,0,2.6 V1.4C0,1.2,0.2,1,0.4,1h2.5c1,0,1.8,0.6,2.1,1.6L5.1,3l2.3,6.8c0,0.1,0.2,0.2,0.3,0.2h8.6c0.1,0,0.3-0.1,0.3-0.2l1.3-4.4 C17.9,5.2,17.7,5,17.5,5H9.4C9.2,5,9,4.8,9,4.6V3.4C9,3.2,9.2,3,9.4,3h9.2C19.4,3,20,3.6,20,4.4z"></path>
                                             </svg>
-                                            <span class="indicator__value">3</span>
+                                            <span class="indicator__value cart-count">0</span>
                                         </span>
                                     </a>
                                 </div>
+                                @include('partials.auth-indicator')
                             </div>
                         </div>
                     </div>
@@ -276,8 +271,10 @@
                                     <div class="indicator indicator--trigger--click">
                                         <a href="#" class="indicator__button">
                                             <span class="indicator__area">
-                                                <svg width="20px" height="20px">
-                                                    <use xlink:href="{{ asset('strokya/images/sprite.svg#cart-20') }}"></use>
+                                                <svg width="20" height="20">
+                                                    <circle cx="7" cy="17" r="2"></circle>
+                                                    <circle cx="15" cy="17" r="2"></circle>
+                                                    <path d="M20,4.4V5l-1.8,6.3c-0.1,0.4-0.5,0.7-1,0.7H6.7c-0.4,0-0.8-0.3-1-0.7L3.3,3.9C3.1,3.3,2.6,3,2.1,3H0.4C0.2,3,0,2.8,0,2.6 V1.4C0,1.2,0.2,1,0.4,1h2.5c1,0,1.8,0.6,2.1,1.6L5.1,3l2.3,6.8c0,0.1,0.2,0.2,0.3,0.2h8.6c0.1,0,0.3-0.1,0.3-0.2l1.3-4.4 C17.9,5.2,17.7,5,17.5,5H9.4C9.2,5,9,4.8,9,4.6V3.4C9,3.2,9.2,3,9.4,3h9.2C19.4,3,20,3.6,20,4.4z"></path>
                                                 </svg>
                                                 <span class="indicator__value cart-count"></span>
                                             </span>
@@ -304,6 +301,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                @include('partials.auth-indicator')
                             </div>
                         </div>
                     </div>

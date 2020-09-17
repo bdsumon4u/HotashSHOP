@@ -24,6 +24,7 @@ class CreateOrdersTable extends Migration
             $table->string('phone');
             $table->string('email')->nullable();
             $table->string('address');
+            $table->string('status');
             $table->json('products');
             $table->text('note')->nullable();
             $table->json('data');

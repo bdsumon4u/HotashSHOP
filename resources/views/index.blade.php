@@ -1,5 +1,13 @@
 @extends('layouts.yellow.master')
 
+@push('styles')
+<style>
+    .owl-stage {
+        padding-bottom: 60px;
+    }
+</style>
+@endpush
+
 @section('content')
 @include('partials.slides')
 

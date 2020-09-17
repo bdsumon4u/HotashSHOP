@@ -14,41 +14,39 @@
 
 <div class="checkout block">
     <div class="container">
-        <x-form :action="route('post-checkout')" method="POST">
+        <x-form :action="route('checkout')" method="POST">
+            @php $user = optional(auth('user')->user()) @endphp
             <div class="row">
-                <div class="col-12 mb-3">
-                    <div class="alert alert-lg alert-primary">Returning customer? <a href="#">Click here to login</a></div>
-                </div>
                 <div class="col-12 col-lg-6 col-xl-7">
                     <div class="card mb-lg-0">
-                        <div class="card-body">
+                        <div class="card-body p-3">
                             <h3 class="card-title">Billing details</h3>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <x-label for="name">Name</x-label>
-                                    <x-input name="name" placeholder="Type your name here" />
+                                    <x-label for="name">Name</x-label> <span class="text-danger">*</span>
+                                    <x-input name="name" placeholder="Type your name here" :value="$user->name" />
                                     <x-error field="name" />
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <x-label for="phone">Phone</x-label>
-                                    <x-input name="phone" placeholder="Type your phone number here" />
+                                    <x-label for="phone">Phone</x-label> <span class="text-danger">*</span>
+                                    <x-input name="phone" placeholder="Type your phone number here" :value="$user->phone_number ?? '+880'" />
                                     <x-error field="phone" />
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-12">
-                                    <x-label for="email">Email address (Optional)</x-label>
-                                    <x-input type="email" name="email" placeholder="Email address" />
+                                    <x-label for="email">Email Address</x-label>
+                                    <x-input type="email" name="email" placeholder="Email Address" :value="$user->email" />
                                     <x-error field="email" />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <x-label for="address">Address</x-label>
-                                <x-input name="address" placeholder="Address" />
+                                <x-label for="address">Address</x-label> <span class="text-danger">*</span>
+                                <x-input name="address" placeholder="Enter Correct Address" />
                                 <x-error field="address" />
                             </div>
                             <div class="form-group">
-                                <label class="d-block">Shipping Area</label>
+                                <label class="d-block">Shipping City <span class="text-danger">*</span></label>
                                 <div class="form-control @error('shipping') is-invalid @enderror">
                                     <div class="custom-control custom-radio custom-control-inline">
                                         <input type="radio" class="custom-control-input" id="inside-dhaka" name="shipping" value="Inside Dhaka" data-val="50">
@@ -63,10 +61,10 @@
                             </div>
                         </div>
                         <div class="card-divider"></div>
-                        <div class="card-body">
+                        <div class="card-body p-3">
                             <h3 class="card-title">Shipping Details</h3>
                             <div class="form-group">
-                                <x-label for="note">Order notes <span class="text-muted">(Optional)</span></x-label>
+                                <x-label for="note">Order Notes (Optional)</x-label>
                                 <x-textarea name="note" rows="4"></x-textarea>
                                 <x-error field="note" />
                             </div>
@@ -100,14 +98,14 @@
                                 <div class="form-check">
                                     <span class="form-check-input input-check">
                                         <span class="input-check__body">
-                                            <input class="input-check__input" type="checkbox" id="checkout-terms">
+                                            <input class="input-check__input" type="checkbox" id="checkout-terms" checked>
                                             <span class="input-check__box"></span>
                                             <svg class="input-check__icon" width="9px" height="7px">
                                                 <use xlink:href="{{ asset('strokya/images/sprite.svg#check-9x7') }}"></use>
                                             </svg>
                                         </span>
                                     </span>
-                                    <label class="form-check-label" for="checkout-terms">I have read and agree to the website <a target="_blank" href="terms-and-conditions.html">terms and conditions</a>*</label>
+                                    <label class="form-check-label" for="checkout-terms">I agree to the <span class="text-info" target="_blank" href="javascript:void(0);">terms and conditions</span>*</label>
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary btn-xl btn-block">Place Order</button>

@@ -484,7 +484,7 @@
                         768:  {items: 3, margin: 10},
                         576:  {items: 2, margin: 10},
                         475:  {items: 2, margin: 10},
-                        0:    {items: 1}
+                        0:    {items: 2}
                     }
                 },
                 'horizontal': {

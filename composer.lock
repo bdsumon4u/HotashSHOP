@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3470bb082eec935145e701fcc0d4c88c",
+    "content-hash": "c31d4e83a11cd9ac7510563d61742aec",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -954,6 +954,52 @@
                 "url"
             ],
             "time": "2019-07-01T23:21:34+00:00"
+        },
+        {
+            "name": "hotash/laravel-multi-ui",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bdsumon4u/Laravel-Multi-Ui.git",
+                "reference": "4a6f9b15925b9daceed71debac442aaf1979fea6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bdsumon4u/Laravel-Multi-Ui/zipball/4a6f9b15925b9daceed71debac442aaf1979fea6",
+                "reference": "4a6f9b15925b9daceed71debac442aaf1979fea6",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "^7.0",
+                "illuminate/filesystem": "^7.0",
+                "illuminate/support": "^7.0",
+                "php": "^7.2.5"
+            },
+            "type": "package",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Hotash\\LaravelMultiUi\\UiServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hotash\\LaravelMultiUi\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sumon Ahmed",
+                    "email": "bdsumon4u@gmail.com"
+                }
+            ],
+            "description": "Laravel Ui Package For Multiple Guards.",
+            "time": "2020-06-11T10:18:40+00:00"
         },
         {
             "name": "laravel/framework",
@@ -8027,7 +8073,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "hotash/laravel-multi-ui": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

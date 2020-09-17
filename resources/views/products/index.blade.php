@@ -1,16 +1,5 @@
 @extends('layouts.yellow.master')
 
-@push('styles')
-<style>
-    .product-card__buttons .btn {
-        height: auto;
-        font-size: 70%;
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
-    }
-</style>
-@endpush
-
 @section('content')
 
 @include('partials.page-header', [

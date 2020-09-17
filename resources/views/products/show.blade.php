@@ -47,26 +47,30 @@
                 <div class="product__info">
                     <h1 class="product__name">{{ $product->name }}</h1>
                     <ul class="product__meta">
-                        <li class="product__meta-availability">Availability:
+                        <li class="product__meta-availability w-100 mb-2">Availability:
                             @if(! $product->should_track)
                             <span class="text-success">In Stock</span>
                             @else
                             <span class="text-{{ $product->stock_count ? 'success' : 'danger' }}">{{ $product->stock_count }} In Stock</span>
                             @endif
                         </li>
-                        <li>Brand: <a href="{{ route('brands.products', $product->brand) }}" class="text-primary">{{ $product->brand->name }}</a></li>
-                        <li>SKU: {{ $product->sku }}</li>
+                        <li class="w-100 mb-2">Brand: <a href="{{ route('brands.products', $product->brand) }}" class="text-primary">{{ $product->brand->name }}</a></li>
+                        <li class="w-100 mb-2">SKU: {{ $product->sku }}</li>
                     </ul>
                 </div><!-- .product__info / end -->
                 <!-- .product__sidebar -->
                 <div class="product__sidebar">
                     <div class="product__prices {{$product->selling_price == $product->price ? '' : 'has-special'}}">
-                        @if($product->selling_price == $product->price)
-                        $ <span>{{ $product->price }}</span>
-                        @else
-                        <span class="product-card__new-price">$ <span>{{ $product->selling_price }}</span></span>
-                        <span class="product-card__old-price">$ <span>{{ $product->price }}</span></span>
-                        @endif
+                        <h4>
+                            Price:&nbsp;
+                            @if($product->selling_price == $product->price)
+                            $ <span>{{ $product->price }}</span>
+                            @else
+                            <span class="product-card__new-price">$ <span>{{ $product->selling_price }}</span></span>
+                            &nbsp;
+                            <span class="product-card__old-price">$ <span>{{ $product->price }}</span></span>
+                            @endif
+                        </h4>
                     </div>
                     <!-- .product__options -->
                     <form class="product__options">
