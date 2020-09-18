@@ -65,9 +65,12 @@
                 </div>
             </div>
             <div class="site-footer__bottom">
-                <div class="site-footer__copyright"><a target="_blank"
-                        href="https://www.templateshub.net">Templates Hub</a></div>
-                <div class="site-footer__payments"><img src="{{ asset('strokya/images/payments.png') }}" alt=""></div>
+                <div class="site-footer__copyright">
+                    Copyright 2020 - {{ date('Y') }} &copy; {{ config('app.name') }}
+                </div>
+                <div class="site-footer__payments">
+                    Developed By <a href="https://cyber32.com" class="text-danger">Cyber32</a>
+                </div>
             </div>
         </div>
     </div>

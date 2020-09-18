@@ -8,14 +8,26 @@
 @push('styles')
 <style>
 @media print {
-    .main-nav
-    .buttons {
+    html, body {
+    height:100vh; 
+    margin: 0 !important; 
+    padding: 0 !important;
+    overflow: hidden;
+    }
+
+    .main-nav {
         display: none !important;
         width: 0 !important;
     }
 
+    .print-edit-buttons,
+    .footer {
+        display: none !important;
+    }
+
     .page-body {
         margin-left: 0 !important;
+        page-break-after: always;
     }
 }
 </style>
@@ -56,8 +68,10 @@
                                 <div class="col-sm-6">
                                     <div class="text-md-right">
                                         <h3>Invoice #<span class="digits counter">{{ $order->id }}</span></h3>
-                                        <p>Issued: May<span class="digits"> 27, 2015</span><br> Payment Due: June
-                                            <span class="digits">27, 2015</span></p>
+                                        <p>
+                                            Ordered At: {{ $order->created_at->format('M') }}<span class="digits"> {{ $order->created_at->format('d, Y') }}</span>
+                                            <br> Invoiced At: {{ date('M') }}<span class="digits"> {{ date('d, Y') }}</span>
+                                        </p>
                                     </div>
                                     <!-- End Title-->
                                 </div>
@@ -87,11 +101,11 @@
                                 <table class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <td>Image</td>
-                                            <td>Name</td>
-                                            <td>Price</td>
-                                            <td>Quantity</td>
-                                            <td>Total</td>
+                                            <th width="100">Image</th>
+                                            <th>Name</th>
+                                            <th width="95">Price</th>
+                                            <th width="10">Quantity</th>
+                                            <th width="95">Total</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -125,7 +139,7 @@
                         </div>
                         <!-- End InvoiceBot-->
                     </div>
-                    <div class="col-sm-12 buttons text-center mt-3">
+                    <div class="col-sm-12 print-edit-buttons text-center mt-3">
                         <button class="btn btn btn-primary mr-2" type="button" onclick="myFunction()">Print</button>
                         <a href="{{ route('admin.orders.edit', $order) }}" class="btn btn-success">Edit</a>
                     </div>

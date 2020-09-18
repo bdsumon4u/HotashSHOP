@@ -27,17 +27,6 @@
             </a>
           </li>
 
-          <li class="dropdown">
-            <a class="nav-link menu-title {{request()->route()->getPrefix() == '/starter-kit' ? 'active' : '' }}" href="#">
-              <i data-feather="anchor"></i><span>{{ trans('lang.Starter kit') }}</span>
-              <div class="according-menu"><i class="fa fa-angle-{{request()->route()->getPrefix() == '/starter-kit' ? 'down' : 'right' }}"></i></div>
-            </a>
-
-            <ul class="nav-submenu menu-content" style="display: {{ request()->route()->getPrefix() == '/starter-kit' ? 'block;' : 'none;' }}">
-              
-            </ul>
-          </li>
-
           <li>
             <a class="nav-link menu-title link-nav {{ Route::currentRouteName()=='admin.slides.index' ? 'active' : '' }}" href="{{route('admin.slides.index')}}">
               <i data-feather="image"> </i>
