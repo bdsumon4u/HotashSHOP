@@ -15,6 +15,14 @@ class BrandProductController extends Controller
      */
     public function __invoke(Request $request, Brand $brand)
     {
-        dd($brand->products);
+        $per_page = $request->get('per_page', 15);
+        $products = $brand->products()
+            ->whereIsActive(1)
+            ->latest('id')
+            ->paginate($per_page)->appends(request()->query());
+        return view('products.index', [
+            'products' => $products,
+            'per_page' => $per_page,
+        ]);
     }
 }

@@ -15,6 +15,14 @@ class CategoryProductController extends Controller
      */
     public function __invoke(Request $request, Category $category)
     {
-        dd($category->products);
+        $per_page = $request->get('per_page', 15);
+        $products = $category->products()
+            ->whereIsActive(1)
+            ->latest('id')
+            ->paginate($per_page)->appends(request()->query());
+        return view('products.index', [
+            'products' => $products,
+            'per_page' => $per_page,
+        ]);
     }
 }

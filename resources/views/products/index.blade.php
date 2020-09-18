@@ -20,6 +20,10 @@
                             <div class="view-options__legend">
                                 @if(request('search'))
                                 Found {{ $products->total() }} result(s) for "{{ request('search', 'NULL') }}"
+                                @elseif($category = request()->route()->parameter('category'))
+                                Showing from "{{ $category->name }}" category.
+                                @elseif($brand = request()->route()->parameter('brand'))
+                                Showing from "{{ $brand->name }}" brand.
                                 @else
                                 Showing {{ $products->count() }} of {{ $products->total() }} products
                                 @endif
