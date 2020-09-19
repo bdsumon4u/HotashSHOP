@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Order;
+use App\Product;
 
 class HomeController extends Controller
 {
@@ -24,6 +26,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('admin.home');
+        $productsCount = Product::count();
+        $ordersCount = Order::count();
+        $pendingOrdersCount = Order::whereStatus('pending')->count();
+        $returnedOrdersCount = Order::whereStatus('returned')->count();
+        $inactiveProducts = Product::whereIsActive(0)->get();
+        $outOfStockProducts = Product::whereShouldTrack(1)->where('stock_count', '<=', 0)->get();
+        return view('admin.dashboard', compact('productsCount', 'ordersCount', 'pendingOrdersCount', 'returnedOrdersCount', 'inactiveProducts', 'outOfStockProducts'));
     }
 }

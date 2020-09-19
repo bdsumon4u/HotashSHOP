@@ -8,6 +8,7 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function() {
 
     # Admin Level Namespace & No Prefix
     MultiUi::routes([
+        'register' => false,
         'URLs' => [
             'login' => 'enter',
             'register' => 'create-admin-account',
@@ -24,7 +25,7 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function() {
 
     Route::group(['prefix' => 'admin'], function() {
         # Admin Level Namespace & 'admin' Prefix
-        Route::get('/home', 'HomeController@index')->name('home');
+        Route::get('/dashboard', 'HomeController@index')->name('home');
         Route::get('example', function() {
             dump('bdsumon4u');
         })->name('example');

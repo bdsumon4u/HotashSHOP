@@ -2,9 +2,10 @@
 
 namespace App\Http\Middleware;
 
-use App\Providers\RouteServiceProvider;
 use Closure;
+use ReflectionClass;
 use Illuminate\Support\Facades\Auth;
+use App\Providers\RouteServiceProvider;
 
 class RedirectIfAuthenticated
 {
@@ -19,8 +20,18 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
-            return redirect(RouteServiceProvider::HOME);
+            $upper = strtoupper(str_replace(['_', '-'], '', $guard));
+            return $upper == 'WEB' || $upper == null
+                ? redirect(RouteServiceProvider::HOME)
+                : redirect(
+                    (new ReflectionClass(RouteServiceProvider::class))
+                        ->getConstant($upper.'_HOME')
+                );
         }
+
+        // if (Auth::guard($guard)->check()) {
+        //     return redirect(RouteServiceProvider::HOME);
+        // }
 
         return $next($request);
     }

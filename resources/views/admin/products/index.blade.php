@@ -27,7 +27,7 @@
                   <table class="display" id="product-table" data-url="{{ route('api.products') }}">
                      <thead>
                         <tr>
-                           <!-- <th>Image</th> -->
+                           <th width="100">Image</th>
                            <th>Name</th>
                            <th>Price</th>
                            <th>Stock</th>

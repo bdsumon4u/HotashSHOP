@@ -45,11 +45,7 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         $data = $request->validated();
-        $data['brand_id']    = $data['brand'];
-        $data['stock_count'] = intval($data['stock_count']);
-
         event(new ProductCreated(Product::create($data), $data));
-
         return back()->with('success', 'Product Has Been Created.');
     }
 
@@ -88,12 +84,8 @@ class ProductController extends Controller
     public function update(ProductRequest $request, Product $product)
     {
         $data = $request->validated();
-        $data['brand_id']    = $data['brand'];
-        $data['stock_count'] = intval($data['stock_count']);
-
         $product->update($data);
         event(new ProductUpdated($product, $data));
-
         return back()->with('success', 'Product Has Been Updated.');
     }
 

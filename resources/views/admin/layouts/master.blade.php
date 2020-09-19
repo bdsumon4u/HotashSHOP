@@ -18,9 +18,25 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style>
+        .h-100vh {
+            height: 100vh !important;
+        }
+        .card {
+            border: none;
+            box-shadow: 0 0 37px rgba(8, 21, 66, 0.05);
+        }
+        .card-header {
+            border-color: rgba(8, 21, 66, 0.05);
+            font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            background-color: #fff;
+        }
+    </style>
 </head>
 <body>
-    <div id="app">
+    <div id="app" class="h-100vh d-flex flex-column">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
@@ -72,7 +88,7 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="h-100 d-flex align-items-center">
             @yield('content')
         </main>
     </div>

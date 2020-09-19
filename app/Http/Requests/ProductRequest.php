@@ -16,6 +16,12 @@ class ProductRequest extends FormRequest
         return true;
     }
 
+    public function prepareForValidation()
+    {
+        $sku = $this->get('sku');
+        $this->merge(['sku' => strtoupper($sku)]);
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -45,5 +51,17 @@ class ProductRequest extends FormRequest
         }
 
         return $rules;
+    }
+
+    public function all($keys = null)
+    {
+        $data = parent::all() + [
+            'is_active' => 0,
+        ];
+
+        $data['brand_id']    = $data['brand'];
+        $data['stock_count'] = intval($data['stock_count']);
+
+        return $data;
     }
 }

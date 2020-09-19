@@ -30,7 +30,7 @@
           <div class="media profile-media">
             <img class="b-r-10" src="{{asset('assets/images/dashboard/profile.jpg')}}" alt="">
             <div class="media-body">
-              <span>Emay Walter</span>
+              <span>{{ $admin->name }}</span>
               <p class="mb-0 font-roboto">Admin <i class="middle fa fa-angle-down"></i></p>
             </div>
           </div>
@@ -39,7 +39,17 @@
             <li><i data-feather="mail"></i><span>Inbox</span></li>
             <li><i data-feather="file-text"></i><span>Taskboard</span></li>
             <li><i data-feather="settings"></i><span>Settings</span></li>
-            <li><i data-feather="log-in"> </i><span>Log in</span></li>
+            <li>
+              <a class="" href="{{ route('admin.logout') }}"
+                onclick="event.preventDefault();
+                document.getElementById('logout-form').submit();">
+                <i data-feather="log-in"> </i> {{ __('Logout') }}
+              </a>
+
+              <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
+                @csrf
+              </form>
+            </li>
           </ul>
         </li>
       </ul>

@@ -19,13 +19,28 @@ class ProductController extends Controller
     {
         return DataTables::of(Product::all())
             ->addIndexColumn()
+            ->addColumn('image', function (Product $product) {
+                return '<img src="'.$product->base_image->src.'" width="100" height="100" />';
+            })
+            ->addColumn('pricing', function (Product $product) {
+                return $product->price == $product->selling_price
+                    ? '<p>$ <span>'.$product->price.'</span></p>'
+                    : '<del style="color: #ff0000;">$ <span>'.$product->price.'</span></del>
+                        <br>
+                    <ins style="text-decoration: none;">$ <span>'.$product->selling_price.'</span></ins>';
+            })
+            ->addColumn('stock', function (Product $product) {
+                return $product->should_track
+                    ? '<span class="text-'.($product->stock_count ? 'success' : 'danger' ).'">'.$product->stock_count.' In Stock</span>'
+                    : '<span class="text-success">In Stock</span>';
+            })
             ->addColumn('actions', function (Product $product) {
                 return '<div>
                     <a href="'.route('admin.products.edit', $product).'" class="btn btn-block btn-primary">Edit</a>
                     <a href="'.route('admin.products.destroy', $product).'" data-action="delete" class="btn btn-block btn-danger">Delete</a>
                 </div>';
             })
-            ->rawColumns(['actions'])
+            ->rawColumns(['image', 'pricing', 'stock', 'actions'])
             ->make(true);
     }
 }

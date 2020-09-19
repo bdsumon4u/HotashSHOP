@@ -7,10 +7,10 @@
         serverSide: true,
         ajax: apiEnd,
         columns: [
-           // { data: 'image' },
+           { data: 'image' },
            { data: 'name', name: 'name' },
-           { data: 'price', name: 'price' },
-           { data: 'stock_count', name: 'stock_count' },
+           { data: 'pricing', name: 'price' },
+           { data: 'stock', name: 'stock_count' },
            { data: 'actions' },
         ],
         order: [

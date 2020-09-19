@@ -25,11 +25,7 @@ Route::view('/cart', 'cart')->name('cart');
 Route::match(['get', 'post'], '/checkout', 'CheckoutController')->name('checkout');
 Route::get('track-order', 'OrderTrackController')->name('track-order');
 
-Route::prefix('dashboard')->group(function () {
-    Route::view('index', 'dashboard.index')->name('index');
-});
-
-Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'as' => 'admin.'], function () {
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'as' => 'admin.', 'middleware' => ['auth:admin']], function () {
     Route::resources([
         'slides'        => 'SlideController',
         'categories'    => 'CategoryController',

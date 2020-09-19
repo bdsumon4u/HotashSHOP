@@ -13,6 +13,7 @@
     @bukStyles(true)
   </head>
   <body class="light-only" main-theme-layout="ltr">
+    @php $admin = auth('admin')->user() @endphp
     <!-- Loader starts-->
     <div class="loader-wrapper">
       <div class="loader-index"><span></span></div>
