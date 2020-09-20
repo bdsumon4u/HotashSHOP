@@ -22,15 +22,24 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function() {
     ]);
     #...
     #...
-
-    Route::group(['prefix' => 'admin'], function() {
+    
+    Route::redirect('/admin', '/admin/dashboard', 301); # Permanent Redirect
+    Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin']], function() {
         # Admin Level Namespace & 'admin' Prefix
         Route::get('/dashboard', 'HomeController@index')->name('home');
-        Route::get('example', function() {
-            dump('bdsumon4u');
-        })->name('example');
-        #...
-        #...
+        Route::any('settings', 'SettingController')->name('settings');
+        Route::resources([
+            'slides'        => 'SlideController',
+            'categories'    => 'CategoryController',
+            'brands'        => 'BrandController',
+            'products'      => 'ProductController',
+            'images'        => 'ImageController',
+            'orders'        => 'OrderController',
+            'home-sections' => 'HomeSectionController',
+            'pages'         => 'PageController',
+            'menus'         => 'MenuController',
+            'menu-items'    => 'MenuItemController',
+        ]);
     });
 });
 

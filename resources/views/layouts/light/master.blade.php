@@ -5,9 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <link rel="icon" href="{{asset('assets/images/favicon.png')}}" type="image/x-icon">
-    <link rel="shortcut icon" href="{{asset('assets/images/favicon.png')}}" type="image/x-icon">
-    <title>{{ config('app.name') }} - @yield('title')</title>
+    <link rel="icon" href="{{asset($logo->favicon ?? '')}}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{asset($logo->favicon ?? '')}}" type="image/x-icon">
+    <title>{{ $company->name ?? '' }} - @yield('title')</title>
     @include('layouts.light.css')
     @stack('styles')
     @bukStyles(true)

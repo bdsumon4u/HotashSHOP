@@ -3,6 +3,6 @@
     id="{{ $id }}"
     rows="{{ $rows }}"
     {{ $attributes->merge([
-        'class' => 'form-control '.($errors->has($name) ? 'is-invalid' : ''),
+        'class' => 'form-control '.($errors->has($key) ? 'is-invalid' : ''),
     ]) }}
->{{ old($name, $slot) }}</textarea>
+>{{ old($key, $slot) }}</textarea>

@@ -25,21 +25,6 @@ Route::view('/cart', 'cart')->name('cart');
 Route::match(['get', 'post'], '/checkout', 'CheckoutController')->name('checkout');
 Route::get('track-order', 'OrderTrackController')->name('track-order');
 
-Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'as' => 'admin.', 'middleware' => ['auth:admin']], function () {
-    Route::resources([
-        'slides'        => 'SlideController',
-        'categories'    => 'CategoryController',
-        'brands'        => 'BrandController',
-        'products'      => 'ProductController',
-        'images'        => 'ImageController',
-        'orders'        => 'OrderController',
-        'home-sections' => 'HomeSectionController',
-        'pages'         => 'PageController',
-        'menus'         => 'MenuController',
-        'menu-items'    => 'MenuItemController',
-    ]);
-});
-
 pageRoutes();
 
 Route::get('/clear-cache', function() {

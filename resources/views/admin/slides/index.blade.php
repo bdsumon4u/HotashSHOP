@@ -24,7 +24,7 @@
                         <div class="dz-message needsclick">
                             <i class="icon-cloud-up"></i>
                             <h6>Drop files here or click to upload.</h6>
-                            <span class="note needsclick">(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</span>
+                            <span class="note needsclick">(Recommended <strong>840x395</strong> dimension.)</span>
                         </div>
                     </x-form>
                 </div>

@@ -35,4 +35,19 @@ return [
         'Outside Dhaka' => 100,
     ],
 
+    'logo' => [
+        'desktop' => [
+            'width' => 260,
+            'height' => 54
+        ],
+        'mobile' => [
+            'width' => 192,
+            'height' => 40
+        ],
+        'favicon' => [
+            'width' => 56,
+            'height' => 56
+        ],
+    ],
+
 ];

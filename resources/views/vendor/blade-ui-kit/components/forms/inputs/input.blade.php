@@ -4,6 +4,6 @@
     id="{{ $id }}"
     @if($value)value="{{ $value }}"@endif
     {{ $attributes->merge([
-        'class' => 'form-control '.($errors->has($name) ? 'is-invalid' : ''),
+        'class' => 'form-control '.($errors->has($key) ? 'is-invalid' : ''),
     ]) }}
 />

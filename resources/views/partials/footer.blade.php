@@ -5,18 +5,12 @@
                 <div class="row justify-content-between">
                     <div class="col-12 col-md-6 col-lg-4">
                         <div class="site-footer__widget footer-contacts">
-                            <h5 class="footer-contacts__title">Contact Us</h5>
-                            <div class="footer-contacts__text">Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit. Integer in feugiat lorem. Pellentque ac placerat tellus.</div>
+                            <h5 class="footer-contacts__title">{{ $company->name ?? '' }}</h5>
+                            <div class="footer-contacts__text">{{ $company->tagline ?? '' }}</div>
                             <ul class="footer-contacts__contacts">
-                                <li><i class="footer-contacts__icon fas fa-globe-americas"></i> 715 Fake Street,
-                                    New York 10021 USA</li>
-                                <li><i class="footer-contacts__icon far fa-envelope"></i> stroyka@example.com
-                                </li>
-                                <li><i class="footer-contacts__icon fas fa-mobile-alt"></i> (800) 060-0730,
-                                    (800) 060-0730</li>
-                                <li><i class="footer-contacts__icon far fa-clock"></i> Mon-Sat 10:00pm - 7:00pm
-                                </li>
+                                <li><i class="footer-contacts__icon fas fa-globe-americas"></i> {{ $company->address ?? '' }}</li>
+                                <li><i class="footer-contacts__icon far fa-envelope"></i> {{ $company->email ?? '' }}</li>
+                                <li><i class="footer-contacts__icon fas fa-mobile-alt"></i> {{ $company->phone ?? '' }}</li>
                             </ul>
                         </div>
                     </div>
@@ -37,20 +31,21 @@
                     <div class="col-12 col-md-6 col-lg-4">
                         <div class="site-footer__widget footer-newsletter">
                             <h5 class="footer-newsletter__title">Socials</h5>
-                            <div class="footer-newsletter__text footer-newsletter__text--social">Follow us on
-                                social networks</div>
+                            <div class="footer-newsletter__text footer-newsletter__text--social">Follow us on social networks</div>
                             <ul class="footer-newsletter__social-links">
-                                <li
-                                    class="footer-newsletter__social-link footer-newsletter__social-link--facebook">
-                                    <a href="https://themeforest.net/user/kos9" target="_blank"><i
-                                            class="fab fa-facebook-f"></i></a></li>
-                                <li
-                                    class="footer-newsletter__social-link footer-newsletter__social-link--twitter">
-                                    <a href="https://themeforest.net/user/kos9" target="_blank"><i
-                                            class="fab fa-twitter"></i></a></li>
-                                <li
-                                    class="footer-newsletter__social-link footer-newsletter__social-link--youtube">
-                                    <a href="https://themeforest.net/user/kos9" target="_blank"><i
+                                <li class="footer-newsletter__social-link footer-newsletter__social-link--facebook">
+                                    <a href="https://themeforest.net/user/kos9" target="_blank">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
+                                </li>
+                                <li class="footer-newsletter__social-link footer-newsletter__social-link--twitter">
+                                    <a href="https://themeforest.net/user/kos9" target="_blank">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                                </li>
+                                <li class="footer-newsletter__social-link footer-newsletter__social-link--youtube">
+                                    <a href="https://themeforest.net/user/kos9" target="_blank">
+                                        <i
                                             class="fab fa-youtube"></i></a></li>
                                 <li
                                     class="footer-newsletter__social-link footer-newsletter__social-link--instagram">
@@ -66,7 +61,7 @@
             </div>
             <div class="site-footer__bottom">
                 <div class="site-footer__copyright">
-                    Copyright 2020 - {{ date('Y') }} &copy; {{ config('app.name') }}
+                    Copyright 2020 - {{ date('Y') }} &copy; {{ $company->name ?? '' }}
                 </div>
                 <div class="site-footer__payments">
                     Developed By <a href="https://cyber32.com" class="text-danger">Cyber32</a>

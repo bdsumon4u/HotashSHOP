@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Category;
 use App\Menu;
+use App\Setting;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
@@ -38,7 +39,7 @@ class ComposerServiceProvider extends ServiceProvider
 
         $menus = [
             'topbar-menu' => 'topbar',
-            'header-menu' => 'header-menu.*',
+            'header-menu' => 'header.menu.*',
             'quick-links' => 'footer',
         ];
 
@@ -51,6 +52,13 @@ class ComposerServiceProvider extends ServiceProvider
 
         View::composer(['partials.departments', 'partials.mobile-menu-categories'], function ($view) {
             $view->with('categories', Category::nested(10));
+        });
+
+        View::composer(['partials.header.*', 'partials.footer', 'layouts.light.master'], function ($view) {
+            $settings = Setting::all()->flatMap(function ($setting) {
+                return [$setting->name => $setting->value];
+            })->toArray();
+            $view->with($settings);
         });
     }
 }

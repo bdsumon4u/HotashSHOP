@@ -1,15 +1,9 @@
 @extends('layouts.light.master')
 @section('title', 'Ecommerce')
 
-@section('css')
+@push('css')
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/animate.css')}}">
-<link rel="stylesheet" type="text/css" href="{{asset('assets/css/chartist.css')}}">
-<link rel="stylesheet" type="text/css" href="{{asset('assets/css/owlcarousel.css')}}">
-<link rel="stylesheet" type="text/css" href="{{asset('assets/css/prism.css')}}">
-@endsection
-
-@section('style')
-@endsection
+@endpush
 
 @section('breadcrumb-title')
 <h3>Ecommerce</h3>
@@ -190,9 +184,8 @@
 </div>
 @endsection
 
-@section('script')
+@push('js')
 <script src="{{asset('assets/js/counter/jquery.counterup.min.js')}}"></script>
 <script src="{{asset('assets/js/counter/counter-custom.js')}}"></script>
-<script src="{{asset('assets/js/custom-card/custom-card.js')}}"></script>
-@endsection
+@endpush
 

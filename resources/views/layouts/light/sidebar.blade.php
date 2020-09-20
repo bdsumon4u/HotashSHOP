@@ -1,17 +1,27 @@
 <header class="main-nav">
   <div class="logo-wrapper">
-    <a href="{{route('/')}}"><img class="img-fluid for-light" src="{{asset('assets/images/logo/logo.png')}}" alt=""><img class="img-fluid for-dark" src="{{asset('assets/images/logo/logo_dark.png')}}" alt=""></a>
+    <a href="{{route('/')}}">
+      <span class="h4 m-0">{{ $company->name }}</span>
+      <!-- <img class="img-fluid for-light" src="{{asset($logo->desktop ?? '')}}" alt=""> -->
+      <!-- <img class="img-fluid for-dark" src="{{asset($logo->desktop ?? '')}}" alt=""> -->
+    </a>
     <div class="back-btn"><i class="fa fa-angle-left"></i></div>
     <div class="toggle-sidebar"><i class="status_toggle middle" data-feather="grid" id="sidebar-toggle"> </i></div>
   </div>
-  <div class="logo-icon-wrapper"><a href="{{route('/')}}"><img class="img-fluid" src="{{asset('assets/images/logo/logo-icon.png')}}" alt=""></a></div>
+  <div class="logo-icon-wrapper">
+    <a href="{{route('/')}}">
+      <img class="img-fluid" src="{{asset($logo->favicon ?? '')}}" width="36" height="36" alt="">
+    </a>
+  </div>
   <nav>
     <div class="main-navbar">
       <div class="left-arrow" id="left-arrow"><i data-feather="arrow-left"></i></div>
       <div id="mainnav">
         <ul class="nav-menu custom-scrollbar">
           <li class="back-btn">
-            <a href="{{route('/')}}"><img class="img-fluid" src="{{asset('assets/images/logo/logo-icon.png')}}" alt=""></a>
+            <a href="{{route('/')}}">
+              <img class="img-fluid" src="{{asset($logo->favicon ?? '')}}" height="36" width="36" alt="">
+            </a>
             <div class="mobile-back text-right"><span>Back</span><i class="fa fa-angle-right pl-2" aria-hidden="true"></i></div>
           </li>
           <li class="sidebar-title">

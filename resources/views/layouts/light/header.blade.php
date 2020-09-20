@@ -13,7 +13,11 @@
       </div>
     </form>
     <div class="main-header-left">
-      <div class="logo-wrapper"><a href="{{route('/')}}"><img class="img-fluid" src="{{asset('assets/images/logo/logo.png')}}" alt=""></a></div>
+      <div class="logo-wrapper">
+        <a href="{{route('/')}}">
+          <img class="img-fluid" src="{{asset($logo->desktop ?? '')}}" alt="Logo">
+        </a>
+      </div>
       <div class="toggle-sidebar"><i class="status_toggle middle" data-feather="grid" id="sidebar-toggle"> </i></div>
     </div>
     <div class="left-menu-header col horizontal-wrapper pl-0">
@@ -38,7 +42,9 @@
             <li><i data-feather="user"></i><span>Account </span></li>
             <li><i data-feather="mail"></i><span>Inbox</span></li>
             <li><i data-feather="file-text"></i><span>Taskboard</span></li>
-            <li><i data-feather="settings"></i><span>Settings</span></li>
+            <li>
+              <a href="{{ route('admin.settings') }}"><i data-feather="settings"></i><span>Settings</span></a>
+            </li>
             <li>
               <a class="" href="{{ route('admin.logout') }}"
                 onclick="event.preventDefault();
