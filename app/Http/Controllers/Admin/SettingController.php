@@ -29,7 +29,7 @@ class SettingController extends Controller
         }
 
         $data = $request->validated();
-        
+
         if (isset($data['logo'])) {
             foreach ($data['logo'] as $type => $file) {
                 $data['logo'][$type] = $this->upload($file, $type);
@@ -38,18 +38,6 @@ class SettingController extends Controller
 
         $settingRepo->setMany($data);
         return back()->withSuccess('Settings Has Been Updated.');
-    }
-    public function all($keys = null)
-    {
-        $data = parent::all();
-        if ($this->isMethod('GET')) {
-            return $data;
-        }
-
-        foreach ($data['logo'] as $type => $file) {
-            $data['logo'][$type] = $this->upload($file, $type);
-        }
-        return $data;
     }
 
     protected function upload($file, $type)
