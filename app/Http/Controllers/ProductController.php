@@ -36,19 +36,10 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        $productsFromSameCategories = Product::whereHas('categories.products', function ($query) use ($product) {
-            $query->where('products.id', $product->id);
-        })->where('id', '!=', $product->id)->get();
-
-        $productsFromSameCategoriesAndBrand = Product::whereHas('categories.products', function ($query) use ($product) {
-            $query->where('products.id', $product->id)->where('products.brand_id', $product->brand->id);
-        })->where('id', '!=', $product->id)->get();
-
-        return $this->view(compact('product'), '', [
-            'relatedProducts'
-                => $productsFromSameCategoriesAndBrand->count() >= 5
-                ? $productsFromSameCategoriesAndBrand->take(10)
-                : $productsFromSameCategories->take(10),
-        ]);
+        $categories = $product->categories->pluck('id')->toArray();
+        $products = Product::whereHas('categories', function ($query) use ($categories) {
+            $query->whereIn('categories.id', $categories);
+        })->where('id', '!=', $product->id)->limit(20)->get();
+        return $this->view(compact('products'));
     }
 }

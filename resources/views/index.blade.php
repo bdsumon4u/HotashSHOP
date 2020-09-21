@@ -1,13 +1,5 @@
 @extends('layouts.yellow.master')
 
-@push('styles')
-<style>
-    .owl-stage {
-        padding-bottom: 60px;
-    }
-</style>
-@endpush
-
 @section('content')
 @include('partials.slides')
 
@@ -59,7 +51,10 @@
 </div><!-- .block-features / end -->
 @foreach($sections as $section)
 <!-- .block-products-carousel -->
-@includeWhen($section->type == 'carousel-grid', 'partials.products-carousel-grid')
+@includeWhen($section->type == 'carousel-grid', 'partials.products-carousel.grid', [
+    'title' => $section->title,
+    'products' => $section->products(),
+])
 <!-- .block-products-carousel / end -->
 @endforeach
 

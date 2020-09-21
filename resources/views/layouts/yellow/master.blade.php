@@ -53,6 +53,9 @@
         .owl-carousel {
             z-index: 0;
         }
+        .owl-stage {
+            padding-bottom: 60px;
+        }
         .product-card__buttons .btn {
             height: auto !important;
             font-size: 70% !important;

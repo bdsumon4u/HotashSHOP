@@ -75,6 +75,7 @@
                             <li class="nav-item rounded-0"><a class="nav-link active" data-toggle="tab" href="#item-general">General</a></li>
                             <li class="nav-item rounded-0"><a class="nav-link" data-toggle="tab" href="#item-1">Company</a></li>
                             <li class="nav-item rounded-0"><a class="nav-link" data-toggle="tab" href="#item-2">Social</a></li>
+                            <li class="nav-item rounded-0"><a class="nav-link" data-toggle="tab" href="#item-others">Others</a></li>
                         </ul>
                     </div>
                     <div class="col-sm-6 col-md-8 col-xl-9">
@@ -87,6 +88,7 @@
                                         @include('admin.settings.general')
                                         @include('admin.settings.company')
                                         @include('admin.settings.social')
+                                        @include('admin.settings.others')
                                     </div>
                                 </form>
                             </div>

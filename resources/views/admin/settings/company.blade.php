@@ -4,7 +4,7 @@
             <h4><small class="border-bottom mb-1">Company</small></h4>
         </div>
     </div>
-@foreach($errors->all() as $error) @dump($error) @endforeach
+
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">

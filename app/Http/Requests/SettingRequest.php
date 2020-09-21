@@ -35,6 +35,9 @@ class SettingRequest extends FormRequest
             'company.address' => 'required',
 
             'social' => 'required|array',
+
+            'related_products.rows' => 'required|integer',
+            'related_products.cols' => 'required|integer',
         ];
     }
 }

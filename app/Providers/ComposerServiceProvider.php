@@ -6,6 +6,7 @@ use App\Category;
 use App\Menu;
 use App\Setting;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -54,11 +55,10 @@ class ComposerServiceProvider extends ServiceProvider
             $view->with('categories', Category::nested(10));
         });
 
-        View::composer(['partials.header.*', 'partials.footer', 'layouts.light.master'], function ($view) {
-            $settings = Setting::all()->flatMap(function ($setting) {
-                return [$setting->name => $setting->value];
-            })->toArray();
-            $view->with($settings);
+        View::composer(['partials.header.*', 'partials.footer', 'products.show', 'layouts.light.master'], function ($view) {
+            $view->with(Cache::get('settings', function () {
+                return Setting::array();
+            }));
         });
     }
 }

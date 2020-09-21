@@ -119,60 +119,12 @@
             </div>
         </div>
     </div>
-</div><!-- .block-products-carousel -->
-
-
-<div class="block block-products-carousel" data-layout="grid-5">
-    <div class="container">
-        <div class="block-header">
-            <h3 class="block-header__title">Related Products</h3>
-            <div class="block-header__divider"></div>
-            <div class="block-header__arrows-list">
-                <button class="block-header__arrow block-header__arrow--left" type="button">
-                    <svg width="7px" height="11px">
-                        <use xlink:href="{{ asset('strokya/images/sprite.svg#arrow-rounded-left-7x11') }}"></use>
-                    </svg>
-                </button>
-                <button class="block-header__arrow block-header__arrow--right" type="button">
-                    <svg width="7px" height="11px">
-                        <use xlink:href="{{ asset('strokya/images/sprite.svg#arrow-rounded-right-7x11') }}"></use>
-                    </svg>
-                </button>
-            </div>
-        </div>
-        <div class="block-products-carousel__slider">
-            <div class="block-products-carousel__preloader"></div>
-            <div class="owl-carousel">
-                @foreach($relatedProducts as $product)
-                <div class="block-products-carousel__column">
-                    <div class="block-products-carousel__cell">
-                        <div class="product-card">
-                            <div class="product-card__image">
-                                <a href="{{ route('products.show', $product) }}">
-                                    <img src="{{ asset($product->base_image->src) }}" alt="Base Image">
-                                </a>
-                            </div>
-                            <div class="product-card__info">
-                                <div class="product-card__name">
-                                    <a href="{{ route('products.show', $product) }}">{{ $product->name }}</a>
-                                </div>
-                            </div>
-                            <div class="product-card__actions">
-                                <div class="product-card__availability">Availability:
-                                    <span class="text-success">In Stock</span>
-                                </div>
-                                <div class="product-card__prices">$749.00</div>
-                                <div class="product-card__buttons">
-                                    <button class="btn btn-primary product-card__addtocart" type="button">Add To Cart</button>
-                                    <button class="btn btn-secondary product-card__addtocart product-card__addtocart--list" type="button">Add To Cart</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                @endforeach
-            </div>
-        </div>
-    </div>
-</div><!-- .block-products-carousel / end -->
+</div>
+<!-- .block-products-carousel -->
+@include('partials.products-carousel.grid', [
+    'title' => 'Related Products',
+    'cols' => $related_products->cols,
+    'rows' => $related_products->rows,
+])
+<!-- .block-products-carousel / end -->
 @endsection
