@@ -55,7 +55,7 @@
                                             <table>
                                                 <tr>
                                                     <th>Subtotal</th>
-                                                    <td class="cart-subtotal">$ <span>0</span></td>
+                                                    <td class="cart-subtotal">{!!  theMoney(0)  !!}</td>
                                                 </tr>
                                             </table>
                                         </div>

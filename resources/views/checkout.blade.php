@@ -80,17 +80,17 @@
                                 <tbody class="checkout__totals-subtotals">
                                     <tr>
                                         <th>Subtotal</th>
-                                        <td class="checkout-subtotal">$ <span>0</span></td>
+                                        <td class="checkout-subtotal">{!!  theMoney(0)  !!}</td>
                                     </tr>
                                     <tr>
                                         <th>Shipping</th>
-                                        <td class="shipping">$ <span>0</span></td>
+                                        <td class="shipping">{!!  theMoney(0)  !!}</td>
                                     </tr>
                                 </tbody>
                                 <tfoot class="checkout__totals-footer">
                                     <tr>
                                         <th>Total</th>
-                                        <td>$ <span>0</span></td>
+                                        <td>{!!  theMoney(0)  !!}</td>
                                     </tr>
                                 </tfoot>
                             </table>

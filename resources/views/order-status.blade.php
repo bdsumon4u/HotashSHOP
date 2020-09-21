@@ -135,7 +135,7 @@
             <div style="text-align: left;">
               <strong>Note:</strong><br>{{ $order->note ?? 'N/A' }}
             </div>
-            <table class="order-detail" border="0" cellpadding="0" cellspacing="0" align="left" style="width: 100%;    margin-bottom: 50px;">
+            <table class="order-detail" border="0" cellpadding="0" cellspacing="0" align="left" style="width: 100%; margin-bottom: 25px;">
               <tbody>
                 <tr align="left">
                   <th>PRODUCT</th>
@@ -151,13 +151,13 @@
                     <h5 style="margin-top: 15px;">{{ $product->name }}</h5>
                   </td>
                   <td valign="top" style="padding-left: 15px;">
-                    <h5 style="font-size: 14px; color:#444;margin-top:15px"><b>$ {{ $product->price }}</b></h5>
+                    <h5 style="font-size: 14px; color:#444;margin-top:15px"><b>{{ theMoney($product->price) }}</b></h5>
                   </td>
                   <td valign="top" style="padding-left: 15px;">
                     <h5 style="font-size: 14px; color:#444;margin-top: 10px;"><span>{{ $product->quantity }}</span></h5>
                   </td>
                   <td valign="top" style="padding-left: 15px;">
-                    <h5 style="font-size: 14px; color:#444;margin-top:15px"><b>$ {{ $product->quantity * $product->price }}</b></h5>
+                    <h5 style="font-size: 14px; color:#444;margin-top:15px"><b>{{ theMoney($product->quantity * $product->price) }}</b></h5>
                   </td>
                 </tr>
                 @endforeach
@@ -165,19 +165,24 @@
                   <td class="m-t-5" colspan="3" align="left">
                     <p style="font-size: 14px;">SUBTOTAL : </p>
                   </td>
-                  <td class="m-t-5" colspan="3" align="right"><b>$ {{ $data->subtotal }}</b></td>
+                  <td class="m-t-5" colspan="3" align="right"><b>{{ theMoney($data->subtotal) }}</b></td>
                 </tr>
                 <tr class="pad-left-right-space">
                   <td colspan="3" align="left">
                     <p style="font-size: 14px;">SHIPPING [{{ $data->shipping_area }}] :</p>
                   </td>
-                  <td colspan="3" align="right"><b>$ {{ $data->shipping_cost }}</b></td>
+                  <td colspan="3" align="right"><b>{{ theMoney($data->shipping_cost) }}</b></td>
                 </tr>
                 <tr class="pad-left-right-space">
                   <td class="m-b-5" colspan="3" align="left">
                     <p style="font-size: 14px;">TOTAL :</p>
                   </td>
-                  <td class="m-b-5" colspan="3" align="right"><b>$ {{ $data->subtotal + $data->shipping_cost }}</b></td>
+                  <td class="m-b-5" colspan="3" align="right"><b>{{ theMoney($data->subtotal + $data->shipping_cost) }}</b></td>
+                </tr>
+                <tr class="pad-left-right-space" style="border-top: 1px solid #ddd !important;">
+                  <td colspan="6">
+                    <a href="{{ route('/') }}" style="display:block; margin-top: 10px; margin-bottom: 10px; color: #ff0000;">Back To Home</a>
+                  </td>
                 </tr>
               </tbody>
             </table>

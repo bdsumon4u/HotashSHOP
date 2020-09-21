@@ -126,11 +126,11 @@
                               </td>
                               <td class="text-center">
                                  @if($product->price == $product->selling_price)
-                                 <p>$ <span>{{ $product->price }}</span></p>
+                                 <p>{!!  theMoney($product->price)  !!}</p>
                                  @else
-                                 <del style="color: #ff0000;">$ <span>{{ $product->price }}</span></del>
+                                 <del style="color: #ff0000;">{!!  theMoney($product->price)  !!}</del>
                                  <br>
-                                 <ins style="text-decoration: none;">$ <span>{{ $product->selling_price }}</span></ins>
+                                 <ins style="text-decoration: none;">{!!  theMoney($product->selling_price)  !!}</ins>
                                  @endif
                               </td>
                            </tr>
@@ -167,9 +167,9 @@
                                  <span>{{ $product->sku }}</span>
                               </td>
                               <td class="text-center">
-                                 <del style="color: #ff0000;">$ <span>{{ $product->price }}</span></del>
+                                 <del style="color: #ff0000;">{!!  theMoney($product->price)  !!}</del>
                                  <br>
-                                 <ins style="text-decoration: none;">$ <span>{{ $product->selling_price }}</span></ins>
+                                 <ins style="text-decoration: none;">{!!  theMoney($product->selling_price)  !!}</ins>
                               </td>
                            </tr>
                            @endforeach

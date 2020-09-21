@@ -2,6 +2,7 @@
 
 use App\Page;
 use App\Product;
+use App\Setting;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 
@@ -23,9 +24,15 @@ if (! function_exists('pageRoutes')) {
     }
 }
 
+if (! function_exists('setting')) {
+    function setting($name) {
+        return optional(optional(Setting::whereName($name)->first())->value);
+    }
+}
+
 if (! function_exists('theMoney')) {
     function theMoney($amount, $decimals = null, $currency = "TK") {
-        return '<span class="currency">'.$currency.'</span>&nbsp;'. number_format($amount, $decimals);
+        return $currency."&nbsp;<span>".number_format($amount, $decimals)."</span>";
     }
 }
 

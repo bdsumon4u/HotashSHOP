@@ -24,10 +24,10 @@ class ProductController extends Controller
             })
             ->addColumn('pricing', function (Product $product) {
                 return $product->price == $product->selling_price
-                    ? '<p>$ <span>'.$product->price.'</span></p>'
-                    : '<del style="color: #ff0000;">$ <span>'.$product->price.'</span></del>
+                    ? '<p>'.theMoney($product->price).'</p>'
+                    : '<del style="color: #ff0000;">'.theMoney($product->price).'</del>
                         <br>
-                    <ins style="text-decoration: none;">$ <span>'.$product->selling_price.'</span></ins>';
+                    <ins style="text-decoration: none;">'.theMoney($product->price).'</ins>';
             })
             ->addColumn('stock', function (Product $product) {
                 return $product->should_track

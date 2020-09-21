@@ -76,10 +76,10 @@
                                         </div>
                                         <div class="product-card__prices {{$product->selling_price == $product->price ? '' : 'has-special'}}">
                                             @if($product->selling_price == $product->price)
-                                            $ <span>{{ $product->price }}</span>
+                                            {!!  theMoney($product->price)  !!}
                                             @else
-                                            <span class="product-card__new-price">$ <span>{{ $product->selling_price }}</span></span>
-                                            <span class="product-card__old-price">$ <span>{{ $product->price }}</span></span>
+                                            <span class="product-card__new-price">{!!  theMoney($product->selling_price)  !!}</span>
+                                            <span class="product-card__old-price">{!!  theMoney($product->price)  !!}</span>
                                             @endif
                                         </div>
                                         <div class="product-card__buttons">

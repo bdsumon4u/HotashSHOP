@@ -64,11 +64,11 @@
                         <h4>
                             Price:&nbsp;
                             @if($product->selling_price == $product->price)
-                            $ <span>{{ $product->price }}</span>
+                            {!!  theMoney($product->price)  !!}
                             @else
-                            <span class="product-card__new-price">$ <span>{{ $product->selling_price }}</span></span>
+                            <span class="product-card__new-price">{!!  theMoney($product->selling_price)  !!}</span>
                             &nbsp;
-                            <span class="product-card__old-price">$ <span>{{ $product->price }}</span></span>
+                            <span class="product-card__old-price">{!!  theMoney($product->price)  !!}</span>
                             @endif
                         </h4>
                     </div>

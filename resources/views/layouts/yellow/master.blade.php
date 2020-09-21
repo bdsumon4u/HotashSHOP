@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="format-detection" content="telephone=no">
-    <title>Stroyka</title>
+    <title>{{ setting('company')->name }} - @yield('title')</title>
     <link rel="icon" type="image/png" href="{{ asset('strokya/images/favicon.png') }}"><!-- fonts -->
     <!-- css -->
     @include('layouts.yellow.css')
@@ -55,6 +55,9 @@
         }
         .owl-stage {
             padding-bottom: 60px;
+        }
+        .product-gallery__featured .owl-stage {
+            padding-bottom: 0;
         }
         .product-card__buttons .btn {
             height: auto !important;
@@ -167,7 +170,7 @@
                                 <a href="${v.detail}">${v.name}</a>
                             </div>
                             <div class="dropcart__product-meta">
-                                <span class="dropcart__product-quantity">${v.quantity}</span> x <span class="dropcart__product-price">$ ${v.price}</span>
+                                <span class="dropcart__product-quantity">${v.quantity}</span> x <span class="dropcart__product-price">TK ${v.price}</span>
                             </div>
                         </div>
                         <button type="button" class="dropcart__product-remove btn btn-light btn-sm btn-svg-icon" remove-cart-item data-id="${v.id}">
@@ -197,7 +200,7 @@
                         <td class="cart-table__column cart-table__column--product">
                             <a href="${v.detail}" class="cart-table__product-name">${v.name}</a>
                         </td>
-                        <td class="cart-table__column cart-table__column--price" data-title="Price">$ ${v.price}</td>
+                        <td class="cart-table__column cart-table__column--price" data-title="Price">TK ${v.price}</td>
                         <td class="cart-table__column cart-table__column--quantity" data-title="Quantity">
                             <div class="input-number">
                                 <input class="form-control input-number__input" type="number" min="1" value="${v.quantity}" `+(v.max != -1 ? 'max="'+v.max+'"' : '')+`>
@@ -205,7 +208,7 @@
                                 <div class="input-number__sub"></div>
                             </div>
                         </td>
-                        <td class="cart-table__column cart-table__column--total" data-title="Total">$ ${Number(v.price) * Number(v.quantity)}</td>
+                        <td class="cart-table__column cart-table__column--total" data-title="Total">TK ${Number(v.price) * Number(v.quantity)}</td>
                         <td class="cart-table__column cart-table__column--remove">
                             <button type="button" class="btn btn-light btn-sm btn-svg-icon" remove-cart-item data-id="${v.id}">
                                 <svg width="12px" height="12px">

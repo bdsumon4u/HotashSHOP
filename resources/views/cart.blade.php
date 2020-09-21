@@ -43,7 +43,7 @@
                             <thead class="cart__totals-header">
                                 <tr>
                                     <th>Subtotal</th>
-                                    <td class="cart-subtotal">$ <span>0</span></td>
+                                    <td class="cart-subtotal">{!!  theMoney(0)  !!}</td>
                                 </tr>
                             </thead>
                             <tbody class="cart__totals-body">
@@ -54,7 +54,7 @@
                                             <label class="custom-control-label" for="inside-dhaka">Inside Dhaka</label>
                                         </div>
                                     </th>
-                                    <td>$ <span>50</span></td>
+                                    <td>{!!  theMoney(50)  !!}</td>
                                 </tr>
                                 <tr>
                                     <th>
@@ -63,13 +63,13 @@
                                             <label class="custom-control-label" for="outside-dhaka">Outside Dhaka</label>
                                         </div>
                                     </th>
-                                    <td>$ <span>100</span></td>
+                                    <td>{!!  theMoney(100)  !!}</td>
                                 </tr>
                             </tbody>
                             <tfoot class="cart__totals-footer">
                                 <tr>
                                     <th>Total</th>
-                                    <td>$ <span>0</span></td>
+                                    <td>{!!  theMoney(0)  !!}</td>
                                 </tr>
                             </tfoot>
                         </table>

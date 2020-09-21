@@ -120,17 +120,17 @@
                                             <tbody class="checkout__totals-subtotals">
                                                 <tr>
                                                     <th>Subtotal</th>
-                                                    <td class="checkout-subtotal">$ <span>{{ $data->subtotal }}</span></td>
+                                                    <td class="checkout-subtotal">{!!  theMoney($data->subtotal)  !!}</td>
                                                 </tr>
                                                 <tr>
                                                     <th>Shipping</th>
-                                                    <td class="shipping">$ <span>{{ $data->shipping_cost }}</span></td>
+                                                    <td class="shipping">{!!  theMoney($data->shipping_cost)  !!}</td>
                                                 </tr>
                                             </tbody>
                                             <tfoot class="checkout__totals-footer">
                                                 <tr>
                                                     <th>Total</th>
-                                                    <td>$ <span>{{ $data->shipping_cost + $data->subtotal }}</span></td>
+                                                    <td>{!!  theMoney($data->shipping_cost + $data->subtotal)  !!}</td>
                                                 </tr>
                                             </tfoot>
                                         </table>
