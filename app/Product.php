@@ -48,16 +48,16 @@ class Product extends Model
                 $categories = range(1, 30);
                 $categories = array_map(function ($key) use ($categories) {
                     return $categories[$key];
-                }, array_rand($categories, mt_rand(4, 7)));
+                }, array_rand($categories, mt_rand(2, 4)));
 
-                $additionals = range(1, 30);
+                $additionals = range(47, 67);
                 $additionals = array_map(function ($key) use ($additionals) {
                     return $additionals[$key];
                 }, array_rand($additionals, mt_rand(4, 7)));
 
                 ProductCreated::dispatch($product, [
                     'categories' => $categories,
-                    'base_image' => mt_rand(1, 23),
+                    'base_image' => mt_rand(47, 67),
                     'additional_images' => $additionals,
                 ]);
             };

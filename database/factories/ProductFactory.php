@@ -12,7 +12,7 @@ $factory->define(Product::class, function (Faker $faker) {
         'name' => $faker->name,
         'slug' => $faker->unique()->slug,
         'description' => $faker->paragraph,
-        'brand_id' => mt_rand(1, 5),
+        'brand_id' => mt_rand(1, 20),
         'price' => $price,
         'selling_price' => $price - mt_rand(10, 40),
         'sku' => $faker->unique()->word,

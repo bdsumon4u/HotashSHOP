@@ -5,10 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Image;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Traits\ImageUploader;
 use Illuminate\Support\Facades\Storage;
 
 class ImageController extends Controller
 {
+    use ImageUploader;
+
     /**
      * Display a listing of the resource.
      *
@@ -17,16 +20,6 @@ class ImageController extends Controller
     public function index()
     {
         return $this->view();
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -41,52 +34,20 @@ class ImageController extends Controller
             'file' => 'required|image',
         ]);
 
-        $disk = Storage::disk('public');
-
         $file = $request->file('file');
 
         return Image::create([
             'disk' => 'public',
             'filename' => $file->getClientOriginalName(),
-            'path' => "storage/{$disk->putFileAs('images', $file, time().'-'.$file->getClientOriginalName())}",
+            'path' => $this->uploadImage($file, [
+                'width' => 700,
+                'height' => 700,
+                'dir' => 'images',
+            ]),
             'extension' => $file->guessClientExtension(),
             'mime' => $file->getClientMimeType(),
             'size' => $file->getSize(),
         ]);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Image  $image
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Image $image)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Image  $image
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Image $image)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Image  $image
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Image $image)
-    {
-        //
     }
 
     /**
@@ -101,7 +62,6 @@ class ImageController extends Controller
             return back()->with('danger', 'Image Is Used.');
         }
 
-        $image->delete();
-        return back()->with('success', 'Image Has Been Deleted.');
+        $this->delete();
     }
 }
