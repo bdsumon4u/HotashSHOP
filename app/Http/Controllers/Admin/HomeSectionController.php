@@ -6,6 +6,7 @@ use App\Category;
 use App\HomeSection;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\HomeSectionRequest;
 
 class HomeSectionController extends Controller
 {
@@ -36,18 +37,12 @@ class HomeSectionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\HomeSectionRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(HomeSectionRequest $request)
     {
-        $data = $request->validate([
-            'title' => 'required',
-            'type' => 'required',
-            'order' => 'required',
-            'categories' => 'required|array',
-        ]);
-        
+        $data = $request->validationData();
         $homeSection = HomeSection::create($data);
         $homeSection->categories()->sync($data['categories']);
 
@@ -82,19 +77,13 @@ class HomeSectionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\HomeSectionRequest  $request
      * @param  \App\HomeSection  $homeSection
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, HomeSection $homeSection)
+    public function update(HomeSectionRequest $request, HomeSection $homeSection)
     {
-        $data = $request->validate([
-            'title' => 'required',
-            'type' => 'required',
-            'order' => 'required',
-            'categories' => 'required|array',
-        ]);
-        
+        $data = $request->validated();
         $homeSection->update($data);
         $homeSection->categories()->sync($data['categories']);
 

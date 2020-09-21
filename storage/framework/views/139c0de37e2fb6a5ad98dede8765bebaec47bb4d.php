@@ -1,0 +1,1 @@
+<div <?php echo e($attributes->merge(['class' => "alert alert-$type"])); ?>><strong><?php echo e($message); ?></strong></div><?php /**PATH E:\XAMPP\htdocs\starter-kit\resources\views/components/alert-box.blade.php ENDPATH**/ ?>

@@ -7,8 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 class HomeSection extends Model
 {
     protected $fillable = [
-        'title', 'type', 'order',
+        'title', 'type', 'order', 'data',
     ];
+
+    public function setDataAttribute($data)
+    {
+        $this->attributes['data'] = json_encode($data);
+    }
+
+    public function getDataAttribute($data)
+    {
+        return json_decode($data);
+    }
 
     public function categories()
     {

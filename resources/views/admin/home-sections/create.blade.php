@@ -57,11 +57,27 @@
                                 <x-error field="order" />
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <x-label for="categories" /><span class="text-danger">*</span>
-                        <x-category-dropdown :categories="$categories" name="categories[]" placeholder="Select Category" id="categories" multiple="true" :selected="old('categories')" />
-                        <x-error field="categories" class="d-block" />
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <x-label for="categories" /><span class="text-danger">*</span>
+                                <x-category-dropdown :categories="$categories" name="categories[]" placeholder="Select Category" id="categories" multiple="true" :selected="old('categories')" />
+                                <x-error field="categories" class="d-block" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <x-label for="rows" />
+                                <x-input type="number" name="data[rows]" />
+                                <x-error field="data.rows" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <x-label for="cols" /><span>(4 or 5)</span>
+                                <x-input type="number" name="data[cols]" />
+                                <x-error field="data.cols" />
+                            </div>
+                        </div>
                     </div>
                     <button type="submit" class="btn btn-success">
                         Submit
