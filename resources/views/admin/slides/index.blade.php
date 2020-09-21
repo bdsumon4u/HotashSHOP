@@ -48,7 +48,7 @@
                                 <tr>
                                     <td width="10">{{ $slide->id }}</td>
                                     <td width="200">
-                                        <img src="{{ $slide->src }}" width="200" height="100" alt="">
+                                        <img src="{{ asset($slide->mobile_src) }}" width="200" height="100" alt="">
                                     </td>
                                     <td>{{ $slide->title }}</td>
                                     <td width="10">
@@ -89,7 +89,7 @@
         init: function () {
             this.on('complete', function(){
                 if(this.getQueuedFiles().length == 0 && this.getUploadingFiles().length == 0) {
-                    $('.datatable').DataTable().ajax.reload();
+                    window.reload();
                 }
             })
         }

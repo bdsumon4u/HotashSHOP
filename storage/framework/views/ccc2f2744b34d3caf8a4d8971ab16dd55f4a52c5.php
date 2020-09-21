@@ -7,9 +7,9 @@
                         <?php $__currentLoopData = $slides; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $slide): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <a class="block-slideshow__slide" href="#">
                             <div class="block-slideshow__slide-image block-slideshow__slide-image--desktop"
-                                style="background-image: url(<?php echo e($slide->src); ?>); background-position: center;"></div>
+                                style="background-image: url(<?php echo e(asset($slide->desktop_src)); ?>); background-position: center;"></div>
                             <div class="block-slideshow__slide-image block-slideshow__slide-image--mobile"
-                                style="background-image: url(<?php echo e($slide->src); ?>); background-position: center;"></div>
+                                style="background-image: url(<?php echo e(asset($slide->mobile_src)); ?>); background-position: center;"></div>
                             <div class="block-slideshow__slide-content">
                                 <div class="block-slideshow__slide-title"><?php echo $slide->title; ?></div>
                                 <div class="block-slideshow__slide-text"><?php echo $slide->text; ?></div>

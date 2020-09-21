@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Slide;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Storage;
+use App\Traits\ImageUploader;
 
 class SlideController extends Controller
 {
+    use ImageUploader;
+
     /**
      * Display a listing of the resource.
      *
@@ -43,13 +45,18 @@ class SlideController extends Controller
             'file' => 'required|image',
         ]);
 
-        $disk = Storage::disk('public');
-
         $file = $request->file('file');
-        $file = $disk->putFileAs('slides', $file, $file->getClientOriginalName());
-
         return Slide::create([
-            'img_src' => "storage/$file",
+            'mobile_src' => $this->uploadImage($file, [
+                'width' => 510,
+                'height' => 395,
+                'dir' => 'slides/mobile',
+            ]),
+            'desktop_src' => $this->uploadImage($file, [
+                'width' => 840,
+                'height' => 395,
+                'dir' => 'slides/desktop',
+            ]),
         ]);
     }
 

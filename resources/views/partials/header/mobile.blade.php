@@ -28,26 +28,6 @@
                                 </button>
                             </div>
                         </div>
-                        <!-- <form class="mobile-header__search-form" action="#">
-                            <input
-                                class="mobile-header__search-input" name="search"
-                                placeholder="Search over 10,000 products" aria-label="Site search" type="text"
-                                autocomplete="off">
-                            <button
-                                class="mobile-header__search-button mobile-header__search-button--submit"
-                                type="submit">
-                                <svg width="20px" height="20px">
-                                    <use xlink:href="{{ asset('strokya/images/sprite.svg#search-20') }}"></use>
-                                </svg>
-                            </button>
-                            <button
-                                class="mobile-header__search-button mobile-header__search-button--close"
-                                type="button"><svg width="20px" height="20px">
-                                    <use xlink:href="{{ asset('strokya/images/sprite.svg#cross-20') }}"></use>
-                                </svg>
-                            </button>
-                            <div class="mobile-header__search-body"></div>
-                        </form> -->
                     </div>
                     <div class="mobile-header__indicators">
                         <div class="indicator indicator--mobile-search indicator--mobile d-sm-none">

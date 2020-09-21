@@ -18,6 +18,7 @@ class CreateHomeSectionsTable extends Migration
             $table->string('title');
             $table->string('type');
             $table->integer('order')->default(1);
+            $table->json('data')->nullable();
             $table->timestamps();
         });
     }

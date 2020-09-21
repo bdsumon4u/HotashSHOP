@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\SettingRequest;
 use App\Repositories\SettingRepository;
 use App\Traits\ImageUploader;
+use Illuminate\Support\Facades\Cache;
 
 class SettingController extends Controller
 {
@@ -22,10 +23,9 @@ class SettingController extends Controller
     public function __invoke(SettingRequest $request, SettingRepository $settingRepo)
     {
         if ($request->isMethod('GET')) {
-            $data = Setting::all()->flatMap(function ($setting) {
-                return [$setting->name => $setting->value];
-            });
-            return $this->view($data);
+            return $this->view(Cache::get('settings', function () {
+                return Setting::array();
+            }));
         }
 
         $data = $request->validated();

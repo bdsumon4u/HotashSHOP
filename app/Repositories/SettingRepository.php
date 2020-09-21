@@ -17,11 +17,9 @@ class SettingRepository
     {
         isset($data['logo'])
             && $data = $this->mergeLogo($data);
-        $data = collect($data)->map(function ($value, $name) {
-            $value = json_encode($value);
-            return compact('value', 'name');
-        })->toArray();
-        DB::table('settings')->insert(array_values($data));
+        foreach($data as $name => $value) {
+            $this->set($name, $value);
+        }
     }
 
     public function get($name)
