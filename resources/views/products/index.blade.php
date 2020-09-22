@@ -1,5 +1,7 @@
 @extends('layouts.yellow.master')
 
+@section('title', 'Products')
+
 @section('content')
 
 @include('partials.page-header', [

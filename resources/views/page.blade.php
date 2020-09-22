@@ -1,5 +1,7 @@
 @extends('layouts.yellow.master')
 
+@section('title', $page->title)
+
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/tinymce.css') }}" />
 @endpush

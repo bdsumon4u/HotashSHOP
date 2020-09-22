@@ -1,6 +1,9 @@
 @extends('layouts.yellow.master')
 
+@section('title', 'Home')
+
 @section('content')
+
 @include('partials.slides')
 
 <!-- .block-features -->

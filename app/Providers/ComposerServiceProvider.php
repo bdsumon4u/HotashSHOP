@@ -55,7 +55,7 @@ class ComposerServiceProvider extends ServiceProvider
             $view->with('categories', Category::nested(10));
         });
 
-        View::composer(['partials.header.*', 'partials.footer', 'products.show', 'layouts.light.master'], function ($view) {
+        View::composer(['partials.header.*', 'partials.footer', 'products.show', 'layouts.light.master', 'layouts.errors.master'], function ($view) {
             $view->with(Cache::get('settings', function () {
                 return Setting::array();
             }));

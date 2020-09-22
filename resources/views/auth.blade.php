@@ -1,5 +1,7 @@
 @extends('layouts.yellow.master')
 
+@section('title', 'Authentication')
+
 @section('content')
 
 @include('partials.page-header', [

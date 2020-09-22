@@ -1,5 +1,7 @@
 @extends('layouts.yellow.master')
 
+@section('title', 'Track Order')
+
 @section('content')
 
 @include('partials.page-header', [
