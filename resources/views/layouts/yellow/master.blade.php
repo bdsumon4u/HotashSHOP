@@ -53,12 +53,6 @@
         .owl-carousel {
             z-index: 0;
         }
-        .owl-stage {
-            padding-bottom: 60px;
-        }
-        .product-gallery__featured .owl-stage {
-            padding-bottom: 0;
-        }
         .product-card__buttons .btn {
             height: auto !important;
             font-size: 70% !important;
@@ -240,7 +234,7 @@
                     name: card.find('.product-card__info a').text(),
                     image: card.find('.product-card__image img').attr('src'),
                     detail: card.find('.product-card__name a').attr('href'),
-                    quantity: Number(1),
+                    quantity: 1,
                     price: price,
                 }
 
@@ -253,12 +247,12 @@
 
             function addToCart(product) {
                 var cart = cartContent(), updated = false;
-                cart.filter(function (item) {
+                cart = cart.filter(function (item) {
                     if (product.id == item.id) {
                         item.quantity = product.quantity;
                         updated = true;
                     }
-                    return item;
+                    return true;
                 });
                 updated || cart.push(product);
                 localStorage.setItem('product-cart', JSON.stringify(cart));
@@ -266,7 +260,7 @@
                 renderTotal();
             }
             
-            $('.product__actions-item--addtocart').on('click', function (ev) {
+            $('.product__actions-item--addtocart button').on('click', function (ev) {
                 ev.preventDefault();
                 var card = $(this).parents('.product__content');
                 var prices = card.find('.product__prices');
@@ -331,7 +325,7 @@
                 var input = $(this).siblings('input');
                 if (input.attr('max') == undefined || input.attr('max') > input.val()) {
                     input.val(Number(input.val()) + 1);
-                    updateCart();
+                    input.attr('id') == 'product-quantity' || updateCart();
                 }
             })
 
@@ -341,7 +335,7 @@
                 var input = $(this).siblings('input');
                 if (input.val() > 1) {
                     input.val(Number(input.val()) - 1);
-                    updateCart();
+                    input.attr('id') == 'product-quantity' || updateCart();
                 }
             })
 

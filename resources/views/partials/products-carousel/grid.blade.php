@@ -1,4 +1,4 @@
-<div class="block block-products-carousel mb-0" data-layout="grid-{{ $cols ?? 5 }}">
+<div class="block block-products-carousel" data-layout="grid-{{ $cols ?? 5 }}">
     <div class="container">
         <div class="block-header">
             <h3 class="block-header__title">{{ $title }}</h3>
