@@ -33,27 +33,38 @@
                             <h5 class="footer-newsletter__title">Socials</h5>
                             <div class="footer-newsletter__text footer-newsletter__text--social">Follow us on social networks</div>
                             <ul class="footer-newsletter__social-links">
-                                <li class="footer-newsletter__social-link footer-newsletter__social-link--facebook">
-                                    <a href="https://themeforest.net/user/kos9" target="_blank">
-                                        <i class="fab fa-facebook-f"></i>
+                                <li class="footer-newsletter__social-link footer-newsletter__social-link--phone">
+                                    <a href="tel:{{$company->phone}}" target="_blank" class="bg-primary">
+                                        <i class="fas fa-phone"></i>
                                     </a>
                                 </li>
-                                <li class="footer-newsletter__social-link footer-newsletter__social-link--twitter">
-                                    <a href="https://themeforest.net/user/kos9" target="_blank">
-                                        <i class="fab fa-twitter"></i>
+                                <li class="footer-newsletter__social-link footer-newsletter__social-link--phone">
+                                    <a href="mailto:{{$company->email}}" target="_blank" class="bg-secondary">
+                                        <i class="fas fa-envelope"></i>
                                     </a>
                                 </li>
-                                <li class="footer-newsletter__social-link footer-newsletter__social-link--youtube">
-                                    <a href="https://themeforest.net/user/kos9" target="_blank">
-                                        <i
-                                            class="fab fa-youtube"></i></a></li>
-                                <li
-                                    class="footer-newsletter__social-link footer-newsletter__social-link--instagram">
-                                    <a href="https://themeforest.net/user/kos9" target="_blank"><i
-                                            class="fab fa-instagram"></i></a></li>
-                                <li class="footer-newsletter__social-link footer-newsletter__social-link--rss">
-                                    <a href="https://themeforest.net/user/kos9" target="_blank"><i
-                                            class="fas fa-rss"></i></a></li>
+                                @foreach($social ?? [] as $item => $data)
+                                    @if($data->display ?? false)
+                                    <li class="footer-newsletter__social-link footer-newsletter__social-link--{{ $item }}">
+                                        <a href="{{ url($data->link ?? '#') }}" target="_blank">
+                                            @switch($item)
+                                                @case('facebook')
+                                                <i class="fab fa-facebook-f"></i>
+                                                @break
+                                                @case('twitter')
+                                                <i class="fab fa-twitter"></i>
+                                                @break
+                                                @case('instagram')
+                                                <i class="fab fa-instagram"></i>
+                                                @break
+                                                @case('youtube')
+                                                <i class="fab fa-youtube"></i>
+                                                @break
+                                            @endswitch
+                                        </a>
+                                    </li>
+                                    @endif
+                                @endforeach
                             </ul>
                         </div>
                     </div>

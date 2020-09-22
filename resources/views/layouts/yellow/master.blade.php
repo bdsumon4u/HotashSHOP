@@ -11,8 +11,8 @@
     @include('layouts.yellow.css')
     <!-- js -->
     <!-- font - fontawesome -->
-    <link rel="stylesheet" href="vendor/fontawesome-5.6.1/css/all.min.css"><!-- font - stroyka -->
-    <link rel="stylesheet" href="fonts/stroyka/stroyka.css">
+    <link rel="stylesheet" href="{{ asset('strokya/vendor/fontawesome-5.6.1/css/all.min.css') }}"><!-- font - stroyka -->
+    <link rel="stylesheet" href="{{ asset('strokya/fonts/stroyka/stroyka.css') }}">
     <style>
         .page-header__container {
             padding-bottom: 12px;
