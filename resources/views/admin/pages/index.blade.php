@@ -10,7 +10,7 @@
 @endsection
 
 @section('content')
-<div class="row">
+<div class="row mb-5">
     <div class="col-sm-12">
         <div class="orders-table">
             <div class="card rounded-0 shadow-sm">

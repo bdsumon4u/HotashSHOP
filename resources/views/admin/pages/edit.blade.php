@@ -10,7 +10,7 @@
 @endsection
 
 @section('content')
-<div class="row">
+<div class="row mb-5">
     <div class="col-sm-12">
         <div class="card rounded-0 shadow-sm">
             <div class="card-header p-3">Edit <strong>Page</strong></div>

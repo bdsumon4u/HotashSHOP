@@ -94,8 +94,6 @@
         }
     </style>
     @stack('styles')
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-97489509-6"></script>
-    <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'UA-97489509-6');</script>
 </head>
 
 <body style="margin: 0; padding: 0;">
