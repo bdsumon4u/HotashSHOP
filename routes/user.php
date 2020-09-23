@@ -27,6 +27,8 @@ Route::group(['namespace' => 'User', 'as' => 'user.'], function() {
         Route::get('/home', 'HomeController@index')->name('home');
         Route::match(['get', 'post'], '/change-password', 'Auth\\ChangePasswordController')
             ->name('password.change');
+        Route::match(['get', 'post'], '/edit-profile', 'ProfileController')
+            ->name('profile.edit');
         Route::get('example', function() {
             dump('bdsumon4u');
         })->name('example');

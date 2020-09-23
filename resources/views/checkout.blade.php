@@ -44,7 +44,7 @@
                             </div>
                             <div class="form-group">
                                 <x-label for="address">Address</x-label> <span class="text-danger">*</span>
-                                <x-input name="address" placeholder="Enter Correct Address" />
+                                <x-input name="address" placeholder="Enter Correct Address" :value="$user->address" />
                                 <x-error field="address" />
                             </div>
                             <div class="form-group">
