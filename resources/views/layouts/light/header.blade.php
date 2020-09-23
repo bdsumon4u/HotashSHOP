@@ -40,11 +40,8 @@
           </div>
           <ul class="profile-dropdown onhover-show-div">
             <li><i data-feather="user"></i><span>Account </span></li>
-            <li><i data-feather="mail"></i><span>Inbox</span></li>
-            <li><i data-feather="file-text"></i><span>Taskboard</span></li>
-            <li>
-              <a href="{{ route('admin.settings') }}"><i data-feather="settings"></i><span>Settings</span></a>
-            </li>
+            <li><a href="{{ route('admin.settings') }}"><i data-feather="settings"></i><span>Settings</span></a></li>
+            <li><a href="{{ route('admin.password.change') }}"><i data-feather="lock"></i><span>Password</span></a></li>
             <li>
               <a class="" href="{{ route('admin.logout') }}"
                 onclick="event.preventDefault();

@@ -27,6 +27,8 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function() {
     Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin']], function() {
         # Admin Level Namespace & 'admin' Prefix
         Route::get('/dashboard', 'HomeController@index')->name('home');
+        Route::match(['get', 'post'], '/change-password', 'Auth\\ChangePasswordController')
+            ->name('password.change');
         Route::any('settings', 'SettingController')->name('settings');
         Route::resources([
             'slides'        => 'SlideController',

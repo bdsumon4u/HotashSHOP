@@ -87,7 +87,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const USER_HOME = '/user/home';
+    public const USER_HOME = '/';
 
     /**
      * Define the "user" routes for the application.
