@@ -56,11 +56,11 @@
                                 <div class="col-sm-6">
                                     <div class="media">
                                         <div class="media-left">
-                                            <img class="media-object img-60" src="{{asset('assets/images/other-images/logo-login.png')}}" alt="">
+                                            <img class="media-object img-60" src="{{asset($logo->mobile)}}" alt="" width="180" height="54">
                                         </div>
                                         <div class="media-body m-l-20">
-                                            <h4 class="media-heading">Cuba</h4>
-                                            <p>hello@Cuba.in<br><span class="digits">289-335-6503</span></p>
+                                            <h4 class="media-heading">{{ $company->name }}</h4>
+                                            <p>{{ $company->email }}<br><span class="digits">{{ $company->phone }}</span></p>
                                         </div>
                                     </div>
                                     <!-- End Info-->

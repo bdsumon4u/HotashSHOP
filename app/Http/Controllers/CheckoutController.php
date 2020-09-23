@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OrderPlaced;
 use App\Order;
 use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class CheckoutController extends Controller
 {
@@ -52,9 +54,9 @@ class CheckoutController extends Controller
                         'name' => $product->name,
                         'slug' => $product->slug,
                         'image' => $product->base_image->src,
-                        'price' => $product->price,
+                        'price' => $product->selling_price,
                         'quantity' => $product->stock_count >= $quantity ? $quantity : $product->stock_count,
-                        'total' => $quantity * $product->price,
+                        'total' => $quantity * $product->selling_price,
                     ];
                 })->filter(function ($product) {
                     return $product != null; // Only Available Products
@@ -76,6 +78,8 @@ class CheckoutController extends Controller
 
             $order = Order::create($data);
         });
+
+        $data['email'] && Mail::to($data['email'])->queue(new OrderPlaced($order));
 
         return redirect()->route('track-order', [
             'phone' => $data['phone'],

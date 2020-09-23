@@ -62,7 +62,7 @@
                   <div class="card-body">
                      <div class="media">
                         <div class="media-body">
-                           <p class="f-w-500 font-roboto">Total Orders</p>
+                           <p class="f-w-500 font-roboto">TOTAL Orders</p>
                            <h4 class="f-w-500 mb-0 f-26"><span class="counter">{{ $ordersCount }}</span></h4>
                         </div>
                      </div>
@@ -74,8 +74,8 @@
                   <div class="card-body">
                      <div class="media">
                         <div class="media-body">
-                           <p class="f-w-500 font-roboto">Pending Orders</p>
-                           <h4 class="f-w-500 mb-0 f-26"><span class="counter">{{ $pendingOrdersCount }}</span></h4>
+                           <p class="f-w-500 font-roboto">{{ $initialStatus }} Orders</p>
+                           <h4 class="f-w-500 mb-0 f-26"><span class="counter">{{ $initialOrdersCount }}</span></h4>
                         </div>
                      </div>
                   </div>
@@ -86,7 +86,7 @@
                   <div class="card-body">
                      <div class="media">
                         <div class="media-body">
-                           <p class="f-w-500 font-roboto">Return Rate</p>
+                           <p class="f-w-500 font-roboto">RETURN Rate</p>
                            <div class="progress-box">
                               <h4 class="f-w-500 mb-0 f-26"><span class="counter">{{ $returnedOrdersCount }}</span></h4>
                               <div class="progress sm-progress-bar progress-animate app-right d-flex justify-content-end">

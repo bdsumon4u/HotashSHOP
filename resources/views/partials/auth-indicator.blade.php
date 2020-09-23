@@ -27,7 +27,7 @@
             </div>
             <div class="account-menu__divider"></div>
             <ul class="account-menu__links">
-                <li><a href="account-profile.html">Edit Profile</a></li>
+                <li><a href="{{ route('user.profile.edit') }}">Edit Profile</a></li>
                 <li><a href="{{ route('user.password.change') }}">Password</a></li>
             </ul>
             <div class="account-menu__divider"></div>
