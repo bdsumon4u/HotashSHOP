@@ -89,7 +89,8 @@
                                     </div>
                                 </div>
                                 <div class="product__actions-item product__actions-item--addtocart">
-                                    <button class="btn btn-primary btn-lg">Add to cart</button>
+                                    @exp($available = !$product->should_track || $product->stock_count > 0)
+                                    <button class="btn btn-primary btn-lg" {{ $available ? '' : 'disabled' }}>Add to cart</button>
                                 </div>
                             </div>
                         </div>
