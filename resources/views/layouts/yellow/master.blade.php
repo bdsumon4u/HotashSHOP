@@ -338,9 +338,11 @@
             });
 
             function renderTotal() {
-                if (localStorage.getItem('shipping')) {
-                    $('#'+localStorage.getItem('shipping')).prop('checked', true);
-                    var shipping = Number($('#'+localStorage.getItem('shipping')).data('val'));
+                var shipping = localStorage.getItem('shipping');
+                $('[name="address"]').parents('.form-group').addClass(shipping ? 'd-block' : 'd-none');
+                if (shipping) {
+                    $('#'+shipping).prop('checked', true);
+                    var shipping = Number($('#'+shipping).data('val'));
                     $('.shipping span').text(shipping)
                     $('.cart__totals-footer span').text(Number($('.cart__totals-header .cart-subtotal span').text()) + shipping);
                     $('.checkout__totals-footer span').text(Number($('.checkout__totals-subtotals .checkout-subtotal span').text()) + shipping);

@@ -43,12 +43,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <x-label for="address">Address</x-label> <span class="text-danger">*</span>
-                                <x-input name="address" placeholder="Enter Correct Address" :value="$user->address" />
-                                <x-error field="address" />
-                            </div>
-                            <div class="form-group">
-                                <label class="d-block">Shipping City <span class="text-danger">*</span></label>
+                                <label class="d-block">Shipping Area <span class="text-danger">*</span></label>
                                 <div class="form-control @error('shipping') is-invalid @enderror">
                                     <div class="custom-control custom-radio custom-control-inline">
                                         <input type="radio" class="custom-control-input" id="inside-dhaka" name="shipping" value="Inside Dhaka" data-val="50">
@@ -60,6 +55,11 @@
                                     </div>
                                 </div>
                                 <x-error field="shipping" />
+                            </div>
+                            <div class="form-group">
+                                <x-label for="address">Address</x-label> <span class="text-danger">*</span>
+                                <x-input name="address" placeholder="Enter Correct Address" :value="$user->address" />
+                                <x-error field="address" />
                             </div>
                         </div>
                         <div class="card-divider"></div>
