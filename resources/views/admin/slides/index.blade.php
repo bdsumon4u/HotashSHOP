@@ -91,8 +91,8 @@
                 if(this.getQueuedFiles().length == 0 && this.getUploadingFiles().length == 0) {
                     window.reload();
                 }
-            })
+            });
         }
-    }
+    };
 </script>
 @endpush

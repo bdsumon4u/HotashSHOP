@@ -74,7 +74,7 @@
             if ($this.data('id') != $(el).data('id')) {
                 $(el).prop('checked', false);
             }
-        })
+        });
 
         $('#base_image-preview').attr('src', $(this).data('src')).show();
         $('[name="base_image_src"]').val($(this).data('src'));

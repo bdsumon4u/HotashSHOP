@@ -83,9 +83,9 @@
                 selected.push($(el).data('id'));
                 additional_images_srcs.push($(el).data('src'));
             }
-        })
+        });
 
-        $('.btn-done').show().text('Done ['+selected.length+']')
+        $('.btn-done').show().text('Done ['+selected.length+']');
 
         $('.btn-done').on('click', function () {
             $additional_images.empty();
@@ -96,7 +96,7 @@
                 $additional_images.append('<input type="hidden" name="additional_images_srcs[]" value="'+additional_images_srcs[index]+'">');
             }
             $(this).parents('.modal').modal('hide');
-        })
+        });
     })
 </script>
 @endpush

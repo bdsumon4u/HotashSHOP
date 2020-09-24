@@ -234,7 +234,7 @@
                     detail: card.find('.product-card__name a').attr('href'),
                     quantity: 1,
                     price: price,
-                }
+                };
 
                 addToCart(product);
 
@@ -274,10 +274,10 @@
                     detail: card.find('.product-base__image').data('detail'),
                     quantity: Number($('#product-quantity').val()),
                     price: price,
-                }
+                };
 
                 addToCart(product);
-            })
+            });
 
             function cartContent() {
                 var cart = JSON.parse(localStorage.getItem('product-cart'));
@@ -325,7 +325,7 @@
                     input.val(Number(input.val()) + 1);
                     input.attr('id') == 'product-quantity' || updateCart();
                 }
-            })
+            });
 
             $(document).on('click', '.input-number__sub', function (ev) {
                 ev.preventDefault();
@@ -335,7 +335,7 @@
                     input.val(Number(input.val()) - 1);
                     input.attr('id') == 'product-quantity' || updateCart();
                 }
-            })
+            });
 
             function renderTotal() {
                 if (localStorage.getItem('shipping')) {

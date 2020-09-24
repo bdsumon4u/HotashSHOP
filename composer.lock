@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9e93facc2d53c9fdcc17e1f03fd02f56",
+    "content-hash": "cc5c40a27d10ebbe904dc80116010558",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -331,6 +331,63 @@
                 }
             ],
             "time": "2020-08-18T23:57:15+00:00"
+        },
+        {
+            "name": "dipeshsukhia/laravel-html-minify",
+            "version": "v1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dipeshsukhia/laravel-html-minify.git",
+                "reference": "aff3fa3ded71854aad4e06a54fc7f31c9ecb5a25"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dipeshsukhia/laravel-html-minify/zipball/aff3fa3ded71854aad4e06a54fc7f31c9ecb5a25",
+                "reference": "aff3fa3ded71854aad4e06a54fc7f31c9ecb5a25",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*|5.8.*|^6.0|^7.0",
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "orchestra/testbench": "3.8.*",
+                "phpunit/phpunit": "^4.8|^5.0|^6.0|^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "DipeshSukhia\\LaravelHtmlMinify\\LaravelHtmlMinifyServiceProvider"
+                    ],
+                    "aliases": {
+                        "LaravelHtmlMinify": "DipeshSukhia\\LaravelHtmlMinify\\LaravelHtmlMinifyFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "DipeshSukhia\\LaravelHtmlMinify\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dipesh Sukhia",
+                    "email": "dipesh.sukhia@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "laravel minify html output",
+            "homepage": "https://github.com/dipeshsukhia/laravel-html-minify",
+            "keywords": [
+                "dipeshsukhia",
+                "laravel-html-minify"
+            ],
+            "time": "2020-05-27T10:20:42+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",

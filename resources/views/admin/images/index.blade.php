@@ -89,9 +89,9 @@
                 if(this.getQueuedFiles().length == 0 && this.getUploadingFiles().length == 0) {
                     $('.datatable').DataTable().ajax.reload();
                 }
-            })
+            });
         }
-    }
+    };
 
     var table = $('.datatable').DataTable({
         processing: true,

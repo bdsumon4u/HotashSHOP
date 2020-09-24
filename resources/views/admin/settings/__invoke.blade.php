@@ -110,7 +110,7 @@
 <script>
     $(document).ready(function(){
         $('#setting-form').keyup(function(e) {
-            return e.which !== 13  
+            return e.which !== 13;
         });
 
         $('#add-courier').click(function(e) {
