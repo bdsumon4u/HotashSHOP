@@ -101,6 +101,10 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-12">
+                    <h4 class="p-2">Selected Products</h4>
+                    @include('partials.cart-table')
+                </div>
             </div>
         </x-form>
     </div>

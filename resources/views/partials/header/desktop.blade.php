@@ -60,7 +60,6 @@
                                             </table>
                                         </div>
                                         <div class="dropcart__buttons">
-                                            <a class="btn btn-secondary" href="{{ route('cart') }}">View Cart</a>
                                             <a class="btn btn-primary" href="{{ route('checkout') }}">Checkout</a>
                                         </div>
                                     </div><!-- .dropcart / end -->

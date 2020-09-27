@@ -74,7 +74,7 @@
                     <div class="call-for-order">
                         <img src="https://tonnicollection.com/public/storage/call-now.gif" width="287" height="68" alt="Call For Order">
                         <div style="padding: 10px;margin-bottom: 10px;font-weight: bold;color: red;padding-left: 5rem;margin-top: -35px;">
-                            01785236924
+                            01721-267467
                         </div>
                     </div>
                     <!-- .product__options -->
