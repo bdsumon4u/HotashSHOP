@@ -9,6 +9,11 @@
     <link rel="shortcut icon" href="{{asset($logo->favicon ?? '')}}" type="image/x-icon">
     <title>{{ $company->name ?? '' }} - @yield('title')</title>
     @include('layouts.light.css')
+    <style>
+      @media (min-width: 992px) {
+        .toggle-sidebar {display: none;}
+      }
+    </style>
     @stack('styles')
     @bukStyles(true)
   </head>

@@ -14,6 +14,8 @@ autocomplete(".aa-input-search", {}, [
                 slug,
                 should_track,
                 stock_count,
+                price,
+                selling_price,
                 _highlightResult
             }) {
                 return `<div class="product-suggestion d-flex">
@@ -38,9 +40,9 @@ autocomplete(".aa-input-search", {}, [
                                     : '<span class="text-success">YES</span>'
                             }
                         </div>
-                        <div class="product-card__prices">
-                            <span class="product-card__new-price">$949.00</span>
-                            <span class="product-card__old-price">$1189.00</span>
+                        <div class="product-card__prices ${price == selling_price ? '' : 'has-special'}" style="display:flex;flex-direction:column;">
+                            <span class="product-card__new-price" style="font-size:13px;">TK ${price}</span>
+                            <span class="product-card__old-price" style="font-size:13px;">TK ${selling_price}</span>
                         </div>
                     </div>
                 </div>

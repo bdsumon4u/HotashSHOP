@@ -63,16 +63,13 @@
                 <!-- .product__sidebar -->
                 <div class="product__sidebar">
                     <div class="product__prices {{$product->selling_price == $product->price ? '' : 'has-special'}}">
-                        <h4>
-                            Price:&nbsp;
-                            @if($product->selling_price == $product->price)
-                            {!!  theMoney($product->price)  !!}
-                            @else
-                            <span class="product-card__new-price">{!!  theMoney($product->selling_price)  !!}</span>
-                            &nbsp;
-                            <span class="product-card__old-price">{!!  theMoney($product->price)  !!}</span>
-                            @endif
-                        </h4>
+                        Price:
+                        @if($product->selling_price == $product->price)
+                        {!!  theMoney($product->price)  !!}
+                        @else
+                        <span class="product__new-price">{!!  theMoney($product->selling_price)  !!}</span>
+                        <span class="product__old-price">{!!  theMoney($product->price)  !!}</span>
+                        @endif
                     </div>
                     <!-- .product__options -->
                     <form class="product__options">
