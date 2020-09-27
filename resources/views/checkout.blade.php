@@ -25,50 +25,37 @@
                             <h3 class="card-title">Billing details</h3>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <x-label for="name">Name</x-label> <span class="text-danger">*</span>
-                                    <x-input name="name" placeholder="Type your name here" :value="$user->name" />
+                                    <x-input name="name" placeholder="Name *" :value="$user->name" />
                                     <x-error field="name" />
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <x-label for="phone">Phone</x-label> <span class="text-danger">*</span>
-                                    <x-input name="phone" placeholder="Type your phone number here" :value="$user->phone_number ?? '+880'" />
+                                    <x-input name="phone" placeholder="Phone Number *" :value="$user->phone_number ?? '+880'" />
                                     <x-error field="phone" />
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-12">
-                                    <x-label for="email">Email Address</x-label>
                                     <x-input type="email" name="email" placeholder="Email Address" :value="$user->email" />
                                     <x-error field="email" />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="d-block">Shipping Area <span class="text-danger">*</span></label>
+                                <label class="d-block">Delivery Area <span class="text-danger">*</span></label>
                                 <div class="form-control @error('shipping') is-invalid @enderror">
                                     <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" class="custom-control-input" id="inside-dhaka" name="shipping" value="Inside Dhaka" data-val="50">
+                                        <input type="radio" class="custom-control-input" id="inside-dhaka" name="shipping" value="Inside Dhaka" data-val="{{ config('services.shipping.Inside Dhaka') }}">
                                         <label class="custom-control-label" for="inside-dhaka">Inside Dhaka</label>
                                     </div>
                                     <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" class="custom-control-input" id="outside-dhaka" name="shipping" value="Outside Dhaka" data-val="100">
+                                        <input type="radio" class="custom-control-input" id="outside-dhaka" name="shipping" value="Outside Dhaka" data-val="{{ config('services.shipping.Outside Dhaka') }}">
                                         <label class="custom-control-label" for="outside-dhaka">Outside Dhaka</label>
                                     </div>
                                 </div>
                                 <x-error field="shipping" />
                             </div>
                             <div class="form-group">
-                                <x-label for="address">Address</x-label> <span class="text-danger">*</span>
-                                <x-input name="address" placeholder="Enter Correct Address" :value="$user->address" />
+                                <x-input name="address" placeholder="Enter Address" :value="$user->address" />
                                 <x-error field="address" />
-                            </div>
-                        </div>
-                        <div class="card-divider"></div>
-                        <div class="card-body p-3">
-                            <h3 class="card-title">Shipping Details</h3>
-                            <div class="form-group">
-                                <x-label for="note">Order Notes (Optional)</x-label>
-                                <x-textarea name="note" rows="4"></x-textarea>
-                                <x-error field="note" />
                             </div>
                         </div>
                     </div>

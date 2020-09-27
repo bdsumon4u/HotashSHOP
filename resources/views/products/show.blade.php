@@ -6,7 +6,7 @@
 
 @include('partials.page-header', [
     'paths' => [
-        url('/')                      => 'Home',
+        url('/')                => 'Home',
         route('products.index') => 'Products',
     ],
     'active' => $product->name,
@@ -57,7 +57,7 @@
                             @endif
                         </li>
                         <li class="w-100 mb-2">Brand: <a href="{{ route('brands.products', $product->brand) }}" class="text-primary">{{ $product->brand->name }}</a></li>
-                        <li class="w-100 mb-2">SKU: {{ $product->sku }}</li>
+                        <li class="w-100 mb-2">Product Code: <strong>{{ $product->sku }}</strong></li>
                     </ul>
                 </div><!-- .product__info / end -->
                 <!-- .product__sidebar -->
@@ -67,15 +67,21 @@
                         @if($product->selling_price == $product->price)
                         {!!  theMoney($product->price)  !!}
                         @else
-                        <span class="product__new-price">{!!  theMoney($product->selling_price)  !!}</span>
-                        <span class="product__old-price">{!!  theMoney($product->price)  !!}</span>
+                        <span class="product-card__new-price">{!!  theMoney($product->selling_price)  !!}</span>
+                        <span class="product-card__old-price">{!!  theMoney($product->price)  !!}</span>
                         @endif
+                    </div>
+                    <div class="call-for-order">
+                        <img src="https://tonnicollection.com/public/storage/call-now.gif" width="287" height="68" alt="Call For Order">
+                        <div style="padding: 10px;margin-bottom: 10px;font-weight: bold;color: red;padding-left: 5rem;margin-top: -35px;">
+                            01785236924
+                        </div>
                     </div>
                     <!-- .product__options -->
                     <form class="product__options">
                         <div class="form-group product__option">
                             <label class="product__option-label" for="product-quantity">Quantity</label>
-                            <div class="product__actions">
+                            <div class="product__actions flex-column">
                                 <div class="product__actions-item">
                                     <div class="input-number product__quantity">
                                         <input id="product-quantity"
@@ -85,9 +91,14 @@
                                         <div class="input-number__sub"></div>
                                     </div>
                                 </div>
-                                <div class="product__actions-item product__actions-item--addtocart">
-                                    @exp($available = !$product->should_track || $product->stock_count > 0)
-                                    <button class="btn btn-primary btn-lg" {{ $available ? '' : 'disabled' }}>Add to cart</button>
+                                @exp($available = !$product->should_track || $product->stock_count > 0)
+                                <div class="product__buttons d-flex">
+                                    <div class="product__actions-item product__actions-item--addtocart">
+                                        <button class="btn btn-primary product__addtocart" {{ $available ? '' : 'disabled' }}>Add to cart</button>
+                                    </div>
+                                    <div class="product__actions-item product__actions-item--ordernow">
+                                        <button class="btn btn-primary product__ordernow" {{ $available ? '' : 'disabled' }}>Order Now</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -106,14 +117,95 @@
             </div>
         </div>
         <div class="product-tabs">
-            <div class="product-tabs__list">
-                <a href="#tab-description" class="product-tabs__item product-tabs__item--active">Description</a>
+            <div class="product-tabs__list" style="background-color: antiquewhite;">
+                <a href="#tab-description" class="product-tabs__item product-tabs__item--active">Product Description</a>
+                <a href="#tab-delivery-payment" class="product-tabs__item">Delivery & Payment</a>
             </div>
             <div class="product-tabs__content p-3">
                 <div class="product-tabs__pane product-tabs__pane--active" id="tab-description">
-                    <div class="typography">
-                        <h3>Product Full Description</h3>
-                        {!! $product->description !!}
+                    <h3>Product Description</h3>
+                    <div class="row">
+                        <div class="col">
+                            <div class="card">
+                                <div class="card-body">
+                                {!! $product->description !!}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-tabs__pane" id="tab-delivery-payment">
+                    <h3>Delivery & Payment</h3>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="card h-100">
+                                <div class="card-header p-3">
+                                    <h4>
+                                        <i class="fa fa-check"> </i>
+                                        আপনি ঢাকা সিটির ভীতরে হলেঃ-
+                                    </h4>
+                                </div>
+                                <div class="card-body p-2">
+                                    <div class="col-sm-12">
+                                        <p>
+                                            <i class="fa  fa-arrow-circle-right "> </i> 
+                                            ক্যাশ অন ডেলিভারি/হ্যান্ড টু হ্যান্ড ডেলিভারি।
+                                        </p>
+                                        <p>
+                                            <i class="fa  fa-arrow-circle-right "> </i> 
+                                            ডেলিভারি চার্জ
+                                            ৬০
+                                            টাকা।
+                                        </p>
+                                        <p>
+                                            <i class="fa  fa-arrow-circle-right "> </i> 
+                                            পণ্যের টাকা ডেলিভারি ম্যানের কাছে প্রদান করবেন। 
+                                        </p>
+                                        <p>
+                                            <i class="fa  fa-arrow-circle-right "> </i> 
+                                            অর্ডার কনফার্ম করার ৪৮ ঘণ্টার ভিতর ডেলিভারি পাবেন।
+                                        </p>
+                                        <p>
+                                            <i class="fa  fa-arrow-circle-right "> </i> 
+                                            বিঃদ্রঃ- ছবি এবং বর্ণনার সাথে পণ্যের মিল থাকা সত্যেও আপনি পণ্য গ্রহন করতে না চাইলে  ডেলিভারি চার্জ
+                                            ৬০ 
+                                            টাকা ডেলিভারি ম্যানকে প্রদান করতে বাধ্য থাকিবেন।
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="card h-100">
+                                <div class="card-header p-3">
+                                    <h4>
+                                        <i class="fa fa-check"> </i>
+                                        আপনি ঢাকা সিটির বাহীরে হলেঃ- 
+                                    </h4>
+                                </div>
+                                <div class="card-body p-2">
+                                    <div class="col-sm-12">
+                                        <p>
+                                            <i class="fa  fa-arrow-circle-right "> </i> 
+                                            কন্ডিশন বুকিং অন কুরিয়ার সার্ভিস (জননী কুরিয়ার অথবা এস এ পরিবহন কুরিয়ার সার্ভিস) এ নিতে হবে।
+                                        </p>
+                                        <p>
+                                            <i class="fa  fa-arrow-circle-right "> </i> 
+                                            কুরিয়ার সার্ভিস চার্জ ১০০ টাকা বিকাশে অগ্রিম প্রদান করতে হবে। 
+                                        </p>
+                                    
+                                        <p>
+                                            <i class="fa  fa-arrow-circle-right "> </i> 
+                                            কুরিয়ার চার্জ ১০০ টাকা বিকাশ করার পর ৪৮ ঘন্টার ভিতর কুরিয়ার হতে পণ্য গ্রহন করতে  হবে এবং পণ্যের টাকা কুরিয়ার অফিসে প্রদান করতে হবে। 
+                                        </p>
+                                        <p>
+                                            <i class="fa  fa-arrow-circle-right "> </i> 
+                                            বিঃদ্রঃ- ছবি এবং বর্ণনার সাথে পণ্যের মিল থাকা সত্যেও আপনি পণ্য গ্রহন করতে না চাইলে  কুরিয়ার চার্জ ১০০ টাকা কুরিয়ার অফিসে প্রদান করে পণ্য আমাদের ঠিকানায় রিটার্ন করবেন। আমরা প্রয়োজনীয় ব্যবস্থা নিব। 
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

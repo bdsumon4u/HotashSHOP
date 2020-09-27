@@ -31,7 +31,7 @@ return [
     ],
 
     'shipping' => [
-        'Inside Dhaka' => 50,
+        'Inside Dhaka' => 60,
         'Outside Dhaka' => 100,
     ],
 

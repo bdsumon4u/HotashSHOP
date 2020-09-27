@@ -70,12 +70,14 @@
             display: block;
             width: 100%;
         }
-        .product-card__addtocart {
+        .product-card__addtocart,
+        .product__addtocart {
             background-color: #0083C4 !important;
             border-color: #0083C4 !important;
             color: #fff !important;
         }
-        .product-card__ordernow {
+        .product-card__ordernow,
+        .product__ordernow {
             background-color: #3d464d !important;
             border-color: #3d464d !important;
             color: #fff !important;
@@ -286,7 +288,7 @@
                 renderTotal();
             }
             
-            $('.product__actions-item--addtocart button').on('click', function (ev) {
+            $('.product__actions-item--addtocart button, .product__actions-item--ordernow button').on('click', function (ev) {
                 ev.preventDefault();
                 var card = $(this).parents('.product__content');
                 var prices = card.find('.product__prices');
@@ -305,6 +307,10 @@
                 };
 
                 addToCart(product);
+                
+                if ($(this).parent().hasClass('product__actions-item--ordernow')) {
+                    window.location = "{{ route('checkout') }}";
+                }
             });
 
             function cartContent() {

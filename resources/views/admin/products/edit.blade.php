@@ -184,7 +184,7 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <x-label for="sku" /><span class="text-danger">*</span>
+                                                        <label for="sku">Product Code</label><span class="text-danger">*</span>
                                                         <x-input name="sku" :value="$product->sku" />
                                                         <x-error field="sku" />
                                                     </div>
@@ -271,6 +271,7 @@
 @endsection
 
 @push('js')
+<script src="{{ asset('js/tinymce.js') }}"></script>
 <script src="{{asset('assets/js/select2/select2.full.min.js')}}"></script>
 <script src="{{asset('assets/js/select2/select2-custom.js')}}"></script>
 @endpush
