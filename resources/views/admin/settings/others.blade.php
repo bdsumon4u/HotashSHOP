@@ -8,6 +8,23 @@
     <div class="row">
         <div class="col-md-4">
             <div class="form-group">
+                <label for="">Products Page</label>
+                <div class="row border py-2">
+                    <div class="col-md-6">
+                        <label for="products_page-rows">Rows</label>
+                        <x-input name="products_page[rows]" id="products_page-rows" :value="$products_page->rows ?? 3" />
+                        <x-error field="products_page.rows" />
+                    </div>
+                    <div class="col-md-6">
+                        <label for="products_page-cols">Cols (4 or 5)</label>
+                        <x-input name="products_page[cols]" id="products_page-cols" :value="$products_page->cols ?? 5" />
+                        <x-error field="products_page.cols" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
                 <label for="">Related Products</label>
                 <div class="row border py-2">
                     <div class="col-md-6">
@@ -17,7 +34,7 @@
                     </div>
                     <div class="col-md-6">
                         <label for="related_products-cols">Cols (4 or 5)</label>
-                        <x-input name="related_products[cols]" id="related_products-cols" :value="$related_products->cols ?? 1" />
+                        <x-input name="related_products[cols]" id="related_products-cols" :value="$related_products->cols ?? 5" />
                         <x-error field="related_products.cols" />
                     </div>
                 </div>

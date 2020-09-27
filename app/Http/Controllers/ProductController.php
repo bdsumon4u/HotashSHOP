@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\Setting;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -15,17 +16,20 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $per_page = $request->get('per_page', 15);
+        $rows = 3;
+        $cols = 5;
+        if ($productsPage = Setting::whereName('products_page')->first()) {
+            $rows = $productsPage->value->rows;
+            $cols = $productsPage->value->cols;
+        }
+        $per_page = $request->get('per_page', $rows * $cols);
         $products = Product::whereIsActive(1)
             ->when($request->search, function ($query) use ($request) {
                 $query->search($request->search, null, true);
             })
             ->latest('id')
             ->paginate($per_page)->appends(request()->query());
-        return $this->view([
-            'products' => $products,
-            'per_page' => $per_page,
-        ]);
+        return $this->view(compact('products', 'per_page', 'rows', 'cols'));
     }
 
     /**

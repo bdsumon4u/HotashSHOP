@@ -467,8 +467,8 @@
                         992:  {items: 4, margin: 10},
                         768:  {items: 3, margin: 10},
                         576:  {items: 2, margin: 10},
-                        475:  {items: 2, margin: 10},
-                        0:    {items: 2}
+                        475:  {items: 2, margin: 0},
+                        0:    {items: 2, margin: 0}
                     }
                 },
                 'grid-4-sm': {
@@ -477,8 +477,8 @@
                         992:  {items: 3, margin: 10},
                         768:  {items: 3, margin: 10},
                         576:  {items: 2, margin: 10},
-                        475:  {items: 2, margin: 10},
-                        0:    {items: 1}
+                        475:  {items: 2, margin: 0},
+                        0:    {items: 1, margin: 0}
                     }
                 },
                 'grid-5': {
@@ -487,8 +487,8 @@
                         992:  {items: 4, margin: 10},
                         768:  {items: 3, margin: 10},
                         576:  {items: 2, margin: 10},
-                        475:  {items: 2, margin: 10},
-                        0:    {items: 2}
+                        475:  {items: 2, margin: 0},
+                        0:    {items: 2, margin: 0}
                     }
                 },
                 'horizontal': {

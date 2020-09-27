@@ -90,7 +90,8 @@
                            <div class="progress-box">
                               <h4 class="f-w-500 mb-0 f-26"><span class="counter">{{ $returnedOrdersCount }}</span></h4>
                               <div class="progress sm-progress-bar progress-animate app-right d-flex justify-content-end">
-                                 <div class="progress-gradient-primary" role="progressbar" style="width: {{round($returnedOrdersCount * 100 / $ordersCount)}}%" aria-valuenow="{{ round($returnedOrdersCount * 100 / $ordersCount) }}" aria-valuemin="0" aria-valuemax="100"><span class="font-primary">{{ round($returnedOrdersCount * 100 / $ordersCount) }} %</span><span class="animate-circle"></span></div>
+                                 @exp($percentage = $ordersCount ? round($returnedOrdersCount * 100 / $ordersCount) : 0)
+                                 <div class="progress-gradient-primary" role="progressbar" style="width: {{$percentage}}%" aria-valuenow="{{$percentage}}" aria-valuemin="0" aria-valuemax="100"><span class="font-primary">{{$percentage}} %</span><span class="animate-circle"></span></div>
                               </div>
                            </div>
                         </div>
@@ -185,6 +186,7 @@
 @endsection
 
 @push('js')
+<script src="{{asset('assets/js/counter/jquery.waypoints.min.js')}}"></script>
 <script src="{{asset('assets/js/counter/jquery.counterup.min.js')}}"></script>
 <script src="{{asset('assets/js/counter/counter-custom.js')}}"></script>
 @endpush

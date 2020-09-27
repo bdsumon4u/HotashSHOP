@@ -101,11 +101,6 @@
 </div>
 @endsection
 
-@push('js')
-<script src="{{asset('assets/js/counter/jquery.counterup.min.js')}}"></script>
-<script src="{{asset('assets/js/counter/counter-custom.js')}}"></script>
-@endpush
-
 @push('scripts')
 <script>
     $(document).ready(function(){

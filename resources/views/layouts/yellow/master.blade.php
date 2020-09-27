@@ -40,6 +40,9 @@
             }
         }
         @media (max-width: 767px) {
+            .block-slideshow__body, .block-slideshow__slide {
+                height: 300px !important;
+            }
             .footer-contacts,
             .footer-links,
             .footer-newsletter {
@@ -65,6 +68,9 @@
         .algolia-autocomplete {
             width: 100%;
             display: flex !important;
+        }
+        .indicator__area {
+            padding: 0 8px;
         }
         .mobile-header__search.mobile-header__search--opened {
             height: 100%;

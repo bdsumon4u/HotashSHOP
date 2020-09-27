@@ -41,7 +41,7 @@ return [
             'height' => 54
         ],
         'mobile' => [
-            'width' => 170,
+            'width' => 150,
             'height' => 40
         ],
         'favicon' => [

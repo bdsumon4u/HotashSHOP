@@ -36,6 +36,8 @@ class SettingRequest extends FormRequest
 
             'social' => 'required|array',
 
+            'products_page.rows' => 'required|integer',
+            'products_page.cols' => 'required|integer',
             'related_products.rows' => 'required|integer',
             'related_products.cols' => 'required|integer',
         ];

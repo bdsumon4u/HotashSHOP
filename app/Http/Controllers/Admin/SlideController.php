@@ -49,7 +49,7 @@ class SlideController extends Controller
         return Slide::create([
             'mobile_src' => $this->uploadImage($file, [
                 'width' => 510,
-                'height' => 395,
+                'height' => 300,
                 'dir' => 'slides/mobile',
             ]),
             'desktop_src' => $this->uploadImage($file, [
@@ -92,7 +92,7 @@ class SlideController extends Controller
     public function update(Request $request, Slide $slide)
     {
         $data = $request->validate([
-            'title' => 'required|max:255',
+            'title' => 'nullable|max:255',
             'text' => 'nullable|max:255',
             'btn_name' => 'nullable|max:20',
             'btn_href' => 'nullable|max:255',
