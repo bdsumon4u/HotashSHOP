@@ -85,8 +85,15 @@ class ProductController extends Controller
     {
         $data = $request->validationData();
         $product->update($data);
+        
+        if ($product->getChanges()) {
+            session()->flash('success', 'Product Updated');
+        } else {
+            session()->flash('success', 'No Field Was Changed');
+        }
+    
         event(new ProductUpdated($product, $data));
-        return back()->with('success', 'Product Has Been Updated.');
+        return back();
     }
 
     /**

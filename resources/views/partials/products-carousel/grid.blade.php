@@ -27,7 +27,7 @@
                             @exp($in_stock = !$product->should_track || $product->stock_count > 0)
                             <div class="product-card__badges-list">
                                 @if(! $in_stock)
-                                <div class="product-card__badge product-card__badge--sale">Sale</div>
+                                <div class="product-card__badge product-card__badge--sale">Sold</div>
                                 @endif
                             </div>
                             <div class="product-card__image">
