@@ -19,7 +19,7 @@
         <x-form :action="route('checkout')" method="POST">
             @php $user = optional(auth('user')->user()) @endphp
             <div class="row">
-                <div class="col-12 col-lg-6 col-xl-7">
+                <div class="col-12 col-md-8 pr-1">
                     <div class="card mb-lg-0">
                         <div class="card-body p-3">
                             <h3 class="card-title">Billing details</h3>
@@ -29,13 +29,13 @@
                                     <x-error field="name" />
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <x-input name="phone" placeholder="Phone Number *" :value="$user->phone_number ?? '+880'" />
+                                    <x-input name="phone" placeholder="Phone Number *" :value="$user->phone_number ?? ''" />
                                     <x-error field="phone" />
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-12">
-                                    <x-input type="email" name="email" placeholder="Email Address" :value="$user->email" />
+                                    <x-input type="email" name="email" placeholder="Email" :value="$user->email" />
                                     <x-error field="email" />
                                 </div>
                             </div>
@@ -54,13 +54,18 @@
                                 <x-error field="shipping" />
                             </div>
                             <div class="form-group">
-                                <x-input name="address" placeholder="Enter Address" :value="$user->address" />
+                                <x-textarea name="address" placeholder="Address">{{ $user->address }}</x-textarea>
                                 <x-error field="address" />
                             </div>
                         </div>
+                        <div class="card-divider"></div>
+                        <div class="card-body p-1">
+                            <h4 class="p-2">Product Overview</h4>
+                            @include('partials.cart-table')
+                        </div>
                     </div>
                 </div>
-                <div class="col-12 col-lg-6 col-xl-5 mt-4 mt-lg-0">
+                <div class="col-12 col-md-4 pl-1 mt-4 mt-lg-0">
                     <div class="card mb-0">
                         <div class="card-body">
                             <h3 class="card-title">Your Order</h3>
@@ -100,10 +105,6 @@
                             <button type="submit" class="btn btn-primary btn-xl btn-block">Place Order</button>
                         </div>
                     </div>
-                </div>
-                <div class="col-12">
-                    <h4 class="p-2">Selected Products</h4>
-                    @include('partials.cart-table')
                 </div>
             </div>
         </x-form>

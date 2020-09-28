@@ -75,7 +75,7 @@
                     Copyright 2020 - {{ date('Y') }} &copy; {{ $company->name ?? '' }}
                 </div>
                 <div class="site-footer__payments">
-                    Developed By <a href="https://cyber32.com" class="text-danger">Cyber32</a>
+                    Developed By <a href="https://cyber32.com" class="text-danger">Cyber 32</a>
                 </div>
             </div>
         </div>

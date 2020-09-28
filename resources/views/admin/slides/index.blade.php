@@ -89,7 +89,7 @@
         init: function () {
             this.on('complete', function(){
                 if(this.getQueuedFiles().length == 0 && this.getUploadingFiles().length == 0) {
-                    window.reload();
+                    location.reload();
                 }
             });
         }

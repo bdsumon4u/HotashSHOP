@@ -59,7 +59,9 @@ class ComposerServiceProvider extends ServiceProvider
             'partials.header.*',
             'partials.footer',
             'products.show',
+            'admin.layouts.master',
             'admin.orders.show',
+            'user.layouts.master',
             'layouts.light.master',
             'layouts.errors.master',
         ];

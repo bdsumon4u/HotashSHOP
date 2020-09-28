@@ -14,10 +14,4 @@
             
         </tbody>
     </table>
-    <div class="cart__actions">
-        <div class="cart__buttons ml-auto">
-            <a href="{{ route('products.index') }}" class="btn btn-light">Continue Shopping</a>
-            <a href="#" class="btn btn-primary cart__update-button">Update Cart</a>
-        </div>
-    </div>
 </div>

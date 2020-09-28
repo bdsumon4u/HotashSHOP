@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Slide;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Traits\ImageUploader;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class SlideController extends Controller
 {
@@ -49,7 +51,7 @@ class SlideController extends Controller
         return Slide::create([
             'mobile_src' => $this->uploadImage($file, [
                 'width' => 510,
-                'height' => 300,
+                'height' => 220,
                 'dir' => 'slides/mobile',
             ]),
             'desktop_src' => $this->uploadImage($file, [
@@ -112,6 +114,8 @@ class SlideController extends Controller
      */
     public function destroy(Slide $slide)
     {
+        Storage::disk('public')->delete(Str::after($slide->mobile_src, 'storage'));
+        Storage::disk('public')->delete(Str::after($slide->desktop_src, 'storage'));
         $slide->delete();
         return back()->with('success', 'Slide Has Been Deleted.');
     }
