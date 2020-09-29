@@ -50,4 +50,10 @@ return [
         ],
     ],
 
+    'products_count' => [
+        'pure-grid' => 20,
+        'carousel-grid' => 20,
+        'related' => 20,
+    ],
+
 ];

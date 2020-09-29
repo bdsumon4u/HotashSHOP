@@ -242,7 +242,7 @@
     </div>
 </div>
 <!-- .block-products-carousel -->
-@include('partials.products-carousel.grid', [
+@include('partials.products.carousel.grid', [
     'title' => 'Related Products',
     'cols' => $related_products->cols,
     'rows' => $related_products->rows,

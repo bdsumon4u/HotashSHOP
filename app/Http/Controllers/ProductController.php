@@ -43,7 +43,7 @@ class ProductController extends Controller
         $categories = $product->categories->pluck('id')->toArray();
         $products = Product::whereHas('categories', function ($query) use ($categories) {
             $query->whereIn('categories.id', $categories);
-        })->where('id', '!=', $product->id)->limit(20)->get();
+        })->where('id', '!=', $product->id)->limit(config('services.products_count.related', 20))->get();
         return $this->view(compact('products'));
     }
 }

@@ -18,9 +18,8 @@ class HomeController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $categories = Category::nested(11);
         $slides = Slide::whereIsActive(1)->get();
-        $sections = HomeSection::with('categories.products')->orderBy('order', 'asc')->get();
-        return view('index', compact('slides', 'categories', 'sections'));
+        $sections = HomeSection::orderBy('order', 'asc')->get();
+        return view('index', compact('slides', 'sections'));
     }
 }

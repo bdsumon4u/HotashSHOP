@@ -30,6 +30,6 @@ class HomeSection extends Model
         $categories = $this->categories->pluck('id')->toArray();
         return Product::whereHas('categories', function ($query) use ($categories) {
             $query->whereIn('categories.id', $categories);
-        })->inRandomOrder()->take(16)->get();
+        })->inRandomOrder()->take(config('services.products_count.'.$this->type, 20))->get();
     }
 }

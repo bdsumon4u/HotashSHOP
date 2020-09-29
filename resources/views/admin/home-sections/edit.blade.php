@@ -45,6 +45,7 @@
                             <div class="form-group">
                                 <x-label for="type" />
                                 <select selector name="type" id="type" class="form-control">
+                                    <option value="pure-grid" {{ $section->type == 'pure-grid' ? 'selected' : '' }}>Pure Grid</option>
                                     <option value="carousel-grid" {{ $section->type == 'carousel-grid' ? 'selected' : '' }}>Carousel Grid</option>
                                 </select>
                                 <x-error field="type" />
