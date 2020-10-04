@@ -7,7 +7,7 @@
         </div>
         @endif
         <div class="products-view__list products-list" data-layout="grid-{{ $cols ?? 5 }}-full" data-with-features="false">
-            <div class="products-list__body">
+            <div class="products-list__body justify-content-around">
                 @foreach($products as $product)
                 <div class="products-list__item">
                     <div class="product-card" data-id="{{ $product->id }}" data-max="{{ $product->should_track ? $product->stock_count : -1 }}">
