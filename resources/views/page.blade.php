@@ -2,10 +2,6 @@
 
 @section('title', $page->title)
 
-@push('styles')
-<link rel="stylesheet" href="{{ asset('css/tinymce.css') }}" />
-@endpush
-
 @section('content')
 
 @include('partials.page-header', [
