@@ -12,11 +12,11 @@
     'page_title' => 'Products'
 ])
 
-<div class="container">
-    <div class="row">
-        <div class="col-12">
-            <div class="block">
-                <div class="products-view">
+<div class="block">
+    <div class="products-view">
+        <div class="container">
+            <div class="row">
+                <div class="col">
                     <div class="products-view__options">
                         <div class="view-options">
                             <div class="view-options__legend">
@@ -53,9 +53,15 @@
                             </div> -->
                         </div>
                     </div>
-                    @include('partials.products.pure-grid', [
-                        'title' => null
-                    ])
+                </div>
+            </div>
+        </div>
+        @include('partials.products.pure-grid', [
+            'title' => null
+        ])
+        <div class="container">
+            <div class="row">
+                <div class="col">
                     <div class="products-view__pagination pt-0">
                         <!-- <ul class="pagination justify-content-center">
                             <li class="page-item disabled">
