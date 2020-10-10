@@ -54,7 +54,7 @@
                                 <x-error field="shipping" />
                             </div>
                             <div class="form-group">
-                                <x-textarea name="address" placeholder="Address">{{ $user->address }}</x-textarea>
+                                <x-textarea name="address" placeholder="Address *">{{ $user->address }}</x-textarea>
                                 <x-error field="address" />
                             </div>
                         </div>

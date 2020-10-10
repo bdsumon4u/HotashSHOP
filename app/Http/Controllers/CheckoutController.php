@@ -2,36 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\OrderPlaced;
 use App\Order;
 use App\Product;
+use App\Mail\OrderPlaced;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Requests\CheckoutRequest;
 
 class CheckoutController extends Controller
 {
     /**
      * Handle the incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\CheckoutRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke(Request $request)
+    public function __invoke(CheckoutRequest $request)
     {
         if ($request->isMethod('GET')) {
             return view('checkout');
         }
 
-        $data = $request->validate([
-            'name' => 'required',
-            'phone' => 'required|regex:/^\+8801\d{9}$/',
-            'email' => 'nullable',
-            'address' => 'required',
-            'note' => 'nullable',
-            'products' => 'required|array',
-            'shipping' => 'required',
-        ]);
+        $data = $request->validated();
 
         $order = null;
         DB::transaction(function () use ($data, &$order) {
