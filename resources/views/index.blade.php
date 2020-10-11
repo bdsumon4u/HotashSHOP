@@ -7,7 +7,7 @@
 @include('partials.slides')
 
 <!-- .block-features -->
-<div class="block block-features block-features--layout--classic">
+<div class="block block-features block-features--layout--classic d-none d-md-block">
     <div class="container">
         <div class="block-features__list">
             <div class="block-features__item">

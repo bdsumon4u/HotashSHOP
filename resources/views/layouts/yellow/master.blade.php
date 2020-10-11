@@ -43,19 +43,6 @@
                 height: auto;
             }
         }
-        @media (max-width: 767px) {
-            .block-slideshow__body, .block-slideshow__slide {
-                height: 220px !important;
-            }
-            .footer-contacts,
-            .footer-links,
-            .footer-newsletter {
-                text-align: left;
-            }
-            .footer-links ul {
-                padding-left: 27px;
-            }
-        }
         .product-card:before,
         .owl-carousel {
             z-index: 0;
@@ -69,9 +56,9 @@
             padding: 0 14px 14px 14px;
         }
         .product-card__buttons {
-            margin-right: -10px !important;
-            margin-bottom: -10px !important;
-            margin-left: -10px !important;
+            margin-right: -12px !important;
+            margin-bottom: -12px !important;
+            margin-left: -12px !important;
         }
         .product-card__buttons .btn {
             height: auto !important;
@@ -138,6 +125,16 @@
             background-color: #f7f8f9;
             z-index: 9999 !important;
         }
+        .aa-input-container input {
+            font-size: 15px;
+
+        }
+        .toast {
+            position: absolute;
+            top: 10%;
+            right: 10%;
+            z-index: 9999;
+        }
     </style>
     @stack('styles')
 </head>
@@ -149,6 +146,14 @@
             <div class="modal-content"></div>
         </div>
     </div><!-- quickview-modal / end -->
+    <div class="toast">
+        <div class="toast-header">
+            Toast Header
+        </div>
+        <div class="toast-body">
+            Some text inside the toast body
+        </div>
+    </div>
     <!-- mobilemenu -->
     <div class="mobilemenu">
         <div class="mobilemenu__backdrop"></div>
@@ -241,7 +246,7 @@
                         <td class="cart-table__column cart-table__column--price" data-title="Price">TK ${v.price}</td>
                         <td class="cart-table__column cart-table__column--quantity" data-title="Quantity">
                             <div class="input-number">
-                                <input class="form-control input-number__input" type="number" min="1" value="${v.quantity}" `+(v.max != -1 ? 'max="'+v.max+'"' : '')+`>
+                                <input class="form-control input-number__input" type="number" min="1" value="${v.quantity}" `+(v.max != -1 ? 'max="'+v.max+'"' : '')+` readonly>
                                 <div class="input-number__add"></div>
                                 <div class="input-number__sub"></div>
                             </div>
@@ -302,6 +307,11 @@
                 localStorage.setItem('product-cart', JSON.stringify(cart));
                 renderCart();
                 renderTotal();
+                $.bootstrapGrowl("Product Added To Cart.", {
+                    type: 'info',
+                    align: 'right',
+                    stackup_spacing: 30
+                });
             }
             
             $('.product__actions-item--addtocart button, .product__actions-item--ordernow button').on('click', function (ev) {
@@ -348,6 +358,11 @@
                     return v.id != id;
                 });
                 localStorage.setItem('product-cart', JSON.stringify(cart));
+                $.bootstrapGrowl("Product Removed From Cart.", {
+                    type: 'info',
+                    align: 'right',
+                    stackup_spacing: 30
+                });
             }
 
             $('.cart__update-button').on('click', function(ev) {

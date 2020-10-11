@@ -1,5 +1,33 @@
+@push('styles')
+<style>
+    @media (max-width: 749px) {
+        .block-slideshow {
+            margin-bottom: 40px;
+        }
+        #slideshow-container {
+            padding: 0;
+        }
+        .block-slideshow__body {
+            margin-top: 0 !important;
+        }
+    }
+    @media (max-width: 767px) {
+        .block-slideshow__body, .block-slideshow__slide {
+            height: 180px !important;
+        }
+        .footer-contacts,
+        .footer-links,
+        .footer-newsletter {
+            text-align: left;
+        }
+        .footer-links ul {
+            padding-left: 27px;
+        }
+    }
+</style>
+@endpush
 <div class="block-slideshow block-slideshow--layout--with-departments block">
-    <div class="container">
+    <div id="slideshow-container" class="container">
         <div class="row">
             <div class="col-12 col-lg-9 offset-lg-3">
                 <div class="block-slideshow__body">

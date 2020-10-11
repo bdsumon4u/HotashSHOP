@@ -7,5 +7,6 @@
 <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearchLite.min.js"></script>
 <script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.min.js"></script>
 <script src="{{ asset('strokya/js/algolia.js') }}"></script>
+<script src="{{ asset('strokya/vendor/jquery.bootstrap-growl.min.js') }}"></script>
 <script src="{{ asset('strokya/vendor/svg4everybody-2.1.9/svg4everybody.min.js') }}"></script>
 <script>svg4everybody();</script>

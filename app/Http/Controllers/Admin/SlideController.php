@@ -51,7 +51,7 @@ class SlideController extends Controller
         return Slide::create([
             'mobile_src' => $this->uploadImage($file, [
                 'width' => 510,
-                'height' => 220,
+                'height' => 180,
                 'dir' => 'slides/mobile',
             ]),
             'desktop_src' => $this->uploadImage($file, [
