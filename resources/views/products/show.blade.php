@@ -156,7 +156,7 @@
         <div id="accordion" class="mt-3">
             <div class="card">
                 <div class="card-header p-0">
-                    <a class="card-link px-4" data-toggle="collapse" href="#collapseOne">
+                    <a class="card-link px-4" datatoggle="collapse" href="javascript:void(false)">
                     Product Description
                     </a>
                 </div>
@@ -168,11 +168,11 @@
             </div>
             <div class="card">
                 <div class="card-header p-0">
-                    <a class="collapsed card-link px-4" data-toggle="collapse" href="#collapseTwo">
+                    <a class="card-link px-4" datatoggle="collapse" href="javascript:void(false)">
                     Delivery and Payment
                     </a>
                 </div>
-                <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                <div id="collapseTwo" class="collapse show" data-parent="#accordion">
                     <div class="card-body p-4">
                         <div class="row">
                             <div class="col-sm-6">
