@@ -5,15 +5,27 @@
             margin-bottom: 40px;
         }
         #slideshow-container {
-            padding: 0;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+        #slideshow-container > div {
+            margin-left: -5px;
+            margin-right: -5px;
+        }
+        #slideshow-container > div > div {
+            padding-left: 5px;
+            padding-right: 5px;
         }
         .block-slideshow__body {
-            margin-top: 0 !important;
+            margin-top: 5px !important;
         }
     }
     @media (max-width: 767px) {
         .block-slideshow__body, .block-slideshow__slide {
             height: 180px !important;
+        }
+        .block-slideshow__slide-image--mobile {
+            background-size: cover;
         }
         .footer-contacts,
         .footer-links,

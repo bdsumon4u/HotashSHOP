@@ -146,14 +146,6 @@
             <div class="modal-content"></div>
         </div>
     </div><!-- quickview-modal / end -->
-    <div class="toast">
-        <div class="toast-header">
-            Toast Header
-        </div>
-        <div class="toast-body">
-            Some text inside the toast body
-        </div>
-    </div>
     <!-- mobilemenu -->
     <div class="mobilemenu">
         <div class="mobilemenu__backdrop"></div>

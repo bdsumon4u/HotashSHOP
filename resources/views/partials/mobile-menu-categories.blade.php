@@ -1,6 +1,6 @@
-<li class="mobile-links__item" data-collapse-item>
+<li class="mobile-links__item mobile-links__item--open" data-collapse-item>
     <div class="mobile-links__item-title">
-        <a href="#" class="mobile-links__item-link">Categories</a>
+        <a href="javascript:void(false)" class="mobile-links__item-link mobile-links__item-toggle" data-collapse-trigger>Categories</a>
         <button class="mobile-links__item-toggle" type="button" data-collapse-trigger>
             <svg class="mobile-links__item-arrow" width="12px" height="7px">
                 <use xlink:href="{{ asset('strokya/images/sprite.svg#arrow-rounded-down-12x7') }}"></use>

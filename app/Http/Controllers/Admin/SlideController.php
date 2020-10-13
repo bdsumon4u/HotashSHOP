@@ -49,8 +49,9 @@ class SlideController extends Controller
 
         $file = $request->file('file');
         return Slide::create([
+            'is_active' => true,
             'mobile_src' => $this->uploadImage($file, [
-                'width' => 510,
+                'width' => 360,
                 'height' => 180,
                 'dir' => 'slides/mobile',
             ]),
