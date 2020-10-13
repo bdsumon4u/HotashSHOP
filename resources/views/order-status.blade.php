@@ -57,3 +57,11 @@
   </div>
 </div>
 @endcontent
+
+@push('scripts')
+@if(request('clear') == 'all')
+<script>
+  localStorage.removeItem('product-cart');
+</script>
+@endif
+@endpush

@@ -77,6 +77,6 @@ class CheckoutController extends Controller
         return redirect()->route('track-order', [
             'phone' => $data['phone'],
             'order' => optional($order)->getKey(),
-        ]);
+        ] + ($request->isMethod('GET') ? [] : ['clear' => 'all']));
     }
 }
