@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 
 class OrderController extends Controller
@@ -51,6 +52,9 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
+        $request->merge([
+            'phone' => Str::startsWith($request->phone, '0') ? '+88'.$request->phone : $request->phone,
+        ]);
         $data = $request->validate([
             'name' => 'required',
             'phone' => 'required|regex:/^\+8801\d{9}$/',

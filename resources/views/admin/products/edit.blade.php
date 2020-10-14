@@ -209,12 +209,12 @@
                                                             <div class="form-group">
                                                                 <!-- Button to Open the Modal -->
                                                                 <label for="base_image" class="d-block"><strong>Base Image</strong></label>
-                                                                <button type="button" class="btn single @if(old('base_image_src', $product->base_image->src)) d-none @endif btn-light" data-toggle="modal" data-target="#single-picker" style="height: 150px; width: 150px; background: transparent;">
+                                                                <button type="button" class="btn single @if(old('base_image_src', optional($product->base_image)->src)) d-none @endif btn-light" data-toggle="modal" data-target="#single-picker" style="height: 150px; width: 150px; background: transparent;">
                                                                     <i class="fa fa-image fa-4x text-secondary"></i>
                                                                 </button>
-                                                                <img src="{{ old('base_image_src', $product->base_image->src) }}" alt="Base Image" data-toggle="modal" data-target="#single-picker" id="base_image-preview" class="img-thumbnail img-responsive" style="display: {{ old('base_image_src', $product->base_image->src) ? '' : 'none' }}; height: 150px; width: 150px; cursor: pointer;">
-                                                                <input type="hidden" name="base_image_src" value="{{ old('base_image_src', $product->base_image->src) }}">
-                                                                <input type="hidden" name="base_image" value="{{ old('base_image', $product->base_image->id) }}" class="@error('base_image') is-invalid @enderror" id="base-image" class="form-control">
+                                                                <img src="{{ old('base_image_src', optional($product->base_image)->src) }}" alt="Base Image" data-toggle="modal" data-target="#single-picker" id="base_image-preview" class="img-thumbnail img-responsive" style="display: {{ old('base_image_src', optional($product->base_image)->src) ? '' : 'none' }}; height: 150px; width: 150px; cursor: pointer;">
+                                                                <input type="hidden" name="base_image_src" value="{{ old('base_image_src', optional($product->base_image)->src) }}">
+                                                                <input type="hidden" name="base_image" value="{{ old('base_image', optional($product->base_image)->id) }}" class="@error('base_image') is-invalid @enderror" id="base-image" class="form-control">
                                                                 @error('base_image')
                                                                     <span class="invalid-feedback">{{ $message }}</span>
                                                                 @enderror
@@ -266,7 +266,7 @@
     </div>
 </div>
 
-@include('admin.images.single-picker', ['selected' => old('base_image', $product->base_image->id)])
+@include('admin.images.single-picker', ['selected' => old('base_image', optional($product->base_image)->id)])
 @include('admin.images.multi-picker', ['selected' => old('additional_images', $product->additional_images->pluck('id')->toArray())])
 @endsection
 

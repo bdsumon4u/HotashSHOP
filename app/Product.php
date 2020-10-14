@@ -5,6 +5,7 @@ namespace App;
 use Laravel\Scout\Searchable;
 use App\Events\ProductCreated;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\App;
 use Nicolaslopezj\Searchable\SearchableTrait;
 
 class Product extends Model
@@ -44,23 +45,25 @@ class Product extends Model
     protected static function booted()
     {
         static::saved(function ($product) {
-            if ($product->categories->isEmpty() || $product->images->isEmpty()) {
-                $categories = range(1, 30);
-                $categories = array_map(function ($key) use ($categories) {
-                    return $categories[$key];
-                }, array_rand($categories, mt_rand(2, 4)));
-
-                $additionals = range(47, 67);
-                $additionals = array_map(function ($key) use ($additionals) {
-                    return $additionals[$key];
-                }, array_rand($additionals, mt_rand(4, 7)));
-
-                ProductCreated::dispatch($product, [
-                    'categories' => $categories,
-                    'base_image' => mt_rand(47, 67),
-                    'additional_images' => $additionals,
-                ]);
-            };
+            if (App::runningInConsole()) {
+                if ($product->categories->isEmpty() || $product->images->isEmpty()) {
+                    $categories = range(1, 30);
+                    $categories = array_map(function ($key) use ($categories) {
+                        return $categories[$key];
+                    }, array_rand($categories, mt_rand(2, 4)));
+    
+                    $additionals = range(47, 67);
+                    $additionals = array_map(function ($key) use ($additionals) {
+                        return $additionals[$key];
+                    }, array_rand($additionals, mt_rand(4, 7)));
+    
+                    ProductCreated::dispatch($product, [
+                        'categories' => $categories,
+                        'base_image' => mt_rand(47, 67),
+                        'additional_images' => $additionals,
+                    ]);
+                };
+            }
         });
     }
 
@@ -111,7 +114,7 @@ class Product extends Model
     {
         return array_merge($this->toArray(), [
             'categories' => $this->categories->pluck('name')->toArray(),
-            'base_image' => $this->base_image->src,
+            'base_image' => optional($this->base_image)->src,
         ]);
     }
 

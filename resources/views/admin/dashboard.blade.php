@@ -115,7 +115,7 @@
                            <tr>
                               <td class="pl-2">
                                  <div class="media">
-                                    <img class="img-fluid m-r-15 rounded-circle" src="{{ $product->base_image->src }}" width="42" height="42" alt="">
+                                    <img class="img-fluid m-r-15 rounded-circle" src="{{ optional($product->base_image)->src }}" width="42" height="42" alt="">
                                     <div class="media-body">
                                        <a href="{{ route('admin.products.edit', $product) }}">{{ $product->name }}</a>
                                     </div>
@@ -157,7 +157,7 @@
                            <tr>
                               <td class="pl-2">
                                  <div class="media">
-                                    <img class="img-fluid m-r-15 rounded-circle" src="{{ $product->base_image->src }}" width="42" height="42" alt="">
+                                    <img class="img-fluid m-r-15 rounded-circle" src="{{ optional($product->base_image)->src }}" width="42" height="42" alt="">
                                     <div class="media-body">
                                        <a href="{{ route('admin.products.edit', $product) }}">{{ $product->name }}</a>
                                     </div>

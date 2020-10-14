@@ -41,7 +41,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="d-block">Delivery Area <span class="text-danger">*</span></label>
-                                <div class="form-control @error('shipping') is-invalid @enderror">
+                                <div class="form-control @error('shipping') is-invalid @enderror h-auto">
                                     <div class="custom-control custom-radio custom-control-inline">
                                         <input type="radio" class="custom-control-input" id="inside-dhaka" name="shipping" value="Inside Dhaka" data-val="{{ config('services.shipping.Inside Dhaka') }}">
                                         <label class="custom-control-label" for="inside-dhaka">Inside Dhaka</label>
