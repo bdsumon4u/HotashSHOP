@@ -40,6 +40,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
+        $product->load(['brand', 'categories']);
         $categories = $product->categories->pluck('id')->toArray();
         $products = Product::whereHas('categories', function ($query) use ($categories) {
             $query->whereIn('categories.id', $categories);

@@ -12,7 +12,7 @@ class Product extends Model
 {
     use Searchable, SearchableTrait;
 
-    protected $with = ['categories', 'brand', 'images'];
+    protected $with = ['images'];
 
     protected $fillable = [
         'brand_id', 'name', 'slug', 'description', 'price', 'selling_price', 'sku', 'should_track', 'stock_count', 'is_active'
