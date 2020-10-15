@@ -52,7 +52,11 @@ class ComposerServiceProvider extends ServiceProvider
         }
 
         View::composer(['partials.departments', 'partials.mobile-menu-categories'], function ($view) {
-            $view->with('categories', Category::nested(10));
+            $view->with('categories', Cache::get('dept_cats', function () {
+                $dept_cats = Category::nested(10);
+                Cache::put('dept_cats', $dept_cats, 60 * 5);
+                return $dept_cats;
+            }));
         });
 
         $settingsPages = [
@@ -67,7 +71,9 @@ class ComposerServiceProvider extends ServiceProvider
         ];
         View::composer($settingsPages, function ($view) {
             $view->with(Cache::get('settings', function () {
-                return Setting::array();
+                $settings = Setting::array();
+                Cache::put('settings', $settings);
+                return $settings;
             }));
         });
     }
