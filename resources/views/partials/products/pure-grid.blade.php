@@ -3,7 +3,11 @@
         @if($title ?? null)
         <div class="block-header">
             <h3 class="block-header__title">
+                @isset($section)
                 <a href="{{ route('home-sections.products', $section) }}" style="color:inherit;">{{ $title }}</a>
+                @else
+                {{ $title }}
+                @endisset
             </h3>
             <div class="block-header__divider"></div>
         </div>
