@@ -135,11 +135,24 @@
             right: 10%;
             z-index: 9999;
         }
+        @media (max-width: 991px) {
+            .header-fixed .site__header {
+                position: fixed;
+                width: 100%;
+                z-index: 9999;
+            }
+            .header-fixed .site__body {
+                padding-top: 54px;
+            }
+            .header-fixed .mobilemenu__body {
+                top: 54px;
+            }
+        }
     </style>
     @stack('styles')
 </head>
 
-<body style="margin: 0; padding: 0;">
+<body class="header-fixed" style="margin: 0; padding: 0;">
     <!-- quickview-modal -->
     <div id="quickview-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl">
@@ -297,6 +310,7 @@
                 });
                 updated || cart.push(product);
                 localStorage.setItem('product-cart', JSON.stringify(cart));
+                orderedProducts();
                 renderCart();
                 renderTotal();
                 $.bootstrapGrowl("Product Added To Cart.", {
@@ -350,6 +364,7 @@
                     return v.id != id;
                 });
                 localStorage.setItem('product-cart', JSON.stringify(cart));
+                orderedProducts();
                 $.bootstrapGrowl("Product Removed From Cart.", {
                     type: 'info',
                     align: 'right',
@@ -369,6 +384,7 @@
                     return item;
                 });
                 localStorage.setItem('product-cart', JSON.stringify(cart));
+                orderedProducts();
                 renderCart();
                 renderCartPage();
                 renderTotal();
@@ -415,9 +431,13 @@
                 renderTotal();
             });
 
-            for (var index = 0, cart = cartContent(); index < cart.length; index++) {
-                $('.ordered-products').append('<input type="hidden" name="products['+cart[index].id+']" value="'+cart[index].quantity+'" />');
+            function orderedProducts() {
+                $('.ordered-products').empty();
+                for (var index = 0, cart = cartContent(); index < cart.length; index++) {
+                    $('.ordered-products').append('<input type="hidden" name="products['+cart[index].id+']" value="'+cart[index].quantity+'" />');
+                }
             }
+            orderedProducts();
         });
     </script>
     @stack('scripts')

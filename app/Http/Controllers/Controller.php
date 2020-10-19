@@ -38,13 +38,18 @@ class Controller extends BaseController
     {
         $route = request()->route();
         $App = App::getNamespace();
-
+        
         # Model Name & Key Name
-        $Name = Str::beforeLast(Str::afterLast(\get_called_class(), '\\'), 'Controller');
-        $keyName = Str::lower($Name);
+        $Model = Str::beforeLast(Str::afterLast(\get_called_class(), '\\'), 'Controller');
+        $keyName = Str::lower($Model);
+
+        # Route Model
+        if ($model = $route->parameter($keyName) instanceof Model) {
+            goto delete;
+        }
 
         # Class & Object
-        $class = class_exists($App.'Models\\'.$Name) ? $App.'Models\\'.$Name : $App.$Name;
+        $class = class_exists($App.'Models\\'.$Model) ? $App.'Models\\'.$Model : $App.$Model;
         $object = new $class;
 
         # Model Binder
@@ -55,13 +60,11 @@ class Controller extends BaseController
         );
 
         # The Model
-        $model = data_get($route->parameters(), $keyName);
-        if (! $model instanceof Model) {
-            $model = $class::where($ModelBinder, $model)->firstOrFail();
-        }
+        $model = $class::where($ModelBinder, $model)->firstOrFail();
 
+        delete:
         # Deleting The Model
         $model->delete();
-        return back()->withSuccess("{$Name} Has Been Deleted.");
+        return back()->withSuccess("{$Model} Has Been Deleted.");
     }
 }
