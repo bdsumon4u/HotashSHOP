@@ -25,11 +25,20 @@ class HomeSection extends Model
         return $this->belongsToMany(Category::class);
     }
 
-    public function products()
+    public function products($limited = true, $paginate = 0)
     {
         $categories = $this->categories->pluck('id')->toArray();
-        return Product::whereHas('categories', function ($query) use ($categories) {
+        $query = Product::whereHas('categories', function ($query) use ($categories) {
             $query->whereIn('categories.id', $categories);
-        })->inRandomOrder()->take(config('services.products_count.'.$this->type, 20))->get();
+        })
+        ->inRandomOrder()
+        ->when($limited, function ($query) {
+            $query->take(5);
+            // $query->take(config('services.products_count.'.$this->type, 20));
+        });
+
+        return $paginate
+            ? $query->paginate($paginate)
+            : $query->get();
     }
 }

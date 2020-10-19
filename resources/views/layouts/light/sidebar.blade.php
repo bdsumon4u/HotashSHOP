@@ -2,8 +2,6 @@
   <div class="logo-wrapper">
     <a href="{{route('/')}}">
       <span class="h4 m-0">{{ $company->name }}</span>
-      <!-- <img class="img-fluid for-light" src="{{asset($logo->desktop ?? '')}}" alt=""> -->
-      <!-- <img class="img-fluid for-dark" src="{{asset($logo->desktop ?? '')}}" alt=""> -->
     </a>
     <div class="back-btn"><i class="fa fa-angle-left"></i></div>
     <div class="toggle-sidebar"><i class="status_toggle middle" data-feather="grid" id="sidebar-toggle"> </i></div>
@@ -23,11 +21,6 @@
               <img class="img-fluid" src="{{asset($logo->favicon ?? '')}}" height="36" width="36" alt="">
             </a>
             <div class="mobile-back text-right"><span>Back</span><i class="fa fa-angle-right pl-2" aria-hidden="true"></i></div>
-          </li>
-          <li class="sidebar-title">
-            <div>
-              <h6 class="lan-1"> {{ trans('lang.General') }}</h6>
-            </div>
           </li>
           <li>
             <a class="nav-link menu-title link-nav {{ Route::currentRouteName()=='admin.home' ? 'active' : '' }}" href="{{route('admin.home')}}">
