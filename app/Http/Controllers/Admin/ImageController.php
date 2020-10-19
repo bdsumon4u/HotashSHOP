@@ -63,5 +63,8 @@ class ImageController extends Controller
         }
 
         $this->delete();
+        return redirect()
+            ->action([self::class, 'index'])
+            ->with('success', 'Image Has Been Deleted.');
     }
 }

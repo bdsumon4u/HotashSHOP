@@ -27,7 +27,7 @@
                                         @if ($category->childrens->isNotEmpty())
                                         <svg class="menu__arrow" width="6px" height="9px">
                                             <use
-                                                xlink:href="http://127.0.0.1:8000/strokya/images/sprite.svg#arrow-rounded-right-6x9">
+                                                xlink:href="{{ asset('strokya/images/sprite.svg#arrow-rounded-right-6x9') }}">
                                             </use>
                                         </svg>
                                         @endif

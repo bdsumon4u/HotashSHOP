@@ -98,6 +98,8 @@ class BrandController extends Controller
     public function destroy(Brand $brand)
     {
         $brand->delete();
-        return back()->with('success', 'Brand Has Been Deleted.');
+        return redirect()
+            ->action([self::class, 'index'])
+            ->with('success', 'Brand Has Been Deleted.');
     }
 }

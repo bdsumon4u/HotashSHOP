@@ -10,14 +10,14 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function() {
     MultiUi::routes([
         'register' => false,
         'URLs' => [
-            'login' => 'enter',
+            'login' => 'getpass',
             'register' => 'create-admin-account',
             'reset/password' => 'reset-pass',
             'logout' => 'getout',
         ],
         'prefix' => [
             'URL' => 'admin-',
-            'except' => 'register',
+            'except' => ['login', 'register'],
         ],
     ]);
     #...

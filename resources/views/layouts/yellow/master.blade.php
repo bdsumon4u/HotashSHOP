@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="format-detection" content="telephone=no">
     <title>{{ setting('company')->name }} - @yield('title')</title>
-    <link rel="icon" type="image/png" href="{{ asset('strokya/images/favicon.png') }}"><!-- fonts -->
+    <link rel="icon" type="image/png" href="{{ asset($logo->favicon) }}"><!-- fonts -->
     <!-- css -->
     @include('layouts.yellow.css')
     <!-- js -->

@@ -65,13 +65,13 @@
                                 <div class="card-header p-3">
                                     <ul class="nav nav-tabs" role="tablist">
                                         <li class="nav-item">
-                                            <a class="nav-link active" data-toggle="tab" href="#create-category"
-                                                role="tab" aria-controls="create-category" aria-selected="false">Create</a>
+                                            <a class="nav-link active" data-toggle="tab" href="#create-brand"
+                                                role="tab" aria-controls="create-brand" aria-selected="false">Create</a>
                                         </li>
                                         @if(request('active_id'))
                                         <li class="nav-item">
-                                            <a class="nav-link" data-toggle="tab" href="#edit-category"
-                                                role="tab" aria-controls="edit-category" aria-selected="false">Edit</a>
+                                            <a class="nav-link" data-toggle="tab" href="#edit-brand"
+                                                role="tab" aria-controls="edit-brand" aria-selected="false">Edit</a>
                                         </li>
                                         <li class="nav-item ml-auto">
                                             <x-form action="{{ route('admin.brands.destroy', request('active_id', 0)) }}" method="delete">
@@ -85,9 +85,9 @@
                                     @if($message = Session::get('success'))
                                     <div class="alert alert-info py-2"><strong>{{ $message }}</strong></div>
                                     @endif
-                                    @php $active = App\Category::find(request('active_id')) @endphp
+                                    @php $active = App\Brand::find(request('active_id')) @endphp
                                     <div class="tab-content">
-                                        <div class="tab-pane active" id="create-category" role="tabpanel">
+                                        <div class="tab-pane active" id="create-brand" role="tabpanel">
                                             <p class="text-info">Create Brand</p>
                                             <form action="{{ route('admin.brands.store') }}" method="post">
                                                 @csrf
@@ -109,7 +109,7 @@
                                             </form>
                                         </div>
                                         @if(request('active_id'))
-                                        <div class="tab-pane" id="edit-category" role="tabpanel">
+                                        <div class="tab-pane" id="edit-brand" role="tabpanel">
                                             <p class="text-info">Edit Brand</p>
                                             <form action="{{ route('admin.brands.update', request('active_id', 0)) }}" method="post">
                                                 @csrf

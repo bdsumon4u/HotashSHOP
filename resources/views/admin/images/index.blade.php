@@ -83,16 +83,6 @@
 
 @push('scripts')
 <script>
-    Dropzone.options.imageDropzone = {
-        init: function () {
-            this.on('complete', function(){
-                if(this.getQueuedFiles().length == 0 && this.getUploadingFiles().length == 0) {
-                    $('.datatable').DataTable().ajax.reload();
-                }
-            });
-        }
-    };
-
     var table = $('.datatable').DataTable({
         processing: true,
         serverSide: true,
@@ -104,9 +94,7 @@
             { data: 'size_human', name: 'size' },
             { data: 'action' },
         ],
-        order: [
-            [1, 'desc']
-        ],
+        ordering: false,
     });
 
     table.on('draw', function () {
@@ -115,5 +103,16 @@
             $('.delete-form').attr('action', $(this).attr('href')).submit();
         });
     });
+
+    Dropzone.options.imageDropzone = {
+        init: function () {
+            this.on('complete', function(){
+                if(this.getQueuedFiles().length == 0 && this.getUploadingFiles().length == 0) {
+                    console.log('yes');
+                    $('.datatable').DataTable().ajax.reload();
+                }
+            });
+        }
+    };
 </script>
 @endpush
