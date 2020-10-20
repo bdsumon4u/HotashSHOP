@@ -60,13 +60,17 @@ class ImageController extends Controller
     public function destroy(Image $image)
     {
         if ($image->products->isNotEmpty()) {
-            return back()->with('danger', 'Image Is Used.');
+            return request()->expectsJson()
+                ? response()->json(['danger' => 'Image Is Used.'])
+                : back()->with('danger', 'Image Is Used.');
         }
 
         // $this->delete();
         $image->delete() && Storage::disk($image->disk)->delete(Str::after($image->path, 'storage'));
-        return redirect()
-            ->action([self::class, 'index'])
-            ->with('success', 'Image Has Been Deleted.');
+        return request()->expectsJson()
+            ? response()->json(['success' => 'Image Has Been Deleted.'])
+            : redirect()
+                ->action([self::class, 'index'])
+                ->with('success', 'Image Has Been Deleted.');
     }
 }

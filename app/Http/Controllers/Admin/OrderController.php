@@ -85,6 +85,7 @@ class OrderController extends Controller
             return null;
         }, $products);
         $order->delete();
-        return redirect(action([self::class, 'index']))->with('success', 'Order Has Been Deleted.');
+        return request()->expectsJson() ? true : redirect(action([self::class, 'index']))
+            ->with('success', 'Order Has Been Deleted.');
     }
 }

@@ -185,6 +185,12 @@ $(document).on('click', '[data-action="delete"]', function (e) {
         type: 'DELETE',
         dataType: 'json',
     }).always(function (data) {
+        data.danger && $('.alert-box').html(`
+            <div class="alert alert-danger">${data.danger}</div>
+        `);
+        data.success && $('.alert-box').html(`
+            <div class="alert alert-success">${data.success}</div>
+        `);
         table.DataTable().draw(false);
     });
 })

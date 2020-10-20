@@ -59,6 +59,7 @@
           </div>
           <!-- Container-fluid starts-->
           <x-alert-box />
+          <div class="alert-box"></div>
           @yield('content')
           <!-- Container-fluid Ends-->
         </div>
