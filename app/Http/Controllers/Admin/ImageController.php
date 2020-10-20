@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Image;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use App\Traits\ImageUploader;
 use Illuminate\Support\Facades\Storage;
@@ -62,7 +63,8 @@ class ImageController extends Controller
             return back()->with('danger', 'Image Is Used.');
         }
 
-        $this->delete();
+        // $this->delete();
+        $image->delete() && Storage::disk($image->disk)->delete(Str::after($image->path, 'storage'));
         return redirect()
             ->action([self::class, 'index'])
             ->with('success', 'Image Has Been Deleted.');

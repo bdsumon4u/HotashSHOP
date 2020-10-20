@@ -28,14 +28,15 @@ class HomeSection extends Model
     public function products($limited = true, $paginate = 0)
     {
         $categories = $this->categories->pluck('id')->toArray();
-        $query = Product::whereHas('categories', function ($query) use ($categories) {
-            $query->whereIn('categories.id', $categories);
-        })
-        ->inRandomOrder()
-        ->when($limited, function ($query) {
-            $query->take(5);
-            // $query->take(config('services.products_count.'.$this->type, 20));
-        });
+        $query = Product::whereIsActive(1)
+            ->whereHas('categories', function ($query) use ($categories) {
+                $query->whereIn('categories.id', $categories);
+            })
+            // ->inRandomOrder()
+            ->when($limited, function ($query) {
+                // $query->take(5);
+                $query->take(config('services.products_count.'.$this->type, 20));
+            });
 
         return $paginate
             ? $query->paginate($paginate)

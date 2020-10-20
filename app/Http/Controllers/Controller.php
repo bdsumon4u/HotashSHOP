@@ -44,7 +44,7 @@ class Controller extends BaseController
         $keyName = Str::lower($Model);
 
         # Route Model
-        if ($model = $route->parameter($keyName) instanceof Model) {
+        if (($model = $route->parameter($keyName)) instanceof Model) {
             goto delete;
         }
 

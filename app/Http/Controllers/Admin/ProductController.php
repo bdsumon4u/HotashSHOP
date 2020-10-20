@@ -46,7 +46,7 @@ class ProductController extends Controller
     {
         $data = $request->validationData();
         event(new ProductCreated(Product::create($data), $data));
-        return back()->with('success', 'Product Has Been Created.');
+        return redirect()->action([self::class, 'index'])->with('success', 'Product Has Been Created.');
     }
 
     /**
@@ -93,7 +93,7 @@ class ProductController extends Controller
         // }
     
         event(new ProductUpdated($product, $data));
-        return back()->with('success', 'Product Has Been Updated.');
+        return redirect()->action([self::class, 'index'])->with('success', 'Product Has Been Updated.');
     }
 
     /**

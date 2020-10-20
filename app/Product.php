@@ -5,6 +5,7 @@ namespace App;
 use Laravel\Scout\Searchable;
 use App\Events\ProductCreated;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\App;
 use Nicolaslopezj\Searchable\SearchableTrait;
 
@@ -64,6 +65,10 @@ class Product extends Model
                     ]);
                 };
             }
+        });
+
+        static::addGlobalScope('latest', function (Builder $builder) {
+            $builder->latest();
         });
     }
 

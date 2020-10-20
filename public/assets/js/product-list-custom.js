@@ -14,28 +14,7 @@
            { data: 'actions' },
         ],
         order: [
-           [1, 'desc']
+        //    [1, 'desc']
         ],
-    })
-
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-    })
-
-    $(document).on('click', '[data-action="delete"]', function (e) {
-        e.preventDefault();
-        if (! confirm('Are you sure to delete?')) {
-            return;
-        }
-
-        $.ajax({
-            url: $(this).attr('href'),
-            type: 'DELETE',
-            dataType: 'json',
-        }).always(function (data) {
-            $('#product-table').DataTable().draw(false);
-        });
     })
 })(jQuery);

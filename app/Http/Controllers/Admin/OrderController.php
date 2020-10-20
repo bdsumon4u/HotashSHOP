@@ -6,6 +6,7 @@ use App\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
+use App\Product;
 
 class OrderController extends Controller
 {
@@ -76,6 +77,14 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        return $this->delete();
+        $products = is_array($order->products) ? $order->products : get_object_vars($order->products);
+        array_map(function ($product) {
+            if ($product = Product::find($product->id)) {
+                $product->should_track && $product->increment('stock_count', intval($product->quantity));
+            }
+            return null;
+        }, $products);
+        $order->delete();
+        return redirect(action([self::class, 'index']))->with('success', 'Order Has Been Deleted.');
     }
 }

@@ -65,7 +65,7 @@ class ImageController extends Controller
 
     protected function ready()
     {
-        return DataTables::of(Image::latest())
+        return DataTables::of(request()->has('order') ? Image::all() : Image::latest('id'))
             ->addIndexColumn()
             ->addColumn('preview', function (Image $image) {
                 return '<img src="'.asset($image->path).'" width="100" height="120" />';

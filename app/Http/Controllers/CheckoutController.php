@@ -33,11 +33,15 @@ class CheckoutController extends Controller
                     $id = $product->id;
                     $quantity = $data['products'][$id];
 
+                    if ($quantity <= 0) {
+                        return null;
+                    }
                     // Manage Stock
                     if ($product->should_track) {
                         if ($product->stock_count <= 0) {
                             return null;
                         }
+                        $quantity = $product->stock_count >= $quantity ? $quantity : $product->stock_count;
                         $product->decrement('stock_count', $quantity);
                     }
 
@@ -48,7 +52,7 @@ class CheckoutController extends Controller
                         'slug' => $product->slug,
                         'image' => $product->base_image->src,
                         'price' => $product->selling_price,
-                        'quantity' => $product->stock_count >= $quantity ? $quantity : $product->stock_count,
+                        'quantity' => $quantity,
                         'total' => $quantity * $product->selling_price,
                     ];
                 })->filter(function ($product) {

@@ -17,7 +17,7 @@ class ProductController extends Controller
      */
     public function __invoke(Request $request)
     {
-        return DataTables::of(Product::all())
+        return DataTables::of($request->has('order') ? Product::all() : Product::latest('id'))
             ->addIndexColumn()
             ->addColumn('image', function (Product $product) {
                 return '<img src="'.$product->base_image->src.'" width="100" height="100" />';

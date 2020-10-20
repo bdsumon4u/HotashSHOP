@@ -64,10 +64,6 @@
                         </thead>
                     </table>
                 </div>
-                <form action="" method="post" class="delete-form d-none">
-                    @csrf
-                    @method('DELETE')
-                </form>
             </div>
         </div>
     </div>
@@ -95,13 +91,6 @@
             { data: 'action' },
         ],
         ordering: false,
-    });
-
-    table.on('draw', function () {
-        $(document).on('click', '[data-action="delete"]', function (ev) {
-            ev.preventDefault();
-            $('.delete-form').attr('action', $(this).attr('href')).submit();
-        });
     });
 
     Dropzone.options.imageDropzone = {

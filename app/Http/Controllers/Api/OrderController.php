@@ -17,7 +17,7 @@ class OrderController extends Controller
      */
     public function __invoke(Request $request)
     {
-        return DataTables::of(Order::all())
+        return DataTables::of($request->has('order') ? Order::all() : Order::latest('id'))
             ->addIndexColumn()
             ->editColumn('created_at', function ($row) {
                 return $row->created_at->format('d-M-Y');
