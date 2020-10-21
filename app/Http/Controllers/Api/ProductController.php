@@ -27,7 +27,7 @@ class ProductController extends Controller
                     ? '<p>'.theMoney($product->price).'</p>'
                     : '<del style="color: #ff0000;">'.theMoney($product->price).'</del>
                         <br>
-                    <ins style="text-decoration: none;">'.theMoney($product->price).'</ins>';
+                    <ins style="text-decoration: none;">'.theMoney($product->selling_price).'</ins>';
             })
             ->addColumn('stock', function (Product $product) {
                 return $product->should_track

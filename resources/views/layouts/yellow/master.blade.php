@@ -300,6 +300,7 @@
             });
 
             function addToCart(product) {
+                product.price = product.price.replace(/,/g , "");
                 var cart = cartContent(), updated = false;
                 cart = cart.filter(function (item) {
                     if (product.id == item.id) {
