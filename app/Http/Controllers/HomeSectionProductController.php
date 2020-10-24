@@ -16,7 +16,7 @@ class HomeSectionProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function __invoke(Request $request, HomeSection $section)
-    {        
+    {
         $rows = 3;
         $cols = 5;
         if ($productsPage = Setting::whereName('products_page')->first()) {
