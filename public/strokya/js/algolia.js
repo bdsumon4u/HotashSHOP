@@ -1,4 +1,4 @@
-const client = algoliasearch("Z8I9YR2F4F", "c386f96a5ff819e9a791a018bc484f9d");
+const client = algoliasearch("KFDUEMFZ33", "c4599a85058ade29b55be79b61f777a0");
 const products = client.initIndex("products");
 
 let enterPressed = false;
