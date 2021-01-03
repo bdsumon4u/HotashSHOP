@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use DB;
 use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -99,7 +100,10 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        $category->delete();
+        DB::transaction(function () use ($category) {
+            $category->childrens()->delete();
+            $category->delete();
+        });
         return redirect()->route('admin.categories.index')->with('success', 'Category Has Been Deleted.');
     }
 }
