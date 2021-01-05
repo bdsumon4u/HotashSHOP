@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use Illuminate\Http\Request;
+use WebLAgence\LaravelFacebookPixel\LaravelFacebookPixel;
 
 class CategoryProductController extends Controller
 {
@@ -15,6 +16,9 @@ class CategoryProductController extends Controller
      */
     public function __invoke(Request $request, Category $category)
     {
+        LaravelFacebookPixel::createEvent('Looking For Category', [
+            'Category Name' => $category->name,
+        ]);
         $per_page = $request->get('per_page', 15);
         $products = $category->products()
             ->whereIsActive(1)

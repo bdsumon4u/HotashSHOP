@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Product;
 use App\Setting;
 use Illuminate\Http\Request;
+use WebLAgence\LaravelFacebookPixel\LaravelFacebookPixel;
 
 class ProductController extends Controller
 {
@@ -16,6 +17,7 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
+        LaravelFacebookPixel::createEvent('Shop Page Visit', []);
         $rows = 3;
         $cols = 5;
         if ($productsPage = Setting::whereName('products_page')->first()) {
@@ -41,6 +43,10 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         $product->load(['brand', 'categories']);
+        LaravelFacebookPixel::createEvent('Product View', [
+            'Product ID' => $product->id,
+            'Product Name' => $product-> $product->name,
+        ]);
         $categories = $product->categories->pluck('id')->toArray();
         $products = Product::whereHas('categories', function ($query) use ($categories) {
             $query->whereIn('categories.id', $categories);

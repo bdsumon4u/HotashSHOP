@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\CheckoutRequest;
+use WebLAgence\LaravelFacebookPixel\LaravelFacebookPixel;
 
 class CheckoutController extends Controller
 {
@@ -57,9 +58,15 @@ class CheckoutController extends Controller
                     ];
                 })->filter(function ($product) {
                     return $product != null; // Only Available Products
-                })->toArray();
+                });
 
-            $data['products'] = json_encode($products);
+            LaravelFacebookPixel::createEvent('Checkout', [
+                'Product IDs' => $products->map(function ($product) {
+                    return $product['id'];
+                })->implode(', '),
+            ]);
+
+            $data['products'] = json_encode($products->toArray());
             $data += [
                 'user_id' => optional(auth('user')->user())->id, // If User Logged In
                 'status' => data_get(config('app.orders', []), 0, 'PENDING'), // Default Status

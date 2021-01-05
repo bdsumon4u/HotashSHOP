@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Brand;
 use Illuminate\Http\Request;
+use WebLAgence\LaravelFacebookPixel\LaravelFacebookPixel;
 
 class BrandProductController extends Controller
 {
@@ -15,6 +16,9 @@ class BrandProductController extends Controller
      */
     public function __invoke(Request $request, Brand $brand)
     {
+        LaravelFacebookPixel::createEvent('Looking For Brand', [
+            'Brand Name' => $brand->name,
+        ]);
         $per_page = $request->get('per_page', 15);
         $products = $brand->products()
             ->whereIsActive(1)

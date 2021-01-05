@@ -8,6 +8,7 @@
     <title>{{ setting('company')->name }} - @yield('title')</title>
     <link rel="icon" type="image/png" href="{{ asset($logo->favicon) }}"><!-- fonts -->
     <!-- css -->
+    @include('facebook-pixel::head')
     @include('layouts.yellow.css')
     <!-- js -->
     <!-- font - fontawesome -->
@@ -153,6 +154,7 @@
 </head>
 
 <body class="header-fixed" style="margin: 0; padding: 0;">
+    @include('facebook-pixel::body')
     <!-- quickview-modal -->
     <div id="quickview-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl">
@@ -320,7 +322,7 @@
                     stackup_spacing: 30
                 });
             }
-            
+
             $('.product__actions-item--addtocart button, .product__actions-item--ordernow button').on('click', function (ev) {
                 ev.preventDefault();
                 var card = $(this).parents('.product__content');
@@ -340,7 +342,7 @@
                 };
 
                 addToCart(product);
-                
+
                 if ($(this).parent().hasClass('product__actions-item--ordernow')) {
                     window.location = "{{ route('checkout') }}";
                 }
