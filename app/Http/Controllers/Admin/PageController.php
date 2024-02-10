@@ -71,7 +71,7 @@ class PageController extends Controller
     {
         $data = $request->validate([
             'title' => 'required',
-            'slug' => 'required|unique:pages,id,'.$page->id,
+            'slug' => 'required|unique:pages,id,' . $page->id,
             'content' => 'required',
         ]);
 
@@ -88,6 +88,7 @@ class PageController extends Controller
      */
     public function destroy(Page $page)
     {
+        abort_if(request()->user()->role_id, 403, 'Not Allowed.');
         $page->delete();
         return back()->withSuccess('Page Deleted.');
     }

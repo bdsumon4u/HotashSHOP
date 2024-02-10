@@ -33,8 +33,12 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function() {
         Route::get('/reports/filter', 'OrderController@filter')->name('orders.filter');
         Route::get('/reports/scanning', 'OrderController@scanning')->name('orders.scanning');
         Route::get('/orders/invoices', 'OrderController@invoices')->name('orders.invoices');
+        Route::get('/orders/stead-fast', 'OrderController@steadFast')->name('orders.stead-fast');
         Route::post('/orders/change-status', 'OrderController@status')->name('orders.status');
+        Route::patch('/orders/{order}/add-product', 'OrderController@addProduct')->name('orders.add-product');
+        Route::patch('/orders/{order}/update-quantity', 'OrderController@updateQuantity')->name('orders.update-quantity');
         Route::resources([
+            'staffs'       => 'StaffController',
             'slides'        => 'SlideController',
             'categories'    => 'CategoryController',
             'brands'        => 'BrandController',

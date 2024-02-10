@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Admin;
 use App\Http\Requests\CheckoutRequest;
 use App\Notifications\User\AccountCreated;
 use App\Notifications\User\OrderPlaced;
@@ -41,7 +42,7 @@ class CheckoutController extends Controller
                     // Manage Stock
                     if ($product->should_track) {
                         if ($product->stock_count <= 0) {
-                            return null;
+                            // return null; // Allow overstock
                         }
                         $quantity = $product->stock_count >= $quantity ? $quantity : $product->stock_count;
                         $product->decrement('stock_count', $quantity);
@@ -66,11 +67,21 @@ class CheckoutController extends Controller
             $oldOrders = $user->orders()->get();
             $status = !auth('user')->user() ? 'PENDING' // PENDING
                 : data_get(config('app.orders', []), 0, 'PENDING'); // Default Status
+
+            $oldOrders = Order::select(['id', 'admin_id', 'status'])->where('data->phone', $data['phone'])->get();
+            $adminIds = $oldOrders->pluck('admin_id')->unique()->toArray();
+            $adminQ = Admin::where('role_id', 1)->where('is_active', true)->inRandomOrder();
+            if (count($adminIds) > 0) {
+                $data['admin_id'] = $adminQ->wheretIn('id', $adminIds)->first()->id ?? $adminQ->first()->id ?? null;
+            } else {
+                $data['admin_id'] = $adminQ->first()->id ?? null;
+            }
+
             $data += [
                 'user_id' => $user->id, // If User Logged In
                 'status' => $status,
                 // Additional Data
-                'data' => json_encode([
+                'data' => [
                     'is_fraud' => $oldOrders->whereIn('status', ['CANCELLED', 'RETURNED'])->count() > 0,
                     'is_repeat' => $oldOrders->count() > 0,
                     'shipping_area' => $data['shipping'],
@@ -78,7 +89,7 @@ class CheckoutController extends Controller
                     'subtotal'      => is_array($products) ? array_reduce($products, function ($sum, $product) {
                         return $sum += $product['total'];
                     }) : $products->sum('total'),
-                ]),
+                ],
             ];
 
            // \LaravelFacebookPixel::createEvent('Purchase', ['currency' => 'USD', 'value' => data_get(json_decode($data['data'], true), 'subtotal')]);

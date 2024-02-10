@@ -51,10 +51,11 @@
         </div>
         <div class="card rounded-0">
             <div class="card-body">
-                <div class="table-responive">
+                <div class="table-responsive">
                     <table class="table table-bordered table-striped table-hover datatable" style="width: 100%;">
                         <thead>
                             <tr>
+                                <th>ID</th>
                                 <th width="100">Preview</th>
                                 <th>Filename</th>
                                 <th>Mime</th>
@@ -84,13 +85,16 @@
         serverSide: true,
         ajax: "{!! route('api.images.index') !!}",
         columns: [
+            { data: 'id' },
             { data: 'preview' },
             { data: 'filename', name: 'filename' },
             { data: 'mime', name: 'mime' },
             { data: 'size_human', name: 'size' },
             { data: 'action' },
         ],
-        ordering: false,
+        order: [
+            [0, 'desc']
+        ],
     });
 
     Dropzone.options.imageDropzone = {

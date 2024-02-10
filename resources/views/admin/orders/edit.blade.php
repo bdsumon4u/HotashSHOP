@@ -47,13 +47,14 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="d-block">Shipping City <span class="text-danger">*</span></label>
+                                            @php $dcharge = setting('delivery_charge') @endphp
                                             <div class="form-control @error('shipping') is-invalid @enderror">
                                                 <div class="custom-control custom-radio custom-control-inline">
-                                                    <input type="radio" class="custom-control-input" id="inside-dhaka" name="shipping" value="Inside Dhaka" data-val="50" {{ $data->shipping_area == 'Inside Dhaka' ? 'checked' : '' }} disabled>
+                                                    <input type="radio" class="custom-control-input" id="inside-dhaka" name="shipping" value="Inside Dhaka" data-val="{{ $dcharge->inside_dhaka ?? config('services.shipping.Inside Dhaka') }}" {{ $data->shipping_area == 'Inside Dhaka' ? 'checked' : '' }}>
                                                     <label class="custom-control-label" for="inside-dhaka">Inside Dhaka</label>
                                                 </div>
                                                 <div class="custom-control custom-radio custom-control-inline">
-                                                    <input type="radio" class="custom-control-input" id="outside-dhaka" name="shipping" value="Outside Dhaka" data-val="100" {{ $data->shipping_area == 'Outside Dhaka' ? 'checked' : '' }} disabled>
+                                                    <input type="radio" class="custom-control-input" id="outside-dhaka" name="shipping" value="Outside Dhaka" data-val="{{ $dcharge->outside_dhaka ?? config('services.shipping.Outside Dhaka') }}" {{ $data->shipping_area == 'Outside Dhaka' ? 'checked' : '' }}>
                                                     <label class="custom-control-label" for="outside-dhaka">Outside Dhaka</label>
                                                 </div>
                                             </div>
@@ -77,6 +78,13 @@
                                     <div class="card-divider"></div>
                                     <div class="card-body p-3">
                                         <h3 class="card-title">Ordered Products</h3>
+                                        <div class="d-flex justify-content-between">
+                                            <div class="d-flex">
+                                                <input type="text" name="id_or_sku" id="id-or-sku" placeholder="ID or SKU" class="form-control">
+                                                <input type="text" name="new_quantity" id="new-quantity" placeholder="Quantity" class="form-control">
+                                            </div>
+                                            <button type="submit" class="btn btn-primary" formaction="{{ route('admin.orders.add-product', $order) }}">Add New</button>
+                                        </div>
                                         <div class="table-responsive">
                                             <table class="table table-bordered table-hover">
                                                 <thead>
@@ -95,12 +103,15 @@
                                                         <td>
                                                             <a href="{{ route('products.show', $product->slug) }}">{{ $product->name }}</a>
                                                         </td>
-                                                        <td>{{ $product->quantity }}</td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="quantity[{{ $product->id }}]" id="quantity-{{ $product->id }}" value="{{ old('quantity.'.$product->id, $product->quantity) }}">
+                                                        </td>
                                                     </tr>
                                                     @endforeach
                                                 </tbody>
                                             </table>
                                         </div>
+                                        <button class="btn btn-success ml-auto d-block" type="submit" formaction="{{ route('admin.orders.update-quantity', $order) }}">Update</button>
                                     </div>
                                 </div>
                             </div>
@@ -125,7 +136,7 @@
                                                 <tr>
                                                     <th>Shipping</th>
                                                     <td class="shipping">
-                                                        <input style="height: auto; padding: 2px 8px;" type="text" name="data[shipping_cost]" value="{!!  $data->shipping_cost ?? 0  !!}" class="form-control">
+                                                        <input class="shipping" style="height: auto; padding: 2px 8px;" type="text" name="data[shipping_cost]" value="{!!  $data->shipping_cost ?? 0  !!}" class="form-control">
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -146,10 +157,10 @@
                                                     <input style="height: auto; padding: 2px 8px;" type="text" name="data[discount]" value="{!!  $data->discount ?? 0  !!}" class="form-control">
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <th>Payable</th>
-                                                <td class="shipping">{!!  theMoney($order->data->shipping_cost + $order->data->subtotal - ($order->data->advanced ?? 0) - ($order->data->discount ?? 0))  !!}</td>
-                                            </tr>
+                                            <!--<tr>-->
+                                            <!--    <th>Payable</th>-->
+                                            <!--    <td class="shipping">{!!  theMoney($order->data->shipping_cost + $order->data->subtotal - ($order->data->advanced ?? 0) - ($order->data->discount ?? 0))  !!}</td>-->
+                                            <!--</tr>-->
                                             </tfoot>
                                         </table>
                                         <button type="submit" class="btn btn-primary btn-xl btn-block">Update</button>

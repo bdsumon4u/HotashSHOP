@@ -83,8 +83,8 @@ class CategoryController extends Controller
     {
         $data = $request->validate([
             'parent_id' => 'nullable|integer',
-            'name' => 'required|unique:categories,id,'.$category->id,
-            'slug' => 'required|unique:categories,id,'.$category->id,
+            'name' => 'required|unique:categories,id,' . $category->id,
+            'slug' => 'required|unique:categories,id,' . $category->id,
         ]);
 
         $category->update($data);
@@ -100,6 +100,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        abort_if(request()->user()->role_id, 403, 'Not Allowed.');
         DB::transaction(function () use ($category) {
             $category->childrens()->delete();
             $category->delete();

@@ -94,15 +94,7 @@
             <div class="card-header p-3">Edit <strong>Product</strong></div>
             <div class="card-body p-3">
                 <div class="row justify-content-center">
-                    <div class="col-sm-6 col-md-4 col-xl-3">
-                        <ul class="nav nav-tabs list-group" role="tablist">
-                            <li class="nav-item rounded-0"><a class="nav-link @if($errors->has('name') || $errors->has('slug') || $errors->has('description') || $errors->has('categories') || $errors->has('brand')) text-danger @endif active" data-toggle="tab" href="#item-1">General</a></li>
-                            <li class="nav-item rounded-0"><a class="nav-link @if($errors->has('price') || $errors->has('selling_price')) text-danger @endif" data-toggle="tab" href="#item-2">Price</a></li>
-                            <li class="nav-item rounded-0"><a class="nav-link @if($errors->has('sku') || $errors->has('track_stock') || $errors->has('stock_count')) text-danger @endif" data-toggle="tab" href="#item-3">Inventory</a></li>
-                            <li class="nav-item rounded-0"><a class="nav-link @if($errors->has('base_image') || $errors->has('additional_images') || $errors->has('additional_images.*')) text-danger @enderror" data-toggle="tab" href="#item-4">Images</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-sm-6 col-md-8 col-xl-9">
+                    <div class="col-sm-12">
                         <div class="row">
                             <div class="col">
                                 <x-form action="{{ route('admin.products.update', $product) }}" method="patch">
@@ -147,7 +139,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="tab-pane" id="item-2" role="tabpanel">
+                                        <div class="tab-pane active" id="item-2" role="tabpanel">
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <h4><small class="border-bottom mb-1">Price</small></h4>
@@ -168,7 +160,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="tab-pane" id="item-3" role="tabpanel">
+                                        <div class="tab-pane active" id="item-3" role="tabpanel">
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <h4><small class="border-bottom mb-1">Inventory</small></h4>
@@ -176,6 +168,7 @@
                                                 <div class="col-sm-12">
                                                     <div class="form-group">
                                                         <div class="custom-control custom-checkbox">
+                                                            <input type="hidden" name="should_track" value="0" />
                                                             <x-checkbox name="should_track" value="1" :checked="$product->should_track" class="custom-control-input" />
                                                             <x-label for="should_track" class="custom-control-label" />
                                                             <x-error field="should_track" />
@@ -198,7 +191,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="tab-pane" id="item-4" role="tabpanel">
+                                        <div class="tab-pane active" id="item-4" role="tabpanel">
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <h4><small class="border-bottom mb-1">Product Images</small></h4>

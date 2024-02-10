@@ -59,6 +59,7 @@ class ImageController extends Controller
      */
     public function destroy(Image $image)
     {
+        abort_if(request()->user()->role_id, 403, 'Not Allowed.');
         if ($image->products->isNotEmpty()) {
             return request()->expectsJson()
                 ? response()->json(['danger' => 'Image Is Used.'])
@@ -70,7 +71,7 @@ class ImageController extends Controller
         return request()->expectsJson()
             ? response()->json(['success' => 'Image Has Been Deleted.'])
             : redirect()
-                ->action([self::class, 'index'])
-                ->with('success', 'Image Has Been Deleted.');
+            ->action([self::class, 'index'])
+            ->with('success', 'Image Has Been Deleted.');
     }
 }

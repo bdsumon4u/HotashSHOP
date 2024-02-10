@@ -91,5 +91,11 @@
     </script>
     @stack('scripts')
     @bukScripts(true)
+    <script>
+        $('[name="shipping"]').on('change', function (ev) {
+            var val = $(this).data('val');
+            $('.shipping').val(val);
+        });
+    </script>
   </body>
 </html>

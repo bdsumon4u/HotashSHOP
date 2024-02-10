@@ -56,8 +56,8 @@ class SlideController extends Controller
                 'dir' => 'slides/mobile',
             ]),
             'desktop_src' => $this->uploadImage($file, [
-                'width' => config('services.slides.desktop.0', 840),
-                'height' => config('services.slides.desktop.1',395),
+                'width' => config('services.slides.desktop.0', 1125),
+                'height' => config('services.slides.desktop.1', 395),
                 'dir' => 'slides/desktop',
             ]),
         ]);
@@ -115,6 +115,7 @@ class SlideController extends Controller
      */
     public function destroy(Slide $slide)
     {
+        abort_if(request()->user()->role_id, 403, 'Not Allowed.');
         Storage::disk('public')->delete(Str::after($slide->mobile_src, 'storage'));
         Storage::disk('public')->delete(Str::after($slide->desktop_src, 'storage'));
         $slide->delete();

@@ -26,7 +26,7 @@
     display: flex;
     flex: 1 1 0%;
     padding: 0px 17px;
-    border: 2px solid #3d464d;
+    border: 2px solid purple;
     border-radius: 4px 0px 0px 4px;
     outline: none;
     width: 100%;
@@ -40,7 +40,7 @@
     align-items: center;
     padding-right: 29px;
     padding-left: 29px;
-    background: #3d464d;
+    background: purple;
     color: rgb(255, 255, 255);
     height: 40px;
     min-height: 100%;

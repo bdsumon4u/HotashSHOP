@@ -28,7 +28,7 @@
                                     <div class="product-card__badge product-card__badge--sale">Sold</div>
                                 @endif
                                 @if($product->price != $product->selling_price)
-                                    <div class="product-card__badge product-card__badge--sale">-{{ round(($product->price - $product->selling_price) * 100 / $product->price, 0, PHP_ROUND_HALF_UP) }}%</div>
+                                    <div class="product-card__badge product-card__badge--sale"><small>Discount:</small> {{ round(($product->price - $product->selling_price) * 100 / $product->price, 0, PHP_ROUND_HALF_UP) }}%</div>
                                 @endif
                             </div>
                             <div class="product-card__image">
@@ -59,8 +59,8 @@
                                 </div>
                                 <div class="product-card__buttons">
                                     @exp($available = !$product->should_track || $product->stock_count > 0)
-                                    <button class="btn btn-primary product-card__addtocart" type="button" {{ $available ? '' : 'disabled' }}>Add To Cart</button>
-                                    <button class="btn btn-primary product-card__ordernow" type="button" {{ $available ? '' : 'disabled' }}>Order Now</button>
+                                    {{-- <button class="btn btn-primary product-card__addtocart" type="button" {{ $available ? '' : 'disabled' }}>Add To Cart</button> --}}
+                                    <button class="btn btn-primary product-card__ordernow" type="button" {{ $available ? '' : 'disabled' }}>অর্ডার করুন</button>
                                 </div>
                             </div>
                         </div>

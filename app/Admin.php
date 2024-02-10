@@ -18,7 +18,7 @@ class Admin extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'role_id', 'is_active',
     ];
 
     /**
@@ -36,6 +36,8 @@ class Admin extends Authenticatable
      * @var array
      */
     protected $casts = [
+        'role_id' => 'integer',
+        'is_active' => 'boolean',
         'email_verified_at' => 'datetime',
     ];
 

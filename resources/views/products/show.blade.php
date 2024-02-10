@@ -38,7 +38,7 @@
 
         img {
             max-width: 100%;
-            height: auto;
+            /*height: auto;*/
         }
     </style>
 @endpush
@@ -100,33 +100,42 @@
                             <!-- .product__options -->
                             <form class="product__options">
                                 <div class="form-group product__option">
-                                    <label class="product__option-label" for="product-quantity">Quantity</label>
-                                    <div class="product__actions">
-                                        <div class="product__actions-item d-flex justify-content-center">
-                                            <div class="input-number product__quantity">
-                                                <input id="product-quantity"
-                                                       class="input-number__input form-control form-control-lg"
-                                                       type="number" min="1" {{ $product->should_track ? 'max='.$product->stock_count : '' }} value="1">
-                                                <div class="input-number__add"></div>
-                                                <div class="input-number__sub"></div>
-                                            </div>
+                                    {{-- <label class="product__option-label" for="product-quantity">Quantity</label> --}}
+                                    <div class="product__actions-item">
+                                        <div class="input-number product__quantity">
+                                            <input id="product-quantity"
+                                                    class="input-number__input form-control form-control-lg"
+                                                    type="number" min="1" {{ $product->should_track ? 'max='.$product->stock_count : '' }} value="1">
+                                            <div class="input-number__add"></div>
+                                            <div class="input-number__sub"></div>
                                         </div>
+                                    </div>
+                                    <div class="product__actions overflow-hidden">
                                         @exp($available = !$product->should_track || $product->stock_count > 0)
-                                        <div class="product__buttons d-flex flex-wrap">
-                                            <div class="product__actions-item product__actions-item--addtocart">
-                                                <button class="btn btn-primary product__addtocart btn-lg btn-block" {{ $available ? '' : 'disabled' }}>Add to cart</button>
-                                            </div>
+                                        <div class="product__buttons w-100">
                                             <div class="product__actions-item product__actions-item--ordernow">
-                                                <button class="btn btn-primary product__ordernow btn-lg btn-block" {{ $available ? '' : 'disabled' }}>Order Now</button>
+                                                <button class="btn btn-primary product__ordernow btn-lg btn-block" {{ $available ? '' : 'disabled' }}>অর্ডার করুন</button>
+                                            </div>
+                                            <div class="product__actions-item product__actions-item--addtocart">
+                                                <button class="btn btn-primary product__addtocart btn-lg btn-block" {{ $available ? '' : 'disabled' }}>কার্টে যোগ করুন</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="call-for-order">
-                                    <img src="{{ asset('call-now-icon-20.jpg') }}" width="135" alt="Call For Order">
+                                    {{-- <img src="{{ asset('call-now-icon-20.jpg') }}" width="135" alt="Call For Order">
                                     <div style="padding: 10px;margin-bottom: 10px;font-weight: bold;color: red;">
                                         {!! implode('<br>', explode(' ', setting('call_for_order'))) !!}
-                                    </div>
+                                    </div> --}}
+                                    @foreach (explode(' ', setting('call_for_order')) as $phone)
+                                        <a href="tel:{{$phone}}" class="btn ptn-primary text-white w-100 mb-1" style="background: #008acf; height: auto;">
+                                            <div>কল করতে ক্লিক করুন</div>
+                                            <div>
+                                                <i class="fa fas fa-phone mr-2"></i>
+                                                <span>{{$phone}}</span>
+                                            </div>
+                                        </a>
+                                    @endforeach
                                 </div>
                             </form><!-- .product__options / end -->
                         </div><!-- .product__end -->

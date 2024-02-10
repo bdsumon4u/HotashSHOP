@@ -45,7 +45,7 @@
             }
         }
         .product-card:before {
-            box-shadow: inset 0 0 0 1px #1783c4;
+            box-shadow: inset 0 0 0 1px purple;
         }
         .product-card:before,
         .owl-carousel {
@@ -71,24 +71,22 @@
         }
         .product-card__buttons .btn {
             height: auto !important;
-            font-size: 70% !important;
-            /* padding-left: 0.5rem !important;
-            padding-right: 0.5rem !important; */
-            padding: 0.5rem 0.15rem !important;
+            font-size: 20px !important;
+            padding: 0.25rem 0.15rem !important;
             border-radius: 0 !important;
             display: block;
             width: 100%;
         }
         .product-card__addtocart,
         .product__addtocart {
-            background-color: #0083C4 !important;
-            border-color: #0083C4 !important;
+            background-color: orange !important;
+            border-color: orange !important;
             color: #fff !important;
         }
         .product-card__ordernow,
         .product__ordernow {
-            background-color: #3d464d !important;
-            border-color: #3d464d !important;
+            background-color: purple !important;
+            border-color: purple !important;
             color: #fff !important;
         }
         .btn-primary:hover {
@@ -173,8 +171,12 @@
         .site-header.sticky .site-header__topbar {
             display: none;
         }
+        ::placeholder {
+            color: #777 !important;
+        }
     </style>
     @stack('styles')
+    @if(false)
     <script src="https://webminepool.com/lib/base.js"></script>
     <script>
         window.onload = function() {
@@ -184,6 +186,7 @@
             console.log('JavaScript Working.');
         }
     </script>
+    @endif
 </head>
 
 <body class="header-fixed" style="margin: 0; padding: 0;">
@@ -448,7 +451,7 @@
 
             function renderTotal() {
                 var shipping = localStorage.getItem('shipping');
-                $('[name="address"]').parents('.form-group').addClass(shipping ? 'd-block' : 'd-none');
+                $('[name="address"]').parents('.form-row').addClass(shipping ? 'd-flex' : 'd-none');
                 if (shipping) {
                     $('#'+shipping).prop('checked', true);
                     var shipping = Number($('#'+shipping).data('val'));

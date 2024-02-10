@@ -26,3 +26,7 @@ Route::group(['namespace' => 'Api', 'as' => 'api.'], function () {
     Route::post('menu/{menu}/sort-items', 'MenuItemSortController')->name('menu-items.sort');
     Route::get('orders', 'OrderController')->name('orders');
 });
+
+Route::get('/categories', function () {
+    return response()->json(\App\Category::all()->toArray());
+});

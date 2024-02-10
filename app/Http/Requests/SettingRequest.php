@@ -42,6 +42,7 @@ class SettingRequest extends FormRequest
             'related_products.cols' => 'required|integer',
 
             'call_for_order' => 'sometimes',
+            'pixel_ids' => 'sometimes',
 
             'delivery_charge.inside_dhaka' => 'sometimes|integer',
             'delivery_charge.outside_dhaka' => 'sometimes|integer',

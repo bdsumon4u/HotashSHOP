@@ -58,8 +58,8 @@ class BrandController extends Controller
     public function update(Request $request, Brand $brand)
     {
         $data = $request->validate([
-            'name' => 'required|unique:brands,id,'.$brand->id,
-            'slug' => 'required|unique:brands,id,'.$brand->id,
+            'name' => 'required|unique:brands,id,' . $brand->id,
+            'slug' => 'required|unique:brands,id,' . $brand->id,
         ]);
 
         $brand->update($data);
@@ -75,6 +75,7 @@ class BrandController extends Controller
      */
     public function destroy(Brand $brand)
     {
+        abort_if(request()->user()->role_id, 403, 'Not Allowed.');
         $brand->delete();
         return redirect()
             ->action([self::class, 'index'])

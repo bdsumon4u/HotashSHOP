@@ -1,4 +1,5 @@
 @push('css')
+<!--<link rel="stylesheet" type="text/css" href="{{asset('assets/css/dropzone.css')}}">-->
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/datatables.css')}}">
 @endpush
 
@@ -17,10 +18,24 @@
             <div class="modal-body p-3">
                 <div class="row">
                     <div class="col-sm-12">
-                        <div class="table-responive">
+                        <div class="card rounded-0">
+                            <div class="card-body">
+                                <x-form method="post" :action="route('admin.images.store')" id="image-dropzone-multi" class="dropzone" has-files>
+                                    <div class="dz-message needsclick">
+                                        <i class="icon-cloud-up"></i>
+                                        <h6>Drop files here or click to upload.</h6>
+                                        <span class="note needsclick">(Recommended <strong>700x700</strong> dimension.)</span>
+                                    </div>
+                                </x-form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="table-responsive">
                             <table class="table table-bordered table-striped table-hover multi-picker w-100" style="width: 100%;">
                                 <thead>
                                     <tr>
+                                        <th>ID</th>
                                         <th width="150">Preview</th>
                                         <th>Filename</th>
                                         <th>Mime</th>
@@ -44,16 +59,19 @@
 </div>
 
 @push('js')
+<!--<script src="{{asset('assets/js/dropzone/dropzone.js')}}"></script>-->
+<!--<script src="{{asset('assets/js/dropzone/dropzone-script.js')}}"></script>-->
 <script src="{{asset('assets/js/datatable/datatables/jquery.dataTables.min.js')}}"></script>
 @endpush
 
 @push('scripts')
 <script>
-    var table = $('.multi-picker').DataTable({
+    var tableMulti = $('.multi-picker').DataTable({
         processing: true,
         serverSide: true,
         ajax: "{!! route('api.images.multiple') !!}",
         columns: [
+            { data: 'id' },
             { data: 'preview' },
             { data: 'filename', name: 'filename' },
             { data: 'mime', name: 'mime' },
@@ -61,11 +79,11 @@
             { data: 'action' },
         ],
         order: [
-            [1, 'desc']
+            [0, 'desc']
         ],
     });
 
-    table.on('draw', function () {
+    tableMulti.on('draw', function () {
         var selected = @json($selected ?? []);
         for (var index = 0; index < selected.length; index++) {  
             $('#multi-select-'+selected[index]).prop('checked', true);
@@ -98,5 +116,16 @@
             $(this).parents('.modal').modal('hide');
         });
     })
+    
+    Dropzone.options.imageDropzoneMulti = {
+        init: function () {
+            this.on('complete', function(){
+                if(this.getQueuedFiles().length == 0 && this.getUploadingFiles().length == 0) {
+                    console.log('yes');
+                    tableMulti.ajax.reload();
+                }
+            });
+        }
+    };
 </script>
 @endpush
