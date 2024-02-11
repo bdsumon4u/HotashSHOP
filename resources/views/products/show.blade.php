@@ -19,6 +19,10 @@
             color: #000;
         }
 
+        iframe {
+            width: 100%;
+        }
+
         @media (max-width: 768px) {
             .product__option-label {
                 display: block;
@@ -188,7 +192,7 @@
                         </a>
                     </div>
                     <div id="collapseOne" class="collapse show" data-parent="#accordion">
-                        <div class="card-body p-4">
+                        <div class="card-body p-2">
                             {!! $product->description !!}
                         </div>
                     </div>
@@ -200,7 +204,7 @@
                         </a>
                     </div>
                     <div id="collapseTwo" class="collapse show" data-parent="#accordion">
-                        <div class="card-body p-4">
+                        <div class="card-body p-2">
                             {!! setting('delivery_text') !!}
                         </div>
                     </div>
