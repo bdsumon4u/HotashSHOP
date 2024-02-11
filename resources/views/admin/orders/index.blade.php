@@ -45,7 +45,7 @@
                             </div>
                             <div class="col-auto">
                                 <button onclick="printInvoice()" id="invoice" class="btn btn-sm btn-primary mr-1">Invoice</button>
-                                <button onclick="steadFast()" id="stead-fast" class="btn btn-sm btn-primary ml-1">SteadFast</button>
+                                <button onclick="courier()" id="courier" class="btn btn-sm btn-primary ml-1">Courier</button>
                             </div>
                         </div>
                     </div>
@@ -62,7 +62,7 @@
                                     <th style="min-width: 120px;">Name</th>
                                     <th style="min-width: 100px;">Phone</th>
                                     <th style="min-width: 250px;">Address</th>
-                                    <th>SteadFast</th>
+                                    <th>Courier</th>
                                     <th width="10">Price</th>
                                     <th width="10">Status</th>
                                     <th width="10" class="text-center">Action</th>
@@ -154,7 +154,7 @@
                 { data: 'name', name: 'name' },
                 { data: 'phone', name: 'phone' },
                 { data: 'address', name: 'address' },
-                { data: 'stead_fast', name: 'stead_fast' },
+                { data: 'courier', name: 'courier' },
                 { data: 'price', name: 'price' },
                 { data: 'status', name: 'status' },
                 { data: 'actions', name: 'actions' },
@@ -218,8 +218,8 @@
                 return $(this).val();
             }).get().join(','), '_blank');
         }
-        function steadFast() {
-            window.open('{{ route('admin.orders.stead-fast') }}?order_id=' + $('[name="order_id[]"]:checked').map(function () {
+        function courier() {
+            window.open('{{ route('admin.orders.courier') }}?order_id=' + $('[name="order_id[]"]:checked').map(function () {
                 return $(this).val();
             }).get().join(','));
         }

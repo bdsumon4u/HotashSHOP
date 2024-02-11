@@ -1,5 +1,6 @@
 <?php
 
+use App\Pathao\Facade\Pathao;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,10 @@ Route::group(['namespace' => 'Api', 'as' => 'api.'], function () {
     Route::get('images/multiple', 'ImageController@multiple')->name('images.multiple');
     Route::post('menu/{menu}/sort-items', 'MenuItemSortController')->name('menu-items.sort');
     Route::get('orders', 'OrderController')->name('orders');
+
+    Route::get('areas/{city_id}', function ($city_id) {
+        return Pathao::area()->zone($city_id)->data;
+    });
 });
 
 Route::get('/categories', function () {

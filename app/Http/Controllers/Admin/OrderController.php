@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
+use App\Pathao\Facade\Pathao;
 use App\Product;
 use Illuminate\Support\Carbon;
 
@@ -21,7 +22,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        if (! request()->has('status')) {
+        if (!request()->has('status')) {
             return redirect(action([static::class, 'index'], ['status' => 'pending']));
         }
 
@@ -36,7 +37,7 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        
+
         return $this->view([
             'orders' => Order::where('user_id', $order->user_id)->where('id', '!=', $order->id)->orderBy('id', 'desc')->get(),
         ]);
@@ -50,7 +51,22 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
+        $areas = [];
+        $data = $order->data;
+        $cities = cache()->remember('pathao_cities', now()->addDay(), function () {
+            return Pathao::area()->city()->data;
+        });
+
+        if ($data->city_id ?? false) {
+            $areas = cache()->remember('pathao_areas:' . $data->city_id, now()->addDay(), function () use ($data) {
+                return Pathao::area()->zone($data->city_id)->data;
+            });
+        }
+
         return $this->view([
+            'areas' => $areas,
+            'cities' => $cities,
+            'courier' => $data->courier ?? '',
             'statuses' => config('app.orders', [])
         ]);
     }
@@ -78,10 +94,13 @@ class OrderController extends Controller
             'data.discount' => 'required|integer',
             'data.advanced' => 'required|integer',
             'data.shipping_cost' => 'required|integer',
+            'data.courier' => 'nullable',
+            'data.city_id' => 'nullable',
+            'data.area_id' => 'nullable',
         ]);
 
         $data['data']['shipping_area'] = $data['shipping'];
-        $data['data']['shipping_cost'] = setting('delivery_charge')->{$data['shipping'] == 'Inside Dhaka' ? 'inside_dhaka' : 'outside_dhaka'} ?? config('services.shipping.'.$data['shipping']);
+        $data['data']['shipping_cost'] = setting('delivery_charge')->{$data['shipping'] == 'Inside Dhaka' ? 'inside_dhaka' : 'outside_dhaka'} ?? config('services.shipping.' . $data['shipping']);
         $data['data']['subtotal'] = $this->getSubtotal($order->products);
         if ($order->status != 'Shipping' && $data['status'] == 'Shipping') {
             $order->forceFill(['shipped_at' => now()->toDateTimeString()]);
@@ -146,7 +165,7 @@ class OrderController extends Controller
         return view('admin.orders.invoices', compact('orders'));
     }
 
-    public function steadFast(Request $request)
+    public function courier(Request $request)
     {
         $request->validate(['order_id' => 'required']);
         $order_ids = explode(',', $request->order_id);
@@ -154,42 +173,92 @@ class OrderController extends Controller
         $order_ids = array_filter($order_ids);
 
         try {
-            $orders = Order::whereIn('id', $order_ids)->get()->map(function ($order) {
-                return [
-                    'invoice' => $order->id,
-                    'recipient_name' => $order->name ?? 'N/A',
-                    'recipient_address' => $order->address ?? 'N/A',
-                    'recipient_phone' => $order->phone ?? '',
-                    'cod_amount' => $order->data->shipping_cost + $order->data->subtotal - ($order->data->advanced ?? 0) - ($order->data->discount ?? 0),
-                    'note' => '', // $order->note,
-                ];
-            })->toJson();
-    
-            $response = Http::withHeaders([
-                'Api-Key' => config('services.stdfst.key'),
-                'Secret-Key' => config('services.stdfst.secret'),
-                'Content-Type' => 'application/json'
-            ])->post($this->base_url.'/create_order/bulk-order', [
-                'data' => $orders,
-            ]);
-
-            $data = json_decode($response->getBody()->getContents(), true);
-
-            foreach ($data['data'] ?? [] as $item) {
-                if (!$order = Order::find($item['invoice'])) continue;
-                
-                $order->update([
-                    'data' => [
-                        'consignment_id' => $item['consignment_id'],
-                        'tracking_code' => $item['tracking_code'],
-                    ],
-                ]);
-            }
+            $this->steadFast($order_ids);
         } catch (\Exception $e) {
             return redirect()->back()->withDanger($e->getMessage());
         }
-        
-        return redirect()->back()->withSuccess('Orders are sent to SteadFast.');
+
+        if (setting('Pathao')->enabled) {
+            foreach (Order::whereIn('id', $order_ids)->where('data->courier', 'Pathao')->get() as $order) {
+                try {
+                    $this->pathao($order);
+                } catch (\App\Pathao\Exceptions\PathaoException $e) {
+                    $errors = collect($e->errors)->values()->flatten()->toArray();
+                    return back()->withDanger($errors[0] ?? $e->getMessage());
+                } catch (\Exception $e) {
+                    return back()->withDanger($e->getMessage());
+                }
+            }
+        }
+
+        return redirect()->back()
+            // ->withSuccess('Orders are sent to Courier.')
+        ;
+    }
+
+    private function steadFast($order_ids)
+    {
+        if (! setting('SteadFast')->enabled) return;
+        $orders = Order::whereIn('id', $order_ids)->where('data->courier', 'SteadFast')->get()->map(function ($order) {
+            return [
+                'invoice' => $order->id,
+                'recipient_name' => $order->name ?? 'N/A',
+                'recipient_address' => $order->address ?? 'N/A',
+                'recipient_phone' => $order->phone ?? '',
+                'cod_amount' => $order->data->shipping_cost + $order->data->subtotal - ($order->data->advanced ?? 0) - ($order->data->discount ?? 0),
+                'note' => '', // $order->note,
+            ];
+        })->toJson();
+
+        $response = Http::withHeaders([
+            'Api-Key' => config('services.stdfst.key'),
+            'Secret-Key' => config('services.stdfst.secret'),
+            'Content-Type' => 'application/json'
+        ])->post($this->base_url . '/create_order/bulk-order', [
+            'data' => $orders,
+        ]);
+
+        $data = json_decode($response->getBody()->getContents(), true);
+
+        foreach ($data['data'] ?? [] as $item) {
+            if (!$order = Order::find($item['invoice'])) continue;
+
+            $order->update([
+                'data' => [
+                    'consignment_id' => $item['consignment_id'],
+                    'tracking_code' => $item['tracking_code'],
+                ],
+            ]);
+        }
+    }
+
+    private function pathao($order)
+    {
+        $data = [
+            "store_id"            => setting('Pathao')->store_id, // Find in store list,
+            "merchant_order_id"   => $order->id, // Unique order id
+            "recipient_name"      => $order->name ?? 'N/A', // Customer name
+            "recipient_phone"     => Str::after($order->phone, '+88') ?? '', // Customer phone
+            "recipient_address"   => $order->address ?? 'N/A', // Customer address
+            "recipient_city"      => $order->data->city_id, // Find in city method
+            "recipient_zone"      => $order->data->area_id, // Find in zone method
+            // "recipient_area"      => "", // Find in Area method
+            "delivery_type"       => 48, // 48 for normal delivery or 12 for on demand delivery
+            "item_type"           => 2, // 1 for document, 2 for parcel
+            // "special_instruction" => "",
+            "item_quantity"       => 1, // item quantity
+            "item_weight"         => 0.5, // parcel weight
+            "amount_to_collect"   => $order->data->shipping_cost + $order->data->subtotal - ($order->data->advanced ?? 0) - ($order->data->discount ?? 0), // - $order->deliveryCharge, // amount to collect
+            // "item_description"    => $this->getProductsDetails($order->id), // product details
+        ];
+
+        $data = \App\Pathao\Facade\Pathao::order()->create($data);
+
+        $order->update([
+            'data' => [
+                'consignment_id' => $data->consignment_id,
+            ],
+        ]);
     }
 
     public function status(Request $request)
