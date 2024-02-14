@@ -38,7 +38,7 @@
                             </div>
                             <div class="product-card__info">
                                 <div class="product-card__name">
-                                    <a href="{{ route('products.show', $product) }}">{{ $product->name }}</a>
+                                    <a href="{{ route('products.show', $product) }}" data-name="{{ $product->var_name }}">{{ $product->name }}</a>
                                 </div>
                             </div>
                             <div class="product-card__actions">

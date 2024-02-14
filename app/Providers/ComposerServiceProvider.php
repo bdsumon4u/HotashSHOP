@@ -34,7 +34,9 @@ class ComposerServiceProvider extends ServiceProvider
             $parameters = optional(Route::current())
                 ->parameters();
             foreach ($parameters ?: [] as $key => $value) {
-                $view->with($key, $value);
+                if (!$view->offsetExists($key)) {
+                    $view->with($key, $value);
+                }
             }
         });
 

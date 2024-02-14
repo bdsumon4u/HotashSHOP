@@ -112,6 +112,12 @@
                                     <span>Create Product</span>
                                 </a>
                             </li>
+                            <li>
+                                <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.attributes.index' ? 'active' : '' }}"
+                                    href="{{ route('admin.attributes.index') }}">
+                                    <span>Attributes</span>
+                                </a>
+                            </li>
                         </ul>
                     </li>
 

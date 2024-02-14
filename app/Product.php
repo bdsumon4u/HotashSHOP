@@ -73,6 +73,12 @@ class Product extends Model
         });
     }
 
+    public function getVarNameAttribute()
+    {
+        if (! $this->parent_id) return $this->name;
+        return $this->parent->name . ' [' . $this->name . ']';
+    }
+
     public function getInStockAttribute()
     {
         return $this->track_stock
@@ -97,16 +103,39 @@ class Product extends Model
             ->withTimestamps();
     }
 
+    public function parent()
+    {
+        return $this->belongsTo(Product::class, 'parent_id');
+    }
+
+    public function variations()
+    {
+        return $this->hasMany(Product::class, 'parent_id');
+    }
+
+    public function options()
+    {
+        return $this->belongsToMany(Option::class);
+    }
+
     public function getBaseImageAttribute()
     {
-        return $this->images->first(function (Image $image) {
+        $images = $this->images;
+        if ($images->isEmpty()) {
+            $images = $this->parent->images;
+        }
+        return $images->first(function (Image $image) {
             return $image->pivot->img_type == 'base';
         });
     }
 
     public function getAdditionalImagesAttribute()
     {
-        return $this->images->filter(function (Image $image) {
+        $images = $this->images;
+        if ($images->isEmpty()) {
+            $images = $this->parent->images;
+        }
+        return $images->filter(function (Image $image) {
             return $image->pivot->img_type == 'additional';
         });
     }

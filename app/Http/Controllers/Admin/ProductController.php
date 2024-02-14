@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Attribute;
 use App\Brand;
 use App\Product;
 use App\Category;
@@ -45,8 +46,8 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         $data = $request->validationData();
-        event(new ProductCreated(Product::create($data), $data));
-        return redirect()->action([self::class, 'index'])->with('success', 'Product Has Been Created.');
+        event(new ProductCreated($product = Product::create($data), $data));
+        return redirect()->action([self::class, 'edit'], $product)->with('success', 'Product Has Been Created.');
     }
 
     /**
@@ -68,9 +69,12 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
+        $product->load(['variations']);
+
         return $this->view(compact('product'), '', [
             'categories' => Category::nested(),
             'brands' => Brand::cached(),
+            'attributes' => Attribute::with('options')->get(),
         ]);
     }
 

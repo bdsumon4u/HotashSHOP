@@ -43,6 +43,7 @@ class HomeSection extends Model
         $rows = $this->data->rows ?? 3;
         $cols = $this->data->cols ?? 5;
         $query = Product::whereIsActive(1)
+            ->whereNull('parent_id')
             ->whereHas('categories', function ($query) {
                 $query->whereIn('categories.id', $this->categories->pluck('id')->toArray());
             })

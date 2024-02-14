@@ -240,6 +240,23 @@
     @include('layouts.yellow.js')
     <script>
         $(document).ready(function () {
+            $(document).on('change', '.option-picker', function (ev) {
+                var options = [];
+                $(document).find('.option-picker:checked').each((_, item) => options.push(item.value));
+                
+                $.get({
+                    url: '',
+                    data: {options},
+                    success: function(data) {
+                        $('.product__content').data('id', data.dataId);
+                        $('.product__content').data('max', data.dataMax);
+                        $('.product__info').remove();
+                        $('.xzoom-container').after(data.content);
+                    },
+                    dataType: 'json',
+                });
+            });
+
             // localStorage.removeItem('product-cart');
             function renderCart() {
                 var cart = cartContent();
@@ -312,7 +329,7 @@
 
             renderCartPage();
 
-            $('.product-card__addtocart, .product-card__ordernow').on('click', function (ev) {
+            $(document).on('click', '.product-card__addtocart, .product-card__ordernow', function (ev) {
                 ev.preventDefault();
                 var card = $(this).parents('.product-card');
                 var prices = card.find('.product-card__prices');
@@ -357,9 +374,9 @@
                     align: 'right',
                     stackup_spacing: 30
                 });
-            }
+            };
 
-            $('.product__actions-item--addtocart button, .product__actions-item--ordernow button').on('click', function (ev) {
+            $(document).on('click', '.product__actions-item--addtocart button, .product__actions-item--ordernow button', function (ev) {
                 ev.preventDefault();
                 var card = $(this).parents('.product__content');
                 var prices = card.find('.product__prices');
@@ -370,7 +387,7 @@
                 var product = {
                     id: card.data('id'),
                     max: card.data('max'),
-                    name: card.find('.product__name').text(),
+                    name: card.find('.product__name').data('name'),
                     image: card.find('.product-base__image').attr('src'),
                     detail: card.find('.product-base__image').data('detail'),
                     quantity: Number($('#product-quantity').val()),

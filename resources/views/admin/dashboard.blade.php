@@ -142,8 +142,6 @@
                </div>
             </div>
          </div>
-      </div>
-      <div class="col-xl-4 xl-50 box-col-12">
          <div class="card">
             <div class="card-header p-4 card-no-border">
                <h5>Out Of Stock</h5>
@@ -159,7 +157,7 @@
                                  <div class="media">
                                     <img class="img-fluid m-r-15 rounded-circle" src="{{ optional($product->base_image)->src }}" width="42" height="42" alt="">
                                     <div class="media-body">
-                                       <a href="{{ route('admin.products.edit', $product) }}">{{ $product->name }}</a>
+                                       <a href="{{ route('admin.products.edit', $product->parent_id ?? $product->id) }}">{{ $product->var_name }}</a>
                                     </div>
                                  </div>
                               </td>

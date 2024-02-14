@@ -16,13 +16,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $productsCount = Product::count();
+        $productsCount = Product::whereNull('parent_id')->count();
         $ordersCount = Order::count();
         $initialStatus = data_get(config('app.orders'), 0, 'PENDING');
         $initialOrdersCount = Order::whereStatus($initialStatus)->count();
         $returnedOrdersCount = Order::whereStatus('returned')->count();
-        $inactiveProducts = Product::whereIsActive(0)->get();
-        $outOfStockProducts = Product::whereShouldTrack(1)->where('stock_count', '<=', 0)->get();
+        $inactiveProducts = Product::whereIsActive(0)->whereNull('parent_id')->get();
+        $outOfStockProducts = Product::whereShouldTrack(1)->where('stock_count', '<=', 0)->get(); // PROBLEM
         return view('admin.dashboard', compact('productsCount', 'ordersCount', 'initialStatus', 'initialOrdersCount', 'returnedOrdersCount', 'inactiveProducts', 'outOfStockProducts'));
     }
 }

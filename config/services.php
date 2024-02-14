@@ -31,7 +31,7 @@ return [
     ],
 
     'services' => [
-        'one' => 'strokya/images/sprite.svg#fi-free-delivery-48',
+        'one' => 'strokya/images/sprite.svg#check-12x9',
         'two' => 'strokya/images/sprite.svg#fi-24-hours-48',
         'three' => 'strokya/images/sprite.svg#fi-payment-security-48',
         'four' => 'strokya/images/sprite.svg#fi-tag-48',

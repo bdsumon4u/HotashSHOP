@@ -7,7 +7,7 @@ use Illuminate\View\Component;
 class CategoryTree extends Component
 {
     public $category;
-    
+
     /**
      * Create a new component instance.
      *

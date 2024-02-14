@@ -89,7 +89,18 @@
 
 @section('content')
 <div class="row mb-5">
-    <div class="col-sm-12">
+    @if($errors->any())
+    <div class="col-12">
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    </div>
+    @endif
+    <div class="@if ($product->parent_id) col-md-12 @else col-md-8 @endif">
         <div class="card rounded-0 shadow-sm">
             <div class="card-header p-3">Edit <strong>Product</strong></div>
             <div class="card-body p-3">
@@ -169,7 +180,7 @@
                                                     <div class="form-group">
                                                         <div class="custom-control custom-checkbox">
                                                             <input type="hidden" name="should_track" value="0" />
-                                                            <x-checkbox name="should_track" value="1" :checked="$product->should_track" class="custom-control-input" />
+                                                            <x-checkbox name="should_track" value="1" :checked="$product->should_track" class="should_track custom-control-input" />
                                                             <x-label for="should_track" class="custom-control-label" />
                                                             <x-error field="should_track" />
                                                         </div>
@@ -257,6 +268,126 @@
             </div>
         </div>
     </div>
+    @unless ($product->parent_id)
+    <div class="col-md-4">
+        <div class="card rounded-0 shadow-sm">
+            <div class="card-header px-3 py-2">
+                <strong>Attributes</strong>
+            </div>
+            <div class="card-body p-2">
+                <x-form method="POST" action="{{ route('admin.products.variations.store', $product) }}">
+                    <div id="attributes">
+                        @php $options = $product->variations->pluck('options')->flatten()->unique('id')->pluck('id'); @endphp
+                        @foreach ($attributes as $attribute)
+                        <div class="card mb-3 rounded-0 shadow-sm">
+                            <div class="card-header px-3 py-2">
+                                <a class="card-link" data-toggle="collapse" href="#collapse-{{$attribute->id}}">
+                                    {{ $attribute->name }}
+                                </a>
+                            </div>
+                            <div id="collapse-{{$attribute->id}}" class="collapse" data-parent="#attributes">
+                                <div class="card-body px-3 py-2">
+                                    <div class="d-flex flex-wrap" style="column-gap: 3rem;">
+                                        @foreach ($attribute->options as $option)
+                                            <div class="checkbox checkbox-secondary">
+                                                <x-checkbox :id="$option->name" name="attributes[{{$attribute->id}}][]" value="{{ $option->id }}" :checked="$options->contains($option->id)" />
+                                                <x-label :for="$option->name" />
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                    <button type="submit" class="btn btn-block btn-success">Generate Variations</button>
+                </x-form>
+            </div>
+        </div>
+
+        <div class="card rounded-0 shadow-sm">
+            <div class="card-header px-3 py-2">
+                <strong>Variations</strong>
+            </div>
+            <div class="card-body p-2">
+                <div id="variations">
+                    @foreach ($product->variations as $variation)
+                    <div class="card mb-3 rounded-0 shadow-sm">
+                        <div class="card-header px-3 py-2">
+                            <a class="card-link" data-toggle="collapse" href="#collapse-{{$variation->id}}">
+                                [#{{$variation->id}}] {{ $variation->name }}
+                            </a>
+                        </div>
+                        <div id="collapse-{{$variation->id}}" class="collapse" data-parent="#variations">
+                            <div class="card-body px-3 py-2">
+                                <x-form method="PATCH" action="{{ route('admin.products.variations.update', [$product, $variation]) }}">
+                                    <div class="d-flex flex-wrap" style="column-gap: 3rem;">
+                                        <div class="tab-pane active" id="var-price-{{$variation->id}}" role="tabpanel">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <h4><small class="border-bottom mb-1">Price</small></h4>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="price-{{$variation->id}}">Price <span class="text-danger">*</span></label>
+                                                        <x-input id="price-{{$variation->id}}" name="price" :value="$variation->price" />
+                                                        <x-error field="price" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="selling-price-{{$variation->id}}">Selling Price <span class="text-danger">*</span></label>
+                                                        <x-input id="selling-price-{{$variation->id}}" name="selling_price" :value="$variation->selling_price" />
+                                                        <x-error field="selling_price" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane active" id="var-invent-{{$variation->id}}" role="tabpanel">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <h4><small class="border-bottom mb-1">Inventory</small></h4>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="hidden" name="should_track" value="0" />
+                                                            <x-checkbox id="should-track-{{$variation->id}}" name="should_track" value="1" :checked="$variation->should_track" class="should_track custom-control-input" />
+                                                            <label for="should-track-{{$variation->id}}" class="custom-control-label">Should Track</label>
+                                                            <x-error field="should_track" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="sku-{{$variation->id}}">Product Code</label><span class="text-danger">*</span>
+                                                        <x-input id="sku-{{$variation->id}}" name="sku" :value="$variation->sku" />
+                                                        <x-error field="sku" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group stock-count" @if(!old('should_track', $variation->should_track)) style="display: none;" @endif>
+                                                        <label for="stock-count-{{$variation->id}}">Stock Count <span class="text-danger">*</span></label>
+                                                        <x-input id="stock-count-{{$variation->id}}" name="stock_count" :value="$variation->stock_count" />
+                                                        <x-error field="stock_count" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <button type="submit" class="btn btn-block btn-success">Save</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </x-form>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+    @endunless
 </div>
 
 @include('admin.images.single-picker', ['selected' => old('base_image', optional($product->base_image)->id)])
@@ -276,11 +407,11 @@
             $($(this).data('target')).val(slugify($(this).val()));
         });
     
-        $('#should_track').change(function() {
+        $('.should_track').change(function() {
             if($(this).is(':checked')) {
-                $('.stock-count').show();
+                $(this).closest('.row').find('.stock-count').show();
             } else {
-                $('.stock-count').hide();
+                $(this).closest('.row').find('.stock-count').hide();
             }
         });
 

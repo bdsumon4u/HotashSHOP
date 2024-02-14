@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Hotash\LaravelMultiUi\Facades\MultiUi;
 
 # Controller Level Namespace
-Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function() {
+Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
 
     # Admin Level Namespace & No Prefix
     MultiUi::routes([
@@ -24,7 +24,7 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function() {
     #...
 
     Route::redirect('/admin', '/admin/dashboard', 301); # Permanent Redirect
-    Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin']], function() {
+    Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin']], function () {
         # Admin Level Namespace & 'admin' Prefix
         Route::get('/dashboard', 'HomeController@index')->name('home');
         Route::match(['get', 'post'], '/change-password', 'Auth\\ChangePasswordController')
@@ -44,6 +44,9 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function() {
             'slides'        => 'SlideController',
             'categories'    => 'CategoryController',
             'brands'        => 'BrandController',
+            'products/attributes' => 'AttributeController',
+            'attributes.options' => 'AttributeOptionController',
+            'products.variations' => 'ProductVariationController',
             'products'      => 'ProductController',
             'images'        => 'ImageController',
             'orders'        => 'OrderController',
@@ -51,7 +54,7 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function() {
             'pages'         => 'PageController',
             'menus'         => 'MenuController',
             'menu-items'    => 'MenuItemController',
-            'category-menus'=> 'CategoryMenuController',
+            'category-menus' => 'CategoryMenuController',
         ]);
     });
 });
