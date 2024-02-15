@@ -86,7 +86,16 @@ class AttributeOptionController extends Controller
      */
     public function update(Request $request, Attribute $attribute, Option $option)
     {
-        //
+        if (!$request->has('value')) {
+            $request->merge(['value' => $request->name]);
+        }
+
+        $option->update($request->validate([
+            'name' => 'required',
+            'value' => 'required',
+        ]));
+
+        return back()->withSuccess('Option updated successfully');
     }
 
     /**
@@ -98,6 +107,8 @@ class AttributeOptionController extends Controller
      */
     public function destroy(Attribute $attribute, Option $option)
     {
-        //
+        $option->delete();
+
+        return back()->withSuccess('Option deleted successfully');
     }
 }

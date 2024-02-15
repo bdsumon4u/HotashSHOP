@@ -51,7 +51,7 @@ class CheckoutController extends Controller
                     // Needed Attributes
                     return [
                         'id' => $id,
-                        'name' => $product->name,
+                        'name' => $product->var_name,
                         'slug' => $product->slug,
                         'image' => $product->base_image->src,
                         'price' => $product->selling_price,

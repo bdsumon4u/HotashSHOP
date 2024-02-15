@@ -198,7 +198,7 @@ class OrderController extends Controller
 
     private function steadFast($order_ids)
     {
-        if (! setting('SteadFast')->enabled) return;
+        if (!setting('SteadFast')->enabled) return;
         $orders = Order::whereIn('id', $order_ids)->where('data->courier', 'SteadFast')->get()->map(function ($order) {
             return [
                 'invoice' => $order->id,
@@ -296,16 +296,16 @@ class OrderController extends Controller
         // Manage Stock
         if ($product->should_track) {
             if ($product->stock_count <= 0) {
-                return redirect()->back()->with('Stock Out.');
+                return redirect()->back()->withDanger('Stock Out.');
             }
             $quantity = $product->stock_count >= $quantity ? $quantity : $product->stock_count;
             $product->decrement('stock_count', $quantity);
         }
 
-        $products = $order->products;
-        $products[] = (object)[
+        $products = (array)$order->products;
+        $products[] = [
             'id' => $id,
-            'name' => $product->name,
+            'name' => $product->var_name,
             'slug' => $product->slug,
             'image' => $product->base_image->src,
             'price' => $product->selling_price,

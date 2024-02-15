@@ -64,11 +64,11 @@
                             <div class="card rounded-0 shadow-sm">
                                 <div class="card-header p-3">
                                     <ul class="nav nav-tabs" role="tablist">
-                                        <li class="nav-item">
-                                            <a class="nav-link active" data-toggle="tab" href="#create-category"
-                                                role="tab" aria-controls="create-category" aria-selected="false">Create</a>
-                                        </li>
                                         @if(request('active_id'))
+                                        <li class="nav-item">
+                                            <a class="nav-link active" data-toggle="tab" href="#options"
+                                                role="tab" aria-controls="options" aria-selected="false">Options</a>
+                                        </li>
                                         <li class="nav-item">
                                             <a class="nav-link" data-toggle="tab" href="#edit-category"
                                                 role="tab" aria-controls="edit-category" aria-selected="false">Edit</a>
@@ -77,6 +77,11 @@
                                             <x-form action="{{ route('admin.attributes.destroy', request('active_id', 0)) }}" method="delete">
                                                 <button type="submit" class="nav-link btn btn-danger btn-square delete-action">Delete</button>
                                             </x-form>
+                                        </li>
+                                        @else
+                                        <li class="nav-item">
+                                            <a class="nav-link active" data-toggle="tab" href="#create-category"
+                                                role="tab" aria-controls="create-category" aria-selected="false">Create</a>
                                         </li>
                                         @endif
                                     </ul>
@@ -87,21 +92,62 @@
                                     <div class="alert alert-info py-2"><strong>{{ $message }}</strong></div>
                                     @endif
                                     <div class="tab-content">
-                                        <div class="tab-pane active" id="create-category" role="tabpanel">
-                                            <p class="text-info">Create Attribute</p>
-                                            <form action="{{ route('admin.attributes.store') }}" method="post">
-                                                @csrf
-                                                <div class="form-group">
-                                                    <label for="create-name">Name</label>
-                                                    <input type="text" name="name" value="{{ old('name') }}" id="create-name" data-target="#create-slug" class="form-control @error('name') is-invalid @enderror">
-                                                    @error('name')
-                                                        <span class="invalid-feedback">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-                                                <button type="submit" class="btn btn-sm btn-success d-block ml-auto"><i class="fa fa-check"></i> Submit</button>
-                                            </form>
-                                        </div>
                                         @if(request('active_id'))
+                                        <div class="tab-pane active" id="options" role="tabpanel">
+                                            <form action="{{ route('admin.attributes.options.store', $active) }}" method="POST">
+                                                @csrf
+                                                <div class="d-flex align-items-center">
+                                                    <h6 class="mr-2 mb-0">{{ $active->name }}</h6>
+                                                    <input type="text" class="form-control mr-1" name="name" placeholder="Option Name">
+                                                    @if ($active->name == 'Color')
+                                                    <input type="color" class="form-control mr-1" name="value">
+                                                    @endif
+                                                    <button class="btn btn-light ml-1" style="white-space: nowrap;">Add Option</button>
+                                                </div>
+                                            </form>
+                                            
+                                            <div class="formatted-categories my-3">
+                                                @if($active->options->isEmpty())
+                                                <div class="alert alert-danger py-2"><strong>No Options Found.</strong></div>
+                                                @else
+                                                    <ul>
+                                                        @foreach ($active->options as $option)
+                                                            <li class="d-flex justify-content-between">
+                                                                <a href="" data-toggle="modal" data-target="#edit-option-{{$option->id}}">{{ $option->name }}</a>
+                                                                <x-form :action="route('admin.attributes.options.destroy', [$active, $option])" method="DELETE">
+                                                                    <button type="submit" class="btn btn-danger btn-xs btn-square delete-action">Delete</button>
+                                                                </x-form>
+                                                                <div class="modal" id="edit-option-{{$option->id}}">
+                                                                    <div class="modal-dialog">
+                                                                        <div class="modal-content">
+
+                                                                        <!-- Modal Header -->
+                                                                        <div class="modal-header">
+                                                                            <h4 class="modal-title">Edit Option: {{$option->name}}</h4>
+                                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                        </div>
+
+                                                                        <!-- Modal body -->
+                                                                        <div class="modal-body">
+                                                                            <x-form :action="route('admin.attributes.options.update', [$active, $option])" method="PATCH">
+                                                                                <div class="d-flex align-items-center">
+                                                                                    <h6 class="mr-2 mb-0">{{ $active->name }}</h6>
+                                                                                    <input type="text" class="form-control mr-1" name="name" placeholder="Option Name" value="{{ old('name', $option->name) }}">
+                                                                                    @if ($active->name == 'Color')
+                                                                                    <input type="color" class="form-control mr-1" name="value" value="{{ old('value', $option->value) }}">
+                                                                                    @endif
+                                                                                    <button type="submit" class="btn btn-light ml-1" style="white-space: nowrap;">Update Option</button>
+                                                                                </div>
+                                                                            </x-form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                @endif
+                                            </div>
+                                        </div>
                                         <div class="tab-pane" id="edit-category" role="tabpanel">
                                             <p class="text-info">Edit Attribute</p>
                                             <form action="{{ route('admin.attributes.update', request('active_id', 0)) }}" method="post">
@@ -117,32 +163,24 @@
                                                 <button type="submit" class="btn btn-sm btn-success d-block ml-auto"><i class="fa fa-check"></i> Submit</button>
                                             </form>
                                         </div>
-                                        @endif
-                                    </div>
-                                </div>
-                                @if(request('active_id'))
-                                <div class="card-footer p-3">
-                                    <form action="{{ route('admin.attributes.options.store', $active) }}" method="POST">
-                                        @csrf
-                                        <div class="d-flex align-items-center">
-                                            <h6 class="mr-2 mb-0">Options</h6>
-                                            <input type="text" class="form-control mr-1" name="name" placeholder="Option Name">
-                                            @if ($active->name == 'Color')
-                                            <input type="color" class="form-control mr-1" name="value">
-                                            @endif
-                                            <button class="btn btn-light ml-1" style="white-space: nowrap;">Add Option</button>
-                                        </div>
-                                    </form>
-                                    
-                                    <div class="formatted-categories my-3">
-                                        @if($active->options->isEmpty())
-                                        <div class="alert alert-danger py-2"><strong>No Options Found.</strong></div>
                                         @else
-                                        <x-categories.tree :categories="$active->options" />
+                                        <div class="tab-pane active" id="create-category" role="tabpanel">
+                                            <p class="text-info">Create Attribute</p>
+                                            <form action="{{ route('admin.attributes.store') }}" method="post">
+                                                @csrf
+                                                <div class="form-group">
+                                                    <label for="create-name">Name</label>
+                                                    <input type="text" name="name" value="{{ old('name') }}" id="create-name" data-target="#create-slug" class="form-control @error('name') is-invalid @enderror">
+                                                    @error('name')
+                                                        <span class="invalid-feedback">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                                <button type="submit" class="btn btn-sm btn-success d-block ml-auto"><i class="fa fa-check"></i> Submit</button>
+                                            </form>
+                                        </div>
                                         @endif
                                     </div>
                                 </div>
-                                @endif
                             </div>
                         </div>
                     </div>
