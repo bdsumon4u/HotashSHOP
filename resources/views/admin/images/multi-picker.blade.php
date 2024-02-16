@@ -38,8 +38,8 @@
                                         <th>ID</th>
                                         <th width="150">Preview</th>
                                         <th>Filename</th>
-                                        <th>Mime</th>
-                                        <th>Size</th>
+                                        {{-- <th>Mime</th>
+                                        <th>Size</th> --}}
                                         <th width="10">Action</th>
                                     </tr>
                                 </thead>
@@ -74,9 +74,9 @@
             { data: 'id' },
             { data: 'preview' },
             { data: 'filename', name: 'filename' },
-            { data: 'mime', name: 'mime' },
-            { data: 'size_human', name: 'size' },
             { data: 'action' },
+            // { data: 'mime', name: 'mime' },
+            // { data: 'size_human', name: 'size' },
         ],
         order: [
             [0, 'desc']

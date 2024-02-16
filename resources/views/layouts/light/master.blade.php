@@ -96,6 +96,75 @@
             var val = $(this).data('val');
             $('.shipping').val(val);
         });
+
+        $(document).on('click', '.img-rename', function (ev) {
+            ev.preventDefault();
+            var input = $(this).parent().prev();
+
+            // if input is disabled, enable it
+            if (input.prop('disabled')) {
+                input.prop('disabled', false);
+                input.focus();
+                input.select();
+                $(this).find('span').text('Save');
+            } else {
+                var id = input.data('id');
+                var filename = input.val();
+                input.prop('disabled', true);
+                $.ajax({
+                    url: "/admin/images/"+id,
+                    type: "PUT",
+                    data: {
+                        _token: "{{csrf_token()}}",
+                        id: id,
+                        filename: filename,
+                    },
+                    success: function (data) {
+                      $(document).find('[rename="'+id+'"] span').text('Rename');
+                        $('.dataTable').DataTable().ajax.reload();
+                        
+                        $.notify('<i class="fa fa-bell-o mr-1"></i> Image renamed', {
+                            type: 'success',
+                            allow_dismiss: true,
+                            // delay: 2000,
+                            showProgressbar: true,
+                            timer: 300,
+                            z_index: 9999,
+                            animate:{
+                                enter:'animated fadeInDown',
+                                exit:'animated fadeOutUp'
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
+        $(document).on('click', '[data-clip]', function (ev) {
+            ev.preventDefault();
+            var text = $(this).data('clip');
+            var input = document.createElement('input');
+            input.value = text;
+            $(this).after(input);
+            input.focus();
+            input.select();
+            document.execCommand("copy");
+            input.remove();
+
+            $.notify('<i class="fa fa-bell-o mr-1"></i> Copied to clipboard', {
+                type: 'success',
+                allow_dismiss: true,
+                // delay: 2000,
+                showProgressbar: true,
+                timer: 300,
+                z_index: 9999,
+                animate:{
+                    enter:'animated fadeInDown',
+                    exit:'animated fadeOutUp'
+                }
+            });
+        });
+
     </script>
   </body>
 </html>

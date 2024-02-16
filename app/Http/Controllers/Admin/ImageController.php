@@ -51,6 +51,18 @@ class ImageController extends Controller
         ]);
     }
 
+    public function update(Request $request, Image $image)
+    {
+        $request->validate([
+            'filename' => 'required|string',
+        ]);
+
+        $image->update($request->only('filename'));
+        return request()->expectsJson()
+            ? response()->json(['success' => 'Image Has Been Updated.'])
+            : back()->with('success', 'Image Has Been Updated.');
+    }
+
     /**
      * Remove the specified resource from storage.
      *

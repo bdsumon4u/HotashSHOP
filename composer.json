@@ -24,6 +24,7 @@
         "laravel/scout": "^8.3",
         "laravel/tinker": "^2.0",
         "nicolaslopezj/searchable": "^1.13",
+        "spatie/laravel-activitylog": "^3.17",
         "tightenco/ziggy": "^1.1",
         "weblagence/laravel-facebook-pixel": "^1.1",
         "yajra/laravel-datatables": "^1.5"

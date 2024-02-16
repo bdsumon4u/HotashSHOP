@@ -2,6 +2,7 @@
 @section('title', 'Edit Order')
 
 @push('css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/prism.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/select2.css') }}">
 @endpush
 
@@ -35,9 +36,11 @@
                             @php $data = $order->data @endphp
                             <div class="row">
                                 <div class="col-12 col-lg-6 col-xl-7">
-                                    <div class="card mb-lg-0">
+                                    <div class="card rounded-0 shadow-sm">
+                                        <div class="card-header p-3">
+                                            <h5 class="card-title">Billing details</h5>
+                                        </div>
                                         <div class="card-body p-3">
-                                            <h3 class="card-title">Billing details</h3>
                                             <div class="form-row">
                                                 <div class="form-group col-md-6">
                                                     <x-label for="name">Name</x-label> <span
@@ -136,9 +139,12 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-divider"></div>
+                                    </div>
+                                    <div class="card rounded-0 shadow-sm">
+                                        <div class="card-header p-3">
+                                            <h5 class="card-title">Ordered Products</h5>
+                                        </div>
                                         <div class="card-body p-3">
-                                            <h3 class="card-title">Ordered Products</h3>
                                             <div class="d-flex justify-content-between">
                                                 <div class="d-flex">
                                                     <input type="text" name="id_or_sku" id="id-or-sku"
@@ -187,10 +193,11 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6 col-xl-5 mt-4 mt-lg-0">
-                                    <div class="card mb-0">
-                                        <div class="card-body">
-                                            <h3 class="card-title">Your Order</h3>
-
+                                    <div class="card rounded-0 shadow-sm">
+                                        <div class="card-header p-3">
+                                            <h5 class="card-title">Your Order</h5>
+                                        </div>
+                                        <div class="card-body p-3">
                                             <label for="status">Order Status</label>
                                             <select name="status" id="status" class="form-control">
                                                 @foreach ($statuses as $status)
@@ -261,12 +268,61 @@
                                                 class="btn btn-primary btn-xl btn-block">Update</button>
                                         </div>
                                     </div>
+                                    <div class="card rounded-0 shadow-sm">
+                                        <div class="card-header p-3">
+                                            <h5 class="card-title">Activities</h5>
+                                        </div>
+                                        <div class="card-body p-3">
+                                            {{-- Accordion --}}
+                                            <div id="accordion">
+                                                @foreach($order->activities()->latest()->get() as $activity)
+                                                    <div class="card rounded-0 shadow-sm mb-1">
+                                                        <div class="card-header px-3 py-2" id="heading{{ $activity->id }}">
+                                                            <a class="text-dark" data-toggle="collapse" href="#collapse-{{$activity->id}}">
+                                                                <div class="border-bottom pb-1 mb-1 text-primary">{{ $activity->description }}</div>
+                                                                <div class="d-flex justify-content-between">
+                                                                    <div><i class="fa fa-user mr-1"></i>{{ $activity->causer->name ?? 'System' }}</div>
+                                                                    <div><i class="fa fa-clock-o mr-1"></i>{{ $activity->created_at->format('d-M-Y h:i A') }}</div>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+
+                                                        <div id="collapse-{{$activity->id}}" class="collapse" data-parent="#accordion">
+                                                            <div class="card-body p-3">
+                                                                <table>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <th class="text-center">OLD</th>
+                                                                            <th class="text-center">NEW</th>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <pre><div class="language-php">{{ json_encode($activity->changes['old'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) }}</div></pre>
+                                                                            </td>
+                                                                            <td>
+                                                                                <pre><div class="language-php">{{ json_encode($activity->changes['attributes'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) }}</div></pre>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </x-form>
                     </div>
-                    <div class="card-footer rounded-0">
+                </div>
+                <div class="card rounded-0 shadow-sm">
+
+                    <div class="card-header p-3">
                         <h5 class="text-center">Other Orders</h5>
+                    </div>
+                    <div class="card-footer rounded-0 p-3">
                         <table class="table table-bordered table-striped table-hover">
                             <thead>
                                 <tr>
@@ -303,6 +359,7 @@
 @endsection
 
 @push('js')
+    <script src="{{ asset('assets/js/prism/prism.min.js') }}"></script>
     <script src="{{ asset('assets/js/select2/select2.full.min.js') }}"></script>
     <script src="{{ asset('assets/js/select2/select2-custom.js') }}"></script>
 @endpush

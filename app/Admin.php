@@ -7,9 +7,11 @@ use App\Notifications\Admin\VerifyEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Notifications\Admin\ResetPassword;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Activitylog\Traits\CausesActivity;
 
 class Admin extends Authenticatable
 {
+    use CausesActivity;
     use Notifiable;
 
     /**
