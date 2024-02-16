@@ -138,15 +138,6 @@
                                         </div>
                                         <div class="card-divider"></div>
                                         <div class="card-body p-3">
-                                            <h3 class="card-title">Shipping Details</h3>
-                                            <div class="form-group">
-                                                <x-label for="note">Order Notes (Optional)</x-label>
-                                                <x-textarea name="note" rows="4">{{ $order->note }}</x-textarea>
-                                                <x-error field="note" />
-                                            </div>
-                                        </div>
-                                        <div class="card-divider"></div>
-                                        <div class="card-body p-3">
                                             <h3 class="card-title">Ordered Products</h3>
                                             <div class="d-flex justify-content-between">
                                                 <div class="d-flex">
@@ -159,7 +150,7 @@
                                                     formaction="{{ route('admin.orders.add-product', $order) }}">Add
                                                     New</button>
                                             </div>
-                                            <div class="table-responsive">
+                                            <div class="table-responsive my-2">
                                                 <table class="table table-bordered table-hover">
                                                     <thead>
                                                         <tr>
@@ -255,6 +246,15 @@
                                                             ($order->data->discount ?? 0),
                                                     ) !!}</td>-->
                                                     <!--</tr>-->
+                                                    <tr>
+                                                        <th>Note <small>(Optional)</small></th>
+                                                        <td>
+                                                            <div class="form-group">
+                                                                <x-textarea name="note" rows="4">{{ $order->note }}</x-textarea>
+                                                                <x-error field="note" />
+                                                            </div>
+                                                        </td>
+                                                    </tr>
                                                 </tfoot>
                                             </table>
                                             <button type="submit"
@@ -264,6 +264,37 @@
                                 </div>
                             </div>
                         </x-form>
+                    </div>
+                    <div class="card-footer rounded-0">
+                        <h5 class="text-center">Other Orders</h5>
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Product</th>
+                                    <th>Note</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($orders as $order)
+                                <tr>
+                                    <td>
+                                        <a class="btn btn-light btn-sm text-nowrap px-2" target="_blank" href="{{ route('admin.orders.edit', $order) }}">{{ $order->id }} <i class="fa fa-eye"></i></a>
+                                    </td>
+                                    <td>{{ $order->created_at->format('d-M-Y') }}</td>
+                                    <td>{{ $order->status }}</td>
+                                    <td>
+                                        @foreach ($order->products as $product)
+                                            <div>{{ $product->quantity }} x {{ $product->name }}</div>
+                                        @endforeach
+                                    </td>
+                                    <td>{{ $order->note }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

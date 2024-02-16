@@ -14866,7 +14866,6 @@ table.dataTable thead .sorting_desc_disabled:after {
 table.dataTable input,
 table.dataTable select {
 	border: 1px solid #efefef;
-	height: 37px
 }
 
 .toolbar {

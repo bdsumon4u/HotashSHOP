@@ -67,7 +67,8 @@ class OrderController extends Controller
             'areas' => $areas,
             'cities' => $cities,
             'courier' => $data->courier ?? '',
-            'statuses' => config('app.orders', [])
+            'statuses' => config('app.orders', []),
+            'orders' => Order::where('user_id', $order->user_id)->where('id', '!=', $order->id)->orderBy('id', 'desc')->get(),
         ]);
     }
 

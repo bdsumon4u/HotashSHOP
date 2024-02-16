@@ -58,14 +58,12 @@
                                         <input type="checkbox" name="check_all">
                                     </th>
                                     <th width="80">ID</th>
-                                    <th style="min-width: 80px;">DateTime</th>
-                                    <th style="min-width: 120px;">Name</th>
-                                    <th style="min-width: 100px;">Phone</th>
-                                    <th style="min-width: 250px;">Address</th>
-                                    <th>Courier</th>
-                                    <th width="10">Price</th>
+                                    <th>Customer</th>
+                                    <th>Products</th>
+                                    <th width="10">Amount</th>
                                     <th width="10">Status</th>
-                                    <th width="10" class="text-center">Action</th>
+                                    <th>Courier</th>
+                                    <th style="min-width: 80px;">DateTime</th>
                                 </tr>
                                 </thead>
                             </table>
@@ -136,10 +134,9 @@
                     type: 'num',
                     orderable: false,
                     searchable: false,
-                    targets: -3
+                    targets: -4
                 },
                 {
-                    orderable: false,
                     searchable: false,
                     targets: -1
                 },
@@ -150,14 +147,12 @@
             columns: [
                 { data: 'checkbox', name: 'checkbox', sortable: false, searchable: false},
                 { data: 'id', name: 'id' },
+                { data: 'customer', name: 'customer', sortable: false },
+                { data: 'products', name: 'products', sortable: false },
+                { data: 'amount', name: 'amount', sortable: false },
+                { data: 'status', name: 'status', sortable: false },
+                { data: 'courier', name: 'courier', sortable: false },
                 { data: 'created_at', name: 'created_at' },
-                { data: 'name', name: 'name' },
-                { data: 'phone', name: 'phone' },
-                { data: 'address', name: 'address' },
-                { data: 'courier', name: 'courier' },
-                { data: 'price', name: 'price' },
-                { data: 'status', name: 'status' },
-                { data: 'actions', name: 'actions' },
             ],
             initComplete: function () {
                 var tr = $(this.api().table().header()).children('tr').clone();
@@ -169,7 +164,7 @@
                     var th = $(this.header()).parents('thead').find('tr').eq(1).find('th').eq(i);
                     $(th).empty();
 
-                    if ($.inArray(i, [0, 2, 6, 7, 9]) === -1) {
+                    if ($.inArray(i, [0, 4, 7]) === -1) {
                         var column = this;
                         var input = document.createElement("input");
                         input.classList.add('form-control', 'border-primary');
