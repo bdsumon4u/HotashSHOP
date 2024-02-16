@@ -1,6 +1,15 @@
 <div class="product__info">
     <h1 class="product__name" data-name="{{$selectedVar->var_name}}">{{ $product->name }}</h1>
-    <div class="w-100 mb-2 border-top pt-2">Product Code: <strong>{{ $selectedVar->sku }}</strong></div>
+    <div class="w-100 border-top pt-2">Product Code: <strong>{{ $selectedVar->sku }}</strong></div>
+    <div class="w-100 mb-2">Availability:
+        <strong>
+            @if(! $selectedVar->should_track)
+                <span class="text-success">In Stock</span>
+            @else
+                <span class="text-{{ $selectedVar->stock_count ? 'success' : 'danger' }}">{{ $selectedVar->stock_count }} In Stock</span>
+            @endif
+        </strong>
+    </div>
     <div class="product__prices {{$selectedVar->selling_price == $selectedVar->price ? '' : 'has-special'}}">
         Price:
         @if($selectedVar->selling_price == $selectedVar->price)
@@ -54,18 +63,7 @@
             <div class="form-group product__option">
                 {{-- <label class="product__option-label" for="product-quantity">Quantity</label> --}}
                 <div class="product__actions-item d-flex justify-content-between align-items-center border-top pt-1">
-                    <ul class="product__meta p-0 m-0 border-0">
-                        <li class="product__meta-availability">
-                            <big>
-                                Availability:
-                                @if(! $selectedVar->should_track)
-                                    <span class="text-success">In Stock</span>
-                                @else
-                                    <span class="text-{{ $selectedVar->stock_count ? 'success' : 'danger' }}">{{ $selectedVar->stock_count }} In Stock</span>
-                                @endif
-                            </big>
-                        </li>
-                    </ul>
+                    <big>Quantity</big>
                     <div class="input-number product__quantity">
                         <input id="product-quantity"
                                 class="input-number__input form-control form-control-lg"
