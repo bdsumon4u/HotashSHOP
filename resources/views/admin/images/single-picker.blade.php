@@ -87,21 +87,23 @@
         $('#single-select-{{ $selected ?? 0 }}').prop('checked', true);
     });
 
-    $('#single-picker').on('change', '.select-image', function (ev) {
-        var $this = $(this);
-        $('#single-picker .select-image:checked').each(function (i, el) {
-            if ($this.data('id') != $(el).data('id')) {
-                $(el).prop('checked', false);
+    $('#single-picker').on('click', '.select-image', function (ev) {
+        $('.base_image-preview').html('<img src="'+$(this).data('src')+'" alt="Base Image" data-toggle="modal" data-target="#single-picker" id="base_image-preview" class="img-thumbnail img-responsive" style="height: 150px; width: 150px; margin: 5px; margin-left: 0;"><input type="hidden" name="base_image" value="'+$(this).data('id')+'"><input type="hidden" name="base_image_src" value="'+$(this).data('src')+'">').removeClass('d-none');
+        $(this).parents('.modal').modal('hide');
+        $.notify('<i class="fa fa-bell-o mr-1"></i> Base image selected', {
+            type: 'success',
+            allow_dismiss: true,
+            // delay: 2000,
+            showProgressbar: true,
+            timer: 300,
+            z_index: 9999,
+            animate:{
+                enter:'animated fadeInDown',
+                exit:'animated fadeOutUp'
             }
         });
+    });
 
-        $('#base_image-preview').attr('src', $(this).data('src')).show();
-        $('[name="base_image_src"]').val($(this).data('src'));
-        $('#base-image').val($(this).data('id'));
-        $('.btn.single').hide();
-        $(this).parents('.modal').modal('hide');
-    })
-    
     Dropzone.options.imageDropzoneSingle = {
         init: function () {
             this.on('complete', function(){

@@ -3,6 +3,8 @@
 <!-- Bootstrap js-->
 <script src="{{asset('assets/js/bootstrap/popper.min.js')}}"></script>
 <script src="{{asset('assets/js/bootstrap/bootstrap.js')}}"></script>
+<!--Bootstrap notify-->
+<script src="{{asset('assets/js/notify/bootstrap-notify.min.js')}}"></script>
 <!-- feather icon js-->
 <script src="{{asset('assets/js/icons/feather-icon/feather.min.js')}}"></script>
 <script src="{{asset('assets/js/icons/feather-icon/feather-icon.js')}}"></script>

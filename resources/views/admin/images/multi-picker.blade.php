@@ -1,6 +1,6 @@
 @push('css')
 <!--<link rel="stylesheet" type="text/css" href="{{asset('assets/css/dropzone.css')}}">-->
-<link rel="stylesheet" type="text/css" href="{{asset('assets/css/datatables.css')}}">
+<!--<link rel="stylesheet" type="text/css" href="{{asset('assets/css/datatables.css')}}">-->
 @endpush
 
 <!-- The Modal -->
@@ -61,7 +61,7 @@
 @push('js')
 <!--<script src="{{asset('assets/js/dropzone/dropzone.js')}}"></script>-->
 <!--<script src="{{asset('assets/js/dropzone/dropzone-script.js')}}"></script>-->
-<script src="{{asset('assets/js/datatable/datatables/jquery.dataTables.min.js')}}"></script>
+<!--<script src="{{asset('assets/js/datatable/datatables/jquery.dataTables.min.js')}}"></script>-->
 @endpush
 
 @push('scripts')
@@ -83,37 +83,42 @@
         ],
     });
 
-    tableMulti.on('draw', function () {
-        var selected = @json($selected ?? []);
-        for (var index = 0; index < selected.length; index++) {  
-            $('#multi-select-'+selected[index]).prop('checked', true);
+    var selected = @json($selected ?? []);
+
+    $('#multi-picker').on('click', '.select-image', function (ev) {
+        // if not selected $(this).data('id')
+        if (selected.includes($(this).data('id'))) {
+            return $.notify('<i class="fa fa-bell-o mr-1"></i> Additional image already selected', {
+                type: 'success',
+                allow_dismiss: true,
+                // delay: 2000,
+                showProgressbar: true,
+                timer: 300,
+                z_index: 9999,
+                animate:{
+                    enter:'animated fadeInDown',
+                    exit:'animated fadeOutUp'
+                }
+            });
         }
-    });
-
-    $('#multi-picker').on('change', '.select-image', function (ev) {
-        var selected = [],
-            $additional_images = $('#additional-images'),
-            additional_images_srcs = [],
-            $additional_images_previews = $('.additional_images-previews');
-
-        $('#multi-picker .select-image:checked').each(function (i, el) {
-            if ($.inArray($(el).data('id'), selected) == -1) {
-                selected.push($(el).data('id'));
-                additional_images_srcs.push($(el).data('src'));
+        selected.push($(this).data('id'));
+        $('.additional_images-previews').append('<div id="preview-'+$(this).data('id')+'" class="additional_images-preview position-relative" style="height: 150px; width: 150px; margin: 5px;">
+            <i class="fa fa-times text-danger position-absolute" style="font-size: large; top: 0; right: 0; background: #ddd; padding: 2px; border-radius: 3px; cursor: pointer;" onclick="this.parentNode.remove()"></i>
+            <img src="'+$(this).data('src')+'" alt="Additional Image" data-toggle="modal" data-target="#multi-picker" id="additional_image-preview" class="img-thumbnail img-responsive">
+            <input type="hidden" name="additional_images[]" value="'+$(this).data('id')+'">
+            <input type="hidden" name="additional_images_srcs[]" value="'+$(this).data('src')+'">
+        </div>');
+        $.notify('<i class="fa fa-bell-o mr-1"></i> Additional image selected', {
+            type: 'success',
+            allow_dismiss: true,
+            // delay: 2000,
+            showProgressbar: true,
+            timer: 300,
+            z_index: 9999,
+            animate:{
+                enter:'animated fadeInDown',
+                exit:'animated fadeOutUp'
             }
-        });
-
-        $('.btn-done').show().text('Done ['+selected.length+']');
-
-        $('.btn-done').on('click', function () {
-            $additional_images.empty();
-            $additional_images_previews.empty();
-            for (var index = 0; index < selected.length; index++) {
-                $additional_images_previews.append('<img src="'+additional_images_srcs[index]+'" alt="Additional Image" id="additional_image-preview" class="img-thumbnail img-responsive" style="height: 150px; width: 150px; margin: 5px;">');
-                $additional_images.append('<input type="hidden" name="additional_images[]" value="'+selected[index]+'">');
-                $additional_images.append('<input type="hidden" name="additional_images_srcs[]" value="'+additional_images_srcs[index]+'">');
-            }
-            $(this).parents('.modal').modal('hide');
         });
     })
     

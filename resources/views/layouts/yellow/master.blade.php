@@ -468,7 +468,7 @@
 
             function renderTotal() {
                 var shipping = localStorage.getItem('shipping');
-                $('[name="address"]').parents('.form-row').addClass(shipping ? 'd-flex' : 'd-none');
+                // $('[name="address"]').parents('.form-row').addClass(shipping ? 'd-flex' : 'd-none');
                 if (shipping) {
                     $('#'+shipping).prop('checked', true);
                     var shipping = Number($('#'+shipping).data('val'));

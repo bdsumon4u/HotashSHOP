@@ -34,6 +34,7 @@ class ProductController extends Controller
         return $this->view([
             'categories' => Category::nested(),
             'brands' => Brand::all(),
+            'product' => new Product,
         ]);
     }
 

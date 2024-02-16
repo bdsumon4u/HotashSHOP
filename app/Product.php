@@ -75,7 +75,7 @@ class Product extends Model
 
     public function getVarNameAttribute()
     {
-        if (! $this->parent_id) return $this->name;
+        if (!$this->parent_id) return $this->name;
         return $this->parent->name . ' [' . $this->name . ']';
     }
 
@@ -120,9 +120,9 @@ class Product extends Model
 
     public function getBaseImageAttribute()
     {
-        $images = $this->images;
+        $images = $this->images ?? collect();
         if ($images->isEmpty()) {
-            $images = $this->parent->images;
+            $images = $this->parent->images ?? collect();
         }
         return $images->first(function (Image $image) {
             return $image->pivot->img_type == 'base';
@@ -131,9 +131,9 @@ class Product extends Model
 
     public function getAdditionalImagesAttribute()
     {
-        $images = $this->images;
+        $images = $this->images ?? collect();
         if ($images->isEmpty()) {
-            $images = $this->parent->images;
+            $images = $this->parent->images ?? collect();
         }
         return $images->filter(function (Image $image) {
             return $image->pivot->img_type == 'additional';
