@@ -105,9 +105,9 @@ class CheckoutController extends Controller
         session()->flash('completed', 'Dear ' . $data['name'] . ', Your Order is Successfully Recieved. Thanks For Your Order.');
 
         return redirect()->route('track-order', [
-            'phone' => $data['phone'],
             'order' => optional($order)->getKey(),
-        ] + ($request->isMethod('GET') ? [] : ['clear' => 'all']));
+            'clear' => 'all',
+        ]);
     }
 
     private function getUser($data)

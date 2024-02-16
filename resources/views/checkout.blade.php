@@ -84,6 +84,15 @@
                                         <x-error field="address" />
                                     </div>
                                 </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-3">
+                                        <label>নোট (অপশনাল):</label>
+                                    </div>
+                                    <div class="form-group col-md-9">
+                                        <x-textarea name="note" placeholder="আপনি চাইলে কোন নোট লিখতে পারেন।">{{ $user->note }}</x-textarea>
+                                        <x-error field="note" />
+                                    </div>
+                                </div>
                             </div>
                             <div class="card-divider d-md-none"></div>
                             <div class="card-body d-md-none">
