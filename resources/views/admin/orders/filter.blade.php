@@ -53,12 +53,18 @@
                 <div class="card-header p-3">
                     <form action="">
                         <div class="row">
-                            <div class="col-auto">
+                            <div class="col-auto pr-1">
+                                <select name="date_type" id="datetype" class="form-control">
+                                    <option value="created_at" @if(request('date_type') == 'created_at') selected @endif>CREATED</option>
+                                    <option value="status_at" @if(request('date_type') == 'status_at') selected @endif>UPDATED</option>
+                                </select>
+                            </div>
+                            <div class="col-auto px-1">
                                 <input class="form-control" id="reportrange" type="text">
                                 <input type="hidden" name="start_d" value="{{ $start }}">
                                 <input type="hidden" name="end_d" value="{{ $end }}">
                             </div>
-                            <div class="col-auto">
+                            <div class="col-auto px-1">
                                 <select name="status" id="status" class="form-control">
                                     <option value="">Delivery Status</option>
                                     @foreach(config('app.orders', []) as $status)
@@ -66,7 +72,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-auto">
+                            <div class="col-auto px-1">
                                 <select name="staff_id" id="staff-id" class="form-control">
                                     <option value="">Select Staff</option>
                                     @foreach(\App\Admin::where('role_id', 1)->get() as $admin)
@@ -74,7 +80,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col">
+                            <div class="col pl-1">
                                 <button class="btn btn-primary" type="submit">Filter</button>
                             </div>
                         </div>

@@ -23,7 +23,7 @@ class HomeController extends Controller
 
         $totalSQL = 'COUNT(*) as order_count, COALESCE(SUM(JSON_UNQUOTE(JSON_EXTRACT(data, "$.subtotal"))) + SUM(JSON_UNQUOTE(JSON_EXTRACT(data, "$.shipping_cost"))) - SUM(JSON_UNQUOTE(JSON_EXTRACT(data, "$.discount"))), 0) as total_amount';
 
-        $orderQ = Order::query()->whereBetween('created_at', [$_start->startOfDay()->toDateTimeString(), $_end->endOfDay()->toDateTimeString()]);
+        $orderQ = Order::query()->whereBetween(request('date_type', 'created_at'), [$_start->startOfDay()->toDateTimeString(), $_end->endOfDay()->toDateTimeString()]);
         $data = (clone $orderQ)
             ->selectRaw($totalSQL)
             ->first();

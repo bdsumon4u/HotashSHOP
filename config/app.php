@@ -24,6 +24,7 @@ return [
         'COMPLETED',
         'RETURNED',
         'CANCELLED',
+        'LOST',
     ],
 
     /*

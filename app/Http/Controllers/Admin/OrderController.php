@@ -131,7 +131,7 @@ class OrderController extends Controller
         if ($request->status) {
             $orders->where('status', $request->status);
         }
-        $orders->whereBetween('status_at', [
+        $orders->whereBetween($request->get('date_type', 'created_at'), [
             $_start->startOfDay()->toDateTimeString(),
             $_end->endOfDay()->toDateTimeString(),
         ]);

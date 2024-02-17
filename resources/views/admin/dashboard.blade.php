@@ -21,8 +21,14 @@
 
 @section('breadcrumb-right')
     <div class="theme-form m-t-10">
-        <div style="max-width: 300px; margin: 0 auto;">
-            <input class="form-control" id="reportrange" type="text">
+        <div style="max-width: 450px; margin: 0 auto;">
+            <div class="input-group">
+               <select name="date_type" id="datetype" class="form-control input-group-prepend" style="max-width: 150px;">
+                  <option value="created_at" @if(request('date_type') == 'created_at') selected @endif>CREATED</option>
+                  <option value="status_at" @if(request('date_type') == 'status_at') selected @endif>UPDATED</option>
+               </select>
+               <input class="form-control" id="reportrange" type="text">
+            </div>
         </div>
     </div>
 @endsection
@@ -186,10 +192,16 @@
     <script src="{{ asset('assets/js/datepicker/daterange-picker/daterangepicker.js') }}"></script>
     <script src="{{ asset('assets/js/datepicker/daterange-picker/daterange-picker.custom.js') }}"></script>
     <script>
+        window._type = '{{ request('date_type', 'created_at') }}';
         window._start = moment('{{ $start }}');
         window._end = moment('{{ $end }}');
         window.reportRangeCB = function (start, end) {
-            window.location = "{!! route('admin.home', ['start_d'=> '_start', 'end_d' => '_end']) !!}".replace('_start', start.format('YYYY-MM-DD')).replace('_end', end.format('YYYY-MM-DD'));
-        }
+            window.location = "{!! route('admin.home', ['date_type' => 'd_type', 'start_d'=> '_start', 'end_d' => '_end']) !!}".replace('d_type', window._type).replace('_start', start.format('YYYY-MM-DD')).replace('_end', end.format('YYYY-MM-DD'));
+        };
+
+        $('#datetype').on('change', function () {
+            window._type = $(this).val();
+            window.location = "{!! route('admin.home', ['date_type' => 'd_type', 'start_d'=> '_start', 'end_d' => '_end']) !!}".replace('d_type', window._type).replace('_start', window._start.format('YYYY-MM-DD')).replace('_end', window._end.format('YYYY-MM-DD'));
+        });
     </script>
 @endpush
