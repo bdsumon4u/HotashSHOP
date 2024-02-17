@@ -253,10 +253,10 @@
 @push('scripts')
 <script>
     $(document).ready(function () {
-        $('[name="name"]').keyup(function () {
-            $($(this).data('target')).val(slugify($(this).val()));
-        });
-    
+        // $('[name="name"]').keyup(function () {
+        //     $($(this).data('target')).val(slugify($(this).val()));
+        // });
+
         $('.should_track').change(function() {
             if($(this).is(':checked')) {
                 $(this).closest('.row').find('.stock-count').show();

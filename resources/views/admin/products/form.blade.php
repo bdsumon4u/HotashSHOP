@@ -12,7 +12,13 @@
         </div>
         <div class="form-group">
             <x-label for="slug" /><span class="text-danger">*</span>
-            <x-input name="slug" :value="$product->slug" />
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">{{ url('/product') }}/</div>
+                </div>
+                <x-input name="slug" :value="$product->slug" />
+                <button class="input-group-append align-items-center btn btn-secondary" type="button" onclick="window.open('{{url('/products').'/'}}'+this.previousSibling.value, '_blank')">VISIT</button>
+            </div>
             <x-error field="slug" />
         </div>
         <div class="row">
