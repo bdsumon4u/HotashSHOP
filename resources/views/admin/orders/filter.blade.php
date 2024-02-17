@@ -1,6 +1,16 @@
 @extends('layouts.light.master')
 @section('title', 'Reports')
 
+@push('css')
+<link rel="stylesheet" type="text/css" href="{{asset('assets/css/animate.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('assets/css/daterange-picker.css')}}">
+<style>
+    .daterangepicker {
+        border: 2px solid #d7d7d7 !important;
+    }
+</style>
+@endpush
+
 @section('breadcrumb-title')
 <h3>Reports</h3>
 @endsection
@@ -44,26 +54,28 @@
                     <form action="">
                         <div class="row">
                             <div class="col-auto">
-                                <input type="date" name="date" id="date" value="{{ request('date', date('Y-m-d')) }}" class="form-control form-control-sm">
+                                <input class="form-control" id="reportrange" type="text">
+                                <input type="hidden" name="start_d" value="{{ $start }}">
+                                <input type="hidden" name="end_d" value="{{ $end }}">
                             </div>
                             <div class="col-auto">
-                                <select name="status" id="status" class="form-control form-control-sm">
+                                <select name="status" id="status" class="form-control">
                                     <option value="">Delivery Status</option>
                                     @foreach(config('app.orders', []) as $status)
                                     <option value="{{ $status }}" @if(request()->get('status') == $status) selected @endif>{{ $status }}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            {{-- <div class="col-auto">
-                                <select name="staff_id" id="staff-id" class="form-control form-control-sm">
+                            <div class="col-auto">
+                                <select name="staff_id" id="staff-id" class="form-control">
                                     <option value="">Select Staff</option>
                                     @foreach(\App\Admin::where('role_id', 1)->get() as $admin)
                                     <option value="{{ $admin->id }}" @if(request()->get('staff_id') == $admin->id) selected @endif>{{ $admin->name }}</option>
                                     @endforeach
                                 </select>
-                            </div> --}}
+                            </div>
                             <div class="col">
-                                <button type="submit">Filter</button>
+                                <button class="btn btn-primary" type="submit">Filter</button>
                             </div>
                         </div>
                     </form>
@@ -99,3 +111,17 @@
     </div>
 </div>
 @endsection
+
+@push('js')
+    <script src="{{ asset('assets/js/datepicker/daterange-picker/moment.min.js') }}"></script>
+    <script src="{{ asset('assets/js/datepicker/daterange-picker/daterangepicker.js') }}"></script>
+    <script src="{{ asset('assets/js/datepicker/daterange-picker/daterange-picker.custom.js') }}"></script>
+    <script>
+        window._start = moment('{{ $start }}');
+        window._end = moment('{{ $end }}');
+        window.reportRangeCB = function (start, end) {
+            $('input[name="start_d"]').val(start.format('YYYY-MM-DD'));
+            $('input[name="end_d"]').val(end.format('YYYY-MM-DD'));
+        }
+    </script>
+@endpush

@@ -80,6 +80,7 @@ class CheckoutController extends Controller
             $data += [
                 'user_id' => $user->id, // If User Logged In
                 'status' => $status,
+                'status_at' => now()->toDateTimeString(),
                 // Additional Data
                 'data' => [
                     'is_fraud' => $oldOrders->whereIn('status', ['CANCELLED', 'RETURNED'])->count() > 0,

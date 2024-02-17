@@ -103,9 +103,6 @@ class OrderController extends Controller
         $data['data']['shipping_area'] = $data['shipping'];
         $data['data']['shipping_cost'] = setting('delivery_charge')->{$data['shipping'] == 'Inside Dhaka' ? 'inside_dhaka' : 'outside_dhaka'} ?? config('services.shipping.' . $data['shipping']);
         $data['data']['subtotal'] = $this->getSubtotal($order->products);
-        if ($order->status != 'Shipping' && $data['status'] == 'Shipping') {
-            $order->forceFill(['shipped_at' => now()->toDateTimeString()]);
-        }
 
         if ($request->status != $order->status) {
             $data['status_at'] = now()->toDateTimeString();
@@ -125,20 +122,27 @@ class OrderController extends Controller
 
     public function filter(Request $request)
     {
+        $_start = Carbon::parse(\request('start_d'));
+        $start = $_start->format('Y-m-d');
+        $_end = Carbon::parse(\request('end_d'));
+        $end = $_end->format('Y-m-d');
+
         $orders = Order::select('id', 'products');
         if ($request->status) {
             $orders->where('status', $request->status);
         }
-        if ($request->date) {
-            $orders->whereBetween('status_at', [Carbon::parse($request->date)->startOfDay(), Carbon::parse($request->date)->endOfDay()]);
-        } else {
-            $orders->whereBetween('status_at', [now()->startOfDay(), now()->endOfDay()]);
+        $orders->whereBetween('status_at', [
+            $_start->startOfDay()->toDateTimeString(),
+            $_end->endOfDay()->toDateTimeString(),
+        ]);
+
+        if ($request->staff_id) {
+            $orders->where('admin_id', $request->staff_id);
         }
-        // if ($request->staff_id) {
-        //     $orders->where('admin_id', $request->staff_id);
-        // }
 
         return view('admin.orders.filter', [
+            'start' => $start,
+            'end' => $end,
             'products' => $orders->get()->pluck('products')->flatten()->groupBy('name')->map->count()->toArray(),
         ]);
     }
@@ -270,9 +274,7 @@ class OrderController extends Controller
         ]);
 
         $data['status'] = $request->status;
-        if ($request->status == 'Shipping') {
-            $data['shipped_at'] = now()->toDateTimeString();
-        }
+        $data['status_at'] = now()->toDateTimeString();
         Order::whereIn('id', $request->order_id)->update($data);
 
         return redirect()->back()->withSuccess('Order Status Has Been Updated.');

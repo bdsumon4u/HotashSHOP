@@ -39,8 +39,8 @@
         }
 
         $('#reportrange').daterangepicker({
-            startDate: start,
-            endDate: end,
+            startDate: _start,
+            endDate: _end,
             ranges: {
                 'Today': [moment(), moment()],
                 'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
@@ -49,9 +49,9 @@
                 'This Month': [moment().startOf('month'), moment().endOf('month')],
                 'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
             }
-        }, cb);
+        }, window.reportRangeCB);
 
-        cb(start, end);
+        cb(_start, _end);
 
     });
 //Input Initially Empty

@@ -53,8 +53,9 @@
                     @yield('breadcrumb-items')
                   </ol>
                 </div>
-                <div class="col-lg-6">
-                </div>
+                  <div class="col-lg-6">
+                      @yield('breadcrumb-right')
+                  </div>
               </div>
             </div>
           </div>

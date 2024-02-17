@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Order;
 use App\Product;
+use Illuminate\Support\Carbon;
 
 class HomeController extends Controller
 {
@@ -16,13 +16,30 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $_start = Carbon::parse(\request('start_d'));
+        $start = $_start->format('Y-m-d');
+        $_end = Carbon::parse(\request('end_d'));
+        $end = $_end->format('Y-m-d');
+
+        $totalSQL = 'COUNT(*) as order_count, COALESCE(SUM(JSON_UNQUOTE(JSON_EXTRACT(data, "$.subtotal"))) + SUM(JSON_UNQUOTE(JSON_EXTRACT(data, "$.shipping_cost"))) - SUM(JSON_UNQUOTE(JSON_EXTRACT(data, "$.discount"))), 0) as total_amount';
+
+        $orderQ = Order::query()->whereBetween('created_at', [$_start->startOfDay()->toDateTimeString(), $_end->endOfDay()->toDateTimeString()]);
+        $data = (clone $orderQ)
+            ->selectRaw($totalSQL)
+            ->first();
+        $orders['Total'] = $data->order_count;
+        $amounts['Total'] = $data->total_amount;
+        foreach (config('app.orders', []) as $status) {
+            $data = (clone $orderQ)->where('status', $status)
+                ->selectRaw($totalSQL)
+                ->first();
+            $orders[$status] = $data->order_count ?? 0;
+            $amounts[$status] = $data->total_amount ?? 0;
+        }
+
         $productsCount = Product::whereNull('parent_id')->count();
-        $ordersCount = Order::count();
-        $initialStatus = data_get(config('app.orders'), 0, 'PENDING');
-        $initialOrdersCount = Order::whereStatus($initialStatus)->count();
-        $returnedOrdersCount = Order::whereStatus('returned')->count();
         $inactiveProducts = Product::whereIsActive(0)->whereNull('parent_id')->get();
-        $outOfStockProducts = Product::whereShouldTrack(1)->where('stock_count', '<=', 0)->get(); // PROBLEM
-        return view('admin.dashboard', compact('productsCount', 'ordersCount', 'initialStatus', 'initialOrdersCount', 'returnedOrdersCount', 'inactiveProducts', 'outOfStockProducts'));
+        $outOfStockProducts = Product::whereShouldTrack(1)->where('stock_count', '<=', 0)->get();
+        return view('admin.dashboard', compact('productsCount', 'orders', 'amounts', 'inactiveProducts', 'outOfStockProducts', 'start', 'end'));
     }
 }
