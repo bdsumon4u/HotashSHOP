@@ -61,6 +61,7 @@
                                     <th style="min-width: 50px;">Order ID</th>
                                     <th>Customer</th>
                                     <th>Note</th>
+                                    <th style="min-width: 80px;">Courier</th>
                                     <th style="min-width: 80px;">Status</th>
                                     <th style="min-width: 80px;">Subtotal</th>
                                     <th style="min-width: 80px;">Shipping</th>
@@ -75,11 +76,14 @@
                     </div>
                     <form id="search-form" action="" class="mt-2">
                         <div class="row">
-                            <div class="col">
+                            <div class="col pr-1">
                                 <input type="text" name="code" id="search" class="form-control form-control">
                             </div>
-                            <div class="col-auto">
+                            <div class="col-auto px-1">
                                 <button type="button" onclick="window.print()" class="btn btn-primary">Print</button>
+                            </div>
+                            <div class="col-auto pl-1">
+                                <button type="button" onclick="saveThis()" class="btn btn-primary">{{isset($report)?'Update':'Save'}}</button>
                             </div>
                         </div>
                     </form>
@@ -93,6 +97,7 @@
                                     <th style="min-width: 50px;">Order ID</th>
                                     <th>Customer</th>
                                     <th>Note</th>
+                                    <th style="min-width: 80px;">Courier</th>
                                     <th style="min-width: 80px;">Status</th>
                                     <th style="min-width: 80px;">Subtotal</th>
                                     <th style="min-width: 80px;">Shipping</th>
@@ -150,47 +155,104 @@
             ev.preventDefault();
             var code = $('#search').blur().val();
 
-            $.get('{{url()->current()}}', {code:code}, function(order) {
-                $('#search').focus().val('');
-                if (! order || uniqueness.includes(order.id)) {
-                    console.log('Order not found');
-                    return;
-                }
-                uniqueness.push(order.id);
-                if (phones.includes(order.phone)) {
-                    duplicates.push(order);
-
-                    var tr = `
-                        <tr data-id="${order.id}">
-                            <td><a target="_blank" href="{{route('admin.orders.show', '')}}/${order.id}">${order.id}</a></td>
-                            <td>${order.name}&nbsp;${order.phone}</td>
-                            <td>${order.note ?? 'N/A'}</td>
-                            <td>${order.status}</td>
-                            <td>${order.data.subtotal}</td>
-                            <td>${order.data.shipping_cost}</td>
-                            <td>${parseInt(order.data.subtotal)+parseInt(order.data.shipping_cost)}</td>
-                            <td style="width: 225px;">
-                                <div class="d-flex justify-content-center">
-                                    <button type="button" onclick="keep(${order.id})" class="btn btn-primary btn-sm mr-1">Keep</button>
-                                    <button type="button" onclick="remove(${order.id})" class="d-none btn btn-danger btn-sm ml-1">Remove</button>
-                                </div>
-                            </td>
-                        </tr>
-                    `;
-                    
-                    $('.card-header table tbody').prepend(tr);
-                } else manageOrder(order);
-                phones.push(order.phone);
-
-                if (duplicates.length) {
-                    $('.card-header .table-responsive').show();
-                } else {
-                    $('.card-header .table-responsive').hide();
-                }
-            });
+            $.get('{{route('admin.reports.create')}}', {code:code}, scanned);
 
             return false;
         });
+
+        function saveThis() {
+            var codes = uniqueness.concat(duplicates.map(order => order.id)).join(',');
+            var url = '{{route('admin.reports.store')}}';
+            var method = 'POST';
+            if ({{isset($report)}}) {
+                url = '{{route('admin.reports.update', $report->id??0)}}';
+                method = 'PUT';
+            }
+            var couriers = new Set();
+            $('.card-body table tbody tr:not(:last-child)').each(function (index, tr) {
+                couriers.add($(tr).find('td:nth-child(5)').text());
+            });
+            couriers = Array.from(couriers).filter((item) => item != 'N/A').join(', ').trim(', ');
+            var courier = 'N/A';
+            if (couriers.length) {
+                courier = couriers;
+            }
+            var statuses = new Set();
+            $('.card-body table tbody tr:not(:last-child)').each(function (index, tr) {
+                statuses.add($(tr).find('td:nth-child(6)').text());
+            });
+            statuses = Array.from(statuses).filter((item) => item != 'N/A').join(', ').trim(', ');
+            var status = 'N/A';
+            if (statuses.length) {
+                status = statuses;
+            }
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: {
+                    _method: method,
+                    _token: '{{csrf_token()}}',
+                    codes: codes,
+                    orders: uniqueness.length+duplicates.length,
+                    products: quantity,
+                    courier: courier,
+                    status: status,
+                    total: amount,
+                },
+                success: function (response, status, xhr) {
+                    if ({{isset($report)}})
+                        $.notify('Report updated successfully', 'success');
+                    else
+                        $.notify('Report saved successfully', 'success');
+
+                    window.location.href = '{{route('admin.reports.index')}}';
+                },
+            });
+        }
+
+        function scanned(order) {
+            $('#search').focus().val('');
+            if (! order || uniqueness.includes(order.id)) {
+                console.log('Order not found');
+                return;
+            }
+            uniqueness.push(order.id);
+            if (phones.includes(order.phone)) {
+                duplicates.push(order);
+
+                var tr = `
+                    <tr data-id="${order.id}">
+                        <td><a target="_blank" href="{{route('admin.orders.show', '')}}/${order.id}">${order.id}</a></td>
+                        <td>${order.name}&nbsp;${order.phone}</td>
+                        <td>${order.note ?? 'N/A'}</td>
+                        <td>${order.data.courier ?? 'N/A'}</td>
+                        <td>${order.status}</td>
+                        <td>${order.data.subtotal}</td>
+                        <td>${order.data.shipping_cost}</td>
+                        <td>${parseInt(order.data.subtotal)+parseInt(order.data.shipping_cost)}</td>
+                        <td style="width: 225px;">
+                            <div class="d-flex justify-content-center">
+                                <button type="button" onclick="keep(${order.id})" class="btn btn-primary btn-sm mr-1">Keep</button>
+                                <button type="button" onclick="remove(${order.id})" class="d-none btn btn-danger btn-sm ml-1">Remove</button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                
+                $('.card-header table tbody').prepend(tr);
+            } else manageOrder(order);
+            phones.push(order.phone);
+
+            if (duplicates.length) {
+                $('.card-header .table-responsive').show();
+            } else {
+                $('.card-header .table-responsive').hide();
+            }
+        }
+
+        @foreach($orders ?? [] as $order)
+            scanned({!! json_encode($order) !!});
+        @endforeach
 
         function keep(id) {
             var order = duplicates.find(order => order.id == id);
@@ -222,6 +284,7 @@
                     <td><a target="_blank" href="{{route('admin.orders.show', '')}}/${order.id}">${order.id}</a></td>
                     <td>${order.name}&nbsp;${order.phone}</td>
                     <td>${order.note ?? 'N/A'}</td>
+                    <td>${order.data.courier ?? 'N/A'}</td>
                     <td>${order.status}</td>
                     <td>${order.data.subtotal}</td>
                     <td>${order.data.shipping_cost}</td>
@@ -235,7 +298,7 @@
             });
 
             if (! $('.card-body table tbody tr:last-child').hasClass('summary')) {
-                $('.card-body table tbody').append('<tr class="summary"><th colspan="5" class="text-right">Total</th><th>'+subtotal+'</th><th>'+shipping+'</th><th>'+total+'</th></tr>');
+                $('.card-body table tbody').append('<tr class="summary"><th colspan="6" class="text-right">Total</th><th>'+subtotal+'</th><th>'+shipping+'</th><th>'+total+'</th></tr>');
             } else {
                 $('.card-body table tbody tr:last-child').find('th:nth-child(2)').text(subtotal);
                 $('.card-body table tbody tr:last-child').find('th:nth-child(3)').text(shipping);

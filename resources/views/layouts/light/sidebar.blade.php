@@ -195,12 +195,12 @@
                             <li>
                                 <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.orders.filter' ? 'active' : '' }}"
                                     href="{{ route('admin.orders.filter') }}">
-                                    <span>Filter</span>
+                                    <span>Filtering</span>
                                 </a>
                             </li>
                             <li>
-                                <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.orders.scanning' ? 'active' : '' }}"
-                                    href="{{ route('admin.orders.scanning') }}">
+                                <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.reports.index' ? 'active' : '' }}"
+                                    href="{{ route('admin.reports.index') }}">
                                     <span>Scanning</span>
                                 </a>
                             </li>

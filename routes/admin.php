@@ -31,7 +31,6 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
             ->name('password.change');
         Route::any('settings', 'SettingController')->name('settings');
         Route::get('/reports/filter', 'OrderController@filter')->name('orders.filter');
-        Route::get('/reports/scanning', 'OrderController@scanning')->name('orders.scanning');
         Route::get('/orders/invoices', 'OrderController@invoices')->name('orders.invoices');
         Route::get('/orders/courier', 'OrderController@courier')->name('orders.courier');
         Route::post('/orders/change-status', 'OrderController@status')->name('orders.status');
@@ -50,6 +49,7 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
             'products'      => 'ProductController',
             'images'        => 'ImageController',
             'orders'        => 'OrderController',
+            'reports'      => 'ReportController',
             'home-sections' => 'HomeSectionController',
             'pages'         => 'PageController',
             'menus'         => 'MenuController',

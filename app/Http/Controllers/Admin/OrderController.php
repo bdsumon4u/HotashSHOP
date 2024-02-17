@@ -147,18 +147,6 @@ class OrderController extends Controller
         ]);
     }
 
-    public function scanning(Request $request)
-    {
-        if ($request->has('code')) {
-            if ($order = Order::find($request->code)) {
-                return $order;
-            }
-            return null;
-        }
-
-        return view('admin.orders.scanning');
-    }
-
     public function invoices(Request $request)
     {
         $request->validate(['order_id' => 'required']);
