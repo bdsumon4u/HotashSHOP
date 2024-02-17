@@ -32,20 +32,21 @@
                     <div class="card-header p-3">
                         <strong>All Orders</strong>
                         <div class="row d-none">
-                            <div class="col-auto">
-                                <select name="status" id="status" class="form-control form-control-sm">
+                            <div class="col-auto pr-1 d-flex align-items-center" check-count></div>
+                            <div class="col-auto px-1">
+                                <select name="status" id="status" class="form-control">
                                     <option value="">Change Status</option>
                                     @foreach(config('app.orders', []) as $status)
                                     <option value="{{ $status }}">{{ $status }}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col">
-                                <button type="button" onclick="changeStatus()">Update</button>
+                            <div class="col pl-1">
+                                <button type="button" class="btn btn-primary" onclick="changeStatus()">Update</button>
                             </div>
                             <div class="col-auto">
-                                <button onclick="printInvoice()" id="invoice" class="btn btn-sm btn-primary mr-1">Invoice</button>
-                                <button onclick="courier()" id="courier" class="btn btn-sm btn-primary ml-1">Courier</button>
+                                <button onclick="courier()" id="courier" class="btn btn-sm btn-primary mr-1">Courier</button>
+                                <button onclick="printInvoice()" id="invoice" class="btn btn-sm btn-primary ml-1">Invoice</button>
                             </div>
                         </div>
                     </div>
@@ -84,22 +85,38 @@
 
 @push('scripts')
     <script>
-        var checked_count = 0;
+        var checklist = new Set();
         function updateBulkMenu() {
-            var total = $('[name="order_id[]"]').length;
-            checked_count = $('[name="order_id[]"]:checked').length;
-            $('[name="check_all"]').prop('checked', checked_count === total);
-            if (checked_count > 0) {
+            $('[name="check_all"]').prop('checked', true);
+            $(document).find('[name="order_id[]"]').each(function () {
+                if (checklist.has($(this).val())) {
+                    $(this).prop('checked', true);
+                } else {
+                    $('[name="check_all"]').prop('checked', false);
+                }
+            });
+
+            if (checklist.size > 0) {
+                $('[check-count]').text(checklist.size + ' selected');
                 $('.card-header > .row').removeClass('d-none');
                 $('.card-header > strong').addClass('d-none');
             } else {
+                $('[check-count]').text('');
                 $('.card-header > .row').addClass('d-none');
                 $('.card-header > strong').removeClass('d-none');
             }
         }
         $('[name="check_all"]').on('change', function () {
-            var checked = $(this).prop('checked');
-            $('[name="order_id[]"]').prop('checked', checked);
+            if ($(this).prop('checked')) {
+                $(document).find('[name="order_id[]"]').each(function () {
+                    checklist.add($(this).val());
+                });
+            } else {
+                $(document).find('[name="order_id[]"]').each(function () {
+                    checklist.delete($(this).val());
+                });
+            }
+            $('[name="order_id[]"]').prop('checked', $(this).prop('checked'));
             updateBulkMenu();
         });
 
@@ -120,7 +137,7 @@
                     action: function ( e, dt, node, config ) {
                         window.location = '{{ request()->fullUrlWithQuery(['status' => strtolower($status)]) }}'
                     }
-                },@endforeach,
+                },@endforeach
                 {
                     text: 'All',
                     className: 'px-1 py-1 {{ request('status') === null ? 'btn-secondary' : '' }}',
@@ -136,10 +153,6 @@
                     searchable: false,
                     targets: -4
                 },
-                {
-                    searchable: false,
-                    targets: -1
-                },
             ],
             processing: true,
             serverSide: true,
@@ -154,7 +167,8 @@
                 { data: 'courier', name: 'courier', sortable: false },
                 { data: 'created_at', name: 'created_at' },
             ],
-            initComplete: function () {
+            initComplete: function (settings, json) {
+                window.ordersTotal = json.recordsTotal;
                 var tr = $(this.api().table().header()).children('tr').clone();
                 tr.find('th').each(function (i, item) {
                     $(this).removeClass('sorting').addClass('p-1');
@@ -164,7 +178,7 @@
                     var th = $(this.header()).parents('thead').find('tr').eq(1).find('th').eq(i);
                     $(th).empty();
 
-                    if ($.inArray(i, [0, 4, 7]) === -1) {
+                    if ($.inArray(i, [0, 4]) === -1) {
                         var column = this;
                         var input = document.createElement("input");
                         input.classList.add('form-control', 'border-primary');
@@ -179,34 +193,49 @@
                     }
                 });
             },
+            drawCallback: function () {
+                updateBulkMenu();
+                $(document).on('change', '[name="order_id[]"]', function () {
+                    if ($(this).prop('checked')) {
+                        checklist.add($(this).val());
+                    } else {
+                        checklist.delete($(this).val());
+                    }
+                    updateBulkMenu();
+                });
+            },
             order: [
                 // [1, 'desc']
             ],
             // pageLength: 1,
         });
 
-        setInterval(() => {
-            $(document).find('[name="order_id[]"]').off('change', updateBulkMenu);
-            $(document).find('[name="order_id[]"]').on('change', updateBulkMenu);
-        }, 500);
         function changeStatus() {
             $.post({
                 url: '{{ route('admin.orders.status') }}',
                 data: {
                     _token: '{{ csrf_token() }}',
-                    order_id: $('[name="order_id[]"]:checked').map(function () {
-                        return $(this).val();
-                    }).get(),
+                    order_id: Array.from(checklist),
                     status: $('[name="status"]').val(),
                 },
                 success: function (response) {
-                    $('[name="order_id[]"]:checked').prop('checked', false);
-                    $('[name="check_all"]').prop('checked', false);
+                    checklist.clear();
                     updateBulkMenu();
                     table.draw();
+
+                    $.notify('Status updated successfully', 'success');
                 }
             });
         }
+
+        setInterval(function () {
+            $('.datatable').DataTable().ajax.reload(function (res) {
+                if (window.ordersTotal !== res.recordsTotal) {
+                    window.ordersTotal = res.recordsTotal;
+                    $.notify('New orders found', 'success');
+                }
+            }, false);
+        }, 60*1000);
 
         function printInvoice() {
             window.open('{{ route('admin.orders.invoices') }}?order_id=' + $('[name="order_id[]"]:checked').map(function () {
@@ -218,22 +247,5 @@
                 return $(this).val();
             }).get().join(','));
         }
-
-        // $('.datatable thead tr').clone(true).appendTo( '.datatable thead' );
-        // $('.datatable thead tr th').each( function (i) {
-        //     if ($.inArray(i, [0]) != -1) {
-        //         var title = $(this).text();
-        //         $(this).removeClass('sorting').addClass('p-1').html( '<input class="form-control" type="text" placeholder="'+title+'" size="10" />' );
-        //
-        //         $( 'input', this ).on( 'keyup change', function () {
-        //             if ( table.column(i).search() !== this.value ) {
-        //                 table
-        //                     .column(i)
-        //                     .search('^'+ (this.value.length ? this.value : '.*') +'$', true, false)
-        //                     .draw();
-        //             }
-        //         } );
-        //     }
-        // });
     </script>
 @endpush

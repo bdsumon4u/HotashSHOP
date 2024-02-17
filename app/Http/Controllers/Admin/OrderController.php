@@ -196,7 +196,7 @@ class OrderController extends Controller
             }
         }
 
-        return redirect()->back()
+        return $this->invoices($request);
             // ->withSuccess('Orders are sent to Courier.')
         ;
     }

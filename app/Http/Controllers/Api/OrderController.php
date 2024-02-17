@@ -73,7 +73,7 @@ class OrderController extends Controller
             ->editColumn('products', function ($row) {
                 $products = '<ul style="list-style: auto; padding-left: 1rem;">';
                 foreach ($row->products as $product) {
-                    $products .= "<li><a class='text-underline' href='" . route('products.show', $product->slug) . "'>{$product->name}</a> x{$product->quantity}</li>";
+                    $products .= "<li><a class='text-underline' href='" . route('products.show', $product->slug) . "' target='_blank'>{$product->name}</a> x{$product->quantity}</li>";
                 }
                 return $products . '</ul>';
             })
@@ -103,9 +103,9 @@ class OrderController extends Controller
                 $query->where('data->courier', 'like', '%' . $keyword . '%')
                     ->orWhere('data->consignment_id', 'like', '%' . $keyword . '%');
             })
-            //            ->filterColumn('created_at', function($query, $keyword) {
-            //                $query->where('created_at', 'like', "%" . Carbon::createFromFormat('d-M-Y', $keyword)->format('Y-m-d') ."%");
-            //            })
+            ->filterColumn('created_at', function ($query, $keyword) {
+                $query->where('created_at', 'like', Carbon::createFromFormat('d-M-Y', $keyword)->format('Y-m-d') . "%");
+            })
             ->rawColumns(['checkbox', 'id', 'customer', 'products', 'courier', 'created_at', 'actions'])
             ->make(true);
     }
