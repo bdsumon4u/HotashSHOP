@@ -13,6 +13,10 @@
       @media (min-width: 992px) {
         .toggle-sidebar {display: none;}
       }
+      .range_inputs {
+        display: flex;
+        justify-content: center;
+      }
     </style>
     @stack('styles')
     @bukStyles(true)

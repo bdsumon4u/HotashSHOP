@@ -21,19 +21,20 @@
 
 @section('breadcrumb-right')
     <div class="theme-form m-t-10">
-        <div style="max-width: 600px; margin: 0 auto;">
+        <div style="max-width: 600px; margin-right: auto;">
             <div class="input-group">
-               <select name="staff_id" id="staff-id" class="form-control input-group-prepend" style="max-width: 150px;">
-                  <option value="">Select Staff</option>
-                  @foreach(\App\Admin::where('role_id', \App\Admin::SALESMAN)->get() as $admin)
-                  <option value="{{ $admin->id }}" @if(request()->get('staff_id') == $admin->id) selected @endif>{{ $admin->name }}</option>
-                  @endforeach
-               </select>
                <select name="date_type" id="datetype" class="form-control input-group-prepend" style="max-width: 150px;">
                   <option value="created_at" @if(request('date_type') == 'created_at') selected @endif>CREATED</option>
                   <option value="status_at" @if(request('date_type') == 'status_at') selected @endif>UPDATED</option>
                </select>
                <input class="form-control" id="reportrange" type="text">
+
+               <select name="staff_id" id="staff-id" class="form-control input-group-append" style="max-width: 150px;">
+                  <option value="">Select Staff</option>
+                  @foreach(\App\Admin::where('role_id', \App\Admin::SALESMAN)->get() as $admin)
+                  <option value="{{ $admin->id }}" @if(request()->get('staff_id') == $admin->id) selected @endif>{{ $admin->name }}</option>
+                  @endforeach
+               </select>
             </div>
         </div>
     </div>
