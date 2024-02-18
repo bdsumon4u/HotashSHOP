@@ -111,8 +111,8 @@
                     </li>
 
                     <li>
-                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.images.index' ? 'active' : '' }}"
-                            href="{{ route('admin.images.index') }}">
+                        <a class="nav-link menu-title link-nav {{ request()->is('admin/settings') && request('tab')=='company' ? 'active' : '' }}"
+                            href="{{ route('admin.settings', ['tab' => 'company']) }}">
                             <i data-feather="image"> </i>
                             <span>Company Info</span>
                         </a>

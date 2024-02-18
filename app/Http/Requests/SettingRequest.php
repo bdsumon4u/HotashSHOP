@@ -23,6 +23,21 @@ class SettingRequest extends FormRequest
      */
     public function rules()
     {
+        if ($this->isMethod('GET')) return [];
+
+        if ($this->get('tab') == 'company') {
+            return [
+                'logo' => 'sometimes|array',
+                'logo.*' => 'nullable|image',
+                'company' => 'required|array',
+                'company.name' => 'required',
+                'company.email' => 'required',
+                'company.phone' => 'required',
+                'company.tagline' => 'required',
+                'company.address' => 'required',
+            ];
+        }
+
         return $this->isMethod('GET') ? [] : [
             'logo' => 'sometimes|array',
             'logo.*' => 'nullable|image',

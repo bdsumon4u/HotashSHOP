@@ -65,40 +65,29 @@
 
 @section('content')
 <div class="row">
-    <div class="col-sm-12">
+    <div class="col-md-8 mx-auto">
         <div class="card rounded-0 shadow-sm">
-            <div class="card-header p-3">Admin <strong>Settings</strong></div>
+            <div class="card-header p-3">{{ strtoupper(request('tab')) }} <strong>Settings</strong></div>
             <div class="card-body p-3">
-                <div class="row justify-content-center">
-                    <div class="col-sm-6 col-md-4 col-xl-3">
-                        <ul class="nav nav-tabs list-group" role="tablist">
-                            <li class="nav-item rounded-0"><a class="nav-link active" data-toggle="tab" href="#item-general">General</a></li>
-                            <li class="nav-item rounded-0"><a class="nav-link" data-toggle="tab" href="#item-1">Company</a></li>
-                            <li class="nav-item rounded-0"><a class="nav-link" data-toggle="tab" href="#item-3">Delivery</a></li>
-                            <li class="nav-item rounded-0"><a class="nav-link" data-toggle="tab" href="#item-services">Services</a></li>
-                            <li class="nav-item rounded-0"><a class="nav-link" data-toggle="tab" href="#item-2">Social</a></li>
-                            <li class="nav-item rounded-0"><a class="nav-link" data-toggle="tab" href="#item-others">Others</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-sm-6 col-md-8 col-xl-9">
-                        <div class="row">
-                            <div class="col">
-                                <form id="setting-form" action="{{ route('admin.settings') }}" method="post" enctype="multipart/form-data">
-                                    <div class="tab-content">
-                                        @csrf
-                                        @method('PATCH')
-                                        @include('admin.settings.general')
-                                        @include('admin.settings.company')
-                                        @include('admin.settings.delivery')
-                                        @include('admin.settings.services')
-                                        @include('admin.settings.social')
-                                        @include('admin.settings.others')
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+                {{-- Errors --}}
+                @if ($errors->any())
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    @foreach ($errors->all() as $error)
+                        <p class="mb-0">{{ $error }}</p>
+                    @endforeach
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
+                @endif
+                <form id="setting-form" action="{{ route('admin.settings') }}" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="tab" value="{{request('tab')}}">
+                    <div class="tab-content">
+                        @csrf
+                        @method('PATCH')
+                        @include('admin.settings.'.request('tab'))
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -121,11 +110,11 @@
             }
 
             $(this).parents('.form-group').append(`<div class="input-group">
-                                                        <input type="text" name="courier[]" value="" class="form-control">
-                                                        <div class="input-group-append">
-                                                            <span class="input-group-text bg-danger remove-courier">&minus;</span>
-                                                        </div>
-                                                    </div>`).children('.input-group').last().hide().fadeIn(350);
+                <input type="text" name="courier[]" value="" class="form-control">
+                <div class="input-group-append">
+                    <span class="input-group-text bg-danger remove-courier">&minus;</span>
+                </div>
+            </div>`).children('.input-group').last().hide().fadeIn(350);
         });
 
         $(document).on('click', '.remove-courier', function(){
