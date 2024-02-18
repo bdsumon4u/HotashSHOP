@@ -80,7 +80,6 @@
             </div>
         </div>
     </div>
-    <button type="submit" class="btn btn-success">Save</button>
 </div>
 
 @push('scripts')

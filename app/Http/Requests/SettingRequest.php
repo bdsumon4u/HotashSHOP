@@ -46,6 +46,13 @@ class SettingRequest extends FormRequest
             ];
         }
 
+        if ($this->get('tab') == 'analytics') {
+            return [
+                'gtm_id' => 'sometimes',
+                'pixel_ids' => 'sometimes',
+            ];
+        }
+
         return $this->isMethod('GET') ? [] : [
             'logo' => 'sometimes|array',
             'logo.*' => 'nullable|image',

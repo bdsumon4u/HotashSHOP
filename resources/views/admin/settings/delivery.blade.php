@@ -1,11 +1,5 @@
 <div class="tab-pane active" id="item-3" role="tabpanel">
     <div class="row">
-        <div class="col-sm-12">
-            <h4><small class="border-bottom mb-1">Delivery</small></h4>
-        </div>
-    </div>
-
-    <div class="row">
         <div class="col-md-6">
             <div class="form-group">
                 <label for="">Delivery Charge</label>
@@ -31,7 +25,6 @@
             </div>
         </div>
     </div>
-    <button type="submit" class="btn btn-success">Save</button>
 </div>
 
 @push('js')

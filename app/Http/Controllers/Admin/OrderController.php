@@ -67,7 +67,7 @@ class OrderController extends Controller
             'cities' => $cities,
             'courier' => $data->courier ?? '',
             'statuses' => config('app.orders', []),
-            'orders' => Order::where('user_id', $order->user_id)->where('id', '!=', $order->id)->orderBy('id', 'desc')->get(),
+            'orders' => Order::with('admin')->where('user_id', $order->user_id)->where('id', '!=', $order->id)->orderBy('id', 'desc')->get(),
         ]);
     }
 
@@ -203,7 +203,7 @@ class OrderController extends Controller
                 'recipient_address' => $order->address ?? 'N/A',
                 'recipient_phone' => $order->phone ?? '',
                 'cod_amount' => $order->data->shipping_cost + $order->data->subtotal - ($order->data->advanced ?? 0) - ($order->data->discount ?? 0),
-                'note' => '', // $order->note,
+                'note' => $order->note,
             ];
         })->toJson();
 
@@ -243,7 +243,7 @@ class OrderController extends Controller
             // "recipient_area"      => "", // Find in Area method
             "delivery_type"       => 48, // 48 for normal delivery or 12 for on demand delivery
             "item_type"           => 2, // 1 for document, 2 for parcel
-            // "special_instruction" => "",
+            "special_instruction" => $order->note,
             "item_quantity"       => 1, // item quantity
             "item_weight"         => 0.5, // parcel weight
             "amount_to_collect"   => $order->data->shipping_cost + $order->data->subtotal - ($order->data->advanced ?? 0) - ($order->data->discount ?? 0), // - $order->deliveryCharge, // amount to collect

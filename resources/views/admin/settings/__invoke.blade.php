@@ -86,6 +86,7 @@
                         @csrf
                         @method('PATCH')
                         @include('admin.settings.'.request('tab'))
+                        <button type="submit" class="btn btn-success">Save</button>
                     </div>
                 </form>
             </div>

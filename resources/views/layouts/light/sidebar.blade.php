@@ -323,8 +323,8 @@
                     </li>
 
                     <li>
-                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.couriers.index' ? 'active' : '' }}"
-                            href="{{ route('admin.couriers.index') }}">
+                        <a class="nav-link menu-title link-nav {{ request()->is('admin/settings*') && request('tab')=='analytics' ? 'active' : '' }}"
+                            href="{{ route('admin.settings', ['tab' => 'analytics']) }}">
                             <i data-feather="truck"> </i>
                             <span>Analytics</span>
                         </a>

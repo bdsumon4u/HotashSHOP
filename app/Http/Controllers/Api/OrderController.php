@@ -49,17 +49,14 @@ class OrderController extends Controller
             ->addIndexColumn()
             ->setRowAttr([
                 'style' => function ($row) {
+                    if ($row->data->is_fraud ?? false) {
+                        return 'background: #ff9e9e';
+                    }
                     if (!($row->data->is_fraud ?? false) && ($row->data->is_repeat ?? false)) {
-                        return 'background: #98a6ad';
+                        return 'background: #ffeeaa';
                     }
                 },
             ])
-            ->setRowClass(function ($row) {
-                if ($row->data->is_fraud ?? false) {
-                    return 'bg-secondary';
-                }
-                return '';
-            })
             ->editColumn('id', function ($row) {
                 return '<a class="btn btn-light btn-sm text-nowrap px-2" href="' . route('admin.orders.edit', $row->id) . '">' . $row->id . '<i class="fa fa-eye ml-1"></i></a>';
             })

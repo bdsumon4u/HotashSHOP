@@ -68,11 +68,11 @@ class CheckoutController extends Controller
             $status = !auth('user')->user() ? 'PENDING' // PENDING
                 : data_get(config('app.orders', []), 0, 'PENDING'); // Default Status
 
-            $oldOrders = Order::select(['id', 'admin_id', 'status'])->where('data->phone', $data['phone'])->get();
+            $oldOrders = Order::select(['id', 'admin_id', 'status'])->where('phone', $data['phone'])->get();
             $adminIds = $oldOrders->pluck('admin_id')->unique()->toArray();
             $adminQ = Admin::where('role_id', Admin::SALESMAN)->where('is_active', true)->inRandomOrder();
             if (count($adminIds) > 0) {
-                $data['admin_id'] = $adminQ->wheretIn('id', $adminIds)->first()->id ?? $adminQ->first()->id ?? null;
+                $data['admin_id'] = $adminQ->whereIn('id', $adminIds)->first()->id ?? $adminQ->first()->id ?? null;
             } else {
                 $data['admin_id'] = $adminQ->first()->id ?? null;
             }
@@ -86,14 +86,14 @@ class CheckoutController extends Controller
                     'is_fraud' => $oldOrders->whereIn('status', ['CANCELLED', 'RETURNED'])->count() > 0,
                     'is_repeat' => $oldOrders->count() > 0,
                     'shipping_area' => $data['shipping'],
-                    'shipping_cost' => setting('delivery_charge')->{$data['shipping'] == 'Inside Dhaka' ? 'inside_dhaka' : 'outside_dhaka'} ?? config('services.shipping.'.$data['shipping']),
+                    'shipping_cost' => setting('delivery_charge')->{$data['shipping'] == 'Inside Dhaka' ? 'inside_dhaka' : 'outside_dhaka'} ?? config('services.shipping.' . $data['shipping']),
                     'subtotal'      => is_array($products) ? array_reduce($products, function ($sum, $product) {
                         return $sum += $product['total'];
                     }) : $products->sum('total'),
                 ],
             ];
 
-           // \LaravelFacebookPixel::createEvent('Purchase', ['currency' => 'USD', 'value' => data_get(json_decode($data['data'], true), 'subtotal')]);
+            // \LaravelFacebookPixel::createEvent('Purchase', ['currency' => 'USD', 'value' => data_get(json_decode($data['data'], true), 'subtotal')]);
 
             $order = Order::create($data);
             $user->notify(new OrderPlaced($order));

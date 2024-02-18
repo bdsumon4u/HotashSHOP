@@ -291,26 +291,22 @@
                                                             <div class="card-body p-3">
                                                                 <table>
                                                                     <tbody>
-                                                                        @if($activity->changes)
-                                                                            <tr>
-                                                                                <th class="text-center">OLD</th>
-                                                                                <th class="text-center">NEW</th>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td>
-                                                                                    <pre><div class="language-php">{{ json_encode($activity->changes['old'] ?? '', JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) }}</div></pre>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <pre><div class="language-php">{{ json_encode($activity->changes['attributes'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) }}</div></pre>
-                                                                                </td>
-                                                                            </tr>
-                                                                        @else
-                                                                            <tr>
-                                                                                <td>
-                                                                                    <pre><div class="language-php">{{ json_encode($activity->properties, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) }}</div></pre>
-                                                                                </td>
-                                                                            </tr>
+                                                                        @if($activity->changes['old'] ?? false)
+                                                                        <tr>
+                                                                            <th class="text-center">OLD</th>
+                                                                            <th class="text-center">NEW</th>
+                                                                        </tr>
                                                                         @endif
+                                                                        <tr>
+                                                                            @if($activity->changes['old'] ?? false)
+                                                                            <td>
+                                                                                <pre><div class="language-php">{{ json_encode($activity->changes['old'] ?? '', JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) }}</div></pre>
+                                                                            </td>
+                                                                            @endif
+                                                                            <td>
+                                                                                <pre><div class="language-php">{{ json_encode($activity->changes['attributes'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) }}</div></pre>
+                                                                            </td>
+                                                                        </tr>
                                                                     </tbody>
                                                                 </table>
                                                             </div>
@@ -335,9 +331,12 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Date</th>
+                                    <th>Products</th>
+                                    <th>Amount</th>
                                     <th>Status</th>
-                                    <th>Product</th>
+                                    <th>Courier</th>
+                                    <th>Staff</th>
+                                    <th>Date</th>
                                     <th>Note</th>
                                 </tr>
                             </thead>
@@ -347,13 +346,16 @@
                                     <td>
                                         <a class="btn btn-light btn-sm text-nowrap px-2" target="_blank" href="{{ route('admin.orders.edit', $order) }}">{{ $order->id }} <i class="fa fa-eye"></i></a>
                                     </td>
-                                    <td>{{ $order->created_at->format('d-M-Y') }}</td>
-                                    <td>{{ $order->status }}</td>
                                     <td>
                                         @foreach ($order->products as $product)
                                             <div>{{ $product->quantity }} x {{ $product->name }}</div>
                                         @endforeach
                                     </td>
+                                    <td>{{ $order->data->subtotal + $order->data->shipping_cost - ($order->data->advanced ?? 0) - ($order->data->discount ?? 0) }}</td>
+                                    <td>{{ $order->status }}</td>
+                                    <td>{{ $order->courier }}</td>
+                                    <td>{{ $order->admin->name }}</td>
+                                    <td>{{ $order->created_at->format('d-M-Y') }}</td>
                                     <td>{{ $order->note }}</td>
                                 </tr>
                                 @endforeach
