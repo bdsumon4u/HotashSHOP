@@ -59,7 +59,7 @@ class OrderController extends Controller
                 return $row->data->subtotal + $row->data->shipping_cost - ($row->data->discount ?? 0) - ($row->data->advanced ?? 0);
             })
             ->addColumn('checkbox', function ($row) {
-                return '<input type="checkbox" name="order_id[]" value="' . $row->id . '">';
+                return '<input type="checkbox" class="form-control" name="order_id[]" value="' . $row->id . '" style="height: 20px;">';
             })
             ->editColumn('customer', function ($row) {
                 return "

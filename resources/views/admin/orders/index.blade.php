@@ -56,7 +56,7 @@
                                 <thead>
                                 <tr>
                                     <th style="max-width: 5%">
-                                        <input type="checkbox" name="check_all">
+                                        <input type="checkbox" class="form-control" name="check_all" style="height: 20px;">
                                     </th>
                                     <th width="80">ID</th>
                                     <th>Customer</th>
