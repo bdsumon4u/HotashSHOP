@@ -32,12 +32,8 @@
                         </a>
                     </li>
 
-                    <li>
-                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.slides.index' ? 'active' : '' }}"
-                            href="{{ route('admin.slides.index') }}">
-                            <i data-feather="image"> </i>
-                            <span>Slides</span>
-                        </a>
+                    <li class="sidebar-title">
+                        <h6>Ecommerce</h6>
                     </li>
 
                     <li>
@@ -45,47 +41,6 @@
                             href="{{ route('admin.orders.index') }}">
                             <i data-feather="check"> </i>
                             <span>Orders</span>
-                        </a>
-                    </li>
-
-                    <li class="dropdown">
-                        <a class="nav-link menu-title {{ request()->is('admin/categories*') ? 'active' : '' }}"
-                            href="#">
-                            <i data-feather="server"> </i><span>Categories</span>
-                            <div class="according-menu"><i
-                                    class="fa fa-angle-{{ request()->is('admin/categories*') ? 'down' : 'right' }}"></i>
-                            </div>
-                        </a>
-
-                        <ul class="nav-submenu menu-content"
-                            style="display: {{ request()->is('admin/categories*') ? 'block;' : 'none;' }}">
-                            <li>
-                                <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.categories.index' ? 'active' : '' }}"
-                                    href="{{ route('admin.categories.index') }}">
-                                    <span>All Categories</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.category-menus.index' ? 'active' : '' }}"
-                                    href="{{ route('admin.category-menus.index') }}">
-                                    <span>Category Menu</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.brands.index' ? 'active' : '' }}"
-                            href="{{ route('admin.brands.index') }}">
-                            <i data-feather="wind"> </i>
-                            <span>Brands</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.images.index' ? 'active' : '' }}"
-                            href="{{ route('admin.images.index') }}">
-                            <i data-feather="image"> </i>
-                            <span>Images</span>
                         </a>
                     </li>
 
@@ -112,19 +67,69 @@
                                     <span>Create Product</span>
                                 </a>
                             </li>
-                            <li>
-                                <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.attributes.index' ? 'active' : '' }}"
-                                    href="{{ route('admin.attributes.index') }}">
-                                    <span>Attributes</span>
-                                </a>
-                            </li>
                         </ul>
+                    </li>
+
+                    <li>
+                        <a class="nav-link menu-title link-nav {{ request()->is('admin/attributes*') ? 'active' : '' }}"
+                            href="{{ route('admin.attributes.index') }}">
+                            <i data-feather="check"> </i>
+                            <span>Attributes</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="nav-link menu-title link-nav {{ request()->is('admin/categories*') ? 'active' : '' }}"
+                            href="{{ route('admin.categories.index') }}">
+                            <i data-feather="server"> </i>
+                            <span>Categories</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.brands.index' ? 'active' : '' }}"
+                            href="{{ route('admin.brands.index') }}">
+                            <i data-feather="wind"> </i>
+                            <span>Brands</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-title">
+                        <h6>Gallery</h6>
+                    </li>
+
+                    <li>
+                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.images.index' ? 'active' : '' }}"
+                            href="{{ route('admin.images.index') }}">
+                            <i data-feather="image"> </i>
+                            <span>Images</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-title">
+                        <h6>Appearance</h6>
+                    </li>
+
+                    <li>
+                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.images.index' ? 'active' : '' }}"
+                            href="{{ route('admin.images.index') }}">
+                            <i data-feather="image"> </i>
+                            <span>Company Info</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.slides.index' ? 'active' : '' }}"
+                            href="{{ route('admin.slides.index') }}">
+                            <i data-feather="image"> </i>
+                            <span>Slides</span>
+                        </a>
                     </li>
 
                     <li class="dropdown">
                         <a class="nav-link menu-title {{ request()->is('admin/home-sections*') ? 'active' : '' }}"
                             href="#">
-                            <i data-feather="layers"> </i><span>Home Sections</span>
+                            <i data-feather="layers"> </i><span>Product Sections</span>
                             <div class="according-menu"><i
                                     class="fa fa-angle-{{ request()->is('admin/home-sections*') ? 'down' : 'right' }}"></i>
                             </div>
@@ -145,6 +150,14 @@
                                 </a>
                             </li>
                         </ul>
+                    </li>
+
+                    <li>
+                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.menus.index' ? 'active' : '' }}"
+                            href="{{ route('admin.menus.index') }}">
+                            <i data-feather="menu"> </i>
+                            <span>Menus</span>
+                        </a>
                     </li>
 
                     <li class="dropdown">
@@ -173,15 +186,7 @@
                         </ul>
                     </li>
 
-                    <li>
-                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.menus.index' ? 'active' : '' }}"
-                            href="{{ route('admin.menus.index') }}">
-                            <i data-feather="menu"> </i>
-                            <span>Menus</span>
-                        </a>
-                    </li>
-
-                    <li class="dropdown">
+                    {{-- <li class="dropdown">
                         <a class="nav-link menu-title {{ request()->is('admin/reports*') ? 'active' : '' }}"
                             href="#">
                             <i data-feather="pie-chart"> </i> </i><span>Reports</span>
@@ -205,13 +210,113 @@
                                 </a>
                             </li>
                         </ul>
+                    </li> --}}
+
+                    <li class="sidebar-title">
+                        <h6>Reports</h6>
                     </li>
 
                     <li>
                         <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.staffs.index' ? 'active' : '' }}"
                             href="{{ route('admin.staffs.index') }}">
                             <i data-feather="users"> </i>
-                            <span>Staffs</span>
+                            <span>Orders</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.staffs.index' ? 'active' : '' }}"
+                            href="{{ route('admin.staffs.index') }}">
+                            <i data-feather="users"> </i>
+                            <span>Stock</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.staffs.index' ? 'active' : '' }}"
+                            href="{{ route('admin.staffs.index') }}">
+                            <i data-feather="users"> </i>
+                            <span>Top Products</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.staffs.index' ? 'active' : '' }}"
+                            href="{{ route('admin.staffs.index') }}">
+                            <i data-feather="users"> </i>
+                            <span>Top Customers</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-title">
+                        <h6>Users</h6>
+                    </li>
+
+                    <li>
+                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.staffs.index' ? 'active' : '' }}"
+                            href="{{ route('admin.staffs.index') }}">
+                            <i data-feather="users"> </i>
+                            <span>Admin</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.staffs.index' ? 'active' : '' }}"
+                            href="{{ route('admin.staffs.index') }}">
+                            <i data-feather="users"> </i>
+                            <span>Manager</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.staffs.index' ? 'active' : '' }}"
+                            href="{{ route('admin.staffs.index') }}">
+                            <i data-feather="users"> </i>
+                            <span>Salesperson</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.staffs.index' ? 'active' : '' }}"
+                            href="{{ route('admin.staffs.index') }}">
+                            <i data-feather="users"> </i>
+                            <span>Customers</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-title">
+                        <h6>Settings</h6>
+                    </li>
+
+                    <li>
+                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.couriers.index' ? 'active' : '' }}"
+                            href="{{ route('admin.couriers.index') }}">
+                            <i data-feather="truck"> </i>
+                            <span>My Profile</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.couriers.index' ? 'active' : '' }}"
+                            href="{{ route('admin.couriers.index') }}">
+                            <i data-feather="truck"> </i>
+                            <span>Delivery Charges</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.couriers.index' ? 'active' : '' }}"
+                            href="{{ route('admin.couriers.index') }}">
+                            <i data-feather="truck"> </i>
+                            <span>Analytics</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.couriers.index' ? 'active' : '' }}"
+                            href="{{ route('admin.couriers.index') }}">
+                            <i data-feather="truck"> </i>
+                            <span>SMS</span>
                         </a>
                     </li>
 
@@ -220,6 +325,46 @@
                             href="{{ route('admin.couriers.index') }}">
                             <i data-feather="truck"> </i>
                             <span>Couriers</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.couriers.index' ? 'active' : '' }}"
+                            href="{{ route('admin.couriers.index') }}">
+                            <i data-feather="truck"> </i>
+                            <span>Payment Gateways</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.couriers.index' ? 'active' : '' }}"
+                            href="{{ route('admin.couriers.index') }}">
+                            <i data-feather="truck"> </i>
+                            <span>Fraud Management</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.couriers.index' ? 'active' : '' }}"
+                            href="{{ route('admin.couriers.index') }}">
+                            <i data-feather="truck"> </i>
+                            <span>Social Media</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.couriers.index' ? 'active' : '' }}"
+                            href="{{ route('admin.couriers.index') }}">
+                            <i data-feather="truck"> </i>
+                            <span>Currency</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.couriers.index' ? 'active' : '' }}"
+                            href="{{ route('admin.couriers.index') }}">
+                            <i data-feather="truck"> </i>
+                            <span>Cache Clear</span>
                         </a>
                     </li>
                 </ul>
