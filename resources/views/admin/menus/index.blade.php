@@ -29,6 +29,14 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <tr>
+                                    <td>0</td>
+                                    <td>Category Menu</td>
+                                    <td></td>
+                                    <td>
+                                        <a href="{{ route('admin.category-menus.index') }}" class="btn btn-primary">Build</a>
+                                    </td>
+                                </tr>
                                 @foreach($menus as $menu)
                                 <tr>
                                     <td>{{ $menu->id }}</td>

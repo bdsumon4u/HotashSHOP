@@ -153,7 +153,7 @@
                     </li>
 
                     <li>
-                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.menus.index' ? 'active' : '' }}"
+                        <a class="nav-link menu-title link-nav {{ request()->is('admin/menus*', 'admin/category-menus*') ? 'active' : '' }}"
                             href="{{ route('admin.menus.index') }}">
                             <i data-feather="menu"> </i>
                             <span>Menus</span>
