@@ -133,9 +133,9 @@
                     @foreach(config('app.orders', []) as $status)
                 {
                     text: '{{ $status }}',
-                    className: 'px-1 py-1 {{ request('status') === strtolower($status) ? 'btn-secondary' : '' }}',
+                    className: 'px-1 py-1 {{ request('status') === $status ? 'btn-secondary' : '' }}',
                     action: function ( e, dt, node, config ) {
-                        window.location = '{{ request()->fullUrlWithQuery(['status' => strtolower($status)]) }}'
+                        window.location = '{{ request()->fullUrlWithQuery(['status' => $status]) }}'
                     }
                 },@endforeach
                 {

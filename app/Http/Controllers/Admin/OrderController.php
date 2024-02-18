@@ -37,7 +37,6 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-
         return $this->view([
             'orders' => Order::where('user_id', $order->user_id)->where('id', '!=', $order->id)->orderBy('id', 'desc')->get(),
         ]);
@@ -143,7 +142,12 @@ class OrderController extends Controller
         return view('admin.orders.filter', [
             'start' => $start,
             'end' => $end,
-            'products' => $orders->get()->pluck('products')->flatten()->groupBy('name')->map->count()->toArray(),
+            'products' => $orders->get()->pluck('products')->flatten()->groupBy('name')->map(function ($item) {
+                return [
+                    'quantity' => $item->sum('quantity'),
+                    'total' => $item->sum('total'),
+                ];
+            })->toArray(),
         ]);
     }
 

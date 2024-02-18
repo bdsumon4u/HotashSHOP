@@ -87,30 +87,7 @@
                     </form>
                 </div>
                 <div class="card-body p-3">
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-striped table-hover datatable" style="width: 100%;">
-                            <thead>
-                                <tr>
-                                    <th style="min-width: 120px;">Name</th>
-                                    <th style="min-width: 100px;">Quantity</th>
-                                </tr>
-                            </thead>
-                            @php $total = 0 @endphp
-                            <tbody>
-                                @foreach ($products as $name => $quantity)
-                                    @php $total += $quantity @endphp
-                                    <tr>
-                                        <td>{{ $name }}</td>
-                                        <td>{{ $quantity }}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                            <tfoot>
-                                <th>Total</th>
-                                <th>{{ $total }}</th>
-                            </tfoot>
-                        </table>
-                    </div>
+                    @include('admin.reports.filtered')
                 </div>
             </div>
         </div>

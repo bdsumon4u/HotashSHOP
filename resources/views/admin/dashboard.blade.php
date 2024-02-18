@@ -21,8 +21,14 @@
 
 @section('breadcrumb-right')
     <div class="theme-form m-t-10">
-        <div style="max-width: 450px; margin: 0 auto;">
+        <div style="max-width: 600px; margin: 0 auto;">
             <div class="input-group">
+               <select name="staff_id" id="staff-id" class="form-control input-group-prepend" style="max-width: 150px;">
+                  <option value="">Select Staff</option>
+                  @foreach(\App\Admin::where('role_id', 1)->get() as $admin)
+                  <option value="{{ $admin->id }}" @if(request()->get('staff_id') == $admin->id) selected @endif>{{ $admin->name }}</option>
+                  @endforeach
+               </select>
                <select name="date_type" id="datetype" class="form-control input-group-prepend" style="max-width: 150px;">
                   <option value="created_at" @if(request('date_type') == 'created_at') selected @endif>CREATED</option>
                   <option value="status_at" @if(request('date_type') == 'status_at') selected @endif>UPDATED</option>
@@ -41,7 +47,7 @@
              <div class="col-12">
                  <div class="mb-3">
                      @foreach(config('app.orders', []) as $status)
-                         <a href="{{ route('admin.orders.index', ['status' => strtolower($status)]) }}" class="btn btn-primary btn-light text-dark px-2 py-1 mx-2 my-1">
+                         <a href="" class="btn @if($status == request('status')) btn-primary text-white @else btn-light @endif px-2 py-1 mx-2 my-1" onclick="event.preventDefault(); window._status = '{{ $status }}'; refresh();">
                              <span>{{ $status }}</span>
                          </a>
                      @endforeach
@@ -103,6 +109,15 @@
                </div>
             </div>
             @endforeach
+         </div>
+
+         <div class="card rounded-0 shadow-sm">
+            <div class="card-header p-3">
+               <strong>Ordered Products</strong>
+            </div>
+            <div class="card-body p-3">
+               @include('admin.reports.filtered')
+            </div>
          </div>
       </div>
       <div class="col-xl-4 xl-50 box-col-12">
@@ -192,16 +207,29 @@
     <script src="{{ asset('assets/js/datepicker/daterange-picker/daterangepicker.js') }}"></script>
     <script src="{{ asset('assets/js/datepicker/daterange-picker/daterange-picker.custom.js') }}"></script>
     <script>
+        window._status = '{{ request('status' )}}';
+        window._staff = '{{ request('staff_id') }}';
         window._type = '{{ request('date_type', 'created_at') }}';
         window._start = moment('{{ $start }}');
         window._end = moment('{{ $end }}');
         window.reportRangeCB = function (start, end) {
-            window.location = "{!! route('admin.home', ['date_type' => 'd_type', 'start_d'=> '_start', 'end_d' => '_end']) !!}".replace('d_type', window._type).replace('_start', start.format('YYYY-MM-DD')).replace('_end', end.format('YYYY-MM-DD'));
+            window._start = start;
+            window._end = end;
+            refresh();
         };
 
         $('#datetype').on('change', function () {
             window._type = $(this).val();
-            window.location = "{!! route('admin.home', ['date_type' => 'd_type', 'start_d'=> '_start', 'end_d' => '_end']) !!}".replace('d_type', window._type).replace('_start', window._start.format('YYYY-MM-DD')).replace('_end', window._end.format('YYYY-MM-DD'));
+            refresh();
         });
+
+         $('#staff-id').on('change', function () {
+            window._staff = $(this).val();
+            refresh();
+         });
+
+         function refresh() {
+            window.location = "{!! route('admin.home', ['status' => '_status', 'date_type' => 'd_type', 'start_d'=> '_start', 'end_d' => '_end', 'staff_id' => '_staff_id']) !!}".replace('_status', window._status).replace('d_type', window._type).replace('_start', window._start.format('YYYY-MM-DD')).replace('_end', window._end.format('YYYY-MM-DD')).replace('_staff_id', window._staff);
+         }
     </script>
 @endpush

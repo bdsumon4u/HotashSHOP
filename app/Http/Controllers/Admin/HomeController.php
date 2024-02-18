@@ -21,9 +21,28 @@ class HomeController extends Controller
         $_end = Carbon::parse(\request('end_d'));
         $end = $_end->format('Y-m-d');
 
-        $totalSQL = 'COUNT(*) as order_count, COALESCE(SUM(JSON_UNQUOTE(JSON_EXTRACT(data, "$.subtotal"))) + SUM(JSON_UNQUOTE(JSON_EXTRACT(data, "$.shipping_cost"))) - SUM(JSON_UNQUOTE(JSON_EXTRACT(data, "$.discount"))), 0) as total_amount';
+        $totalSQL = 'COUNT(*) as order_count, SUM(JSON_UNQUOTE(JSON_EXTRACT(data, "$.subtotal"))) + SUM(JSON_UNQUOTE(JSON_EXTRACT(data, "$.shipping_cost"))) - COALESCE(SUM(JSON_UNQUOTE(JSON_EXTRACT(data, "$.discount"))), 0) as total_amount';
 
-        $orderQ = Order::query()->whereBetween(request('date_type', 'created_at'), [$_start->startOfDay()->toDateTimeString(), $_end->endOfDay()->toDateTimeString()]);
+        $orderQ = Order::query()
+            ->whereBetween(request('date_type', 'created_at'), [
+                $_start->startOfDay()->toDateTimeString(),
+                $_end->endOfDay()->toDateTimeString(),
+            ]);
+
+        if (request('staff_id')) {
+            $orderQ->where('admin_id', request('staff_id'));
+        }
+        if (request('status')) {
+            $orderQ->where('status', request('status'));
+        }
+
+        $products = $orderQ->get()->pluck('products')->flatten()->groupBy('name')->map(function ($item) {
+            return [
+                'quantity' => $item->sum('quantity'),
+                'total' => $item->sum('total'),
+            ];
+        })->toArray();
+
         $data = (clone $orderQ)
             ->selectRaw($totalSQL)
             ->first();
@@ -40,6 +59,6 @@ class HomeController extends Controller
         $productsCount = Product::whereNull('parent_id')->count();
         $inactiveProducts = Product::whereIsActive(0)->whereNull('parent_id')->get();
         $outOfStockProducts = Product::whereShouldTrack(1)->where('stock_count', '<=', 0)->get();
-        return view('admin.dashboard', compact('productsCount', 'orders', 'amounts', 'inactiveProducts', 'outOfStockProducts', 'start', 'end'));
+        return view('admin.dashboard', compact('products', 'productsCount', 'orders', 'amounts', 'inactiveProducts', 'outOfStockProducts', 'start', 'end'));
     }
 }

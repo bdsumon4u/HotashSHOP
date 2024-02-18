@@ -119,7 +119,7 @@
                     </li>
 
                     <li>
-                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.slides.index' ? 'active' : '' }}"
+                        <a class="nav-link menu-title link-nav {{ request()->is('admin/slides*') ? 'active' : '' }}"
                             href="{{ route('admin.slides.index') }}">
                             <i data-feather="image"> </i>
                             <span>Slides</span>
@@ -129,7 +129,7 @@
                     <li class="dropdown">
                         <a class="nav-link menu-title {{ request()->is('admin/home-sections*') ? 'active' : '' }}"
                             href="#">
-                            <i data-feather="layers"> </i><span>Product Sections</span>
+                            <i data-feather="layers"> </i><span>Sections</span>
                             <div class="according-menu"><i
                                     class="fa fa-angle-{{ request()->is('admin/home-sections*') ? 'down' : 'right' }}"></i>
                             </div>
@@ -216,12 +216,30 @@
                         <h6>Reports</h6>
                     </li>
 
-                    <li>
-                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.staffs.index' ? 'active' : '' }}"
-                            href="{{ route('admin.staffs.index') }}">
-                            <i data-feather="users"> </i>
-                            <span>Orders</span>
+                    <li class="dropdown">
+                        <a class="nav-link menu-title {{ request()->is('admin/reports*') ? 'active' : '' }}"
+                            href="#">
+                            <i data-feather="pie-chart"> </i> </i><span>Orders</span>
+                            <div class="according-menu"><i
+                                    class="fa fa-angle-{{ request()->is('admin/reports*') ? 'down' : 'right' }}"></i>
+                            </div>
                         </a>
+
+                        <ul class="nav-submenu menu-content"
+                            style="display: {{ request()->is('admin/reports*') ? 'block;' : 'none;' }}">
+                            <li>
+                                <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.orders.filter' ? 'active' : '' }}"
+                                    href="{{ route('admin.orders.filter') }}">
+                                    <span>Filtering</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.reports.index' ? 'active' : '' }}"
+                                    href="{{ route('admin.reports.index') }}">
+                                    <span>Scanning</span>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
 
                     <li>
