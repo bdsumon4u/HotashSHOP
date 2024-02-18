@@ -355,8 +355,8 @@
                     </li>
 
                     <li>
-                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.settings' ? 'active' : '' }}"
-                            href="{{ route('admin.settings') }}">
+                        <a class="nav-link menu-title link-nav {{ request()->is('admin/settings*') && request('tab')=='fraud' ? 'active' : '' }}"
+                            href="{{ route('admin.settings', ['tab' => 'fraud']) }}">
                             <i data-feather="truck"> </i>
                             <span>Fraud Management</span>
                         </a>

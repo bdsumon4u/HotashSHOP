@@ -60,6 +60,12 @@ class SettingRequest extends FormRequest
             ];
         }
 
+        if ($this->get('tab') == 'fraud') {
+            return [
+                'fraud' => 'required|array',
+            ];
+        }
+
         return $this->isMethod('GET') ? [] : [
             'logo' => 'sometimes|array',
             'logo.*' => 'nullable|image',

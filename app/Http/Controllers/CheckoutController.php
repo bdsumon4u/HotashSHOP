@@ -10,6 +10,7 @@ use App\Order;
 use App\Product;
 use App\User;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -29,6 +30,16 @@ class CheckoutController extends Controller
         }
 
         $data = $request->validated();
+        $fraud = setting('fraud');
+
+        if (Cache::has('fraud:hourly:' . $request->ip()) || Cache::has('fraud:daily:' . $data['phone'])) {
+            if (Cache::get('fraud:hourly:' . $request->ip()) >= ($fraud->allow_per_hour ?? 3)) {
+                abort(429, 'You have reached the maximum limit of orders per hour.');
+            }
+            if (Cache::get('fraud:daily:' . $request->ip()) >= ($fraud->allow_per_day ?? 7)) {
+                abort(429, 'You have reached the maximum limit of orders per day.');
+            }
+        }
 
         $order = DB::transaction(function () use ($data, &$order) {
             $products = Product::find(array_keys($data['products']))
@@ -99,6 +110,9 @@ class CheckoutController extends Controller
             $user->notify(new OrderPlaced($order));
             return $order;
         });
+
+        Cache::put('fraud:hourly:' . $request->ip(), Cache::get('fraud:hourly:' . $request->ip(), 0) + 1, now()->addHour());
+        Cache::put('fraud:daily:' . $request->ip(), Cache::get('fraud:daily:' . $request->ip(), 0) + 1, now()->addDay());
 
         // Undefined index email.
         // $data['email'] && Mail::to($data['email'])->queue(new OrderPlaced($order));
