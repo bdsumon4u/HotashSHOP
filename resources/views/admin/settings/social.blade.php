@@ -1,4 +1,4 @@
-<div class="tab-pane" id="item-2" role="tabpanel">
+<div class="tab-pane active" id="item-2" role="tabpanel">
     <div class="row">
         <div class="col-sm-12">
             <h4><small class="border-bottom mb-1">Social</small></h4>
@@ -59,5 +59,4 @@
             </div>
         </div>
     </div>
-    <button type="submit" class="btn btn-success">Save</button>
 </div>

@@ -363,8 +363,8 @@
                     </li>
 
                     <li>
-                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.settings' ? 'active' : '' }}"
-                            href="{{ route('admin.settings') }}">
+                        <a class="nav-link menu-title link-nav {{ request()->is('admin/settings*') && request('tab')=='social' ? 'active' : '' }}"
+                            href="{{ route('admin.settings', ['tab' => 'social']) }}">
                             <i data-feather="truck"> </i>
                             <span>Social Media</span>
                         </a>
