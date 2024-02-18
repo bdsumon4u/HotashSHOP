@@ -53,6 +53,13 @@ class SettingRequest extends FormRequest
             ];
         }
 
+        if ($this->get('tab') == 'courier') {
+            return [
+                'Pathao' => 'required|array',
+                'SteadFast' => 'required|array',
+            ];
+        }
+
         return $this->isMethod('GET') ? [] : [
             'logo' => 'sometimes|array',
             'logo.*' => 'nullable|image',

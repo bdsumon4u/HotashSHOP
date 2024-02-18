@@ -331,56 +331,56 @@
                     </li>
 
                     <li>
-                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.couriers.index' ? 'active' : '' }}"
-                            href="{{ route('admin.couriers.index') }}">
+                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.settings' ? 'active' : '' }}"
+                            href="{{ route('admin.settings') }}">
                             <i data-feather="truck"> </i>
                             <span>SMS</span>
                         </a>
                     </li>
 
                     <li>
-                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.couriers.index' ? 'active' : '' }}"
-                            href="{{ route('admin.couriers.index') }}">
+                        <a class="nav-link menu-title link-nav {{ request()->is('admin/settings*') && request('tab')=='courier' ? 'active' : '' }}"
+                            href="{{ route('admin.settings', ['tab' => 'courier']) }}">
                             <i data-feather="truck"> </i>
                             <span>Couriers</span>
                         </a>
                     </li>
 
                     <li>
-                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.couriers.index' ? 'active' : '' }}"
-                            href="{{ route('admin.couriers.index') }}">
+                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.settings' ? 'active' : '' }}"
+                            href="{{ route('admin.settings') }}">
                             <i data-feather="truck"> </i>
                             <span>Payment Gateways</span>
                         </a>
                     </li>
 
                     <li>
-                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.couriers.index' ? 'active' : '' }}"
-                            href="{{ route('admin.couriers.index') }}">
+                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.settings' ? 'active' : '' }}"
+                            href="{{ route('admin.settings') }}">
                             <i data-feather="truck"> </i>
                             <span>Fraud Management</span>
                         </a>
                     </li>
 
                     <li>
-                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.couriers.index' ? 'active' : '' }}"
-                            href="{{ route('admin.couriers.index') }}">
+                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.settings' ? 'active' : '' }}"
+                            href="{{ route('admin.settings') }}">
                             <i data-feather="truck"> </i>
                             <span>Social Media</span>
                         </a>
                     </li>
 
                     <li>
-                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.couriers.index' ? 'active' : '' }}"
-                            href="{{ route('admin.couriers.index') }}">
+                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.settings' ? 'active' : '' }}"
+                            href="{{ route('admin.settings') }}">
                             <i data-feather="truck"> </i>
                             <span>Currency</span>
                         </a>
                     </li>
 
                     <li>
-                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.couriers.index' ? 'active' : '' }}"
-                            href="{{ route('admin.couriers.index') }}">
+                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.settings' ? 'active' : '' }}"
+                            href="{{ route('admin.settings') }}">
                             <i data-feather="truck"> </i>
                             <span>Cache Clear</span>
                         </a>

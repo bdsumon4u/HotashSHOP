@@ -36,8 +36,6 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
         Route::post('/orders/change-status', 'OrderController@status')->name('orders.status');
         Route::patch('/orders/{order}/add-product', 'OrderController@addProduct')->name('orders.add-product');
         Route::patch('/orders/{order}/update-quantity', 'OrderController@updateQuantity')->name('orders.update-quantity');
-        Route::get('/couriers', 'CourierController@index')->name('couriers.index');
-        Route::post('/couriers', 'CourierController@store')->name('couriers.store');
         Route::resources([
             'staffs'       => 'StaffController',
             'slides'        => 'SlideController',
