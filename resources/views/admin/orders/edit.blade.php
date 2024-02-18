@@ -291,18 +291,26 @@
                                                             <div class="card-body p-3">
                                                                 <table>
                                                                     <tbody>
-                                                                        <tr>
-                                                                            <th class="text-center">OLD</th>
-                                                                            <th class="text-center">NEW</th>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>
-                                                                                <pre><div class="language-php">{{ json_encode($activity->changes['old'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) }}</div></pre>
-                                                                            </td>
-                                                                            <td>
-                                                                                <pre><div class="language-php">{{ json_encode($activity->changes['attributes'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) }}</div></pre>
-                                                                            </td>
-                                                                        </tr>
+                                                                        @if($activity->changes)
+                                                                            <tr>
+                                                                                <th class="text-center">OLD</th>
+                                                                                <th class="text-center">NEW</th>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <pre><div class="language-php">{{ json_encode($activity->changes['old'] ?? '', JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) }}</div></pre>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <pre><div class="language-php">{{ json_encode($activity->changes['attributes'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) }}</div></pre>
+                                                                                </td>
+                                                                            </tr>
+                                                                        @else
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <pre><div class="language-php">{{ json_encode($activity->properties, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) }}</div></pre>
+                                                                                </td>
+                                                                            </tr>
+                                                                        @endif
                                                                     </tbody>
                                                                 </table>
                                                             </div>
