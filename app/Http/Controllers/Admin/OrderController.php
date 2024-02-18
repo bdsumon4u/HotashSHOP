@@ -221,6 +221,7 @@ class OrderController extends Controller
             if (!$order = Order::find($item['invoice'])) continue;
 
             $order->update([
+                'status' => 'SHIPPING',
                 'data' => [
                     'consignment_id' => $item['consignment_id'],
                     'tracking_code' => $item['tracking_code'],
@@ -252,6 +253,7 @@ class OrderController extends Controller
         $data = \App\Pathao\Facade\Pathao::order()->create($data);
 
         $order->update([
+            'status' => 'SHIPPING',
             'data' => [
                 'consignment_id' => $data->consignment_id,
             ],

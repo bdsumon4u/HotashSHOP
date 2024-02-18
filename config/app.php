@@ -17,8 +17,7 @@ return [
 
     'orders' => [
         'PENDING',
-        'PROCESSING',
-        'INVOICING',
+        'CONFIRMED',
         'SHIPPING',
         'WAITING',
         'COMPLETED',
