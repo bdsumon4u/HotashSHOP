@@ -315,8 +315,8 @@
                     </li>
 
                     <li>
-                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.couriers.index' ? 'active' : '' }}"
-                            href="{{ route('admin.couriers.index') }}">
+                        <a class="nav-link menu-title link-nav {{ request()->is('admin/settings*') && request('tab')=='delivery' ? 'active' : '' }}"
+                            href="{{ route('admin.settings', ['tab' => 'delivery']) }}">
                             <i data-feather="truck"> </i>
                             <span>Delivery Charges</span>
                         </a>

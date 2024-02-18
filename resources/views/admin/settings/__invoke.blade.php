@@ -66,7 +66,7 @@
 @section('content')
 <div class="row">
     <div class="col-md-8 mx-auto">
-        <div class="card rounded-0 shadow-sm">
+        <div class="card rounded-0 shadow-sm mb-5">
             <div class="card-header p-3">{{ strtoupper(request('tab')) }} <strong>Settings</strong></div>
             <div class="card-body p-3">
                 {{-- Errors --}}

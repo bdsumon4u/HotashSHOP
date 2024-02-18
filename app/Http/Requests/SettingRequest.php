@@ -38,6 +38,14 @@ class SettingRequest extends FormRequest
             ];
         }
 
+        if ($this->get('tab') == 'delivery') {
+            return [
+                'delivery_charge.inside_dhaka' => 'sometimes|integer',
+                'delivery_charge.outside_dhaka' => 'sometimes|integer',
+                'delivery_text' => 'sometimes',
+            ];
+        }
+
         return $this->isMethod('GET') ? [] : [
             'logo' => 'sometimes|array',
             'logo.*' => 'nullable|image',
