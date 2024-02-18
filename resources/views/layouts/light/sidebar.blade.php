@@ -38,7 +38,7 @@
 
                     <li>
                         <a class="nav-link menu-title link-nav {{ request()->is('admin/orders*') ? 'active' : '' }}"
-                            href="{{ route('admin.orders.index') }}">
+                            href="{{ route('admin.orders.index', ['status' => 'PENDING']) }}">
                             <i data-feather="check"> </i>
                             <span>Orders</span>
                         </a>
@@ -271,26 +271,26 @@
                     </li>
 
                     <li>
-                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.staffs.index' ? 'active' : '' }}"
-                            href="{{ route('admin.staffs.index') }}">
+                        <a class="nav-link menu-title link-nav {{ request()->is('admin/staffs') && request('role_id') == \App\Admin::ADMIN ? 'active' : '' }}"
+                            href="{{ route('admin.staffs.index', ['role_id' => \App\Admin::ADMIN]) }}">
                             <i data-feather="users"> </i>
                             <span>Admin</span>
                         </a>
                     </li>
 
                     <li>
-                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.staffs.index' ? 'active' : '' }}"
-                            href="{{ route('admin.staffs.index') }}">
+                        <a class="nav-link menu-title link-nav {{ request()->is('admin/staffs') && request('role_id') == \App\Admin::MANAGER ? 'active' : '' }}"
+                            href="{{ route('admin.staffs.index', ['role_id' => \App\Admin::MANAGER]) }}">
                             <i data-feather="users"> </i>
                             <span>Manager</span>
                         </a>
                     </li>
 
                     <li>
-                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.staffs.index' ? 'active' : '' }}"
-                            href="{{ route('admin.staffs.index') }}">
+                        <a class="nav-link menu-title link-nav {{ request()->is('admin/staffs') && request('role_id') == \App\Admin::SALESMAN ? 'active' : '' }}"
+                            href="{{ route('admin.staffs.index', ['role_id' => \App\Admin::SALESMAN]) }}">
                             <i data-feather="users"> </i>
-                            <span>Salesperson</span>
+                            <span>Salesman</span>
                         </a>
                     </li>
 
@@ -307,8 +307,8 @@
                     </li>
 
                     <li>
-                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.couriers.index' ? 'active' : '' }}"
-                            href="{{ route('admin.couriers.index') }}">
+                        <a class="nav-link menu-title link-nav {{ request()->is('admin/profile*') ? 'active' : '' }}"
+                            href="{{ route('admin.password.change') }}">
                             <i data-feather="truck"> </i>
                             <span>My Profile</span>
                         </a>

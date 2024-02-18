@@ -70,7 +70,7 @@ class CheckoutController extends Controller
 
             $oldOrders = Order::select(['id', 'admin_id', 'status'])->where('data->phone', $data['phone'])->get();
             $adminIds = $oldOrders->pluck('admin_id')->unique()->toArray();
-            $adminQ = Admin::where('role_id', 1)->where('is_active', true)->inRandomOrder();
+            $adminQ = Admin::where('role_id', Admin::SALESMAN)->where('is_active', true)->inRandomOrder();
             if (count($adminIds) > 0) {
                 $data['admin_id'] = $adminQ->wheretIn('id', $adminIds)->first()->id ?? $adminQ->first()->id ?? null;
             } else {

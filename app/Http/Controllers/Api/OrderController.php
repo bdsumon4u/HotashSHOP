@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Order;
@@ -20,11 +21,9 @@ class OrderController extends Controller
     public function __invoke(Request $request)
     {
         $_start = Carbon::parse(\request('start_d'));
-        $start = $_start->format('Y-m-d');
         $_end = Carbon::parse(\request('end_d'));
-        $end = $_end->format('Y-m-d');
 
-        $orders = Order::query();
+        $orders = Order::with('admin');
         if ($request->status) {
             $orders->where('status', $request->status);
         }
@@ -32,12 +31,14 @@ class OrderController extends Controller
             $orders->where('admin_id', $request->staff_id);
         }
 
-        $orders->whereBetween($request->get('date_type', 'created_at'), [
-            $_start->startOfDay()->toDateTimeString(),
-            $_end->endOfDay()->toDateTimeString(),
-        ]);
+        if ($request->has('start_d') && $request->has('end_d')) {
+            $orders->whereBetween(request('date_type', 'created_at'), [
+                $_start->startOfDay()->toDateTimeString(),
+                $_end->endOfDay()->toDateTimeString(),
+            ]);
+        }
 
-        $orders = $orders->when($request->role_id == 1, function ($orders) {
+        $orders = $orders->when($request->role_id == Admin::SALESMAN, function ($orders) {
             $orders->where('admin_id', request('admin_id'));
         });
         $orders = $orders->when(!$request->has('order'), function ($orders) {

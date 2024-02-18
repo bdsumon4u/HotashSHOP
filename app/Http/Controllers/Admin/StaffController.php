@@ -16,8 +16,12 @@ class StaffController extends Controller
     public function index()
     {
         abort_if(request()->user()->role_id, 403, 'Not Allowed.');
+        $admins = Admin::query();
+        if (request()->role_id) {
+            $admins->where('role_id', request()->role_id);
+        }
         return $this->view([
-            'admins' => Admin::all(),
+            'admins' => $admins->get(),
         ]);
     }
 
@@ -48,6 +52,11 @@ class StaffController extends Controller
             'role_id' => 'sometimes',
         ]);
         $data['password'] = bcrypt($data['password']);
+        if (!isset($data['role_id'])) {
+            $data['role_id'] = Admin::SALESMAN;
+        }
+
+        $data['is_active'] = true;
 
         Admin::create($data);
 
@@ -93,13 +102,15 @@ class StaffController extends Controller
             'name' => 'required',
             'email' => 'required|unique:admins,id,' . $staff->id,
             'password' => 'nullable',
-            'role_id' => 'sometimes',
+            'role_id' => 'required',
             'is_active' => 'sometimes',
         ]);
         if (isset($data['password'])) {
             $data['password'] = bcrypt($data['password']);
         }
-        $data['is_active'] = isset($data['is_active']);
+        if (!isset($data['is_active'])) {
+            $data['is_active'] = $data['role_id'] != Admin::SALESMAN;
+        }
         $staff->update($data);
 
         return back()->with('success', 'Staff Has Been Updated.');

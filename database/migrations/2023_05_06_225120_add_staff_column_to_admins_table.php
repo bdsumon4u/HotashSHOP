@@ -1,5 +1,6 @@
 <?php
 
+use App\Admin;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,7 +15,7 @@ class AddStaffColumnToAdminsTable extends Migration
     public function up()
     {
         Schema::table('admins', function (Blueprint $table) {
-            $table->tinyInteger('role_id')->after('password')->default(1);
+            $table->tinyInteger('role_id')->after('password')->default(Admin::SALESMAN);
             $table->boolean('is_active')->after('role_id')->default(true);
         });
     }

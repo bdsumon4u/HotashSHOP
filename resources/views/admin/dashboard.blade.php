@@ -25,7 +25,7 @@
             <div class="input-group">
                <select name="staff_id" id="staff-id" class="form-control input-group-prepend" style="max-width: 150px;">
                   <option value="">Select Staff</option>
-                  @foreach(\App\Admin::where('role_id', 1)->get() as $admin)
+                  @foreach(\App\Admin::where('role_id', \App\Admin::SALESMAN)->get() as $admin)
                   <option value="{{ $admin->id }}" @if(request()->get('staff_id') == $admin->id) selected @endif>{{ $admin->name }}</option>
                   @endforeach
                </select>
@@ -47,10 +47,13 @@
              <div class="col-12">
                  <div class="mb-3">
                      @foreach(config('app.orders', []) as $status)
-                         <a href="" class="btn @if($status == request('status')) btn-primary text-white @else btn-light @endif px-2 py-1 mx-2 my-1" onclick="event.preventDefault(); window._status = '{{ $status }}'; refresh();">
+                         <a href="" class="btn @if($status == request('status')) btn-primary text-white @else btn-light @endif px-2 py-1 m-1" onclick="event.preventDefault(); window._status = '{{ $status }}'; refresh();">
                              <span>{{ $status }}</span>
                          </a>
                      @endforeach
+                     <a href="" class="btn @if(request('status') == '') btn-primary text-white @else btn-light @endif px-2 py-1 m-1" onclick="event.preventDefault(); window._status = ''; refresh();">
+                        <span>All</span>
+                     </a>
                  </div>
              </div>
             <div class="col-xl-4 box-col-4 col-lg-4 col-md-4">
@@ -98,7 +101,7 @@
                   <div class="card-body p-3">
                      <div class="media">
                         <div class="media-body">
-                            <a href="{{ route('admin.orders.index', array_merge(['status' => in_array($stat = strtolower($status), ['all', 'total']) ? '' : $stat, 'start_d' => date('Y-m-d'), 'end_d' => date('Y-m-d')], request()->query())) }}">
+                            <a href="{{ route('admin.orders.index', array_merge(array_merge(['start_d' => date('Y-m-d'), 'end_d' => date('Y-m-d')], request()->query()),['status' => in_array(strtolower($status), ['all', 'total']) ? '' : $status])) }}">
                                 <p class="f-w-500 font-roboto mb-2">{{ $status }} Orders</p>
                                 <h4 class="f-w-500 mb-0 f-26"><span class="-counter-">{{ $count }}</span></h4>
                                 <span class="-counter-">Taka: {{ $amounts[$status] }}</span>

@@ -16,21 +16,25 @@ class ChangePasswordController extends Controller
      */
     public function __invoke(Request $request)
     {
-        if ( $request->isMethod('GET')) {
-            return view('admin.auth.passwords.change');
+        if ($request->isMethod('GET')) {
+            return view('admin.auth.passwords.change', [
+                'admin' => auth('admin')->user(),
+            ]);
         }
 
         $data = $request->validate([
-            'old_password' => 'required',
-            'password' => 'required|confirmed|min:8',
+            'name' => 'required',
+            'email' => 'required|email|unique:admins,email,' . auth('admin')->id(),
+            'password' => 'nullable|min:8',
         ]);
 
-        $user = auth('admin')->user();
-        if (Hash::check($data['old_password'], $user->password)) {
-            $user->update(['password' => Hash::make($data['password'])]);
-            return back()->withSuccess('Password Changed.');
+        if ($data['password']) {
+            $data['password'] = Hash::make($data['password']);
+        } else {
+            unset($data['password']);
         }
 
-        return back()->withDanger('Opps! Unknown Errors Occured.');
+        auth('admin')->user()->update($data);
+        return back()->withSuccess('Password Changed.');
     }
 }

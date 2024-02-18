@@ -64,6 +64,7 @@
                                     <th width="10">Amount</th>
                                     <th width="10">Status</th>
                                     <th>Courier</th>
+                                    <th>Staff</th>
                                     <th style="min-width: 80px;">DateTime</th>
                                 </tr>
                                 </thead>
@@ -133,16 +134,16 @@
                     @foreach(config('app.orders', []) as $status)
                 {
                     text: '{{ $status }}',
-                    className: 'px-1 py-1 {{ request('status') === $status ? 'btn-secondary' : '' }}',
+                    className: 'px-1 py-1 {{ request('status') == $status ? 'btn-secondary' : '' }}',
                     action: function ( e, dt, node, config ) {
-                        window.location = '{{ request()->fullUrlWithQuery(['status' => $status]) }}'
+                        window.location = '{!! request()->fullUrlWithQuery(['status' => $status]) !!}'
                     }
                 },@endforeach
                 {
                     text: 'All',
-                    className: 'px-1 py-1 {{ request('status') === null ? 'btn-secondary' : '' }}',
+                    className: 'px-1 py-1 {{ request('status') == '' ? 'btn-secondary' : '' }}',
                     action: function ( e, dt, node, config ) {
-                        window.location = '{{ request()->fullUrlWithQuery(['status' => '']) }}'
+                        window.location = '{!! request()->fullUrlWithQuery(['status' => '']) !!}'
                     }
                 },
             ],
@@ -165,6 +166,7 @@
                 { data: 'amount', name: 'amount', sortable: false },
                 { data: 'status', name: 'status', sortable: false },
                 { data: 'courier', name: 'courier', sortable: false },
+                { data: 'admin.name', name: 'admin.name', sortable: false },
                 { data: 'created_at', name: 'created_at' },
             ],
             initComplete: function (settings, json) {
@@ -178,7 +180,7 @@
                     var th = $(this.header()).parents('thead').find('tr').eq(1).find('th').eq(i);
                     $(th).empty();
 
-                    if ($.inArray(i, [0, 4]) === -1) {
+                    if ($.inArray(i, [0, 4, 7]) === -1) {
                         var column = this;
                         var input = document.createElement("input");
                         input.classList.add('form-control', 'border-primary');

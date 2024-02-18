@@ -1,73 +1,52 @@
 @extends('layouts.light.master')
-
-@title('Change Password')
+@section('title', 'Edit Profile')
 
 @section('breadcrumb-title')
-<h3>Change Password</h3>
+<h3>Edit Profile</h3>
 @endsection
 
 @section('breadcrumb-items')
-<li class="breadcrumb-item">Change Password</li>
+<li class="breadcrumb-item">Edit Profile</li>
 @endsection
 
 @section('content')
-<div class="container py-4">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header p-3">{{ __('Change Password') }}</div>
-
-                <div class="card-body p-3">
-                    @errors
-                    <form method="POST" action="{{ route('admin.password.change') }}">
-                        @csrf
-                        <div class="form-group row">
-                            <label for="old-password" class="col-md-4 col-form-label text-md-right">{{ __('Old Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="old-password" type="password" class="form-control @error('old_password') is-invalid @enderror" name="old_password" value="{{ old('old_password') }}" required autofocus>
-
-                                @error('old_password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+<div class="row mb-5">
+    <div class="col-sm-12">
+        <div class="card rounded-0 shadow-sm">
+            <div class="card-header p-3">Edit <strong>Profile</strong></div>
+            <div class="card-body p-3">
+                <x-form action="{{ route('admin.password.change') }}">
+                    <div class="form-group">
+                        <label for="name">Name</label><span class="text-danger">*</span>
+                        <x-input name="name" :value="$admin->name" />
+                        <x-error field="name" />
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label><span class="text-danger">*</span>
+                        <x-input name="email" :value="$admin->email" />
+                        <x-error field="email" />
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <x-input name="password" />
+                        <x-error field="password" />
+                    </div>
+                    @if($admin->is('salesman'))
+                    <div class="form-group">
+                        <div class="checkbox checkbox-secondary">
+                            <input type="hidden" name="is_active" value="0">
+                            <x-checkbox name="is_active" value="1" :checked="$admin->is_active" />
+                            <x-label for="is_active" />
                         </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Reset Password') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                    @endif
+                    <div class="form-group mb-0">
+                        <button type="submit" class="btn btn-success">Save</button>
+                    </div>
+                </x-form>
             </div>
         </div>
     </div>
 </div>
+
 @endsection

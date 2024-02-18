@@ -14,6 +14,10 @@ class Admin extends Authenticatable
     use CausesActivity;
     use Notifiable;
 
+    const ADMIN = 0;
+    const MANAGER = 1;
+    const SALESMAN = 2;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -62,5 +66,12 @@ class Admin extends Authenticatable
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPassword($token));
+    }
+
+    public function is($role)
+    {
+        return $this->role_id == static::ADMIN && $role == 'admin'
+            || $this->role_id == static::MANAGER && $role == 'manager'
+            || $this->role_id == static::SALESMAN && $role == 'salesman';
     }
 }

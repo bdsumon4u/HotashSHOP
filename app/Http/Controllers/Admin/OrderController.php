@@ -23,7 +23,7 @@ class OrderController extends Controller
     public function index()
     {
         if (!request()->has('status')) {
-            return redirect(action([static::class, 'index'], ['status' => 'pending']));
+            request()->merge(['status' => 'pending']);
         }
 
         return $this->view();

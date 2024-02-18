@@ -27,28 +27,37 @@
                                     <th>Role</th>
                                     <th>Name</th>
                                     <th>Email</th>
+                                    @if(request('role_id')==\App\Admin::SALESMAN)
                                     <th>Status</th>
+                                    @endif
                                     <th>Edit</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($admins as $admin)
+                                @forelse($admins as $admin)
                                 <tr data-row-id="{{ $admin->id }}">
                                     <td>{{ $admin->id }}</td>
-                                    <td>{{ $admin->role_id ? 'Manager' : 'Admin' }}</td>
+                                    <td>{{ $admin->is('admin') ? 'Admin' : ($admin->is('manager') ? 'Manager' : 'Salesman') }}</td>
                                     <td>{{ $admin->name }}</td>
                                     <td>{{ $admin->email }}</td>
+                                    @if(request('role_id')==\App\Admin::SALESMAN)
                                     <td>
                                         @if($admin->is_active)
                                         <span class="badge badge-success">Active</span>
                                         @else
                                         <span class="badge badge-danger">Inactive</span>
-                                        @endif</td>
+                                        @endif
+                                    </td>
+                                    @endif
                                     <td>
                                         <a href="{{ route('admin.staffs.edit', $admin->id) }}">Edit</a>
                                     </td>
                                 </tr>
-                                @endforeach
+                                @empty
+                                <tr>
+                                    <td colspan="{{ request('role_id')==\App\Admin::SALESMAN ? 6 : 5 }}" class="text-center text-danger">No staffs found</td>
+                                </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>

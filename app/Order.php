@@ -53,6 +53,11 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function admin()
+    {
+        return $this->belongsTo(Admin::class);
+    }
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()

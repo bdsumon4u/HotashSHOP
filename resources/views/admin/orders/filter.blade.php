@@ -75,7 +75,7 @@
                             <div class="col-auto px-1">
                                 <select name="staff_id" id="staff-id" class="form-control">
                                     <option value="">Select Staff</option>
-                                    @foreach(\App\Admin::where('role_id', 1)->get() as $admin)
+                                    @foreach(\App\Admin::where('role_id', \App\Admin::SALESMAN)->get() as $admin)
                                     <option value="{{ $admin->id }}" @if(request()->get('staff_id') == $admin->id) selected @endif>{{ $admin->name }}</option>
                                     @endforeach
                                 </select>

@@ -34,16 +34,19 @@
                     <div class="form-group">
                         <label for="role-id">Role</label>
                         <select name="role_id" id="role-id" class="form-control">
-                            <option value="0" {{ $admin->role_id == 0 ? 'selected' : '' }}>Admin</option>
-                            <option value="1" {{ $admin->role_id == 1 ? 'selected' : '' }}>Manager</option>
+                            <option value="{{$admin::ADMIN}}" {{ $admin->is('admin') ? 'selected' : '' }}>Admin</option>
+                            <option value="{{$admin::MANAGER}}" {{ $admin->is('manager') ? 'selected' : '' }}>Manager</option>
+                            <option value="{{$admin::SALESMAN}}" {{ $admin->is('salesman') ? 'selected' : '' }}>Salesman</option>
                         </select>
                     </div>
+                    @if($admin->is('salesman'))
                     <div class="form-group">
                         <div class="checkbox checkbox-secondary">
                             <x-checkbox name="is_active" value="1" :checked="$admin->is_active" />
                             <x-label for="is_active" />
                         </div>
                     </div>
+                    @endif
                     <div class="form-group mb-0">
                         <button type="submit" class="btn btn-success">Save</button>
                     </div>

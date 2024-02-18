@@ -34,15 +34,10 @@
                     <div class="form-group">
                         <label for="role-id">Role</label>
                         <select name="role_id" id="role-id" class="form-control">
-                            <option value="0">Admin</option>
-                            <option value="1" selected>Manager</option>
+                            <option value="{{\App\Admin::ADMIN}}">Admin</option>
+                            <option value="{{\App\Admin::MANAGER}}">Manager</option>
+                            <option value="{{\App\Admin::SALESMAN}}" selected>Salesman</option>
                         </select>
-                    </div>
-                    <div class="form-group">
-                        <div class="checkbox checkbox-secondary">
-                            <x-checkbox name="is_active" value="1" checked />
-                            <x-label for="is_active" />
-                        </div>
                     </div>
                     <div class="form-group mb-0">
                         <button type="submit" class="btn btn-success">Save</button>
