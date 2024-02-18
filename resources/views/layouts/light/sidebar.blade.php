@@ -379,8 +379,8 @@
                     </li>
 
                     <li>
-                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.settings' ? 'active' : '' }}"
-                            href="{{ route('admin.settings') }}">
+                        <a class="nav-link menu-title link-nav"
+                            href="{{ route('clear.cache') }}">
                             <i data-feather="truck"> </i>
                             <span>Cache Clear</span>
                         </a>

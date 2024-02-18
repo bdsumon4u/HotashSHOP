@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Session;
 
 //Language Change
 Route::get('lang/{locale}', function ($locale) {
-    if (! in_array($locale, ['en', 'de', 'es','fr','pt', 'cn', 'ae'])) {
+    if (!in_array($locale, ['en', 'de', 'es', 'fr', 'pt', 'cn', 'ae'])) {
         abort(400);
     }
     Session::put('locale', $locale);
@@ -28,7 +28,7 @@ Route::match(['get', 'post'], 'track-order', 'OrderTrackController')->name('trac
 
 pageRoutes();
 
-Route::get('/storage-link', function() {
+Route::get('/storage-link', function () {
     Artisan::call('storage:link');
 });
 
@@ -40,11 +40,10 @@ Route::get('/scout-import', function () {
     Artisan::call('scout:import', ["model" => "App\Product"]);
 });
 
-Route::get('/clear-cache', function() {
-    Artisan::call('config:cache');
+Route::get('/clear-cache', function () {
     Artisan::call('cache:clear');
     Artisan::call('config:clear');
     Artisan::call('view:clear');
     Artisan::call('route:clear');
-    return "Cache is cleared";
+    return back()->with('success', 'Cache has been cleared');
 })->name('clear.cache');
