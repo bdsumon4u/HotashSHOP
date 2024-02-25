@@ -2,6 +2,13 @@
 @section('title', 'Orders')
 
 @push('css')
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/animate.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/daterange-picker.css')}}">
+    <style>
+        .daterangepicker {
+            border: 2px solid #d7d7d7 !important;
+        }
+    </style>
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/datatables.css')}}">
     <style>
         .dt-buttons.btn-group {
@@ -184,14 +191,37 @@
                         var column = this;
                         var input = document.createElement("input");
                         input.classList.add('form-control', 'border-primary');
-                        $(input).appendTo($(th))
-                            .on('change', function () {
-                                if (i) {
-                                    column.search($(this).val(), false, false, true).draw();
-                                } else {
-                                    column.search('^'+ (this.value.length ? this.value : '.*') +'$', true, false).draw();
-                                }
+                        if (i === 8) {
+                            input.style.minWidth = '200px';
+                            $(input).appendTo($(th)).on('apply.daterangepicker', function (ev, picker) {
+                                column.search(picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format('YYYY-MM-DD')).draw();
+                            }).daterangepicker({
+                                startDate: window._start,
+                                endDate: window._end,
+                                ranges: {
+                                    'Today': [moment(), moment()],
+                                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                                },
                             });
+
+                            // clear the input when _start and _end are empty
+                            if (!window._start && !window._end) {
+                                $(input).val('');
+                            }
+                        } else {
+                            $(input).appendTo($(th))
+                                .on('change', function () {
+                                    if (i) {
+                                        column.search($(this).val(), false, false, true).draw();
+                                    } else {
+                                        column.search('^'+ (this.value.length ? this.value : '.*') +'$', true, false).draw();
+                                    }
+                                });
+                        }
                     }
                 });
             },
@@ -250,4 +280,8 @@
             }).get().join(','));
         }
     </script>
+
+    <script src="{{ asset('assets/js/datepicker/daterange-picker/moment.min.js') }}"></script>
+    <script src="{{ asset('assets/js/datepicker/daterange-picker/daterangepicker.js') }}"></script>
 @endpush
+
