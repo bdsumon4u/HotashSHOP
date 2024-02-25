@@ -37,10 +37,16 @@
                     </li>
 
                     <li>
-                        <a class="nav-link menu-title link-nav {{ request()->is('admin/orders*') ? 'active' : '' }}"
+                        <a class="nav-link d-flex menu-title link-nav {{ request()->is('admin/orders*') ? 'active' : '' }}"
                             href="{{ route('admin.orders.index', ['status' => 'PENDING']) }}">
-                            <i data-feather="check"> </i>
-                            <span>Orders</span>
+                            <i class="d-block" data-feather="check"> </i>
+                            <span class="d-block">Orders</span>
+                            @php
+                                $pendingCount = \App\Order::where('status', 'PENDING')->when(auth('admin')->user()->role_id == \App\Admin::SALESMAN, function ($query) {
+                                    $query->where('admin_id', auth('admin')->id());
+                                })->count();
+                            @endphp
+                            <span class="d-flex text-white badge badge-primary pending-count ml-auto align-items-center">{{ $pendingCount }}</span>
                         </a>
                     </li>
 

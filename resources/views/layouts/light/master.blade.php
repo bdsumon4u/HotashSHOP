@@ -172,6 +172,16 @@
             });
         });
 
+        // ajax every 1 minute
+        setInterval(function () {
+            $.ajax({
+                url: "{{url('api/pending-count')}}",
+                type: "GET",
+                success: function (data) {
+                  $('.pending-count').text(data);
+                }
+            });
+        }, 60000);
     </script>
   </body>
 </html>

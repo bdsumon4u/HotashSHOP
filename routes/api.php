@@ -42,3 +42,9 @@ Route::get('/products/{search}', function ($search) {
 
     return view('admin.orders.searched', compact('products'))->render();
 });
+
+Route::get('pending-count', function () {
+    return \App\Order::where('status', 'PENDING')->when(auth('admin')->user()->role_id == \App\Admin::SALESMAN, function ($query) {
+        $query->where('admin_id', auth('admin')->id());
+    })->count();
+});
