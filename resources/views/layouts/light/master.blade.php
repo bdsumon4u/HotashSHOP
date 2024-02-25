@@ -20,7 +20,8 @@
     </style>
     @stack('styles')
     @bukStyles(true)
-      @routes
+    @routes
+    @livewireStyles
   </head>
   <body class="light-only" main-theme-layout="ltr">
     @php $admin = auth('admin')->user() @endphp
@@ -74,6 +75,7 @@
       </div>
     </div>
     @include('layouts.light.js')
+    @livewireScripts
     <script>
       window.slugify = function (src) {
         return src.toLowerCase()

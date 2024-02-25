@@ -3,7 +3,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label for="">Limit orders per IP address</label>
-                <div class="row border py-2">
+                <div class="row py-2">
                     <div class="col-md-6">
                         <label for="fraud[allow_per_hour]">Allow per hour orders</label>
                         <x-input name="fraud[allow_per_hour]" :value="$fraud->allow_per_hour ?? 3" />

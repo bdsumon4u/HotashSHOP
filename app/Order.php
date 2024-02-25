@@ -58,6 +58,14 @@ class Order extends Model
         return $this->belongsTo(Admin::class);
     }
 
+    public function getSubtotal($products)
+    {
+        $products = (array)$products;
+        return array_reduce($products, function ($sum, $product) {
+            return $sum + ((array)$product)['total'];
+        });
+    }
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()

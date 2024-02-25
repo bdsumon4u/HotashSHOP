@@ -1,6 +1,7 @@
 <?php
 
 use App\Pathao\Facade\Pathao;
+use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -34,4 +35,10 @@ Route::group(['namespace' => 'Api', 'as' => 'api.'], function () {
 
 Route::get('/categories', function () {
     return response()->json(\App\Category::all()->toArray());
+});
+
+Route::get('/products/{search}', function ($search) {
+    $products = Product::where('name', 'like', "%$search%")->take(5)->get();
+
+    return view('admin.orders.searched', compact('products'))->render();
 });

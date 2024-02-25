@@ -101,7 +101,7 @@ class OrderController extends Controller
 
         $data['data']['shipping_area'] = $data['shipping'];
         $data['data']['shipping_cost'] = setting('delivery_charge')->{$data['shipping'] == 'Inside Dhaka' ? 'inside_dhaka' : 'outside_dhaka'} ?? config('services.shipping.' . $data['shipping']);
-        $data['data']['subtotal'] = $this->getSubtotal($order->products);
+        $data['data']['subtotal'] = $order->getSubtotal($order->products);
 
         if ($request->status != $order->status) {
             $data['status_at'] = now()->toDateTimeString();
@@ -109,14 +109,6 @@ class OrderController extends Controller
 
         $order->update($data);
         return redirect(route('admin.orders.index', ['status' => 'pending']))->withSuccess('Order Has Been Updated.');
-    }
-
-    protected function getSubtotal($products)
-    {
-        $products = (array)$products;
-        return array_reduce($products, function ($sum, $product) {
-            return $sum + ((array)$product)['total'];
-        });
     }
 
     public function filter(Request $request)
@@ -274,52 +266,6 @@ class OrderController extends Controller
         return redirect()->back()->withSuccess('Order Status Has Been Updated.');
     }
 
-    public function addProduct(Request $request, Order $order)
-    {
-        if (!$product = Product::find($request->id_or_sku)) {
-            if (!$product = Product::where('sku', $request->id_or_sku)->first()) {
-                return back()->with('danger', 'No Product Found.');
-            }
-        }
-
-        foreach ($order->products as $orderedProduct) {
-            if ($orderedProduct->id === $product->id) {
-                return back()->with('danger', 'Product Is Already In This Order.');
-            }
-        }
-
-        $id = $product->id;
-        $quantity = $request->get('new_quantity') ?? 1;
-        // Manage Stock
-        if ($product->should_track) {
-            if ($product->stock_count <= 0) {
-                return redirect()->back()->withDanger('Stock Out.');
-            }
-            $quantity = $product->stock_count >= $quantity ? $quantity : $product->stock_count;
-            $product->decrement('stock_count', $quantity);
-        }
-
-        $products = (array)$order->products;
-        $products[] = [
-            'id' => $id,
-            'name' => $product->var_name,
-            'slug' => $product->slug,
-            'image' => $product->base_image->src,
-            'price' => $product->selling_price,
-            'quantity' => $quantity,
-            'total' => $quantity * $product->selling_price,
-        ];
-
-        $order->update([
-            'products' => $products,
-            'data' => [
-                'subtotal' => $this->getSubtotal($products),
-            ]
-        ]);
-
-        return redirect()->back()->with('success', $order->getChanges() ? 'Order Updated.' : 'Not Updated.');
-    }
-
     public function updateQuantity(Request $request, Order $order)
     {
         $quantities = $request->quantity;
@@ -357,7 +303,7 @@ class OrderController extends Controller
         $order->update([
             'products' => json_encode($products),
             'data' => [
-                'subtotal' => $this->getSubtotal($products),
+                'subtotal' => $order->getSubtotal($products),
             ],
         ]);
 

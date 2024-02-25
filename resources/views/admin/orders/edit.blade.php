@@ -140,57 +140,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card rounded-0 shadow-sm">
-                                        <div class="card-header p-3">
-                                            <h5 class="card-title">Ordered Products</h5>
-                                        </div>
-                                        <div class="card-body p-3">
-                                            <div class="d-flex justify-content-between">
-                                                <div class="d-flex">
-                                                    <input type="text" name="id_or_sku" id="id-or-sku"
-                                                        placeholder="ID or SKU" class="form-control">
-                                                    <input type="text" name="new_quantity" id="new-quantity"
-                                                        placeholder="Quantity" class="form-control">
-                                                </div>
-                                                <button type="submit" class="btn btn-primary"
-                                                    formaction="{{ route('admin.orders.add-product', $order) }}">Add
-                                                    New</button>
-                                            </div>
-                                            <div class="table-responsive my-2">
-                                                <table class="table table-bordered table-hover">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Image</th>
-                                                            <th>Name</th>
-                                                            <th>Quantity</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach ($order->products as $product)
-                                                            <tr>
-                                                                <td>
-                                                                    <img src="{{ $product->image }}" width="100"
-                                                                        height="100" alt="">
-                                                                </td>
-                                                                <td>
-                                                                    <a
-                                                                        href="{{ route('products.show', $product->slug) }}">{{ $product->name }}</a>
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control"
-                                                                        name="quantity[{{ $product->id }}]"
-                                                                        id="quantity-{{ $product->id }}"
-                                                                        value="{{ old('quantity.' . $product->id, $product->quantity) }}">
-                                                                </td>
-                                                            </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <button class="btn btn-success ml-auto d-block" type="submit"
-                                                formaction="{{ route('admin.orders.update-quantity', $order) }}">Update</button>
-                                        </div>
-                                    </div>
+                                    <livewire:order-product-manager :order="$order" />
                                 </div>
                                 <div class="col-12 col-lg-6 col-xl-5 mt-4 mt-lg-0">
                                     <div class="card rounded-0 shadow-sm">
@@ -268,6 +218,15 @@
                                                 class="btn btn-primary btn-xl btn-block">Update</button>
                                         </div>
                                     </div>
+                                    <?php
+                                        function getData($data) {
+                                            if (isset($data['data'])) {
+                                                $data = array_merge($data, $data['data']);
+                                                unset($data['data']);
+                                            }
+                                            return json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+                                        }
+                                    ?>
                                     <div class="card rounded-0 shadow-sm">
                                         <div class="card-header p-3">
                                             <h5 class="card-title">Activities</h5>
@@ -289,7 +248,7 @@
 
                                                         <div id="collapse-{{$activity->id}}" class="collapse" data-parent="#accordion">
                                                             <div class="card-body p-3">
-                                                                <table>
+                                                                <table class="table table-responsive">
                                                                     <tbody>
                                                                         @if($activity->changes['old'] ?? false)
                                                                         <tr>
@@ -300,11 +259,11 @@
                                                                         <tr>
                                                                             @if($activity->changes['old'] ?? false)
                                                                             <td>
-                                                                                <pre><div class="language-php">{{ json_encode($activity->changes['old'] ?? '', JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) }}</div></pre>
+                                                                                <pre><div class="language-php">{{ getData($activity->changes['old'] ?? []) }}</div></pre>
                                                                             </td>
                                                                             @endif
                                                                             <td>
-                                                                                <pre><div class="language-php">{{ json_encode($activity->changes['attributes'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) }}</div></pre>
+                                                                                <pre><div class="language-php">{{ getData($activity->changes['attributes']) }}</div></pre>
                                                                             </td>
                                                                         </tr>
                                                                     </tbody>
