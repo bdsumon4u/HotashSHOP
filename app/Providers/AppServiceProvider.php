@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Extensions\DatabaseSessionHandler;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -25,6 +27,14 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+
+        Session::extend('custom', function ($app) {
+            $table = $app['config']['session.table'];
+            $lifetime = $app['config']['session.lifetime'];
+            $connection = $app['db']->connection($app['config']['session.connection']);
+
+            return new DatabaseSessionHandler($connection, $table, $lifetime, $app);
+        });
 
         $this->app->bind("pathao", function () {
             return new \App\Pathao\Manage\Manage(

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class StaffController extends Controller
 {
@@ -17,7 +18,7 @@ class StaffController extends Controller
     {
         abort_if(request()->user()->role_id, 403, 'Not Allowed.');
         $admins = Admin::query();
-        if (request()->role_id) {
+        if (request()->has('role_id')) {
             $admins->where('role_id', request()->role_id);
         }
         return $this->view([
@@ -85,6 +86,10 @@ class StaffController extends Controller
         abort_if(request()->user()->role_id, 403, 'Not Allowed.');
         return $this->view([
             'admin' => $staff,
+            'logins' => DB::table('sessions')
+                ->where('userable_type', Admin::class)
+                ->where('userable_id', $staff->id)
+                ->get(),
         ]);
     }
 
