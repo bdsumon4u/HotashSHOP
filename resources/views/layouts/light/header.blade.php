@@ -27,7 +27,9 @@
       <ul class="nav-menus">
 
         <li>
-          <div class="mode"><i class="fa fa-moon-o"></i></div>
+          <a href="{{ route('admin.orders.create') }}" class="border px-2 py-1">
+            <i class="fa fa-plus"></i>
+          </a>
         </li>
         <li class="maximize"><a class="text-dark" href="#!" onclick="javascript:toggleFullScreen()"><i data-feather="maximize"></i></a></li>
         <li class="profile-nav onhover-dropdown p-0">

@@ -29,6 +29,11 @@ class OrderController extends Controller
         return $this->view();
     }
 
+    public function create()
+    {
+        return $this->view();
+    }
+
     /**
      * Display the specified resource.
      *
@@ -50,65 +55,9 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        $areas = [];
-        $data = $order->data;
-        $cities = cache()->remember('pathao_cities', now()->addDay(), function () {
-            return Pathao::area()->city()->data;
-        });
-
-        if ($data->city_id ?? false) {
-            $areas = cache()->remember('pathao_areas:' . $data->city_id, now()->addDay(), function () use ($data) {
-                return Pathao::area()->zone($data->city_id)->data;
-            });
-        }
-
         return $this->view([
-            'areas' => $areas,
-            'cities' => $cities,
-            'courier' => $data->courier ?? '',
-            'statuses' => config('app.orders', []),
             'orders' => Order::with('admin')->where('user_id', $order->user_id)->where('id', '!=', $order->id)->orderBy('id', 'desc')->get(),
         ]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Admin\Order  $order
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Order $order)
-    {
-        $request->merge([
-            'phone' => Str::startsWith($request->phone, '0') ? '+88' . $request->phone : $request->phone,
-        ]);
-        $data = $request->validate([
-            'name' => 'required',
-            'phone' => 'required|regex:/^\+8801\d{9}$/',
-            'email' => 'nullable',
-            'address' => 'required',
-            'note' => 'nullable',
-            'status' => 'required',
-            'shipping' => 'required',
-            'data.discount' => 'required|integer',
-            'data.advanced' => 'required|integer',
-            'data.shipping_cost' => 'required|integer',
-            'data.courier' => 'nullable',
-            'data.city_id' => 'nullable',
-            'data.area_id' => 'nullable',
-        ]);
-
-        $data['data']['shipping_area'] = $data['shipping'];
-        $data['data']['shipping_cost'] = setting('delivery_charge')->{$data['shipping'] == 'Inside Dhaka' ? 'inside_dhaka' : 'outside_dhaka'} ?? config('services.shipping.' . $data['shipping']);
-        $data['data']['subtotal'] = $order->getSubtotal($order->products);
-
-        if ($request->status != $order->status) {
-            $data['status_at'] = now()->toDateTimeString();
-        }
-
-        $order->update($data);
-        return redirect(route('admin.orders.index', ['status' => 'pending']))->withSuccess('Order Has Been Updated.');
     }
 
     public function filter(Request $request)
