@@ -14,10 +14,6 @@ class HomeSection extends Model
 
     public static function booted()
     {
-        static::saved(function ($menu) {
-            cache()->put('homesections', static::orderBy('order', 'asc')->get());
-        });
-
         static::deleted(function () {
             cache()->forget('homesections');
         });

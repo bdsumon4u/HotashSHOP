@@ -26,6 +26,7 @@
                            <th>Order</th>
                            <th>Title</th>
                            <th>Type</th>
+                           <th>Categories</th>
                            <th width="10">Action</th>
                         </tr>
                      </thead>
@@ -35,6 +36,13 @@
                            <td>{{ $section->order }}</td>
                            <td>{{ $section->title }}</td>
                            <td>{{ $section->type }}</td>
+                           <td>
+                              <ul style="list-style: circle; padding-left: 1rem;">
+                                 @foreach($section->categories as $category)
+                                 <li>{{ $category->name }}</li>
+                                 @endforeach
+                              </ul>
+                           </td>
                            <td>
                               <x-form :action="route('admin.home-sections.destroy', $section)" method="delete" class="d-flex justify-content-between">
                                  <a href="{{ route('admin.home-sections.edit', $section) }}" class="btn btn-primary">Edit</a>

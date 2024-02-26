@@ -45,6 +45,7 @@ class HomeSectionController extends Controller
         $data = $request->validationData();
         $homeSection = HomeSection::create($data);
         $homeSection->categories()->sync($data['categories']);
+        cache()->put('homesections', HomeSection::orderBy('order', 'asc')->get());
 
         return redirect()->route('admin.home-sections.index')->with('success', 'Section Has Been Created.');
     }
@@ -86,6 +87,7 @@ class HomeSectionController extends Controller
         $data = $request->validated();
         $homeSection->update($data);
         $homeSection->categories()->sync($data['categories']);
+        cache()->put('homesections', HomeSection::orderBy('order', 'asc')->get());
 
         return redirect()->route('admin.home-sections.index')->with('success', 'Section Has Been Updated.');
     }
