@@ -13,6 +13,12 @@ Route::get('lang/{locale}', function ($locale) {
     return redirect()->back();
 })->name('lang');
 
+Route::get('/categories', function () {
+    return view('categories', [
+        'categories' => \App\Category::inRandomOrder()->get(),
+    ]);
+})->name('categories');
+
 Route::get('auth', 'User\\Auth\\LoginController@showLoginForm')->middleware('guest:user')->name('auth');
 
 Route::get('/', 'HomeController')->name('/');

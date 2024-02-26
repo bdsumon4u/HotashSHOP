@@ -69,7 +69,7 @@ class Product extends Model
         });
 
         static::addGlobalScope('latest', function (Builder $builder) {
-            $builder->latest();
+            $builder->latest('products.created_at');
         });
     }
 

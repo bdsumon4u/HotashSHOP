@@ -50,6 +50,15 @@
                             @endif
                         </li>
                     @endforeach
+                    <li class="departments__item">
+                        <a href="{{ route('categories') }}">View All Categories
+                            <svg class="departments__link-arrow" width="6px" height="9px">
+                                <use
+                                    xlink:href="{{ asset('strokya/images/sprite.svg#arrow-rounded-right-6x9') }}">
+                                </use>
+                            </svg>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>

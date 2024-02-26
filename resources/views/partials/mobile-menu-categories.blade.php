@@ -56,6 +56,16 @@
                     @endif
                 </li>
             @endforeach
+            <li class="mobile-links__item">
+                <div class="mobile-links__item-title">
+                    <a href="{{ route('categories') }}" class="mobile-links__item-link">View All Categories</a>
+                    <a href="{{ route('categories') }}" class="mobile-links__item-toggle d-flex justify-content-center align-items-center">
+                        <svg class="mobile-links__item-arrow" width="12px" height="12px">
+                            <use xlink:href="{{ asset('strokya/images/sprite.svg#arrow-rounded-right-8x13') }}"></use>
+                        </svg>
+                    </a>
+                </div>
+            </li>
         </ul>
     </div>
 </li>
