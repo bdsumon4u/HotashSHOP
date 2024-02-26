@@ -175,7 +175,7 @@
         // ajax every 1 minute
         setInterval(function () {
             $.ajax({
-                url: "{{url('api/pending-count')}}",
+                url: "/api/pending-count/"+{{auth('admin')->id()}},
                 type: "GET",
                 success: function (data) {
                   $('.pending-count').text(data);
