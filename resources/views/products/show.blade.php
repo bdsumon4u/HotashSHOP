@@ -52,12 +52,12 @@
     <div class="block mt-1">
         <div class="container">
             <div class="product product--layout--standard" data-layout="standard">
-                <div class="product__content" data-id="{{ $dataId }}" data-max="{{ $dataMax }}">
+                <div class="product__content">
                     <div class="xzoom-container">
-                        <img class="xzoom" id="xzoom-default" src="{{ asset($selectedVar->base_image->src) }}" xoriginal="{{ asset($selectedVar->base_image->src) }}" />
+                        <img class="xzoom" id="xzoom-default" src="{{ asset($product->base_image->src) }}" xoriginal="{{ asset($product->base_image->src) }}" />
                         <div class="xzoom-thumbs d-flex mt-2">
-                            <a href="{{ asset($selectedVar->base_image->src) }}"><img data-detail="{{ route('products.show', $selectedVar) }}" class="xzoom-gallery product-base__image" width="80" src="{{ asset($selectedVar->base_image->src) }}"  xpreview="{{ asset($selectedVar->base_image->src) }}"></a>
-                            @foreach($selectedVar->additional_images as $image)
+                            <a href="{{ asset($product->base_image->src) }}"><img data-detail="{{ route('products.show', $product) }}" class="xzoom-gallery product-base__image" width="80" src="{{ asset($product->base_image->src) }}"  xpreview="{{ asset($product->base_image->src) }}"></a>
+                            @foreach($product->additional_images as $image)
                                 <a href="{{ asset($image->src) }}">
                                     <img class="xzoom-gallery" width="80" src="{{ asset($image->src) }}">
                                 </a>
@@ -65,7 +65,7 @@
                         </div>
                     </div>
                     <!-- .product__info -->
-                    @include('products.info')
+                    <livewire:product-detail :product="$product" />
                     <!-- .product__info / end -->
                     <div>
                         <div class="product__footer mt-2 mb-2 border p-3">

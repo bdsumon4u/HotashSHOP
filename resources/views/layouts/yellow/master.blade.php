@@ -231,22 +231,22 @@
     @livewireScripts
     <script>
         $(document).ready(function () {
-            $(document).on('change', '.option-picker', function (ev) {
-                var options = [];
-                $(document).find('.option-picker:checked').each((_, item) => options.push(item.value));
+            // $(document).on('change', '.option-picker', function (ev) {
+            //     var options = [];
+            //     $(document).find('.option-picker:checked').each((_, item) => options.push(item.value));
                 
-                $.get({
-                    url: '',
-                    data: {options},
-                    success: function(data) {
-                        $('.product__content').data('id', data.dataId);
-                        $('.product__content').data('max', data.dataMax);
-                        $('.product__info').remove();
-                        $('.xzoom-container').after(data.content);
-                    },
-                    dataType: 'json',
-                });
-            });
+            //     $.get({
+            //         url: '',
+            //         data: {options},
+            //         success: function(data) {
+            //             $('.product__content').data('id', data.dataId);
+            //             $('.product__content').data('max', data.dataMax);
+            //             $('.product__info').remove();
+            //             $('.xzoom-container').after(data.content);
+            //         },
+            //         dataType: 'json',
+            //     });
+            // });
 
             $(window).on('scroll', function() {
                 $('input, textarea').blur();

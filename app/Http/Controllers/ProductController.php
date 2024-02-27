@@ -51,29 +51,6 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        $selectedVar = $product;
-        if ($product->parent_id) {
-            $selectedVar = $product;
-            $product = $product->parent;
-        } else if ($product->variations->isNotEmpty()) {
-            $selectedVar = $product->variations->random();
-        }
-
-        if (request()->has('options')) {
-            $variation = $product->variations->first(function ($item) {
-                return $item->options->pluck('id')->diff(request('options'))->isEmpty();
-            });
-            if ($variation) {
-                $selectedVar = $variation;
-            }
-        }
-
-        $dataId = $selectedVar->id;
-        $dataMax = $selectedVar->should_track ? $selectedVar->stock_count : -1;
-
-        $optionGroup = $product->variations->pluck('options')->flatten()->unique('id')->groupBy('attribute_id');
-        $attributes = \App\Attribute::find($optionGroup->keys());
-
         $product->load(['brand', 'categories', 'variations.options']);
         $categories = $product->categories->pluck('id')->toArray();
         $products = Product::whereIsActive(1)
@@ -86,10 +63,6 @@ class ProductController extends Controller
         ->get();
         //  \LaravelFacebookPixel::createEvent('ViewContent', $parameters = []);
 
-        if (request()->has('options')) {
-            return compact('dataId', 'dataMax') + ['content' => view('products.info', compact('product', 'products', 'optionGroup', 'selectedVar', 'attributes'))->render()];
-        }
-
-        return $this->view(compact('dataId', 'dataMax', 'product', 'products', 'optionGroup', 'selectedVar', 'attributes'));
+        return $this->view(compact('product', 'products'));
     }
 }
