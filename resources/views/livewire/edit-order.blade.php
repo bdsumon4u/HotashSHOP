@@ -247,16 +247,20 @@
                 <h5 class="card-title">Your Order</h5>
             </div>
             <div class="card-body p-3">
-                <label for="status">Order Status</label>
-                <select wire:model.defer="status" id="status" class="form-control">
-                    @foreach (config('app.orders', []) as $stat)
-                        <option value="{{ $stat }}"
-                            {{ $stat == $status ? 'selected' : '' }}>
-                            {{ $stat }}</option>
-                    @endforeach
-                </select>
                 <table class="checkout__totals table table-borderless">
                     <tbody class="checkout__totals-subtotals">
+                        <tr>
+                            <th>Order Status</th>
+                            <td>
+                                <select wire:model.defer="status" id="status" selector class="form-control">
+                                    @foreach (config('app.orders', []) as $stat)
+                                        <option value="{{ $stat }}"
+                                            {{ $stat == $status ? 'selected' : '' }}>
+                                            {{ $stat }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                        </tr>
                         <tr>
                             <th>Subtotal</th>
                             <td class="checkout-subtotal">{!! theMoney($data['subtotal']) !!}</td>
@@ -272,10 +276,6 @@
                         </tr>
                     </tbody>
                     <tfoot class="checkout__totals-footer">
-                        {{--                                            <tr> --}}
-                        {{--                                                <th>Total</th> --}}
-                        {{--                                                <td>{!!  theMoney($data['shipping_cost'] + $data['subtotal'])  !!}</td> --}}
-                        {{--                                            </tr> --}}
                         <tr>
                             <th>Advanced</th>
                             <td>
@@ -292,15 +292,6 @@
                                     class="form-control">
                             </td>
                         </tr>
-                        <!--<tr>-->
-                        <!--    <th>Payable</th>-->
-                        <!--    <td class="shipping">{!! theMoney(
-                            ($data['shipping_cost'] ?? 0) +
-                                ($data['subtotal'] ?? 0) -
-                                ($data['advanced'] ?? 0) -
-                                ($data['discount'] ?? 0),
-                        ) !!}</td>-->
-                        <!--</tr>-->
                         <tr>
                             <th>Note <small>(Optional)</small></th>
                             <td>

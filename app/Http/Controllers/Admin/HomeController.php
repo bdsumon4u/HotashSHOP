@@ -48,6 +48,19 @@ class HomeController extends Controller
             ->first();
         $orders['Total'] = $data->order_count;
         $amounts['Total'] = $data->total_amount;
+
+        $data = (clone $orderQ)->where('type', Order::ONLINE)
+            ->selectRaw($totalSQL)
+            ->first();
+        $orders['Online'] = $data->order_count;
+        $amounts['Online'] = $data->total_amount;
+
+        $data = (clone $orderQ)->where('type', Order::MANUAL)
+            ->selectRaw($totalSQL)
+            ->first();
+        $orders['Manual'] = $data->order_count;
+        $amounts['Manual'] = $data->total_amount;
+
         foreach (config('app.orders', []) as $status) {
             $data = (clone $orderQ)->where('status', $status)
                 ->selectRaw($totalSQL)

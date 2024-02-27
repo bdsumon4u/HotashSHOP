@@ -23,7 +23,7 @@ class OrderController extends Controller
     public function index()
     {
         if (!request()->has('status')) {
-            request()->merge(['status' => 'pending']);
+            return redirect()->route('admin.orders.index', ['status' => 'PENDING']);
         }
 
         return $this->view();

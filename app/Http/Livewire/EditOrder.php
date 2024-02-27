@@ -132,8 +132,8 @@ class EditOrder extends Component
             'note' => 'nullable',
             'status' => 'required',
             'shipping' => 'required',
-            'data.discount' => 'required|integer',
-            'data.advanced' => 'required|integer',
+            'data.discount' => 'nullable|integer',
+            'data.advanced' => 'nullable|integer',
             'data.shipping_cost' => 'required|integer',
             'data.courier' => 'nullable',
             'data.city_id' => 'nullable',
@@ -170,6 +170,7 @@ class EditOrder extends Component
                 'status' => $this->status,
                 'note' => $this->note,
                 'data' => $this->data,
+                'type' => Order::MANUAL,
                 'status_at' => now()->toDateTimeString(),
                 'products' => json_encode($this->selectedProducts),
             ])->save();

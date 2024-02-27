@@ -10,6 +10,9 @@ class Order extends Model
 {
     use LogsActivity;
 
+    const ONLINE = 0;
+    const MANUAL = 1;
+
     protected $fillable = [
         'admin_id', 'user_id', 'name', 'phone', 'email', 'address', 'status', 'status_at', 'products', 'note', 'data',
     ];

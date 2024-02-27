@@ -102,7 +102,19 @@
                   <div class="card-body p-3">
                      <div class="media">
                         <div class="media-body">
-                            <a href="{{ route('admin.orders.index', array_merge(array_merge(['start_d' => date('Y-m-d'), 'end_d' => date('Y-m-d')], request()->query()),['status' => in_array(strtolower($status), ['all', 'total']) ? '' : $status])) }}">
+                           @php
+                              $statData = compact('status');
+                              if ($loop->index == 0) {
+                                 $statData = ['status' => ''];
+                              } else if ($loop->index < 3) {
+                                 $statData = ['status' => '', 'type' => $status];
+                              }
+                           @endphp
+                            <a href="{{
+                              route('admin.orders.index', array_merge(array_merge([
+                                 'start_d' => date('Y-m-d'), 'end_d' => date('Y-m-d'),
+                              ], request()->query()), $statData))
+                           }}">
                                 <p class="f-w-500 font-roboto mb-2">{{ $status }} Orders</p>
                                 <h4 class="f-w-500 mb-0 f-26"><span class="-counter-">{{ $count }}</span></h4>
                                 <span class="-counter-">Taka: {{ $amounts[$status] }}</span>
