@@ -46,7 +46,7 @@
                                 <x-label for="type" />
                                 <select selector name="type" id="type" class="form-control">
                                     <option value="pure-grid">Pure Grid</option>
-                                    <!-- <option value="carousel-grid">Carousel Grid</option> -->
+                                    <option value="carousel-grid">Carousel Grid</option>
                                 </select>
                                 <x-error field="type" />
                             </div>

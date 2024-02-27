@@ -28,7 +28,7 @@ class ProductController extends Controller
         $per_page = $request->get('per_page', $rows * $cols);
         if ($section = request('section', 0)) {
             $section = HomeSection::with('categories')->findOrFail($section);
-            $products = $section->products(false, $per_page);
+            $products = $section->products($per_page);
         } else {
             $products = Product::whereIsActive(1)
                 ->whereNull('parent_id')

@@ -24,7 +24,7 @@ class HomeSectionProductController extends Controller
             $cols = $productsPage->value->cols;
         }
         $per_page = $request->get('per_page', $rows * $cols);
-        $products = $section->products(false, $per_page)->appends(request()->query());
+        $products = $section->products($per_page)->appends(request()->query());
         return view('products.index', compact('section', 'products', 'per_page', 'rows', 'cols'));
     }
 }
