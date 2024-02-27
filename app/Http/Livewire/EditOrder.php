@@ -79,11 +79,11 @@ class EditOrder extends Component
             $product->decrement('stock_count', $quantity);
         }
 
-        $this->selectedProducts[] = [
+        $this->selectedProducts[$id] = [
             'id' => $id,
             'name' => $product->var_name,
             'slug' => $product->slug,
-            'image' => $product->base_image->src,
+            'image' => optional($product->base_image)->src,
             'price' => $product->selling_price,
             'quantity' => $quantity,
             'total' => $quantity * $product->selling_price,
@@ -94,29 +94,19 @@ class EditOrder extends Component
 
     public function increaseQuantity($id)
     {
-        foreach ($this->selectedProducts as $key => $product) {
-            if ($product['id'] === $id) {
-                $this->selectedProducts[$key]['quantity']++;
-                $this->selectedProducts[$key]['total'] = $this->selectedProducts[$key]['quantity'] * $this->selectedProducts[$key]['price'];
-                break;
-            }
-        }
+        $this->selectedProducts[$id]['quantity']++;
+        $this->selectedProducts[$id]['total'] = $this->selectedProducts[$id]['quantity'] * $this->selectedProducts[$id]['price'];
 
         $this->data['subtotal'] = $this->order->getSubtotal($this->selectedProducts);
     }
 
     public function decreaseQuantity($id)
     {
-        foreach ($this->selectedProducts as $key => $product) {
-            if ($product['id'] === $id) {
-                if ($this->selectedProducts[$key]['quantity'] > 1) {
-                    $this->selectedProducts[$key]['quantity']--;
-                    $this->selectedProducts[$key]['total'] = $this->selectedProducts[$key]['quantity'] * $this->selectedProducts[$key]['price'];
-                } else {
-                    unset($this->selectedProducts[$key]);
-                }
-                break;
-            }
+        if ($this->selectedProducts[$id]['quantity'] > 1) {
+            $this->selectedProducts[$id]['quantity']--;
+            $this->selectedProducts[$id]['total'] = $this->selectedProducts[$id]['quantity'] * $this->selectedProducts[$id]['price'];
+        } else {
+            unset($this->selectedProducts[$id]);
         }
 
         $this->data['subtotal'] = $this->order->getSubtotal($this->selectedProducts);
