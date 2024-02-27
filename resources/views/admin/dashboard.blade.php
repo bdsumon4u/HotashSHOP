@@ -213,6 +213,41 @@
                </div>
             </div>
          </div>
+         <div class="card rounded-sm">
+            <div class="card-header p-3">
+               <h5>Staffs</h5>
+            </div>
+            <div class="card-body p-3">
+               <div class="table-responsive">
+                  <table class="table table-bordered">
+                     <thead>
+                        <tr>
+                           <th>ONLINE</th>
+                           <th>OFFLINE</th>
+                        </tr>
+                     </thead>
+                     <tbody class="f-w-500">
+                        <tr>
+                           <td>
+                              <ul style="list-style: disc; padding-left: 1rem;">
+                                 @foreach($staffs['online'] as $staff)
+                                 <li class="@if($staff->role_id == \App\Admin::SALESMAN && !$staff->is_active) text-danger @endif">{{ $staff->name }}</li>
+                                 @endforeach
+                              </ul>
+                           </td>
+                           <td>
+                              <ul style="list-style: disc; padding-left: 1rem;">
+                                 @foreach($staffs['offline'] as $staff)
+                                 <li class="@if($staff->role_id == \App\Admin::SALESMAN && !$staff->is_active) text-danger @endif">{{ $staff->name }}</li>
+                                 @endforeach
+                              </ul>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div>
       </div>
    </div>
 </div>
