@@ -11,7 +11,35 @@
             </tr>
         </thead>
         <tbody class="cart-table__body">
-            
+            @forelse ($cart as $product)
+            <tr class="cart-table__row" data-id="{{$product['id']}}">
+                <td class="cart-table__column cart-table__column--image">
+                    <a href="{{url($product['slug'])}}">
+                        <img src="{{asset($product['image'])}}" alt=""></a>
+                    </td>
+                <td class="cart-table__column cart-table__column--product">
+                    <a href="{{url($product['slug'])}}" class="cart-table__product-name">{{$product['name']}}</a>
+                </td>
+                <td class="cart-table__column cart-table__column--price" data-title="Price">TK {{$product['price']}}</td>
+                <td class="cart-table__column cart-table__column--quantity" data-title="Quantity">
+                    <div class="input-number">
+                        <input class="form-control input-number__input" type="number" min="1" value="{{$product['quantity']}}" @if($product['max'] != -1) max="{{$product['max']}}" @endif readonly />
+                        <div class="input-number__add" wire:click="increaseQuantity({{$product['id']}})"></div>
+                        <div class="input-number__sub" wire:click="decreaseQuantity({{$product['id']}})"></div>
+                    </div>
+                </td>
+                <td class="cart-table__column cart-table__column--total" data-title="Total">TK {{$product['price']*$product['quantity']}}</td>
+                <td class="cart-table__column cart-table__column--remove">
+                    <button type="button" class="btn btn-light btn-sm btn-svg-icon" wire:click="remove({{$product['id']}})">
+                        <svg width="12px" height="12px">
+                            <use xlink:href="{{ asset('strokya/images/sprite.svg#cross-12') }}"></use>
+                        </svg>
+                    </button>
+                </td>
+            </tr>
+            @empty
+            <tr class="bg-danger"><td colspan="6" class="text-center py-2">No Items In Cart.</td></tr>
+            @endforelse
         </tbody>
     </table>
 </div>

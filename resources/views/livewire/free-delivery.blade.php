@@ -1,5 +1,5 @@
 <div class="col-md-12">
-    <div class="row" x-data="{free: {{$free_delivery}}, all: {{$free_for_all}}}">
+    <div class="row" x-data="{free: {{$free_delivery ?? 0}}, all: {{$free_for_all ?? 0}}}">
         <div class="col-md-6 py-2">
             <div class="d-flex">
                 <label for="">Delivery Charge</label>
@@ -39,12 +39,12 @@
             <div x-show="free && all" class="row borderr py-2">
                 <div class="col-md-6 pr-0">
                     <label for="products_page-rows">Minimum No. of Products</label>
-                    <x-input name="free_delivery[min_quantity]" id="free_delivery-min_quantity" :value="$free_delivery->min_quantity ?? false" />
+                    <x-input name="free_delivery[min_quantity]" id="free_delivery-min_quantity" :value="$min_quantity ?? false" />
                     <x-error field="free_delivery.min_quantity" />
                 </div>
                 <div class="col-md-6 pl-0">
                     <label for="products_page-cols">Minimum Total Amount</label>
-                    <x-input name="free_delivery[min_amount]" id="free_delivery-min_amount" :value="$free_delivery->min_amount ?? false" />
+                    <x-input name="free_delivery[min_amount]" id="free_delivery-min_amount" :value="$min_amount ?? false" />
                     <x-error field="free_delivery.min_amount" />
                 </div>
             </div>

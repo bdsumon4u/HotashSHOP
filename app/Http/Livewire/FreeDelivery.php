@@ -11,6 +11,8 @@ class FreeDelivery extends Component
 
     public int $free_delivery;
     public int $free_for_all;
+    public int $min_quantity;
+    public int $min_amount;
 
     public $search;
 
@@ -18,6 +20,8 @@ class FreeDelivery extends Component
     {
         $this->free_delivery = $freeDelivery->enabled ?? 0;
         $this->free_for_all = $freeDelivery->for_all ?? 0;
+        $this->min_quantity = $freeDelivery->min_quantity ?? 1;
+        $this->min_amount = $freeDelivery->min_amount ?? 1;
 
         $products = (array)$freeDelivery->products ?? [];
         Product::find(array_keys($products))->each(function ($product) use ($products) {

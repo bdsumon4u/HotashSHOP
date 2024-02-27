@@ -23,7 +23,7 @@
                 <div class="block-products-carousel__column">
                     @foreach($products as $product)
                     <div class="block-products-carousel__cell">
-                        @include('partials.products.product-card', ['product' => $product])
+                        <livewire:product-card :product="$product" :key="$product->id" />
                     </div>
                     @endforeach
                 </div>
