@@ -201,9 +201,9 @@ class Checkout extends Component
             $adminIds = $oldOrders->pluck('admin_id')->unique()->toArray();
             $adminQ = Admin::where('role_id', Admin::SALESMAN)->where('is_active', true)->inRandomOrder();
             if (count($adminIds) > 0) {
-                $data['admin_id'] = $adminQ->whereIn('id', $adminIds)->first()->id ?? $adminQ->first()->id ?? null;
+                $data['admin_id'] = $adminQ->whereIn('id', $adminIds)->first()->id ?? $adminQ->first()->id ?? Admin::where('is_active', true)->inRandomOrder()->first()->id;
             } else {
-                $data['admin_id'] = $adminQ->first()->id ?? null;
+                $data['admin_id'] = $adminQ->first()->id ?? Admin::where('is_active', true)->inRandomOrder()->first()->id;
             }
 
             $data += [
