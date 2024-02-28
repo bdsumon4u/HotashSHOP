@@ -10,7 +10,7 @@
             @endif
         </strong>
     </div>
-    <div class="product__prices {{$selectedVar->selling_price == $selectedVar->price ? '' : 'has-special'}}">
+    <div class="product__prices mb-1 {{$selectedVar->selling_price == $selectedVar->price ? '' : 'has-special'}}">
         Price:
         @if($selectedVar->selling_price == $selectedVar->price)
             {!!  theMoney($selectedVar->price)  !!}
@@ -21,7 +21,7 @@
     </div>
 
     @foreach($attributes as $attribute)
-    <div class="form-group product__option">
+    <div class="form-group product__option mb-1">
         <label class="product__option-label">{{$attribute->name}}</label>
         @if (strtolower($attribute->name) == 'color')
         <div class="input-radio-color">
@@ -52,7 +52,7 @@
     <div class="product__sidebar">
         <!-- .product__options -->
         <form class="product__options">
-            <div class="form-group product__option">
+            <div class="form-group product__option mb-1">
                 {{-- <label class="product__option-label" for="product-quantity">Quantity</label> --}}
                 <div class="product__actions-item d-flex justify-content-between align-items-center border-top pt-1">
                     <big>Quantity</big>
@@ -85,7 +85,8 @@
                 @endforeach
             </div>
             @if($free_delivery->enabled && $deliveryText)
-            <div class="text-white w-100 p-2 mb-1" style="background: #008acf; height: auto;">
+            <div class="text-center font-weight-bold border">
+                <p class="border-bottom mb-1">আজ অর্ডার করলে <br> সারা বাংলাদেশে ডেলিভারি চার্জ <strong class="text-danger">ফ্রি</strong></p>
                 {!! $deliveryText !!}
             </div>
             @endif

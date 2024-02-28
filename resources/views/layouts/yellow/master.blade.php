@@ -177,6 +177,9 @@
     </style>
     @stack('styles')
     @livewireStyles
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@100..900&family=Oswald:wght@400;500;600;700&family=Roboto+Mono:wght@600&display=swap" rel="stylesheet">
 </head>
 
 <body class="header-fixed" style="margin: 0; padding: 0;">

@@ -14,11 +14,11 @@
             @forelse ($cart as $product)
             <tr class="cart-table__row" data-id="{{$product['id']}}">
                 <td class="cart-table__column cart-table__column--image">
-                    <a href="{{url($product['slug'])}}">
+                    <a href="{{route('products.show', $product['slug'])}}">
                         <img src="{{asset($product['image'])}}" alt=""></a>
                     </td>
                 <td class="cart-table__column cart-table__column--product">
-                    <a href="{{url($product['slug'])}}" class="cart-table__product-name">{{$product['name']}}</a>
+                    <a href="{{route('products.show', $product['slug'])}}" class="cart-table__product-name">{{$product['name']}}</a>
                 </td>
                 <td class="cart-table__column cart-table__column--price" data-title="Price">TK {{$product['price']}}</td>
                 <td class="cart-table__column cart-table__column--quantity" data-title="Quantity">
