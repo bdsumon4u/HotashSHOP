@@ -10,7 +10,7 @@
                         <label>আপনার নাম:</label>
                     </div>
                     <div class="form-group col-md-9">
-                        <x-input name="name" wire:model.defer="name" placeholder="এখানে আপনার নাম লিখুন।" :value="$user->name" />
+                        <x-input name="name" wire:model.defer="name" placeholder="এখানে আপনার নাম লিখুন।" />
                         <x-error field="name" />
                     </div>
                 </div>
@@ -19,7 +19,7 @@
                         <label>মোবাইল নম্বর:</label>
                     </div>
                     <div class="form-group col-md-9">
-                        <x-input name="phone" wire:model.defer="phone" placeholder="+880" :value="$user->phone_number ?? '+880'" />
+                        <x-input name="phone" wire:model.defer="phone" placeholder="+880" />
                         <x-error field="phone" />
                     </div>
                 </div>
@@ -46,7 +46,7 @@
                         <label>আপনার ঠিকানা:</label>
                     </div>
                     <div class="form-group col-md-9">
-                        <x-textarea name="address" wire:model.defer="address" placeholder="এখানে আপনার পুরো ঠিকানা লিখুন।">{{ $user->address }}</x-textarea>
+                        <x-textarea name="address" wire:model.defer="address" placeholder="এখানে আপনার পুরো ঠিকানা লিখুন।"></x-textarea>
                         <x-error field="address" />
                     </div>
                 </div>
@@ -55,7 +55,7 @@
                         <label>নোট (অপশনাল):</label>
                     </div>
                     <div class="form-group col-md-9">
-                        <x-textarea name="note" wire:model.defer="note" placeholder="আপনি চাইলে কোন নোট লিখতে পারেন।">{{ $user->note }}</x-textarea>
+                        <x-textarea name="note" wire:model.defer="note" placeholder="আপনি চাইলে কোন নোট লিখতে পারেন।"></x-textarea>
                         <x-error field="note" />
                     </div>
                 </div>

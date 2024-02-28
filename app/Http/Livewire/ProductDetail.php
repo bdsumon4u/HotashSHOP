@@ -3,8 +3,8 @@
 namespace App\Http\Livewire;
 
 use App\Product;
-use Illuminate\Support\Collection;
 use Livewire\Component;
+use Spatie\GoogleTagManager\GoogleTagManagerFacade;
 
 class ProductDetail extends Component
 {
@@ -51,11 +51,30 @@ class ProductDetail extends Component
                 'name' => $this->selectedVar->var_name,
                 'slug' => $this->selectedVar->slug,
                 'image' => optional($this->selectedVar->base_image)->src,
+                'category' => $this->product->category,
                 'quantity' => $this->quantity,
                 'price' => $this->selectedVar->price,
                 'max' => $this->selectedVar->should_track ? $this->selectedVar->stock : -1,
             ];
         }
+
+        $ecommerce = [
+            'currency' => 'BDT',
+            'value' => $cart[$this->selectedVar->id]['price']*$cart[$this->selectedVar->id]['quantity'],
+            'items' => array_values(array_map(function ($product) {
+                return [
+                    'item_id' => $product['id'],
+                    'item_name' => $product['name'],
+                    'item_category' => $product['category'],
+                    'price' => $product['price'],
+                    'quantity' => $product['quantity'],
+                ];
+            }, $cart)),
+        ];
+        GoogleTagManagerFacade::flash([
+            'event' => 'add_to_cart',
+            'ecommerce' => $ecommerce,
+        ]);
         session()->put('cart', $cart);
 
         return redirect()->route('checkout');
@@ -64,7 +83,8 @@ class ProductDetail extends Component
     public function mount()
     {
         if ($this->product->variations->count() > 0) {
-            $this->selectedVar = $this->product->variations->random();
+            $this->selectedVar = $this->product->variations->where('slug', request()->segment(2))->first()
+                ?? $this->product->variations->random();
         } else {
             $this->selectedVar = $this->product;
         }

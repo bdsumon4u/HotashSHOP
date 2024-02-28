@@ -26,6 +26,7 @@
         "livewire/livewire": "^2.9",
         "nicolaslopezj/searchable": "^1.13",
         "spatie/laravel-activitylog": "^3.17",
+        "spatie/laravel-googletagmanager": "^2.7",
         "tightenco/ziggy": "^1.1",
         "weblagence/laravel-facebook-pixel": "^1.1",
         "yajra/laravel-datatables": "^1.5"

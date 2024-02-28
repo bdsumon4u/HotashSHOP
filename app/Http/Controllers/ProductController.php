@@ -6,6 +6,7 @@ use App\HomeSection;
 use App\Product;
 use App\Setting;
 use Illuminate\Http\Request;
+use Spatie\GoogleTagManager\GoogleTagManagerFacade;
 
 class ProductController extends Controller
 {
@@ -17,6 +18,17 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
+        if ($request->search) {
+            GoogleTagManagerFacade::set([
+                'event' => 'search',
+                'search_term' => $request->search,
+            ]);
+        } else {
+            GoogleTagManagerFacade::set([
+                'event' => 'page_view',
+                'page_type' => 'shop',
+            ]);
+        }
        // \LaravelFacebookPixel::createEvent('PageView', $parameters = []);
         $section = null;
         $rows = 3;
@@ -51,6 +63,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
+        if ($product->parent_id) $product = $product->parent;
         $product->load(['brand', 'categories', 'variations.options']);
         $categories = $product->categories->pluck('id')->toArray();
         $products = Product::whereIsActive(1)
@@ -62,6 +75,22 @@ class ProductController extends Controller
         ->limit(config('services.products_count.related', 20))
         ->get();
         //  \LaravelFacebookPixel::createEvent('ViewContent', $parameters = []);
+        GoogleTagManagerFacade::set([
+            'event' => 'view_item',
+            'ecommerce' => [
+                'currency' => 'BDT',
+                'value' => $product->selling_price,
+                'items' => [
+                    [
+                        'item_id' => $product->id,
+                        'item_name' => $product->name,
+                        'price' => $product->selling_price,
+                        'item_category' => $product->category,
+                        'quantity' => 1,
+                    ],
+                ],
+            ],
+        ]);
 
         return $this->view(compact('product', 'products'));
     }

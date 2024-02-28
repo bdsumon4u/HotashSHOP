@@ -8,6 +8,7 @@
     <title>{{ setting('company')->name }} - @yield('title')</title>
     <link rel="icon" type="image/png" href="{{ asset($logo->favicon) }}"><!-- fonts -->
     <!-- css -->
+    @include('googletagmanager::head')
     @include('facebook-pixel::head')
     @include('layouts.yellow.css')
     <!-- js -->
@@ -183,6 +184,7 @@
 </head>
 
 <body class="header-fixed" style="margin: 0; padding: 0;">
+    @include('googletagmanager::body')
     @include('facebook-pixel::body')
     <!-- quickview-modal -->
     <div id="quickview-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">

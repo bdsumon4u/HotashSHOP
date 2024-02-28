@@ -79,6 +79,15 @@ class Product extends Model
         return $this->parent->name . ' [' . $this->name . ']';
     }
 
+    public function getCategoryAttribute()
+    {
+        if ($this->parent_id) {
+            return $this->parent->categories()->inRandomOrder()->first(['name'])->name ?? 'Uncategorized';
+        }
+
+        return $this->categories()->inRandomOrder()->first(['name'])->name ?? 'Uncategorized';
+    }
+
     public function getInStockAttribute()
     {
         return $this->track_stock

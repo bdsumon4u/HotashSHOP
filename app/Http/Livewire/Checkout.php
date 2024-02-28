@@ -8,12 +8,13 @@ use App\Admin;
 use App\Order;
 use App\Product;
 use App\User;
-use Illuminate\Support\Facades\App;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Str;
 use Livewire\Component;
+use Spatie\GoogleTagManager\GoogleTagManagerFacade;
 
 class Checkout extends Component
 {
@@ -122,6 +123,13 @@ class Checkout extends Component
 
     public function mount()
     {
+        if ($user = auth('user')->user()) {
+            $this->name = $user->name;
+            $this->phone = $user->phone ?? '+880';
+            $this->address = $user->address ?? '';
+            $this->note = $user->note ?? '';
+        }
+
         $this->cart = session()->get('cart', []);
         $this->cartUpdated();
     }
@@ -177,6 +185,7 @@ class Checkout extends Component
                         'image' => $product->base_image->src,
                         'price' => $product->selling_price,
                         'quantity' => $quantity,
+                        'category' => $product->category,
                         'total' => $quantity * $product->selling_price,
                     ];
                 })->filter(function ($product) {
@@ -217,6 +226,25 @@ class Checkout extends Component
 
             $order = Order::create($data);
             $user->notify(new OrderPlaced($order));
+
+            GoogleTagManagerFacade::flash([
+                'event' => 'purchase',
+                'ecommerce' => [
+                    'currency' => 'BDT',
+                    'transaction_id' => $order->id,
+                    'value' => $order->data->subtotal,
+                    'items' => array_map(function ($product) {
+                        return [
+                            'item_id' => $product['id'],
+                            'item_name' => $product['name'],
+                            'item_category' => $product['category'],
+                            'price' => $product['price'],
+                            'quantity' => $product['quantity'],
+                        ];
+                    }, $products),
+                ],
+            ]);
+    
             return $order;
         });
 
@@ -242,7 +270,7 @@ class Checkout extends Component
 
         $user = User::query()->firstOrCreate(
             ['phone_number' => $data['phone']],
-            array_merge(App::except($data, 'phone'), [
+            array_merge(Arr::except($data, 'phone'), [
                 'email_verified_at' => now(),
                 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
                 'remember_token' => Str::random(10),
