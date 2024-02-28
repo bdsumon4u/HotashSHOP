@@ -71,16 +71,14 @@ class HomeController extends Controller
             $amounts[$status] = $data->total_amount ?? 0;
         }
 
-        $staffs = cache()->remember('staffs', now()->addMinutes(1), function () {
-            $query = DB::table('admins')->leftJoin('sessions', 'userable_id', 'admins.id')->where('userable_type', Admin::class);
-            $online = $query->where('last_activity', '>=', now()->subMinutes(5)->timestamp)->groupBy('admins.email')->get();
-            $offline = DB::table('admins')->whereNotIn('email', $online->pluck('email'))->get();
-            return compact('online', 'offline');
-        });
+        $query = DB::table('admins')->leftJoin('sessions', 'userable_id', 'admins.id')->where('userable_type', Admin::class);
+        $online = $query->where('last_activity', '>=', now()->subMinutes(5)->timestamp)->groupBy('admins.email')->get();
+        $offline = DB::table('admins')->whereNotIn('email', $online->pluck('email'))->get();
+        $staffs = compact('online', 'offline');
 
         $productsCount = Product::whereNull('parent_id')->count();
         $inactiveProducts = Product::whereIsActive(0)->whereNull('parent_id')->get();
-        $outOfStockProducts = Product::whereShouldTrack(1)->where('stock_count', '<=', 0)->get();
-        return view('admin.dashboard', compact('staffs', 'products', 'productsCount', 'orders', 'amounts', 'inactiveProducts', 'outOfStockProducts', 'start', 'end'));
+        $lowStockProducts = Product::whereShouldTrack(1)->where('stock_count', '<', 10)->get();
+        return view('admin.dashboard', compact('staffs', 'products', 'productsCount', 'orders', 'amounts', 'inactiveProducts', 'lowStockProducts', 'start', 'end'));
     }
 }

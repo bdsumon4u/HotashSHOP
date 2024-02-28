@@ -88,8 +88,8 @@
                   <div class="card-body p-3">
                      <div class="ecommerce-widgets media">
                         <div class="media-body">
-                           <p class="f-w-500 font-roboto mb-2">Out Of Stock</p>
-                           <h4 class="f-w-500 mb-0 f-26"><span class="counter">{{ $outOfStockProducts->count() }}</span></h4>
+                           <p class="f-w-500 font-roboto mb-2">Low Stock</p>
+                           <h4 class="f-w-500 mb-0 f-26"><span class="counter">{{ $lowStockProducts->count() }}</span></h4>
                         </div>
                         <div class="ecommerce-box light-bg-primary"><i class="fa fa-heart" aria-hidden="true"></i></div>
                      </div>
@@ -179,14 +179,14 @@
          </div>
          <div class="card rounded-sm">
             <div class="card-header p-4 card-no-border">
-               <h5>Out Of Stock</h5>
+               <h5>Low Stock</h5>
             </div>
             <div class="card-body p-3">
                <div class="our-product">
                   <div class="table-responsive">
                      <table class="table table-bordered">
                         <tbody class="f-w-500">
-                           @foreach($outOfStockProducts as $product)
+                           @foreach($lowStockProducts as $product)
                            <tr>
                               <td class="pl-2">
                                  <div class="media">
@@ -197,13 +197,8 @@
                                  </div>
                               </td>
                               <td>
-                                 <p>SKU</p>
-                                 <span>{{ $product->sku }}</span>
-                              </td>
-                              <td class="text-center">
-                                 <del style="color: #ff0000;">{!!  theMoney($product->price)  !!}</del>
-                                 <br>
-                                 <ins style="text-decoration: none;">{!!  theMoney($product->selling_price)  !!}</ins>
+                                 <p class="text-nowrap">{{ $product->sku }}</p>
+                                 <p class="font-weight-bold">Stock: <span>{{ $product->stock_count }}</span></p>
                               </td>
                            </tr>
                            @endforeach
