@@ -71,7 +71,7 @@
                                 </div><!-- .dropcart / end -->
                             </div>
                         </div>
-                        @include('partials.auth-indicator')
+                        {{-- @include('partials.auth-indicator') --}}
                     </div>
                 </div>
             </div>

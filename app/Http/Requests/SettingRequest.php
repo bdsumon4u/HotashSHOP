@@ -67,34 +67,17 @@ class SettingRequest extends FormRequest
             ];
         }
 
-        return $this->isMethod('GET') ? [] : [
-            'logo' => 'sometimes|array',
-            'logo.*' => 'nullable|image',
+        if ($this->get('tab') == 'color') {
+            $rules = [];
+            foreach (['topbar', 'header', 'navbar', 'footer', 'primary', 'secondary'] as $key) {
+                $rules['color.'.$key] = 'required|array';
+                foreach (['background_color', 'background_hover', 'text_color', 'text_hover'] as $color) {
+                    $rules['color.' . $key . '.' . $color] = ['required', 'regex:/^#([a-f0-9]{6}|[a-f0-9]{3})$/i'];
+                }
+            }
+            return $rules;
+        }
 
-            'company' => 'required|array',
-            'company.name' => 'required',
-            'company.email' => 'required',
-            'company.phone' => 'required',
-            'company.tagline' => 'required',
-            'company.address' => 'required',
-
-            'social' => 'required|array',
-
-            'products_page.rows' => 'required|integer',
-            'products_page.cols' => 'required|integer',
-            'related_products.rows' => 'required|integer',
-            'related_products.cols' => 'required|integer',
-
-            'call_for_order' => 'sometimes',
-            'pixel_ids' => 'sometimes',
-
-            'delivery_charge.inside_dhaka' => 'sometimes|integer',
-            'delivery_charge.outside_dhaka' => 'sometimes|integer',
-            'delivery_text' => 'sometimes',
-
-            'services' => 'sometimes|nullable|array',
-            'services.*' => 'sometimes|nullable|array',
-            'services.*.*' => 'sometimes|nullable|string|max:255',
-        ];
+        return ['required' => 'required'];
     }
 }

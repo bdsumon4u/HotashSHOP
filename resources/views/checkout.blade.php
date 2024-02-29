@@ -16,10 +16,6 @@
     .form-control {
         border: 2px solid #1783c4;
     }
-    .btn-primary {
-        border-color: purple;
-        background-color: purple;
-    }
     .input-number .form-control:focus {
         box-shadow: none;
     }

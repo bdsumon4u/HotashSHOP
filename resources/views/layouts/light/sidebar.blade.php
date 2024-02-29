@@ -343,6 +343,14 @@
                     </li>
 
                     <li>
+                        <a class="nav-link menu-title link-nav {{ request()->is('admin/settings*') && request('tab')=='color' ? 'active' : '' }}"
+                            href="{{ route('admin.settings', ['tab' => 'color']) }}">
+                            <i data-feather="droplet"> </i>
+                            <span>Color Management</span>
+                        </a>
+                    </li>
+
+                    <li>
                         <a class="nav-link menu-title link-nav {{ request()->is('admin/settings*') && request('tab')=='social' ? 'active' : '' }}"
                             href="{{ route('admin.settings', ['tab' => 'social']) }}">
                             <i data-feather="globe"> </i>

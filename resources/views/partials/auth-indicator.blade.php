@@ -1,5 +1,5 @@
 @guest('user')
-<div class="indicator">
+<div class="indicator ml-2">
     <a href="{{ route('auth') }}" class="indicator__button">
         <span class="indicator__area">
             <!-- <svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 0 32 32" width="32">
@@ -14,7 +14,7 @@
     </a>
 </div>
 @else
-<div class="indicator indicator--trigger--click indicator--hover">
+<div class="indicator ml-2 indicator--trigger--click indicator--hover">
     <a href="#" class="indicator__button">
         <span class="indicator__area">
             <svg width="20" height="20">

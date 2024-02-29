@@ -75,7 +75,7 @@
             </div>
             <div class="call-for-order">
                 @foreach (explode(' ', setting('call_for_order')) as $phone)
-                    <a href="tel:{{$phone}}" class="btn ptn-primary text-white w-100 mb-1" style="background: #008acf; height: auto;">
+                    <a href="tel:{{$phone}}" class="btn btn-secondary w-100 mb-1" style="height: auto;">
                         <div>কল করতে ক্লিক করুন</div>
                         <div>
                             <i class="fa fas fa-phone mr-2"></i>

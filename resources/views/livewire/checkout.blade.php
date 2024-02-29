@@ -86,14 +86,14 @@
                     <div class="form-check">
                         <span class="form-check-input input-check">
                             <span class="input-check__body">
-                                <input class="input-check__input" type="checkbox" id="checkout-terms" checked>
+                                <input class="input-check__input" type="checkbox" id="checkout-terms-mobile" checked>
                                 <span class="input-check__box"></span>
                                 <svg class="input-check__icon" width="9px" height="7px">
                                     <use xlink:href="{{ asset('strokya/images/sprite.svg#check-9x7') }}"></use>
                                 </svg>
                             </span>
                         </span>
-                        <label class="form-check-label" for="checkout-terms">I agree to the <span class="text-info" target="_blank" href="javascript:void(0);">terms and conditions</span>*</label>
+                        <label class="form-check-label" for="checkout-terms-mobile">I agree to the <span class="text-info" target="_blank" href="javascript:void(0);">terms and conditions</span>*</label>
                     </div>
                 </div>
                 <button type="button" wire:click="checkout" class="btn btn-primary btn-xl btn-block text-white">কনফার্ম অর্ডার</button>
@@ -133,14 +133,14 @@
                         <div class="form-check">
                             <span class="form-check-input input-check">
                                 <span class="input-check__body">
-                                    <input class="input-check__input" type="checkbox" id="checkout-terms" checked>
+                                    <input class="input-check__input" type="checkbox" id="checkout-terms-desktop" checked>
                                     <span class="input-check__box"></span>
                                     <svg class="input-check__icon" width="9px" height="7px">
                                         <use xlink:href="{{ asset('strokya/images/sprite.svg#check-9x7') }}"></use>
                                     </svg>
                                 </span>
                             </span>
-                            <label class="form-check-label" for="checkout-terms">I agree to the <span class="text-info" target="_blank" href="javascript:void(0);">terms and conditions</span>*</label>
+                            <label class="form-check-label" for="checkout-terms-desktop">I agree to the <span class="text-info" target="_blank" href="javascript:void(0);">terms and conditions</span>*</label>
                         </div>
                     </div>
                     <button type="button" wire:click="checkout" class="btn btn-primary btn-xl btn-block text-white">কনফার্ম অর্ডার</button>

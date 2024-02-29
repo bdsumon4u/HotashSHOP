@@ -18,7 +18,6 @@
                         <div style="grid-area:search" class="md:ml-4"><div class="Searchbar__CustomCombobox-xnx3kr-6 joXPnU transition-all duration-75 ease-linear overflow-initial" data-reach-combobox="" data-state="idle"><div class="Searchbar__Container-xnx3kr-1 kWQExC" style="
     display: flex;
 "><input name="search" aria-autocomplete="both" aria-controls="listbox--1" aria-expanded="false" aria-haspopup="listbox" aria-labelledby="demo" role="combobox" placeholder="Search for..." data-reach-combobox-input="" data-state="idle" value="{{ request('search') }}" style="
-    background-color: white;
     letter-spacing: 0.025em;
     font-weight: 500;
     font-size: 0.875rem;
@@ -26,7 +25,7 @@
     display: flex;
     flex: 1 1 0%;
     padding: 0px 17px;
-    border: 2px solid purple;
+    border: 2px solid;
     border-radius: 4px 0px 0px 4px;
     outline: none;
     width: 100%;
@@ -40,7 +39,6 @@
     align-items: center;
     padding-right: 29px;
     padding-left: 29px;
-    background: purple;
     color: rgb(255, 255, 255);
     height: 40px;
     min-height: 100%;
@@ -106,7 +104,7 @@
                                 </div>
                             </div>
                         </div>
-                        @include('partials.auth-indicator')
+                        {{-- @include('partials.auth-indicator') --}}
                     </div>
                 </div>
             </div>

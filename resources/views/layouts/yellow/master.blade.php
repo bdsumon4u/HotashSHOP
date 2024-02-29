@@ -15,9 +15,76 @@
     <!-- font - fontawesome -->
     <link rel="stylesheet" href="{{ asset('strokya/vendor/fontawesome-5.6.1/css/all.min.css') }}"><!-- font - stroyka -->
     <link rel="stylesheet" href="{{ asset('strokya/fonts/stroyka/stroyka.css') }}">
+    @php $color = setting('color') @endphp
     <style>
+        :root {
+            --primary: {{$color->primary->background_color}};
+        }
         ::placeholder {
             color: #ccc !important;
+        }
+        .topbar {
+            background-color: {{$color->topbar->background_color}};
+            color: {{$color->topbar->text_color}};
+        }
+        .topbar:hover {
+            background-color: {{$color->topbar->background_hover}};
+        }
+        .topbar a:hover {
+            color: {{$color->topbar->text_hover}};
+        }
+        .site-header, .mobile-header__panel {
+            background-color: {{$color->header->background_color}};
+            color: {{$color->header->text_color}};
+        }
+        .site-header:hover, .mobile-header__panel {
+            background-color: {{$color->header->background_hover}};
+        }
+        .site-header a:hover, .mobile-header__panel a:hover {
+            color: {{$color->header->text_hover}};
+        }
+        .site-header .site-header__search input {
+            background-color: {{$color->header->background_color}} !important;
+            color: {{$color->header->text_color}} !important;
+            border-color: {{$color->header->text_color}} !important;
+        }
+        .site-header .site-header__search figure {
+            background-color: {{$color->header->text_color}} !important;
+            color: {{$color->header->background_color}} !important;
+        }
+        .site-header .site-header__search figure:hover {
+            background-color: {{$color->header->text_hover}} !important;
+            color: {{$color->header->background_hover}} !important;
+        }
+        .site-header .nav-panel {
+            background-color: {{$color->navbar->background_color}};
+        }
+        .site-header .nav-links__item>a {
+            color: {{$color->navbar->text_color}};
+        }
+        .site-header .nav-links__item>a:hover {
+            background: {{$color->navbar->background_hover}};
+            color: {{$color->navbar->text_hover}};
+        }
+        .site-footer {
+            background: {{$color->footer->background_color}};
+            color: {{$color->footer->text_color}};
+        }
+        .site-footer:hover {
+            background: {{$color->footer->background_hover}};
+            color: {{$color->footer->text_hover}};
+        }
+        .product-card:before {
+            box-shadow: inset 0 0 0 1px {{$color->primary->text_color}};
+        }
+        .product-card:hover:before {
+            box-shadow: inset 0 0 0 2px {{$color->primary->text_color}};
+        }
+        .product-card__badge--sale {
+            background: {{$color->primary->background_color}};
+        }
+        .product-card__badge--sale:hover {
+            background: {{$color->primary->background_hover}};
         }
         .page-header__container {
             padding-bottom: 12px;
@@ -44,9 +111,6 @@
             .block-products-carousel[data-layout=grid-4] .product-card .product-card__buttons .btn {
                 height: auto;
             }
-        }
-        .product-card:before {
-            box-shadow: inset 0 0 0 1px purple;
         }
         .product-card:before,
         .owl-carousel {
@@ -78,21 +142,25 @@
             display: block;
             width: 100%;
         }
-        .product-card__addtocart,
-        .product__addtocart {
-            background-color: orange !important;
-            border-color: orange !important;
-            color: #fff !important;
-        }
-        .product-card__ordernow,
-        .product__ordernow {
-            background-color: purple !important;
-            border-color: purple !important;
-            color: #fff !important;
+        .btn-primary {
+            background-color: {{$color->primary->background_color}} !important;
+            border-color: {{$color->primary->background_color}} !important;
+            color: {{$color->primary->text_color}} !important;
         }
         .btn-primary:hover {
-            background-color: #6c95b5 !important;
-            border-color: #6c95b5 !important;
+            background-color: {{$color->primary->background_hover}} !important;
+            border-color: {{$color->primary->background_hover}} !important;
+            color: {{$color->primary->text_hover}} !important;
+        }
+        .btn-secondary {
+            background-color: {{$color->secondary->background_color}} !important;
+            border-color: {{$color->secondary->background_color}} !important;
+            color: {{$color->secondary->text_color}} !important;
+        }
+        .btn-secondary:hover {
+            background-color: {{$color->secondary->background_hover}} !important;
+            border-color: {{$color->secondary->background_hover}} !important;
+            color: {{$color->secondary->text_hover}} !important;
         }
         .aa-input-container {
             width: 100%;

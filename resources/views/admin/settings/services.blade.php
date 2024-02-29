@@ -1,4 +1,4 @@
-<div class="tab-pane" id="item-services" role="tabpanel">
+<div class="tab-pane active" id="item-services" role="tabpanel">
     <div class="row">
         <div class="col-sm-12">
             <h4><small class="border-bottom mb-1">Services</small></h4>
@@ -28,5 +28,4 @@
         </div>
         @endforeach
     </div>
-    <button type="submit" class="btn btn-success">Save</button>
 </div>
