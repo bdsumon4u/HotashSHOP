@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use DB;
 use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -16,6 +16,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
         return $this->view([
             'categories' => Category::nested(),
         ]);
@@ -39,6 +40,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
         $data = $request->validate([
             'parent_id' => 'nullable|integer',
             'name' => 'required|unique:categories',
@@ -81,6 +83,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
+        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
         $data = $request->validate([
             'parent_id' => 'nullable|integer',
             'name' => 'required|unique:categories,id,' . $category->id,
@@ -100,7 +103,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        abort_if(request()->user()->role_id, 403, 'Not Allowed.');
+        abort_unless(request()->user()->is('admin'), 403, 'Not Allowed.');
         DB::transaction(function () use ($category) {
             $category->childrens()->delete();
             $category->delete();

@@ -31,6 +31,7 @@ class ProductController extends Controller
      */
     public function create()
     {
+        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
         return $this->view([
             'categories' => Category::nested(),
             'brands' => Brand::all(),
@@ -46,6 +47,7 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
+        abort_if($request->user()->is('salesman'), 403, 'Not Allowed.');
         $data = $request->validationData();
         event(new ProductCreated($product = Product::create($data), $data));
         return redirect()->action([self::class, 'edit'], $product)->with('success', 'Product Has Been Created.');
@@ -70,6 +72,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
+        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
         $product->load(['variations']);
 
         return $this->view(compact('product'), '', [
@@ -88,6 +91,7 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, Product $product)
     {
+        abort_if($request->user()->is('salesman'), 403, 'Not Allowed.');
         $data = $request->validationData();
         $product->update($data);
 
@@ -109,7 +113,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        abort_if(request()->user()->role_id, 403, 'Not Allowed.');
+        abort_unless(request()->user()->is('admin'), 403, 'Not Allowed.');
         $product->delete();
 
         return request()->ajax()

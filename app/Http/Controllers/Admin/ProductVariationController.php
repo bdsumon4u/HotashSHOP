@@ -41,6 +41,7 @@ class ProductVariationController extends Controller
      */
     public function store(Request $request, Product $product)
     {
+        abort_if($request->user()->is('salesman'), 403, 'Not Allowed.');
         $attributes = collect($request->get('attributes'));
         $options = Option::find($attributes->flatten());
 
@@ -103,6 +104,7 @@ class ProductVariationController extends Controller
      */
     public function update(Request $request, Product $product, Product $variation)
     {
+        abort_if($request->user()->is('salesman'), 403, 'Not Allowed.');
         $variation->update($request->validate([
             'price' => 'required|numeric',
             'selling_price' => 'required|numeric',

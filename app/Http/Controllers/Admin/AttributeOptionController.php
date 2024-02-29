@@ -40,6 +40,7 @@ class AttributeOptionController extends Controller
      */
     public function store(Request $request, Attribute $attribute)
     {
+        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
         if (! $request->has('value')) {
             $request->merge(['value' => $request->name]);
         }
@@ -86,6 +87,7 @@ class AttributeOptionController extends Controller
      */
     public function update(Request $request, Attribute $attribute, Option $option)
     {
+        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
         if (!$request->has('value')) {
             $request->merge(['value' => $request->name]);
         }
@@ -107,6 +109,7 @@ class AttributeOptionController extends Controller
      */
     public function destroy(Attribute $attribute, Option $option)
     {
+        abort_unless(request()->user()->is('admin'), 403, 'Not Allowed.');
         $option->delete();
 
         return back()->withSuccess('Option deleted successfully');

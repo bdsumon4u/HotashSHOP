@@ -16,7 +16,6 @@ class StaffController extends Controller
      */
     public function index()
     {
-        abort_if(request()->user()->role_id, 403, 'Not Allowed.');
         $admins = Admin::query();
         if (request()->has('role_id')) {
             $admins->where('role_id', request()->role_id);
@@ -33,7 +32,7 @@ class StaffController extends Controller
      */
     public function create()
     {
-        abort_if(request()->user()->role_id, 403, 'Not Allowed.');
+        abort_unless(request()->user()->is('admin'), 403, 'Not Allowed.');
         return $this->view();
     }
 
@@ -45,7 +44,7 @@ class StaffController extends Controller
      */
     public function store(Request $request)
     {
-        abort_if(request()->user()->role_id, 403, 'Not Allowed.');
+        abort_unless(request()->user()->is('admin'), 403, 'Not Allowed.');
         $data = $request->validate([
             'name' => 'required',
             'email' => 'required|unique:admins',
@@ -83,7 +82,7 @@ class StaffController extends Controller
      */
     public function edit(Admin $staff)
     {
-        abort_if(request()->user()->role_id, 403, 'Not Allowed.');
+        abort_unless(request()->user()->is('admin'), 403, 'Not Allowed.');
         return $this->view([
             'admin' => $staff,
             'logins' => DB::table('sessions')
@@ -102,7 +101,7 @@ class StaffController extends Controller
      */
     public function update(Request $request, Admin $staff)
     {
-        abort_if(request()->user()->role_id, 403, 'Not Allowed.');
+        abort_unless(request()->user()->is('admin'), 403, 'Not Allowed.');
         $data = $request->validate([
             'name' => 'required',
             'email' => 'required|unique:admins,id,' . $staff->id,

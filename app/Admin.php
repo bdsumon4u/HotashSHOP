@@ -70,6 +70,7 @@ class Admin extends Authenticatable
 
     public function is($role)
     {
+        if (!is_string($role)) return parent::is($role);
         return $this->role_id == static::ADMIN && $role == 'admin'
             || $this->role_id == static::MANAGER && $role == 'manager'
             || $this->role_id == static::SALESMAN && $role == 'salesman';

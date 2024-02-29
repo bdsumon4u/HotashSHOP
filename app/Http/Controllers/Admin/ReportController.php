@@ -121,6 +121,10 @@ class ReportController extends Controller
      */
     public function destroy(Report $report)
     {
-        //
+        abort_unless(request()->user()->is('admin'), 403, 'Not Allowed.');
+        $report->delete();
+
+        return redirect()->route('admin.reports.index')
+            ->with('success', 'Report deleted successfully.');
     }
 }

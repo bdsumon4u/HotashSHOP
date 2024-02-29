@@ -15,6 +15,7 @@ class BrandController extends Controller
      */
     public function index()
     {
+        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
         return $this->view([
             'brands' => Brand::cached(),
         ]);
@@ -38,6 +39,7 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
+        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
         $data = $request->validate([
             'name' => 'required|unique:brands',
             'slug' => 'required|unique:brands',
@@ -57,6 +59,7 @@ class BrandController extends Controller
      */
     public function update(Request $request, Brand $brand)
     {
+        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
         $data = $request->validate([
             'name' => 'required|unique:brands,id,' . $brand->id,
             'slug' => 'required|unique:brands,id,' . $brand->id,
@@ -75,7 +78,7 @@ class BrandController extends Controller
      */
     public function destroy(Brand $brand)
     {
-        abort_if(request()->user()->role_id, 403, 'Not Allowed.');
+        abort_unless(request()->user()->is('admin'), 403, 'Not Allowed.');
         $brand->delete();
         return redirect()
             ->action([self::class, 'index'])

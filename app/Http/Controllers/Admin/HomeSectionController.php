@@ -17,6 +17,7 @@ class HomeSectionController extends Controller
      */
     public function index()
     {
+        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
         return $this->view([
             'sections' => HomeSection::orderBy('order', 'asc')->get(),
         ]);
@@ -29,6 +30,7 @@ class HomeSectionController extends Controller
      */
     public function create()
     {
+        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
         return $this->view([
             'categories' => Category::nested(),
         ]);
@@ -42,6 +44,7 @@ class HomeSectionController extends Controller
      */
     public function store(HomeSectionRequest $request)
     {
+        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
         $data = $request->validationData();
         $homeSection = HomeSection::create($data);
         $homeSection->categories()->sync($data['categories']);
@@ -69,6 +72,7 @@ class HomeSectionController extends Controller
      */
     public function edit(HomeSection $homeSection)
     {
+        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
         return $this->view([
             'section' => $homeSection,
             'categories' => Category::nested(),
@@ -84,6 +88,7 @@ class HomeSectionController extends Controller
      */
     public function update(HomeSectionRequest $request, HomeSection $homeSection)
     {
+        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
         $data = $request->validated();
         $homeSection->update($data);
         $homeSection->categories()->sync($data['categories']);
@@ -100,7 +105,7 @@ class HomeSectionController extends Controller
      */
     public function destroy(HomeSection $homeSection)
     {
-        abort_if(request()->user()->role_id, 403, 'Not Allowed.');
+        abort_unless(request()->user()->is('admin'), 403, 'Not Allowed.');
         $homeSection->delete();
 
         return back()->withSuccess('Section Has Been Deleted.');

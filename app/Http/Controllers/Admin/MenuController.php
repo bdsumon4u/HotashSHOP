@@ -15,6 +15,7 @@ class MenuController extends Controller
      */
     public function index()
     {
+        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
         return $this->view([
             'menus' => Menu::all(),
         ]);
@@ -27,6 +28,7 @@ class MenuController extends Controller
      */
     public function create()
     {
+        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
         return $this->view();
     }
 
@@ -38,6 +40,7 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
+        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
         $data = $request->validate([
             'name' => 'required',
             'slug' => 'required|unique:menus',
@@ -54,6 +57,7 @@ class MenuController extends Controller
      */
     public function edit(Menu $menu)
     {
+        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
         return $this->view();
     }
 }

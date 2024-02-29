@@ -26,6 +26,7 @@ class MenuItemController extends Controller
      */
     public function create()
     {
+        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
         return $this->view();
     }
 
@@ -37,6 +38,7 @@ class MenuItemController extends Controller
      */
     public function store(Request $request)
     {
+        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
         $data = $request->validate([
             'menu_id' => 'required|integer',
             'name' => 'required',
@@ -56,6 +58,7 @@ class MenuItemController extends Controller
      */
     public function show(MenuItem $menuItem)
     {
+        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
         return $this->view();
     }
 
@@ -67,6 +70,7 @@ class MenuItemController extends Controller
      */
     public function edit(MenuItem $menuItem)
     {
+        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
         return $this->view();
     }
 
@@ -79,6 +83,7 @@ class MenuItemController extends Controller
      */
     public function update(Request $request, MenuItem $menuItem)
     {
+        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
         $data = $request->validate([
             'name' => 'required',
             'href' => 'required',
@@ -97,7 +102,7 @@ class MenuItemController extends Controller
      */
     public function destroy(MenuItem $menuItem)
     {
-        abort_if(request()->user()->role_id, 403, 'Not Allowed.');
+        abort_unless(request()->user()->is('admin'), 403, 'Not Allowed.');
         $menuItem->delete();
         return back()->withSuccess('Menu Item Deleted.');
     }
