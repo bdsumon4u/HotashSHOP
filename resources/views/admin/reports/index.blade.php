@@ -68,6 +68,7 @@
                                     <th style="min-width: 80px;">Courier</th>
                                     <th style="min-width: 80px;">Status</th>
                                     <th style="min-width: 80px;">Amount</th>
+                                    <th style="width: 100px;">DELETE</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -80,6 +81,13 @@
                                         <td>{{$report->courier}}</td>
                                         <td>{{$report->status}}</td>
                                         <td>{{$report->total}}</td>
+                                        <td>
+                                            <form action="{{route('admin.reports.destroy', $report->id)}}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm" data-action="delete">Delete</button>
+                                            </form>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
