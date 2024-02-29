@@ -37,11 +37,14 @@
             <div class="orders-table">
                 <div class="card rounded-0 shadow-sm">
                     <div class="card-header p-3">
-                        <strong>All Orders</strong>
+                        <div class="row px-3 justify-content-between align-items-center">
+                            <div>All Orders</div>
+                            <a href="{{route('admin.orders.create')}}" class="btn btn-sm btn-primary">New Order</a>
+                        </div>
                         <div class="row d-none">
                             <div class="col-auto pr-1 d-flex align-items-center" check-count></div>
                             <div class="col-auto px-1">
-                                <select name="status" id="status" class="form-control">
+                                <select name="status" id="status" class="form-control form-control-sm">
                                     <option value="">Change Status</option>
                                     @foreach(config('app.orders', []) as $status)
                                     <option value="{{ $status }}">{{ $status }}</option>
@@ -49,7 +52,7 @@
                                 </select>
                             </div>
                             <div class="col pl-1">
-                                <button type="button" class="btn btn-primary" onclick="changeStatus()">Update</button>
+                                <button type="button" class="btn btn-sm btn-primary" onclick="changeStatus()">Update</button>
                             </div>
                             <div class="col-auto">
                                 <button onclick="courier()" id="courier" class="btn btn-sm btn-primary mr-1">Courier</button>
@@ -106,12 +109,12 @@
 
             if (checklist.size > 0) {
                 $('[check-count]').text(checklist.size + ' selected');
-                $('.card-header > .row').removeClass('d-none');
-                $('.card-header > strong').addClass('d-none');
+                $('.card-header > .row:last-child').removeClass('d-none');
+                $('.card-header > .row:first-child').addClass('d-none');
             } else {
                 $('[check-count]').text('');
-                $('.card-header > .row').addClass('d-none');
-                $('.card-header > strong').removeClass('d-none');
+                $('.card-header > .row:last-child').addClass('d-none');
+                $('.card-header > .row:first-child').removeClass('d-none');
             }
         }
         $('[name="check_all"]').on('change', function () {
