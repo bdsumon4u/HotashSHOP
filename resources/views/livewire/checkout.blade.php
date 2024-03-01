@@ -67,11 +67,11 @@
                 <table class="checkout__totals">
                     <tbody class="checkout__totals-subtotals">
                         <tr>
-                            <th>Product Subtotal</th>
+                            <th>Subtotal</th>
                             <td class="checkout-subtotal">{!!  theMoney($subtotal)  !!}</td>
                         </tr>
                         <tr>
-                            <th>Delivery Charge</th>
+                            <th>Shipping</th>
                             <td class="shipping">{!! $shipping_cost ? theMoney($shipping_cost) : 'FREE' !!}</td>
                         </tr>
                     </tbody>
@@ -113,11 +113,11 @@
                 <table class="checkout__totals">
                     <tbody class="checkout__totals-subtotals">
                         <tr>
-                            <th>Product Subtotal</th>
+                            <th>Subtotal</th>
                             <td class="checkout-subtotal desktop">{!!  theMoney($subtotal)  !!}</td>
                         </tr>
                         <tr>
-                            <th>Delivery Charge</th>
+                            <th>Shipping</th>
                             <td class="shipping">{!! $shipping_cost ? theMoney($shipping_cost) : 'FREE' !!}</td>
                         </tr>
                     </tbody>

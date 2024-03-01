@@ -135,6 +135,9 @@ class Checkout extends Component
 
     public function checkout()
     {
+        if (Str::startsWith($this->phone, '01')) {
+            $this->phone = '+88' . $this->phone;
+        }
         $data = $this->validate([
             'name' => 'required',
             'phone' => 'required|regex:/^\+8801\d{9}$/',
