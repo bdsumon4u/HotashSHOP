@@ -57,6 +57,9 @@
     .nav-links__item>a span, .indicator .indicator__area {
         color: {{$color->navbar->text_color}} !important;
     }
+    .mobile-header__menu-button {
+        fill: {{$color->header->text_color}} !important;
+    }
     .mobile-header__indicators .indicator__area {
         color: {{$color->header->text_color}} !important;
     }
@@ -67,6 +70,14 @@
     .mobile-header__indicators .indicator--trigger--click.indicator--opened .indicator__area, .mobile-header__indicators .indicator:hover .indicator__area {
         background: {{$color->header->background_hover}} !important;
         color: {{$color->header->text_hover}} !important;
+    }
+    .indicator__value {
+        background: {{$color->header->background_color}} !important;
+        color: {{$color->header->text_color}} !important;
+    }
+    .mobile-header__indicators .indicator__value {
+        background: {{$color->navbar->background_color}} !important;
+        color: {{$color->navbar->text_color}} !important;
     }
     .departments {
         color: {{$color->category_menu->text_color}} !important;
