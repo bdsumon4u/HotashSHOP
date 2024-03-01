@@ -92,7 +92,7 @@
                 @endforeach
             </div>
             @if($free_delivery->enabled && $deliveryText)
-            <div class="text-center font-weight-bold border">
+            <div class="text-center font-weight-bold border mt-2">
                 <p class="border-bottom mb-1">আজ অর্ডার করলে <br> সারা বাংলাদেশে ডেলিভারি চার্জ <strong class="text-danger">ফ্রি</strong></p>
                 {!! $deliveryText !!}
             </div>
