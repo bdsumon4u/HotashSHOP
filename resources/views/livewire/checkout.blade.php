@@ -2,12 +2,12 @@
     <div class="col-12 col-md-8 pr-1">
         <div class="card mb-lg-0">
             <div class="card-body p-3">
-                <h4 class="card-title border text-success" style="background: #eee; padding: 2px 10px;">
-                    নিচের তথ্যগুলো সঠিকভাবে পূরণ করে কনফার্ম অর্ডার বাটনে ক্লিক করুন।
-                </h4>
+                <h5 class="border text-success text-center" style="background: #eee; padding: 2px 10px;">
+                    আপনার নাম, মোবাইল নাম্বার, ঠিকানা, লিখে <span class="text-danger">কনফার্ম অর্ডার</span> বাটনে ক্লিক করুন।
+                </h5>
                 <div class="form-row">
-                    <div class="form-group col-md-3">
-                        <label>আপনার নাম:</label>
+                    <div class="form-group col-md-3 m-0">
+                        <label>আপনার নাম: <span class="text-danger">*</span></label>
                     </div>
                     <div class="form-group col-md-9">
                         <x-input name="name" wire:model.defer="name" placeholder="এখানে আপনার নাম লিখুন।" />
@@ -15,8 +15,8 @@
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-md-3">
-                        <label>মোবাইল নম্বর:</label>
+                    <div class="form-group col-md-3 m-0">
+                        <label>মোবাইল নম্বর: <span class="text-danger">*</span></label>
                     </div>
                     <div class="form-group col-md-9">
                         <x-input name="phone" wire:model.defer="phone" placeholder="+880" />
@@ -24,7 +24,7 @@
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-3 m-0">
                         <label class="d-block"><label>ডেলিভারি এরিয়া: <span class="text-danger">*</span></label>
                     </div>
                     <div class="form-group col-md-9">
@@ -42,20 +42,20 @@
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-md-3">
-                        <label>আপনার ঠিকানা:</label>
+                    <div class="form-group col-md-3 m-0">
+                        <label>আপনার ঠিকানা: <span class="text-danger">*</span></label>
                     </div>
                     <div class="form-group col-md-9">
-                        <x-textarea name="address" wire:model.defer="address" placeholder="এখানে আপনার পুরো ঠিকানা লিখুন।"></x-textarea>
+                        <x-textarea name="address" wire:model.defer="address" placeholder="এখানে আপনার পুরো ঠিকানা লিখুন।">{{old('address',$address)}}</x-textarea>
                         <x-error field="address" />
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-3 m-0">
                         <label>নোট (অপশনাল):</label>
                     </div>
                     <div class="form-group col-md-9">
-                        <x-textarea name="note" wire:model.defer="note" placeholder="আপনি চাইলে কোন নোট লিখতে পারেন।"></x-textarea>
+                        <x-textarea name="note" wire:model.defer="note" placeholder="আপনি চাইলে কোন নোট লিখতে পারেন।">{{old('note',$note)}}</x-textarea>
                         <x-error field="note" />
                     </div>
                 </div>
@@ -67,11 +67,11 @@
                 <table class="checkout__totals">
                     <tbody class="checkout__totals-subtotals">
                         <tr>
-                            <th>Subtotal</th>
+                            <th>Product Subtotal</th>
                             <td class="checkout-subtotal">{!!  theMoney($subtotal)  !!}</td>
                         </tr>
                         <tr>
-                            <th>Shipping</th>
+                            <th>Delivery Charge</th>
                             <td class="shipping">{!! $shipping_cost ? theMoney($shipping_cost) : 'FREE' !!}</td>
                         </tr>
                     </tbody>
@@ -113,11 +113,11 @@
                 <table class="checkout__totals">
                     <tbody class="checkout__totals-subtotals">
                         <tr>
-                            <th>Subtotal</th>
+                            <th>Product Subtotal</th>
                             <td class="checkout-subtotal desktop">{!!  theMoney($subtotal)  !!}</td>
                         </tr>
                         <tr>
-                            <th>Shipping</th>
+                            <th>Delivery Charge</th>
                             <td class="shipping">{!! $shipping_cost ? theMoney($shipping_cost) : 'FREE' !!}</td>
                         </tr>
                     </tbody>
