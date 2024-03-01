@@ -20,9 +20,9 @@ Route::get('/categories', function () {
     ]);
 })->name('categories');
 
-Route::get('auth', 'User\\Auth\\LoginController@showLoginForm')->middleware('guest:user')->name('auth');
-
 Route::middleware(GoogleTagManagerMiddleware::class)->group(function () {
+    Route::get('auth', 'User\\Auth\\LoginController@showLoginForm')->middleware('guest:user')->name('auth');
+
     Route::get('/', 'HomeController')->name('/');
     Route::get('/sections/{section}/products', 'HomeSectionProductController')->name('home-sections.products');
     Route::get('/shop', 'ProductController@index')->name('products.index');

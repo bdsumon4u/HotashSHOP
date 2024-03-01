@@ -2,16 +2,16 @@
     <div class="container">
         @if($title ?? null)
             <div class="block-header">
-                <h3 class="block-header__title">
+                <h3 class="block-header__title" style="padding: 0.375rem 1rem;">
                     @isset($section)
-                        <a href="{{ route('home-sections.products', $section) }}" style="color:inherit;">{{ $title }}</a>
+                        <a href="{{ route('home-sections.products', $section) }}">{{ $title }}</a>
                     @else
                         {{ $title }}
                     @endisset
                 </h3>
                 <div class="block-header__divider"></div>
                 @isset($section)
-                    <a href="{{ route('products.index', ['section' => $section->id]) }}" class="btn btn-sm ml-0 block-header__arrows-list">
+                    <a href="{{ route('products.index', ['section' => $section->id]) }}" class="btn btn-sm btn-all ml-3">
                         View All
                     </a>
                 @endisset

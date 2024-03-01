@@ -69,7 +69,7 @@
                 </div>
             </div>
             <div class="site-header__phone d-none">
-                <div class="site-header__phone-title">Customer Service</div>
+                <div class="site-header__phone-title mb-0">Customer Service</div>
                 <div class="site-header__phone-number">
                     <div class="topbar__item topbar__item--link">
                         <img style="height: 35px;" class="img-responsive " src="https://www.himelshop.com/front_asset/call-now.gif" alt="Call 7colors" title="7colors">&nbsp;
@@ -104,7 +104,7 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- @include('partials.auth-indicator') --}}
+                        @include('partials.auth-indicator')
                     </div>
                 </div>
             </div>

@@ -117,6 +117,14 @@
                     </li>
 
                     <li>
+                        <a class="nav-link menu-title link-nav {{ request()->is('admin/settings*') && request('tab')=='color' ? 'active' : '' }}"
+                            href="{{ route('admin.settings', ['tab' => 'color']) }}">
+                            <i data-feather="droplet"> </i>
+                            <span>Color</span>
+                        </a>
+                    </li>
+
+                    <li>
                         <a class="nav-link menu-title link-nav {{ request()->is('admin/slides*') ? 'active' : '' }}"
                             href="{{ route('admin.slides.index') }}">
                             <i data-feather="sliders"> </i>
@@ -339,14 +347,6 @@
                             href="{{ route('admin.settings', ['tab' => 'fraud']) }}">
                             <i data-feather="alert-triangle"> </i>
                             <span>Fraud Management</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a class="nav-link menu-title link-nav {{ request()->is('admin/settings*') && request('tab')=='color' ? 'active' : '' }}"
-                            href="{{ route('admin.settings', ['tab' => 'color']) }}">
-                            <i data-feather="droplet"> </i>
-                            <span>Color Management</span>
                         </a>
                     </li>
 

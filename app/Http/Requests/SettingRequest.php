@@ -69,7 +69,7 @@ class SettingRequest extends FormRequest
 
         if ($this->get('tab') == 'color') {
             $rules = [];
-            foreach (['topbar', 'header', 'navbar', 'footer', 'primary', 'secondary'] as $key) {
+            foreach (['topbar', 'header', 'search', 'navbar', 'category_menu', 'section', 'footer', 'primary', 'secondary'] as $key) {
                 $rules['color.'.$key] = 'required|array';
                 foreach (['background_color', 'background_hover', 'text_color', 'text_hover'] as $color) {
                     $rules['color.' . $key . '.' . $color] = ['required', 'regex:/^#([a-f0-9]{6}|[a-f0-9]{3})$/i'];
