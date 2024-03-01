@@ -57,9 +57,16 @@
     .nav-links__item>a span, .indicator .indicator__area {
         color: {{$color->navbar->text_color}} !important;
     }
+    .mobile-header__indicators .indicator__area {
+        color: {{$color->header->text_color}} !important;
+    }
     .nav-links__item:hover>a span, .indicator--trigger--click.indicator--opened .indicator__area, .indicator:hover .indicator__area {
         background: {{$color->navbar->background_hover}} !important;
         color: {{$color->navbar->text_hover}} !important;
+    }
+    .mobile-header__indicators .indicator--trigger--click.indicator--opened .indicator__area, .mobile-header__indicators .indicator:hover .indicator__area {
+        background: {{$color->header->background_hover}} !important;
+        color: {{$color->header->text_hover}} !important;
     }
     .departments {
         color: {{$color->category_menu->text_color}} !important;

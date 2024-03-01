@@ -1,4 +1,4 @@
-<div class="site-header__topbar topbar">
+<div class="site-header__topbar topbar text-nowrap">
     <div class="topbar__container container">
         <div class="topbar__row">
             <div class="topbar__item topbar__item--link">
@@ -10,6 +10,7 @@
                 <a class="topbar-link" href="{{ url($item->href) }}">{!! $item->name !!}</a>
             </div>
             @endforeach
+            <marquee class="d-flex align-items-center h-100 mx-2" behavior="" direction="">{!! $scroll_text ?? '' !!}</marquee>
             <div class="topbar__spring"></div>
             <div class="topbar__item topbar__item--link">
                 <a class="topbar-link" href="{{ url('/track-order') }}">Track Order</a>

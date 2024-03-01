@@ -24,15 +24,13 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Name</th>
-                                    <th>Slug</th>
                                     <th width="10">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>0</td>
-                                    <td>Category Menu</td>
-                                    <td></td>
+                                    <td>category-menu</td>
                                     <td>
                                         <a href="{{ route('admin.category-menus.index') }}" class="btn btn-primary">Build</a>
                                     </td>
@@ -40,7 +38,6 @@
                                 @foreach($menus as $menu)
                                 <tr>
                                     <td>{{ $menu->id }}</td>
-                                    <td>{{ $menu->name }}</td>
                                     <td>{{ $menu->slug }}</td>
                                     <td>
                                         <a href="{{ route('admin.menus.edit', $menu) }}" class="btn btn-primary">Build</a>

@@ -1,5 +1,25 @@
 @push('styles')
 <style>
+    .block-slideshow__body .owl-carousel .owl-nav {
+        position: absolute;
+        height: 100%;
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 40px;
+        top: 0;
+    }
+    .block-slideshow__body .owl-carousel .owl-nav button {
+        height: 60px;
+        color: white;
+        background: rgba(0, 0, 0, 0.1);
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+    }
+    .block-slideshow__body .owl-carousel .owl-nav button:focus {
+        outline: none;
+    }
     @media (max-width: 749px) {
         .block-slideshow {
             margin-bottom: 40px;

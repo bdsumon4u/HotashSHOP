@@ -9,7 +9,7 @@
         </div>
         <div class="col-md-6">
             <div class="form-group">
-                <label for="pixel-ids">Pixel IDs (comma seperated)</label>
+                <label for="pixel-ids">Pixel IDs (space separated)</label>
                 <x-input name="pixel_ids" id="pixel-ids" :value="$pixel_ids ?? null" />
                 <x-error field="pixel_ids" />
             </div>

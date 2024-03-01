@@ -289,7 +289,7 @@
     $(function() {
         $('.block-slideshow .owl-carousel').owlCarousel({
             items: 1,
-            nav: false,
+            nav: true,
             dots: true,
             loop: true,
             autoplay: true,

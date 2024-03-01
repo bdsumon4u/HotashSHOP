@@ -68,12 +68,14 @@
                     <!--</div>-->
                 </div>
             </div>
-            <div class="site-header__phone d-none">
-                <div class="site-header__phone-title mb-0">Customer Service</div>
-                <div class="site-header__phone-number">
-                    <div class="topbar__item topbar__item--link">
-                        <img style="height: 35px;" class="img-responsive " src="https://www.himelshop.com/front_asset/call-now.gif" alt="Call 7colors" title="7colors">&nbsp;
-                        <a style="font-family: monospace; font-size: 16px;" class="topbar-link" href="tel:{{ $company->phone ?? '' }}">{{ $company->phone ?? '' }}</a>
+            <div class="site-header__phone d-flex align-items-center">
+                <img style="height: 35px;" class="img-responsive mr-1" src="{{ asset('call-now.gif') }}">
+                <div>
+                    <div class="site-header__phone-title mb-0">Customer Service</div>
+                    <div class="site-header__phone-number">
+                        <div class="topbar__item topbar__item--link">
+                            <a style="font-family: monospace; font-size: 16px;" class="topbar-link" href="tel:{{ $company->phone ?? '' }}">{{ $company->phone ?? '' }}</a>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -43,18 +43,71 @@
             max-width: 100%;
             /*height: auto;*/
         }
+
+        .original {
+            position: relative;
+        }
+        .zoom-nav {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .zoom-control {
+            height: 40px;
+            outline: none;
+            border: 2px solid white;
+            cursor: pointer;
+            opacity: 0.8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 10px;
+            width: 40px;
+            border-radius: 5px;
+            color: #ca3d1c;
+            background: transparent;
+        }
+        .zoom-control:hover {
+            opacity: 1;
+        }
+        .zoom-control:focus {
+            outline: none;
+        }
     </style>
 @endpush
 
 @section('title', $product->name)
 
 @section('content')
+    <div class="d-none d-md-block">
+        @include('partials.page-header', [
+            'paths' => [
+                url('/')                => 'Home',
+                route('products.index') => 'Products',
+            ],
+            'active' => $product->name,
+        ])
+    </div>
     <div class="block mt-1">
         <div class="container">
             <div class="product product--layout--standard" data-layout="standard">
                 <div class="product__content">
-                    <div class="xzoom-container">
-                        <img class="xzoom" id="xzoom-default" src="{{ asset($product->base_image->src) }}" xoriginal="{{ asset($product->base_image->src) }}" />
+                    <div class="xzoom-container d-flex flex-column">
+                        <div class="original">
+                            <img class="xzoom" id="xzoom-default" src="{{ asset($product->base_image->src) }}" xoriginal="{{ asset($product->base_image->src) }}" />
+                            <div class="zoom-nav">
+                                <button class="zoom-control left">
+                                    <i class="fa fa-chevron-left"></i>
+                                </button>
+                                <button class="zoom-control right">
+                                    <i class="fa fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
                         <div class="xzoom-thumbs d-flex mt-2">
                             <a href="{{ asset($product->base_image->src) }}"><img data-detail="{{ route('products.show', $product) }}" class="xzoom-gallery product-base__image" width="80" src="{{ asset($product->base_image->src) }}"  xpreview="{{ asset($product->base_image->src) }}"></a>
                             @foreach($product->additional_images as $image)
@@ -83,7 +136,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="block-features__list flex-column d-block">
+                        <div class="block-features__list flex-column d-none d-md-block">
                             @if($services = setting('services'))
                                 @foreach(config('services.services', []) as $num => $icon)
                                     <div class="block-features__item">
@@ -119,10 +172,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="card">
+                <div class="card mt-3">
                     <div class="card-header p-0">
                         <a class="card-link px-4" datatoggle="collapse" href="javascript:void(false)">
-                            Delivery and Payment
+                            Delivery and Return Policy
                         </a>
                     </div>
                     <div id="collapseTwo" class="collapse show" data-parent="#accordion">
@@ -149,7 +202,30 @@
     <script src="{{ asset('strokya/vendor/xZoom-master/example/js/setup.js') }}"></script>
     <script>
         $(document).ready(function () {
-
+            let activeG = 0;
+            let lastG = 0;
+            $('.zoom-control.left').click(function () {
+                let gallery = $('.xzoom-gallery');
+                gallery.each(function (g, e) {
+                    if ($(e).hasClass('xactive')) {
+                        activeG = g;
+                    }
+                    lastG = g;
+                })
+                const prev = activeG === 0 ? lastG : (activeG - 1);
+                gallery.eq(prev).trigger('click');
+            });
+            $('.zoom-control.right').click(function () {
+                let gallery = $('.xzoom-gallery');
+                gallery.each(function (g, e) {
+                    if ($(e).hasClass('xactive')) {
+                        activeG = g;
+                    }
+                    lastG = g;
+                })
+                const next = activeG === lastG ? 0 : (activeG + 1);
+                gallery.eq(next).trigger('click');
+            });
         });
     </script>
 @endpush

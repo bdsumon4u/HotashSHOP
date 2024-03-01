@@ -78,6 +78,17 @@ class SettingRequest extends FormRequest
             return $rules;
         }
 
-        return ['required' => 'required'];
+        if ($this->get('tab') == 'services') {
+            return [
+                'services' => 'required|array',
+            ];
+        }
+
+        return [
+            'products_page' => 'required|array',
+            'related_products' => 'required|array',
+            'call_for_order' => 'required',
+            'scroll_text' => 'nullable',
+        ];
     }
 }

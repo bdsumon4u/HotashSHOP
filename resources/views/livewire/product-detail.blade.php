@@ -1,14 +1,16 @@
 <div class="product__info">
     <h3 class="product__name mb-2" data-name="{{$selectedVar->var_name}}">{{ $product->name }}</h1>
-    <div class="w-100 border-top pt-2">Product Code: <strong>{{ $selectedVar->sku }}</strong></div>
-    <div class="w-100 mb-2">Availability:
-        <strong>
-            @if(! $selectedVar->should_track)
-                <span class="text-success">In Stock</span>
-            @else
-                <span class="text-{{ $selectedVar->stock_count ? 'success' : 'danger' }}">{{ $selectedVar->stock_count }} In Stock</span>
-            @endif
-        </strong>
+    <div class="d-flex justify-content-between border-top pt-2 mb-2">
+        <div>Code: <strong>{{ $selectedVar->sku }}</strong></div>
+        <div>Availability:
+            <strong>
+                @if(! $selectedVar->should_track)
+                    <span class="text-success">In Stock</span>
+                @else
+                    <span class="text-{{ $selectedVar->stock_count ? 'success' : 'danger' }}">{{ $selectedVar->stock_count }} In Stock</span>
+                @endif
+            </strong>
+        </div>
     </div>
     <div class="product__prices mb-1 {{$selectedVar->selling_price == $selectedVar->price ? '' : 'has-special'}}">
         Price:
@@ -68,20 +70,25 @@
                     @exp($available = !$selectedVar->should_track || $selectedVar->stock_count > 0)
                     <div class="product__buttons w-100">
                         <div class="product__actions-item product__actions-item--ordernow">
-                            <button type="button" wire:click="orderNow" class="btn btn-primary product__ordernow btn-lg btn-block" {{ $available ? '' : 'disabled' }}>অর্ডার করুন</button>
+                            <button type="button" wire:click="orderNow" class="btn btn-primary product__ordernow btn-lg btn-block" {{ $available ? '' : 'disabled' }}>
+                                <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path d="M7 8V6a5 5 0 1 1 10 0v2h3a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1h3zm0 2H5v10h14V10h-2v2h-2v-2H9v2H7v-2zm2-2h6V6a3 3 0 0 0-6 0v2z"></path></svg>
+                                <span class="ml-1">অর্ডার করুন</span>
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="call-for-order">
+            <div class="call-for-order p-1 text-center mt-2" style="border: 2px dashed #dedede;">
+                <div>এই পণ্য সম্পর্কে প্রশ্ন আছে? অনুগ্রহপূর্বক কল করুন:</div>
                 @foreach (explode(' ', setting('call_for_order')) as $phone)
-                    <a href="tel:{{$phone}}" class="btn btn-secondary w-100 mb-1" style="height: auto;">
-                        <div>কল করতে ক্লিক করুন</div>
-                        <div>
+                    @if ($phone = trim($phone))
+                    <a href="tel:{{$phone}}" class="text-danger">
+                        <div class="lead mt-1">
                             <i class="fa fas fa-phone mr-2"></i>
                             <span>{{$phone}}</span>
                         </div>
                     </a>
+                    @endif
                 @endforeach
             </div>
             @if($free_delivery->enabled && $deliveryText)

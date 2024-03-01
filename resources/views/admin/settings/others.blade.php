@@ -42,9 +42,16 @@
         </div>
         <div class="col-md-4">
             <div class="form-group">
-                <label for="">Call For Order</label>
+                <label for="">Call For Order (space separated)</label>
                 <x-input name="call_for_order" id="call_for_order" :value="$call_for_order ?? null" />
                 <x-error field="call_for_order" />
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="">Scroll Text</label>
+                <x-textarea name="scroll_text" id="scroll_text">{{$scroll_text ?? null}}</x-textarea>
+                <x-error field="scroll_text" />
             </div>
         </div>
     </div>

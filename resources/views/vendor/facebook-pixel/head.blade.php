@@ -16,9 +16,12 @@
         fbq('track', 'PageView');
     </script>
     @foreach($id AS $i)
-    <noscript><img height="1" width="1" style="display:none"
-                   src="https://www.facebook.com/tr?id={{ $i }}&ev=PageView&noscript=1"
-        /></noscript>
+        @if($i = trim($i))
+            <noscript>
+                <img height="1" width="1" style="display:none"
+                     src="https://www.facebook.com/tr?id={{ $i }}&ev=PageView&noscript=1"/>
+            </noscript>
+        @endif
     @endforeach
     <!-- End Facebook Pixel Code -->
 @endif

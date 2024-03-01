@@ -38,7 +38,7 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <x-label for="brand" /><span class="text-danger">*</span>
+                    <x-label for="brand" />
                     <x-category-dropdown :categories="$brands" name="brand" placeholder="Select Brand" id="brand" :selected="old('brand', $product->brand_id)" />
                     <x-error field="brand" class="d-block" />
                 </div>
@@ -52,7 +52,7 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <x-label for="price" /><span class="text-danger">*</span>
+                    <label for="price">Old Price</label><span class="text-danger">*</span>
                     <x-input name="price" :value="$product->price" />
                     <x-error field="price" />
                 </div>
