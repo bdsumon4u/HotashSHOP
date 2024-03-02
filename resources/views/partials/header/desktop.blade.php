@@ -1,4 +1,4 @@
-<header class="site__header d-lg-block d-none">
+<header class="site__header d-lg-block d-none position-fixed" style="top: 0; left: 0; right: 0; z-index: 100;">
     <div class="site-header">
         <!-- .topbar -->
         @include('partials.topbar')

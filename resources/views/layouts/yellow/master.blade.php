@@ -17,6 +17,9 @@
     <link rel="stylesheet" href="{{ asset('strokya/fonts/stroyka/stroyka.css') }}">
     @include('layouts.yellow.color')
     <style>
+        .topbar__item {
+            flex: none;
+        }
         .page-header__container {
             padding-bottom: 12px;
         }
@@ -121,6 +124,9 @@
             top: 10%;
             right: 10%;
             z-index: 9999;
+        }
+        .header-fixed .site__body {
+            padding-top: 11rem;
         }
         @media (max-width: 991px) {
             .header-fixed .site__header {
@@ -235,13 +241,18 @@
             $(window).on('scroll', function() {
                 $('input, textarea').blur();
                 var scrollTop = $(this).scrollTop()
+                if (scrollTop > 32) {
+                    $('.site__header.position-fixed .topbar').hide();
+                } else {
+                    $('.site__header.position-fixed .topbar').show();
+                }
                 if (scrollTop > 200) {
-                    $('.site-header').addClass('sticky');
+                    // $('.site-header').addClass('sticky');
                     // $('.site-header__phone').removeClass('d-none');
                     $('.departments').removeClass('departments--opened departments--fixed');
                     $('.departments__body').attr('style', '');
                 } else {
-                    $('.site-header').removeClass('sticky');
+                    // $('.site-header').removeClass('sticky');
                     // $('.site-header__phone').addClass('d-none');
                     if ($('.departments').data('departments-fixed-by') != '')
                         $('.departments').addClass('departments--opened departments--fixed');
