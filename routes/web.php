@@ -14,15 +14,15 @@ Route::get('lang/{locale}', function ($locale) {
     return redirect()->back();
 })->name('lang');
 
-Route::get('/categories', function () {
-    return view('categories', [
-        'categories' => \App\Category::inRandomOrder()->get(),
-    ]);
-})->name('categories');
-
 Route::middleware(GoogleTagManagerMiddleware::class)->group(function () {
     Route::get('auth', 'User\\Auth\\LoginController@showLoginForm')->middleware('guest:user')->name('auth');
 
+    Route::get('/categories', function () {
+        return view('categories', [
+            'categories' => \App\Category::inRandomOrder()->get(),
+        ]);
+    })->name('categories');
+    
     Route::get('/', 'HomeController')->name('/');
     Route::get('/sections/{section}/products', 'HomeSectionProductController')->name('home-sections.products');
     Route::get('/shop', 'ProductController@index')->name('products.index');
