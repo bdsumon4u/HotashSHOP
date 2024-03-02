@@ -43,6 +43,8 @@ class ProductRequest extends FormRequest
             'is_active' => 'sometimes|boolean',
             'base_image' => 'required|integer',
             'additional_images' => 'sometimes|array',
+            'desc_img' => 'required|boolean',
+            'desc_img_pos' => 'required_if:desc_img,1',
         ];
 
         if (! $this->isMethod('POST')) {

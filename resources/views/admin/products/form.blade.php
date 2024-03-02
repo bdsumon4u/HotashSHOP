@@ -153,6 +153,31 @@
                             @enderror
                         </div>
                     </div>
+                    <div class="col-sm-12">
+                        <div class="form-group" x-data="{desc_img: {{old('desc_img', $product->desc_img ?? 0)}}}">
+                            <div class="checkbox d-inline checkbox-primary">
+                                <input type="hidden" name="desc_img" value="0">
+                                <x-checkbox name="desc_img" x-model="desc_img" value="1" />
+                                <label for="desc_img">Show Images in Description</label>
+                                <x-error field="desc_img" />
+                            </div>
+                            <div x-show="desc_img" class="form-control @error('desc_img_pos') is-invalid @enderror">
+                                @foreach (['before_content' => 'Before Content', 'after_content' => 'After Content'] as $key => $option)
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio"
+                                            name="desc_img_pos"
+                                            class="custom-control-input"
+                                            id="{{ $key }}"
+                                            value="{{ $key }}"
+                                            {{ $key == old('desc_img_pos', $product->desc_img_pos) ? 'checked' : '' }}>
+                                        <label class="custom-control-label"
+                                            for="{{ $key }}">{{ $option }}</label>
+                                    </div>
+                                @endforeach
+                            </div>
+                            <x-error field="desc_img_pos" />
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

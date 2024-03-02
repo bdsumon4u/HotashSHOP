@@ -168,7 +168,23 @@
                     </div>
                     <div id="collapseOne" class="collapse show" data-parent="#accordion">
                         <div class="card-body p-2">
+                            @if($product->desc_img && $product->desc_img_pos == 'before_content')
+                            <div class="text-center">
+                                @foreach ($product->images as $image)
+                                    <img src="{{ asset($image->src) }}" alt="{{ $product->name }}" class="img-fluid border my-2">
+                                @endforeach
+                            </div>
+                            @endif
+
                             {!! $product->description !!}
+
+                            @if($product->desc_img && $product->desc_img_pos == 'after_content')
+                            <div class="text-center">
+                                @foreach ($product->images as $image)
+                                    <img src="{{ asset($image->src) }}" alt="{{ $product->name }}" class="img-fluid border my-2">
+                                @endforeach
+                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>

@@ -17,7 +17,8 @@ class Product extends Model
     protected $with = ['images'];
 
     protected $fillable = [
-        'brand_id', 'name', 'slug', 'description', 'price', 'selling_price', 'sku', 'should_track', 'stock_count', 'is_active'
+        'brand_id', 'name', 'slug', 'description', 'price', 'selling_price', 'sku',
+        'should_track', 'stock_count', 'desc_img', 'desc_img_pos', 'is_active',
     ];
 
     /**
