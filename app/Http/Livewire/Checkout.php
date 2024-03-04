@@ -61,11 +61,9 @@ class Checkout extends Component
     {
         if ($this->cart[$id]['quantity'] > 1) {
             $this->cart[$id]['quantity']--;
-        } else {
-            unset($this->cart[$id]);
+            session()->put('cart', $this->cart);
+            $this->cartUpdated();
         }
-        session()->put('cart', $this->cart);
-        $this->cartUpdated();
     }
 
     private function shippingCost()
@@ -165,7 +163,7 @@ class Checkout extends Component
             $products = Product::find(array_keys($this->cart))
                 ->map(function (Product $product) use ($data) {
                     $id = $product->id;
-                    $quantity = $this->cart[$id]['quantity'];
+                    $quantity = min($this->cart[$id]['quantity'], $fraud->max_qty_per_product);
 
                     if ($quantity <= 0) {
                         return null;
@@ -173,7 +171,7 @@ class Checkout extends Component
                     // Manage Stock
                     if ($product->should_track) {
                         if ($product->stock_count <= 0) {
-                            // return null; // Allow overstock
+                            return null; // Allow overstock
                         }
                         $quantity = $product->stock_count >= $quantity ? $quantity : $product->stock_count;
                         $product->decrement('stock_count', $quantity);

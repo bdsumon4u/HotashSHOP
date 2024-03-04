@@ -61,7 +61,7 @@
                     <div class="input-number product__quantity">
                         <input id="product-quantity"
                                 class="input-number__input form-control form-control-lg" wire:model.defer="quantity"
-                                type="number" min="1" @if($selectedVar->should_track) max="{{$selectedVar->stock_count}}" @endif value="1" readonly>
+                                type="number" min="1" max="{{$maxQuantity}}" value="1" readonly>
                         <div class="input-number__add" wire:click="increment"></div>
                         <div class="input-number__sub" wire:click="decrement"></div>
                     </div>

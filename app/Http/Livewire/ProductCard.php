@@ -13,9 +13,8 @@ class ProductCard extends Component
     public function orderNow()
     {
         $cart = session()->get('cart', []);
-        if (isset($cart[$this->product->id])) {
-            $cart[$this->product->id]['quantity']++;
-        } else {
+        $fraudQuantity = setting('fraud')->max_qty_per_product;
+        if (!isset($cart[$this->product->id])) {
             $cart[$this->product->id] = [
                 'id' => $this->product->id,
                 'parent_id' => $this->product->parent_id ?? $this->product->id,
@@ -25,7 +24,7 @@ class ProductCard extends Component
                 'category' => $this->product->category,
                 'quantity' => 1,
                 'price' => $this->product->price,
-                'max' => $this->product->should_track ? $this->product->stock : -1,
+                'max' => $this->product->should_track ? min($this->product->stock_count, $fraudQuantity) : $fraudQuantity,
             ];
         }
 

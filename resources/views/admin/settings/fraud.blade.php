@@ -17,5 +17,10 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-6">
+            <label for="fraud[max_qty_per_product]">Max quantity each product</label>
+            <x-input name="fraud[max_qty_per_product]" :value="$fraud->max_qty_per_product ?? 3" />
+            <x-error field="fraud[max_qty_per_product]" />
+        </div>
     </div>
 </div>

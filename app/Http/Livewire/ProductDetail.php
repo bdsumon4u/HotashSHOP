@@ -11,7 +11,7 @@ class ProductDetail extends Component
     public Product $product;
     public Product $selectedVar;
     public array $options = [];
-
+    public int $maxQuantity = 0;
     public int $quantity = 1;
 
     public function updatedOptions($value, $key)
@@ -27,7 +27,7 @@ class ProductDetail extends Component
 
     public function increment()
     {
-        if (!$this->selectedVar->should_track || $this->selectedVar->stock_count > $this->quantity) {
+        if ($this->quantity < $this->maxQuantity) {
             $this->quantity++;
         }
     }
@@ -43,7 +43,7 @@ class ProductDetail extends Component
     {
         $cart = session()->get('cart', []);
         if (isset($cart[$this->selectedVar->id])) {
-            $cart[$this->selectedVar->id]['quantity']++;
+            $cart[$this->selectedVar->id]['quantity'] = min($this->quantity, $this->maxQuantity);
         } else {
             $cart[$this->selectedVar->id] = [
                 'id' => $this->selectedVar->id,
@@ -52,9 +52,9 @@ class ProductDetail extends Component
                 'slug' => $this->selectedVar->slug,
                 'image' => optional($this->selectedVar->base_image)->src,
                 'category' => $this->product->category,
-                'quantity' => $this->quantity,
+                'quantity' => min($this->quantity, $this->maxQuantity),
                 'price' => $this->selectedVar->price,
-                'max' => $this->selectedVar->should_track ? $this->selectedVar->stock : -1,
+                'max' => $this->maxQuantity,
             ];
         }
 
@@ -82,6 +82,7 @@ class ProductDetail extends Component
 
     public function mount()
     {
+        $maxPerProduct = setting('fraud')->max_qty_per_product;
         if ($this->product->variations->count() > 0) {
             $this->selectedVar = $this->product->variations->where('slug', request()->segment(2))->first()
                 ?? $this->product->variations->random();
@@ -89,6 +90,7 @@ class ProductDetail extends Component
             $this->selectedVar = $this->product;
         }
         $this->options = $this->selectedVar->options->pluck('id', 'attribute_id')->toArray();
+        $this->maxQuantity = $this->selectedVar->should_track ? min($this->selectedVar->stock_count, $maxPerProduct) : $maxPerProduct;
     }
 
     public function deliveryText($freeDelivery)
