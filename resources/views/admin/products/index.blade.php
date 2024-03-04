@@ -17,8 +17,14 @@
 <div class="container-fluid">
    <div class="row">
       <div class="col-sm-12">
-         <div class="card">
-            <div class="card-body">
+         <div class="card rounded-0 shadow-sm">
+            <div class="card-header p-3">
+               <div class="row px-3 justify-content-between align-items-center">
+                  <div>All Products</div>
+                  <a href="{{route('admin.products.create')}}" class="btn btn-sm btn-primary">New Product</a>
+               </div>
+            </div>
+            <div class="card-body p-3">
                <div class="table-responsive product-table">
                   <table class="display" id="product-table" data-url="{{ route('api.products') }}">
                      <thead>
