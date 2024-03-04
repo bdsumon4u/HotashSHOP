@@ -25,11 +25,15 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="slug">Slug</label><span class="text-danger">*</span>
-                        <input type="text" name="slug" value="{{ old('slug') }}" id="slug" class="form-control @error('slug') is-invalid @enderror">
-                        @error('slug')
-                            <span class="invalid-feedback">{{ $message }}</span>
-                        @enderror
+                        <x-label for="slug" /><span class="text-danger">*</span>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">{{ url('/') }}/</div>
+                            </div>
+                            <x-input name="slug" />
+                            <button class="input-group-append align-items-center btn btn-secondary" type="button" onclick="window.open('/'+this.previousSibling.value, '_blank')">VISIT</button>
+                        </div>
+                        <x-error field="slug" />
                     </div>
                     <div class="row">
                         <div class="col-sm-12">

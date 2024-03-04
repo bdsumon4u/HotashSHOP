@@ -22,8 +22,14 @@
                         <x-error field="title" />
                     </div>
                     <div class="form-group">
-                        <label for="slug">Slug</label><span class="text-danger">*</span>
-                        <x-input name="slug" :value="$page->slug" />
+                        <x-label for="slug" /><span class="text-danger">*</span>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">{{ url('/') }}/</div>
+                            </div>
+                            <x-input name="slug" :value="$page->slug" />
+                            <button class="input-group-append align-items-center btn btn-secondary" type="button" onclick="window.open('/'+this.previousSibling.value, '_blank')">VISIT</button>
+                        </div>
                         <x-error field="slug" />
                     </div>
                     <div class="row">
@@ -55,9 +61,9 @@
 @push('scripts')
 <script>
 $(document).ready(function () {
-    $('[name="title"]').keyup(function () {
-        $($(this).data('target')).val(slugify($(this).val()));
-    });
+    // $('[name="title"]').keyup(function () {
+    //     $($(this).data('target')).val(slugify($(this).val()));
+    // });
 });
 </script>
 @endpush
