@@ -142,30 +142,20 @@
                         <h6>Reports</h6>
                     </li>
 
-                    <li class="dropdown">
-                        <a class="nav-link menu-title {{ request()->is('admin/reports*') ? 'active' : '' }}"
-                            href="#">
-                            <i data-feather="pie-chart"> </i> </i><span>Orders</span>
-                            <div class="according-menu"><i
-                                    class="fa fa-angle-{{ request()->is('admin/reports*') ? 'down' : 'right' }}"></i>
-                            </div>
+                    <li>
+                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.orders.filter' ? 'active' : '' }}"
+                            href="{{ route('admin.orders.filter') }}">
+                            <i data-feather="pie-chart"> </i>
+                            <span>Orders</span>
                         </a>
+                    </li>
 
-                        <ul class="nav-submenu menu-content"
-                            style="display: {{ request()->is('admin/reports*') ? 'block;' : 'none;' }}">
-                            <li>
-                                <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.orders.filter' ? 'active' : '' }}"
-                                    href="{{ route('admin.orders.filter') }}">
-                                    <span>Filtering</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="nav-link menu-title link-nav {{ request()->is('admin/reports', 'admin/reports/*/edit') ? 'active' : '' }}"
-                                    href="{{ route('admin.reports.index') }}">
-                                    <span>Scanning</span>
-                                </a>
-                            </li>
-                        </ul>
+                    <li>
+                        <a class="nav-link menu-title link-nav {{ request()->is('admin/reports', 'admin/reports/*/edit') ? 'active' : '' }}"
+                            href="{{ route('admin.reports.index') }}">
+                            <i data-feather="pie-chart"> </i>
+                            <span>Scans</span>
+                        </a>
                     </li>
 
                     <li>
