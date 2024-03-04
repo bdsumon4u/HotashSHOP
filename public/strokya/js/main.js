@@ -458,6 +458,9 @@
                 nav: false,
                 dots: false,
                 loop: true,
+                autoplay: true,
+                autoplayTimeout: 3000,
+                autoplaySpeed: 500,
                 stagePadding: 1
             };
             const layoutOptions = {
