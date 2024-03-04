@@ -26,8 +26,8 @@ class HomeSectionRequest extends FormRequest
         return [
             'title' => 'required',
             'type' => 'required',
-            'order' => 'required',
-            'categories' => 'required|array',
+            'items' => 'nullable|array',
+            'categories' => 'nullable|array',
             'data.rows' => 'required|integer',
             'data.cols' => 'required|integer',
         ];

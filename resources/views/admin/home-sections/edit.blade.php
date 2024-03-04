@@ -35,13 +35,15 @@
             <div class="card-header p-3">Edit <strong>Section</strong></div>
             <div class="card-body p-3">
                 <x-form :action="route('admin.home-sections.update', $section)" method="PATCH">
-                    <div class="form-group">
-                        <x-label for="title" />
-                        <x-input name="title" :value="$section->title" />
-                        <x-error field="title" />
-                    </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <x-label for="title" />
+                                <x-input name="title" :value="$section->title" />
+                                <x-error field="title" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <x-label for="type" />
                                 <select selector name="type" id="type" class="form-control">
@@ -51,32 +53,28 @@
                                 <x-error field="type" />
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <x-label for="order" />
-                                <x-input type="number" name="order" :value="$section->order" />
-                                <x-error field="order" />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <x-label for="categories" /><span class="text-danger">*</span>
-                                <x-category-dropdown :categories="$categories" name="categories[]" placeholder="Select Category" id="categories" multiple="true" :selected="old('categories', $section->categories->pluck('id')->toArray())" />
-                                <x-error field="categories" class="d-block" />
-                            </div>
-                        </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <div class="form-group">
                                 <x-label for="rows" />
                                 <x-input type="number" name="data[rows]" :value="$section->data->rows ?? 2" />
                                 <x-error field="data.rows" />
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <div class="form-group">
                                 <x-label for="cols" /><span>(4 or 5)</span>
                                 <x-input type="number" name="data[cols]" :value="$section->data->cols ?? 5" />
                                 <x-error field="data.cols" />
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <livewire:section-product :selected-ids="$section->items ?? []" />
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="categories">Automatically add products from categories:</label>
+                                <x-category-dropdown :categories="$categories" name="categories[]" placeholder="Select Categories" id="categories" multiple="true" :selected="old('categories', $section->categories->pluck('id')->toArray())" />
+                                <x-error field="categories" class="d-block" />
                             </div>
                         </div>
                     </div>
@@ -96,6 +94,7 @@
 @endpush
 
 @push('scripts')
+<script src="https://unpkg.com/@nextapps-be/livewire-sortablejs@0.2.3/dist/livewire-sortable.js"></script>
 <script>
     $(document).ready(function(){
         $('[selector]').select2({
