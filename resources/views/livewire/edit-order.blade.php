@@ -268,7 +268,7 @@
                         <tr>
                             <th>Shipping</th>
                             <td class="shipping">
-                                <input class="shipping"
+                                <input class="shipping form-control"
                                     style="height: auto; padding: 2px 8px;" type="text"
                                     wire:model="data.shipping_cost" value="{!! $data['shipping_cost'] ?? 0 !!}"
                                     class="form-control">
@@ -291,6 +291,10 @@
                                     wire:model="data.discount" value="{!! $data['discount'] ?? 0 !!}"
                                     class="form-control">
                             </td>
+                        </tr>
+                        <tr>
+                            <th>Grand Total</th>
+                            <th class="checkout-subtotal"><strong>{!! theMoney($data['subtotal'] + $data['shipping_cost'] - ($data['advanced'] ?? 0) - ($data['discount'] ?? 0)) !!}</strong></td>
                         </tr>
                         <tr>
                             <th>Note <small>(Optional)</small></th>

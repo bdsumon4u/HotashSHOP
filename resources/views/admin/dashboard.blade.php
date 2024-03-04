@@ -129,7 +129,7 @@
 
          <div class="card rounded-0 shadow-sm">
             <div class="card-header p-3">
-               <strong>Ordered Products</strong>
+               <strong>{{ request('status') ?? 'Ordered' }} Products</strong>
             </div>
             <div class="card-body p-3">
                @include('admin.reports.filtered')

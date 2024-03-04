@@ -34,16 +34,16 @@ class HomeController extends Controller
         if (request('staff_id')) {
             $orderQ->where('admin_id', request('staff_id'));
         }
-        if (request('status')) {
-            $orderQ->where('status', request('status'));
-        }
 
-        $products = $orderQ->get()->pluck('products')->flatten()->groupBy('name')->map(function ($item) {
-            return [
-                'quantity' => $item->sum('quantity'),
-                'total' => $item->sum('total'),
-            ];
-        })->toArray();
+        $products = (clone $orderQ)->get()
+            ->when(request('status'), fn ($query) => $query->where('status', request('status')))
+            ->flatMap(fn ($order) => json_decode(json_encode($order->products), true))
+            ->groupBy('name')->map(function ($item) {
+                return [
+                    'quantity' => $item->sum('quantity'),
+                    'total' => $item->sum('total'),
+                ];
+            })->toArray();
 
         $data = (clone $orderQ)
             ->selectRaw($totalSQL)

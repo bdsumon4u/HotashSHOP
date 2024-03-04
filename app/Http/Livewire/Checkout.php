@@ -159,9 +159,9 @@ class Checkout extends Component
             }
         }
 
-        $order = DB::transaction(function () use ($data, &$order) {
+        $order = DB::transaction(function () use ($data, &$order, $fraud) {
             $products = Product::find(array_keys($this->cart))
-                ->map(function (Product $product) use ($data) {
+                ->mapWithKeys(function (Product $product) use ($fraud) {
                     $id = $product->id;
                     $quantity = min($this->cart[$id]['quantity'], $fraud->max_qty_per_product);
 
@@ -178,7 +178,7 @@ class Checkout extends Component
                     }
 
                     // Needed Attributes
-                    return [
+                    return [$id => [
                         'id' => $id,
                         'name' => $product->var_name,
                         'slug' => $product->slug,
@@ -187,7 +187,7 @@ class Checkout extends Component
                         'quantity' => $quantity,
                         'category' => $product->category,
                         'total' => $quantity * $product->selling_price,
-                    ];
+                    ]];
                 })->filter(function ($product) {
                     return $product != null; // Only Available Products
                 })->toArray();

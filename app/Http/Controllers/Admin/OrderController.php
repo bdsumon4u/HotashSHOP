@@ -83,12 +83,14 @@ class OrderController extends Controller
         return view('admin.orders.filter', [
             'start' => $start,
             'end' => $end,
-            'products' => $orders->get()->pluck('products')->flatten()->groupBy('name')->map(function ($item) {
-                return [
-                    'quantity' => $item->sum('quantity'),
-                    'total' => $item->sum('total'),
-                ];
-            })->toArray(),
+            'products' => $orders->get()
+                ->flatMap(fn ($order) => json_decode(json_encode($order->products), true))
+                ->groupBy('name')->map(function ($item) {
+                    return [
+                        'quantity' => $item->sum('quantity'),
+                        'total' => $item->sum('total'),
+                    ];
+                })->toArray(),
         ]);
     }
 

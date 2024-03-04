@@ -153,6 +153,7 @@ class EditOrder extends Component
             session()->flash('success', 'Order updated successfully.');
         } else {
             $this->order->fill([
+                'admin_id' => auth('admin')->id(),
                 'name' => $this->name,
                 'phone' => $this->phone,
                 'email' => $this->email,
@@ -167,10 +168,10 @@ class EditOrder extends Component
 
             session()->flash('success', 'Order created successfully.');
 
-            return redirect()->route('admin.orders.index', ['status' => 'CONFIRMED']);
+            return redirect()->route('admin.orders.edit', $this->order);
         }
 
-        return redirect()->route('admin.orders.index');
+        return redirect()->route('admin.orders.edit', $this->order);
     }
 
     public function render()
@@ -178,6 +179,7 @@ class EditOrder extends Component
         $products = collect();
         if (strlen($this->search) > 2) {
             $products = Product::with('variations.options')
+                ->whereNotIn('id', array_keys($this->selectedProducts))
                 ->where('name', 'like', "%$this->search%")
                 ->whereNull('parent_id')
                 ->whereIsActive(1)
