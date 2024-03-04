@@ -94,9 +94,11 @@
     }
     .block-header__title, .block-header__arrow {
         background: {{$color->section->background_color}} !important;
+        color: {{$color->section->text_color}} !important;
     }
     .block-header__title:hover, .block-header__arrow:hover {
         background: {{$color->section->background_hover}} !important;
+        color: {{$color->section->text_hover}} !important;
     }
     .block-header__title a, .block-header__arrow {
         color: {{$color->section->text_color}} !important;
