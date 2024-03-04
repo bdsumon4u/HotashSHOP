@@ -3,14 +3,19 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class HomeSection extends Model
 {
     protected $fillable = [
-        'title', 'type', 'order', 'data',
+        'title', 'type', 'items', 'order', 'data',
     ];
 
     protected $with = ['categories'];
+
+    protected $casts = [
+        'items' => 'array',
+    ];
 
     public static function booted()
     {
@@ -46,10 +51,14 @@ class HomeSection extends Model
             ->whereHas('categories', function ($query) {
                 $query->whereIn('categories.id', $this->categories->pluck('id')->toArray());
             })
+            ->orWhereIn('id', $ids = $this->items ?? [])
             // ->inRandomOrder()
             ->when(!$paginate, function ($query) use ($rows, $cols) {
                 $query->take($rows * $cols);
             });
+        if ($ids) {
+            $query->orderByRaw(DB::raw("CASE WHEN id IN (".implode(',', $ids).") THEN 0 ELSE 1 END"));
+        }
 
         return $paginate
             ? $query->paginate($paginate)

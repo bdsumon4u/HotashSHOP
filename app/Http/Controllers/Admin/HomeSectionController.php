@@ -7,6 +7,7 @@ use App\HomeSection;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\HomeSectionRequest;
+use Illuminate\Support\Facades\DB;
 
 class HomeSectionController extends Controller
 {
@@ -18,6 +19,16 @@ class HomeSectionController extends Controller
     public function index()
     {
         abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
+        if (request()->has('orders')) {
+            $orders = request('orders');
+            DB::statement('UPDATE home_sections SET `order` = CASE id ' . implode(' ', array_map(function ($id) use ($orders) {
+                return "WHEN $id THEN $orders[$id] ";
+            }, array_keys($orders))) . 'END');
+
+            cache()->put('homesections', HomeSection::orderBy('order', 'asc')->get());
+
+            return response()->json(['message' => 'Sections Have Been Reordered.']);
+        }
         return $this->view([
             'sections' => HomeSection::orderBy('order', 'asc')->get(),
         ]);
@@ -50,7 +61,7 @@ class HomeSectionController extends Controller
         $homeSection->categories()->sync($data['categories']);
         cache()->put('homesections', HomeSection::orderBy('order', 'asc')->get());
 
-        return redirect()->route('admin.home-sections.index')->with('success', 'Section Has Been Created.');
+        return redirect()->route('admin.home-sections.edit', $homeSection)->with('success', 'Section Has Been Created.');
     }
 
     /**
@@ -91,7 +102,7 @@ class HomeSectionController extends Controller
         abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
         $data = $request->validated();
         $homeSection->update($data);
-        $homeSection->categories()->sync($data['categories']);
+        $homeSection->categories()->sync($data['categories'] ?? []);
         cache()->put('homesections', HomeSection::orderBy('order', 'asc')->get());
 
         return redirect()->route('admin.home-sections.index')->with('success', 'Section Has Been Updated.');

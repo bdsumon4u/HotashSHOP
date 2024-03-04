@@ -132,30 +132,12 @@
                         </a>
                     </li>
 
-                    <li class="dropdown">
-                        <a class="nav-link menu-title {{ request()->is('admin/home-sections*') ? 'active' : '' }}"
-                            href="#">
-                            <i data-feather="layers"> </i><span>Sections</span>
-                            <div class="according-menu"><i
-                                    class="fa fa-angle-{{ request()->is('admin/home-sections*') ? 'down' : 'right' }}"></i>
-                            </div>
+                    <li>
+                        <a class="nav-link menu-title link-nav {{ request()->is('admin/home-sections*') ? 'active' : '' }}"
+                            href="{{ route('admin.home-sections.index') }}">
+                            <i data-feather="layers"> </i>
+                            <span>Sections</span>
                         </a>
-
-                        <ul class="nav-submenu menu-content"
-                            style="display: {{ request()->is('admin/home-sections*') ? 'block;' : 'none;' }}">
-                            <li>
-                                <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.home-sections.index' ? 'active' : '' }}"
-                                    href="{{ route('admin.home-sections.index') }}">
-                                    <span>All Sections</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.home-sections.create' ? 'active' : '' }}"
-                                    href="{{ route('admin.home-sections.create') }}">
-                                    <span>Create Section</span>
-                                </a>
-                            </li>
-                        </ul>
                     </li>
 
                     <li>

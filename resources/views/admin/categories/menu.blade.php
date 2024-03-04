@@ -9,14 +9,19 @@
     <li class="breadcrumb-item">Categories</li>
 @endsection
 
-
 @push('styles')
     <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
     <style>
         .footer {
             z-index: 1;
         }
-        .route {position: relative;list-style-type: none;border: 0;margin: 0;padding: 0;top: 0px;margin-top: 0px;max-height: 100% !important;width: 100%;background: #bcf;border-radius: 2px;z-index: -1;}.route span {position: absolute;top: 6px;left: 12px;-ms-transform: scale(2);z-index: 10;}.route .title {position: absolute;border: 0;margin: 0;padding: 0;padding-top: 4px;font-size: 1rem;height: 30px;width: 400px;text-indent: 50px;background: #4af;border-radius: 2px;box-shadow: 0px 0px 0px 2px #29f;pointer-events: none;}.first-title { margin-left: 10px; }.space{position: relative;list-style-type: none;border: 0;margin: 0;padding: 0;margin-left: 45px;width: 40px;top: 35px;padding-bottom: 35px;height: 100%;z-index: 1;}.first-space {margin-left: 10px; top: 0;}
+        .route {position: relative;list-style-type: none;border: 0;margin: 0;padding: 0;top: 0px;margin-top: 0px;max-height: 100% !important;width: 100%;background: #bcf;border-radius: 2px;z-index: -1;}
+        .route span {position: absolute;top: 6px;left: 12px;-ms-transform: scale(2);z-index: 10;}
+        .route .title {position: absolute;border: 0;margin: 0;padding: 0;padding-top: 4px;font-size: 1rem;height: 30px;width: 400px;text-indent: 50px;background: #4af;border-radius: 2px;box-shadow: 0px 0px 0px 2px #29f;pointer-events: none;}
+        .first-title { margin-left: 10px; }
+        .space{position: relative;list-style-type: none;border: 0;margin: 0;padding: 0;margin-left: 45px;width: 40px;top: 35px;padding-bottom: 35px;height: 100%;z-index: 1;}
+        .first-space {margin-left: 10px; top: 0;}
+        .space .space{min-height: 4rem;}
         .space button[type="button"] {
             z-index: 9999;
             display: block;
