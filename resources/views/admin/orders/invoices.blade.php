@@ -140,7 +140,7 @@
                                 <th class="py-1">{{ $order->data->advanced ?? 0 }}</th>
                             </tr>
                             <tr>
-                                <th class="py-1">Shipping</th>
+                                <th class="py-1">Delivery Charge</th>
                                 <th class="py-1">{{ $order->data->shipping_cost }}</th>
                             </tr>
                             <tr>

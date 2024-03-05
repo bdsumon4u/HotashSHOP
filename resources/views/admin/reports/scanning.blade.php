@@ -64,7 +64,7 @@
                                     <th style="min-width: 80px;">Courier</th>
                                     <th style="min-width: 80px;">Status</th>
                                     <th style="min-width: 80px;">Subtotal</th>
-                                    <th style="min-width: 80px;">Shipping</th>
+                                    <th style="min-width: 80px;">Delivery Charge</th>
                                     <th style="min-width: 80px;">Total</th>
                                     <th style="max-width: 225px; text-align: center;">Action</th>
                                 </tr>
@@ -100,7 +100,7 @@
                                     <th style="min-width: 80px;">Courier</th>
                                     <th style="min-width: 80px;">Status</th>
                                     <th style="min-width: 80px;">Subtotal</th>
-                                    <th style="min-width: 80px;">Shipping</th>
+                                    <th style="min-width: 80px;">Delivery Charge</th>
                                     <th style="min-width: 80px;">Total</th>
                                 </tr>
                             </thead>

@@ -27,7 +27,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="d-block">Shipping City <span
+                    <label class="d-block">Delivery Charge City <span
                             class="text-danger">*</span></label>
                     <div class="form-control @error('shipping') is-invalid @enderror">
                         <div class="custom-control custom-radio custom-control-inline">
@@ -266,7 +266,7 @@
                             <td class="checkout-subtotal">{!! theMoney($data['subtotal']) !!}</td>
                         </tr>
                         <tr>
-                            <th>Shipping</th>
+                            <th>Delivery Charge</th>
                             <td class="shipping">
                                 <input class="shipping form-control"
                                     style="height: auto; padding: 2px 8px;" type="text"

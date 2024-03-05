@@ -68,7 +68,7 @@
                     <td>{!! theMoney($data->subtotal) !!}</td>
                   </tr>
                   <tr>
-                    <th>Shipping</th>
+                    <th>Delivery Charge</th>
                     <td>{!! theMoney($data->shipping_cost) !!}</td>
                   </tr>
                 </tbody>
