@@ -75,7 +75,7 @@
                         <x-input name="name" data-target="#href" />
                     </div>
                     <div class="form-group">
-                        <x-label for="href" /><span class="text-danger">*</span>
+                        <label for="href">Link</label><span class="text-danger">*</span>
                         <x-input name="href" />
                     </div>
                 </div>
@@ -97,7 +97,7 @@
                         <x-input name="name" data-target="#url" />
                     </div>
                     <div class="form-group">
-                        <label for="url">Href</label><span class="text-danger">*</span>
+                        <label for="url">Link</label><span class="text-danger">*</span>
                         <input type="text" name="href" id="url" class="form-control">
                     </div>
                 </div>
@@ -117,9 +117,9 @@
 @push('scripts')
 <script>
     $(function() {
-        $('[name="name"]').keyup(function () {
-            $($(this).data('target')).val(slugify($(this).val()));
-        });
+        // $('[name="name"]').keyup(function () {
+        //     $($(this).data('target')).val(slugify($(this).val()));
+        // });
 
         $('[href="#edit-menu-item"]').click(function () {
             $('#edit-menu-item').find('form').attr('action', $(this).data('route'));
