@@ -1,6 +1,6 @@
 <div class="tab-pane active" id="item-3" role="tabpanel">
     <div class="row">
-        <livewire:free-delivery :free-delivery="$free_delivery ?? null" />
+        <livewire:free-delivery :free-delivery="$free_delivery ?? null" :delivery-charge="$delivery_charge" />
         <div class="col-md-12">
             <div class="form-group">
                 <label for="delivery-text">Delivery Text</label>

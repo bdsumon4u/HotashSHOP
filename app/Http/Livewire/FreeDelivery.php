@@ -9,6 +9,7 @@ class FreeDelivery extends Component
 {
     public array $selectedProducts = [];
 
+    public array $delivery_charge;
     public int $free_delivery;
     public int $free_for_all;
     public int $min_quantity;
@@ -16,7 +17,7 @@ class FreeDelivery extends Component
 
     public $search;
 
-    public function mount($freeDelivery = null)
+    public function mount($freeDelivery = null, $deliveryCharge)
     {
         $this->free_delivery = $freeDelivery->enabled ?? 0;
         $this->free_for_all = $freeDelivery->for_all ?? 0;
@@ -27,6 +28,7 @@ class FreeDelivery extends Component
         Product::find(array_keys($products))->each(function ($product) use ($products) {
             $this->addProduct($product, $products[$product->id]);
         });
+        $this->delivery_charge = json_decode(json_encode($deliveryCharge), true);
     }
 
     public function addProduct(Product $product, $quantity = 1)

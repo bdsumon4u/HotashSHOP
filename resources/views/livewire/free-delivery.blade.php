@@ -27,12 +27,12 @@
             <div x-show="!free || !all" class="row borderr py-2">
                 <div class="col-md-6 pr-0">
                     <label for="products_page-rows">Inside Dhaka</label>
-                    <x-input name="delivery_charge[inside_dhaka]" id="delivery_charge-inside_dhaka" :value="$delivery_charge->inside_dhaka ?? config('services.shipping')['Inside Dhaka']" />
+                    <x-input name="delivery_charge[inside_dhaka]" id="delivery_charge-inside_dhaka" :value="$delivery_charge['inside_dhaka'] ?? config('services.shipping')['Inside Dhaka']" />
                     <x-error field="delivery_charge.inside_dhaka" />
                 </div>
                 <div class="col-md-6 pl-0">
                     <label for="products_page-cols">Outside Dhaka</label>
-                    <x-input name="delivery_charge[outside_dhaka]" id="delivery_charge-outside_dhaka" :value="$delivery_charge->outside_dhaka ?? config('services.shipping')['Outside Dhaka']" />
+                    <x-input name="delivery_charge[outside_dhaka]" id="delivery_charge-outside_dhaka" :value="$delivery_charge['outside_dhaka'] ?? config('services.shipping')['Outside Dhaka']" />
                     <x-error field="delivery_charge.outside_dhaka" />
                 </div>
             </div>
