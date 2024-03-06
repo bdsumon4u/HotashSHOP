@@ -48,11 +48,11 @@
                             </td>
                             <td>
                                 <div class="d-flex">
-                                    <button type="button" class="btn btn-primary btn-xs d-flex align-items-center justify-content-center mr-1 p-1" wire:sortable.handle>
-                                        <i data-feather="move"></i>
+                                    <button type="button" class="btn btn-primary d-flex align-items-center justify-content-center mr-1 p-2" wire:sortable.handle>
+                                        <i class="fa fa-arrows-alt"></i>
                                     </button>
-                                    <button type="button" class="btn btn-danger btn-xs d-flex align-items-center justify-content-center ml-1 p-1" wire:click="removeProduct({{$product['id']}})">
-                                        <i data-feather="x"></i>
+                                    <button type="button" class="btn btn-danger d-flex align-items-center justify-content-center ml-1 p-2" wire:click="removeProduct({{$product['id']}})">
+                                        <i class="fa fa-times"></i>
                                     </button>
                                 </div>
                             </td>

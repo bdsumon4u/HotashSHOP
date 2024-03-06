@@ -90,6 +90,9 @@ class EditOrder extends Component
         ];
 
         $this->data['subtotal'] = $this->order->getSubtotal($this->selectedProducts);
+
+        $this->search = '';
+        $this->dispatchBrowserEvent('notify', ['message' => 'Product added successfully.']);
     }
 
     public function increaseQuantity($id)

@@ -99,6 +99,10 @@
     @stack('scripts')
     @bukScripts(true)
     <script>
+      $(window).on('notify', function (ev) {
+        $.notify(ev.detail.message);
+      });
+
         $('[name="shipping"]').on('change', function (ev) {
             var val = $(this).data('val');
             $('.shipping').val(val);

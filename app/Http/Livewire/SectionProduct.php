@@ -43,6 +43,8 @@ class SectionProduct extends Component
     public function addProduct($id)
     {
         $this->selectedIds[] = $id;
+
+        $this->dispatchBrowserEvent('notify', ['message' => 'Product added successfully.']);
     }
 
     public function removeProduct($id)
