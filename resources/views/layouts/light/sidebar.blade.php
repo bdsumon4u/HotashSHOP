@@ -159,8 +159,8 @@
                     </li>
 
                     <li>
-                        <a class="nav-link menu-title link-nav {{ false ? 'active' : '' }}"
-                            href="#">
+                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.reports.stock' ? 'active' : '' }}"
+                            href="{{ route('admin.reports.stock') }}">
                             <i data-feather="pie-chart"> </i>
                             <span>Stock</span>
                         </a>

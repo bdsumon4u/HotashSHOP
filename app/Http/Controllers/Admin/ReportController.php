@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Order;
+use App\Product;
 use App\Report;
 use Illuminate\Http\Request;
 
@@ -126,5 +127,12 @@ class ReportController extends Controller
 
         return redirect()->route('admin.reports.index')
             ->with('success', 'Report deleted successfully.');
+    }
+
+    public function stock(Request $request)
+    {
+        return view('admin.reports.stock', [
+            'products' => Product::whereShouldTrack(true)->orderBy('stock_count')->get(),
+        ]);
     }
 }
