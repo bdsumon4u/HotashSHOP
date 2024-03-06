@@ -21,11 +21,11 @@ class EditOrder extends Component
 
     public ?string $name = '';
     public ?string $phone = '';
-    public ?string $email = '';
+    public ?string $email = null;
     public ?string $status = '';
     public ?string $address = '';
     public ?string $shipping = '';
-    public ?string $note = '';
+    public ?string $note = null;
 
     public function mount(?Order $order = null)
     {

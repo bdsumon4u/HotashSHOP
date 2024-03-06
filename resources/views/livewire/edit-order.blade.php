@@ -252,11 +252,9 @@
                         <tr>
                             <th>Order Status</th>
                             <td>
-                                <select wire:model.defer="status" id="status" selector class="form-control">
+                                <select wire:model.defer="status" id="status" class="form-control">
                                     @foreach (config('app.orders', []) as $stat)
-                                        <option value="{{ $stat }}"
-                                            {{ $stat == $status ? 'selected' : '' }}>
-                                            {{ $stat }}</option>
+                                        <option value="{{ $stat }}">{{ $stat }}</option>
                                     @endforeach
                                 </select>
                             </td>
