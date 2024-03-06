@@ -14,7 +14,7 @@ class Order extends Model
     const MANUAL = 1;
 
     protected $fillable = [
-        'admin_id', 'user_id', 'name', 'phone', 'email', 'address', 'status', 'status_at', 'products', 'note', 'data',
+        'admin_id', 'user_id', 'type', 'name', 'phone', 'email', 'address', 'status', 'status_at', 'products', 'note', 'data',
     ];
 
     protected static $logOnlyDirty = true;
