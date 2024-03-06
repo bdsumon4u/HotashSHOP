@@ -71,7 +71,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="sku">Product Code</label><span class="text-danger">*</span>
-                    <x-input name="sku" :value="$product->sku" />
+                    <x-input name="sku" :value="$product->sku ?? genSKU()" />
                     <x-error field="sku" />
                 </div>
             </div>
