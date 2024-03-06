@@ -53,7 +53,7 @@
                           <small>({{$section->type}})</small>
                        </h5>
                        <span class="ui-icon ui-icon-arrow-4-diag"></span>
-                       <button type="button" data-id="{{ $section->id }}" class="delete-section btn btn-sm btn-danger">x</button>
+                       <button type="button" data-id="{{ $section->id }}" class="delete-item btn btn-sm btn-danger">x</button>
                     </li>
                     @endforeach
                 </ul>
@@ -129,18 +129,20 @@
             $(document).on('click', '.delete-item', function(e) {
                 e.preventDefault()
 
-                $(e.target).addClass('disabled')
-                var id = $(this).attr('data-id')
-                $.ajax({
-                    url: route('admin.home-sections.destroy', id),
-                    type: 'DELETE',
-                    _method: 'DELETE',
-                    complete: function () {
-                        $(e.target).removeClass('disabled')
-                        window.location.reload();
-                    }
-                })
-            })
+                if (confirm('Are you sure to delete?')) {
+                    $(e.target).addClass('disabled')
+                    var id = $(this).attr('data-id')
+                    $.ajax({
+                        url: route('admin.home-sections.destroy', id),
+                        type: 'DELETE',
+                        _method: 'DELETE',
+                        complete: function () {
+                            $(e.target).removeClass('disabled')
+                            window.location.reload();
+                        }
+                    })
+                }
+            });
         });
     </script>
 @endpush
