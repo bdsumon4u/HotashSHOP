@@ -10,20 +10,20 @@
         </thead>
         @php $total = 0; $amount = 0; @endphp
         <tbody>
-            @foreach ($products as $name => $product)
+            @foreach ($products as $id => $product)
                 @php $total += $product['quantity']; $amount += $product['total']; @endphp
                 <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <td>{{ $name }}</td>
+                    <td>{{ $product['name'] }}</td>
                     <td>{{ $product['quantity'] }}</td>
-                    <td>{{ $product['total'] }}</td>
+                    <td>{!!theMoney($product['total'])!!}</td>
                 </tr>
             @endforeach
         </tbody>
         <tfoot>
             <th colspan="2" class="text-right">Total</th>
             <th>{{ $total }}</th>
-            <th>{{ $amount }}</th>
+            <th>{!!theMoney($amount)!!}</th>
         </tfoot>
     </table>
 </div>

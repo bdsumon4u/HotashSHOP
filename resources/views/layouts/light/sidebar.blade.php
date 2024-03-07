@@ -143,14 +143,6 @@
                     </li>
 
                     <li>
-                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.orders.filter' ? 'active' : '' }}"
-                            href="{{ route('admin.orders.filter') }}">
-                            <i data-feather="pie-chart"> </i>
-                            <span>Orders</span>
-                        </a>
-                    </li>
-
-                    <li>
                         <a class="nav-link menu-title link-nav {{ request()->is('admin/reports', 'admin/reports/*/edit') ? 'active' : '' }}"
                             href="{{ route('admin.reports.index') }}">
                             <i data-feather="pie-chart"> </i>
@@ -167,8 +159,8 @@
                     </li>
 
                     <li>
-                        <a class="nav-link menu-title link-nav {{ false ? 'active' : '' }}"
-                            href="#">
+                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.orders.filter' ? 'active' : '' }}"
+                            href="{{ route('admin.orders.filter') }}">
                             <i data-feather="pie-chart"> </i>
                             <span>Top Products</span>
                         </a>

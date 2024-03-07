@@ -38,12 +38,14 @@ class HomeController extends Controller
         $products = (clone $orderQ)->get()
             ->when(request('status'), fn ($query) => $query->where('status', request('status')))
             ->flatMap(fn ($order) => json_decode(json_encode($order->products), true))
-            ->groupBy('name')->map(function ($item) {
+            ->groupBy('id')->map(function ($item) {
                 return [
+                    'name' => $item->random()['name'],
+                    'slug' => $item->random()['slug'],
                     'quantity' => $item->sum('quantity'),
                     'total' => $item->sum('total'),
                 ];
-            })->toArray();
+            })->sortByDesc('quantity')->toArray();
 
         $data = (clone $orderQ)
             ->selectRaw($totalSQL)

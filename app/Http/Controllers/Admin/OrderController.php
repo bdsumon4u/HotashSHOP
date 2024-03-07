@@ -85,12 +85,14 @@ class OrderController extends Controller
             'end' => $end,
             'products' => $orders->get()
                 ->flatMap(fn ($order) => json_decode(json_encode($order->products), true))
-                ->groupBy('name')->map(function ($item) {
+                ->groupBy('id')->map(function ($item) {
                     return [
+                        'name' => $item->random()['name'],
+                        'slug' => $item->random()['slug'],
                         'quantity' => $item->sum('quantity'),
                         'total' => $item->sum('total'),
                     ];
-                })->toArray(),
+                })->sortByDesc('quantity')->toArray(),
         ]);
     }
 
