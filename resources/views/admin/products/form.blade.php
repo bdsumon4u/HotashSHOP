@@ -100,8 +100,8 @@
                         </button>
                     </label>
                     <div id="preview-{{optional($product->base_image)->id}}" class="base_image-preview @unless(old('base_image', optional($product->base_image)->id)) d-none @endunless" style="height: 150px; width: 150px; margin: 5px; margin-left: 0px;">
-                        <img src="{{ old('base_image_src', optional($product->base_image)->src) }}" alt="Base Image" data-toggle="modal" data-target="#single-picker" id="base_image-preview" class="img-thumbnail img-responsive" style="display: {{ old('base_image_src', optional($product->base_image)->src) ? '' : 'none' }};">
-                        <input type="hidden" name="base_image_src" value="{{ old('base_image_src', optional($product->base_image)->src) }}">
+                        <img src="{{ old('base_image_src', asset(optional($product->base_image)->src)) }}" alt="Base Image" data-toggle="modal" data-target="#single-picker" id="base_image-preview" class="img-thumbnail img-responsive" style="display: {{ old('base_image_src', optional($product->base_image)->src) ? '' : 'none' }};">
+                        <input type="hidden" name="base_image_src" value="{{ old('base_image_src', asset(optional($product->base_image)->src)) }}">
                         <input type="hidden" name="base_image" value="{{ old('base_image', optional($product->base_image)->id) }}" id="base-image" class="form-control">
                     </div>
                     @error('base_image')

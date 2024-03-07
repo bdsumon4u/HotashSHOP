@@ -50,7 +50,7 @@ class ProductDetail extends Component
                 'parent_id' => $this->selectedVar->parent_id ?? $this->selectedVar->id,
                 'name' => $this->selectedVar->var_name,
                 'slug' => $this->selectedVar->slug,
-                'image' => optional($this->selectedVar->base_image)->src,
+                'image' => optional($this->selectedVar->base_image)->path,
                 'category' => $this->product->category,
                 'quantity' => min($this->quantity, $this->maxQuantity),
                 'price' => $this->selectedVar->price,

@@ -24,7 +24,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/fix-orders-products', function () {
     $orders = Order::all()->mapWithKeys(function ($order) {
-        return [$order->id => collect(json_decode(json_encode($order->products), true))->keyBy('id')->toJson(JSON_UNESCAPED_UNICODE)];
+        return [
+            $order->id => collect(json_decode(json_encode($order->products), true))
+                ->map(function ($product) {
+                    $product['image'] = preg_replace('/https?:\/\/[^\/]+/', '', $product['image']);
+                    return $product;
+                })
+                ->keyBy('id')
+                ->toJson(JSON_UNESCAPED_UNICODE),
+        ];
     });
 
     DB::statement('UPDATE orders SET products = CASE id ' . $orders->map(function ($products, $id) {

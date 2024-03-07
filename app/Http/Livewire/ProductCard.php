@@ -20,7 +20,7 @@ class ProductCard extends Component
                 'parent_id' => $this->product->parent_id ?? $this->product->id,
                 'name' => $this->product->name,
                 'slug' => $this->product->slug,
-                'image' => optional($this->product->base_image)->src,
+                'image' => optional($this->product->base_image)->path,
                 'category' => $this->product->category,
                 'quantity' => 1,
                 'price' => $this->product->price,

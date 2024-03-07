@@ -253,7 +253,7 @@ class OrderController extends Controller
                             'id' => $product->id,
                             'name' => $product->name,
                             'slug' => $product->slug,
-                            'image' => $product->base_image->src,
+                            'image' => optional($product->base_image)->src,
                             'price' => $product->selling_price,
                             'quantity' => $quantity,
                             'total' => $quantity * $product->selling_price,

@@ -62,7 +62,7 @@
                 @foreach($order->products as $product)
                     <tr>
                         <td>
-                            <img src="{{ $product->image }}" alt="Image" width="70" height="60">
+                            <img src="{{ asset($product->image) }}" alt="Image" width="70" height="60">
                         </td>
                         <td>{{ $product->name }}</td>
                         <td>{{ $product->price }}</td>

@@ -64,7 +64,7 @@ class CheckoutController extends Controller
                         'id' => $id,
                         'name' => $product->var_name,
                         'slug' => $product->slug,
-                        'image' => $product->base_image->src,
+                        'image' => optional($product->base_image)->src,
                         'price' => $product->selling_price,
                         'quantity' => $quantity,
                         'total' => $quantity * $product->selling_price,

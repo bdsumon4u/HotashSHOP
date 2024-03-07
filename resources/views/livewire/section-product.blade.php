@@ -21,7 +21,7 @@
                         @if(!isset($selectedProducts[$product['id']]))
                         <tr>
                             <td>
-                                <img src="{{ $product['image'] }}" width="100"
+                                <img src="{{ asset($product['image']) }}" width="100"
                                     height="100" alt="">
                             </td>
                             <td>

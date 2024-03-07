@@ -10,7 +10,7 @@
     </div>
     <div class="product-card__image">
         <a href="{{ route('products.show', $product) }}">
-            <img src="{{ $product->base_image->src }}" alt="Base Image">
+            <img src="{{ asset(optional($product->base_image)->src) }}" alt="Base Image">
         </a>
     </div>
     <div class="product-card__info">

@@ -20,7 +20,7 @@ class ProductController extends Controller
         return DataTables::of($request->has('order') ? Product::whereNull('parent_id')->get() : Product::whereNull('parent_id')->latest('id'))
             ->addIndexColumn()
             ->addColumn('image', function (Product $product) {
-                return '<img src="' . $product->base_image->src . '" width="100" height="100" />';
+                return '<img src="' . asset(optional($product->base_image)->src) . '" width="100" height="100" />';
             })
             ->editColumn('name', function (Product $product) {
                 return '<a href="' . route('products.show', $product) . '" target="_blank">' . $product->name . '</a>';
