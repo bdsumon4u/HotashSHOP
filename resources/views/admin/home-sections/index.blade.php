@@ -21,14 +21,14 @@
         }
         .route {position: relative;list-style-type: none;border: 0;margin: 0;padding: 0;top: 0px;margin-bottom: 1rem;max-height: 100% !important;width: 100%;background: #bcf;border-radius: 2px;z-index: -1;}
         .route span {position: absolute;top: 6px;left: 12px;-ms-transform: scale(2);z-index: 10;}
-        .route .title {display: flex;align-items: center;justify-content: space-between;border: 0;margin: 0;padding: 0;padding-right: 1rem;font-size: 1rem;height: 30px;width: 400px;text-indent: 50px;background: #4af;border-radius: 2px;box-shadow: 0px 0px 0px 2px #29f;}
-        .space{position: relative;list-style-type: none;border: 0;margin: 0;padding: 0;margin-left: 0;width: 40px;top: 0;height: 100%;z-index: 1;}
+        .route .title {display: flex;align-items: center;justify-content: space-between;border: 0;margin: 0;padding: 0;padding-right: 2.5rem;font-size: 1rem;height: 30px;text-indent: 50px;background: #4af;border-radius: 2px;box-shadow: 0px 0px 0px 2px #29f;}
+        .space{position: relative;list-style-type: none;border: 0;margin: 0;padding: 0;margin-left: 0;top: 0;height: 100%;z-index: 1;}
         .space button[type="button"] {
             z-index: 9999;
             display: block;
             top: -3px;
             height: 35px;
-            right: -395px;
+            right: 3px;
             position: absolute;
             padding: 0.375rem 0.75rem;
         }

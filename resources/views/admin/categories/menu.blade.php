@@ -17,9 +17,9 @@
         }
         .route {position: relative;list-style-type: none;border: 0;margin: 0;padding: 0;top: 0px;margin-top: 0px;max-height: 100% !important;width: 100%;background: #bcf;border-radius: 2px;z-index: -1;}
         .route span {position: absolute;top: 6px;left: 12px;-ms-transform: scale(2);z-index: 10;}
-        .route .title {position: absolute;border: 0;margin: 0;padding: 0;padding-top: 4px;font-size: 1rem;height: 30px;width: 400px;text-indent: 50px;background: #4af;border-radius: 2px;box-shadow: 0px 0px 0px 2px #29f;pointer-events: none;}
+        .route .title {position: absolute;border: 0;margin: 0;padding: 0;padding-top: 4px;font-size: 1rem;height: 30px;text-indent: 50px;background: #4af;border-radius: 2px;box-shadow: 0px 0px 0px 2px #29f;pointer-events: none;}
         .first-title { margin-left: 10px; }
-        .space{position: relative;list-style-type: none;border: 0;margin: 0;padding: 0;margin-left: 45px;width: 40px;top: 35px;padding-bottom: 35px;height: 100%;z-index: 1;}
+        .space{background:white;position: relative;list-style-type: none;border: 0;margin: 0;padding: 0;margin-left: 45px;top: 35px;padding-bottom: 35px;height: 100%;z-index: 1;}
         .first-space {margin-left: 10px; top: 0;}
         .space .space{min-height: 4rem;}
         .space button[type="button"] {
@@ -27,7 +27,7 @@
             display: block;
             top: -3px;
             height: 35px;
-            right: -395px;
+            right: 3px;
             position: absolute;
             padding: 0.375rem 0.75rem;
         }

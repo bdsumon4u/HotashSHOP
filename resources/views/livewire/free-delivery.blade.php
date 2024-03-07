@@ -25,12 +25,12 @@
         </div>
         <div class="col-md-6">
             <div x-show="!free || !all" class="row borderr py-2">
-                <div class="col-md-6 pr-0">
+                <div class="col-md-6 pr-md-0">
                     <label for="products_page-rows">Inside Dhaka</label>
                     <x-input name="delivery_charge[inside_dhaka]" id="delivery_charge-inside_dhaka" :value="$delivery_charge['inside_dhaka'] ?? config('services.shipping')['Inside Dhaka']" />
                     <x-error field="delivery_charge.inside_dhaka" />
                 </div>
-                <div class="col-md-6 pl-0">
+                <div class="col-md-6 pl-md-0">
                     <label for="products_page-cols">Outside Dhaka</label>
                     <x-input name="delivery_charge[outside_dhaka]" id="delivery_charge-outside_dhaka" :value="$delivery_charge['outside_dhaka'] ?? config('services.shipping')['Outside Dhaka']" />
                     <x-error field="delivery_charge.outside_dhaka" />
@@ -87,14 +87,12 @@
                                         href="{{ route('products.show', $product['slug']) }}">{{ $product['name'] }}</a>
                                 </td>
                                 <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="">
-                                            <button class="btn btn-outline-primary"
-                                                wire:click="decreaseQuantity({{ $product['id'] }})"
-                                                type="button">
-                                                <i class="fa fa-minus"></i>
-                                            </button>
-                                        </div>
+                                    <div class="input-group">
+                                        <button class="btn btn-outline-primary input-group-prepend"
+                                            wire:click="decreaseQuantity({{ $product['id'] }})"
+                                            type="button">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
                                         <input type="text" style="max-width: 100px;"
                                             class="form-control text-center border-primary"
                                             name="free_delivery[products][{{$product['id']}}]"
@@ -102,13 +100,11 @@
                                             wire:model="selectedProducts.{{$product['id']}}.quantity"
                                             readonly
                                         >
-                                        <div class="">
-                                            <button class="btn btn-outline-primary"
-                                                wire:click="increaseQuantity({{ $product['id'] }})"
-                                                type="button">
-                                                <i class="fa fa-plus"></i>
-                                            </button>
-                                        </div>
+                                        <button class="btn btn-outline-primary input-group-append"
+                                            wire:click="increaseQuantity({{ $product['id'] }})"
+                                            type="button">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
                                     </div>
                                 </td>
                             </tr>

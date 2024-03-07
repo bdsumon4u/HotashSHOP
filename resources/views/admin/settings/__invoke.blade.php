@@ -43,14 +43,14 @@
         cursor: pointer;
     }
     .input-group input, .input-group select {
-        min-width: 250px !important;
-        max-width: 450px !important;
+        min-width: 250px;
+        max-width: 450px;
     }
     .select2 {
         width: 100% !important;
     }
     .input-group-append input {
-        min-width: 0 !important;
+        min-width: 0;
     }
 </style>
 @endpush

@@ -165,13 +165,16 @@
             </div>
         </div>
     </div>
-</div>
-
-<div class="d-flex" style="gap: 1rem;">
-    <div class="checkbox checkbox-secondary">
-        <x-checkbox name="is_active" value="1" :checked="!!$product->is_active" />
-        <x-label for="is_active" />
-        <x-error field="is_active" />
+    <div class="col-sm-12">
+        <div class="form-group">
+            <div class="checkbox checkbox-secondary">
+                <x-checkbox name="is_active" value="1" :checked="!!$product->is_active" />
+                <x-label for="is_active" />
+                <x-error field="is_active" />
+            </div>
+        </div>
     </div>
-    <button type="submit" class="btn btn-success">Save Product</button>
+    <div class="col-sm-12">
+        <button type="submit" class="btn btn-success">Save Product</button>
+    </div>
 </div>

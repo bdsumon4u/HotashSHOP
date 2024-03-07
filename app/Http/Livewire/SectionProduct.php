@@ -19,6 +19,9 @@ class SectionProduct extends Component
 
     public function updatedSearch()
     {
+        if (strlen($this->search) < 3) {
+            return $this->products = [];
+        }
         $this->products = Product::whereNull('parent_id')
             ->where('name', 'like', "%{$this->search}%")
             ->take(5)->get()->map(function ($product, $i) {

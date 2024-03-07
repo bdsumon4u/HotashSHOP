@@ -29,7 +29,7 @@
                 <div class="form-group">
                     <label class="d-block">Delivery Charge City <span
                             class="text-danger">*</span></label>
-                    <div class="form-control @error('shipping') is-invalid @enderror">
+                    <div class="form-control h-auto @error('shipping') is-invalid @enderror">
                         <div class="custom-control custom-radio custom-control-inline">
                             <input type="radio" class="custom-control-input" id="inside-dhaka"
                                 name="shipping" wire:model="shipping" value="Inside Dhaka">
@@ -52,7 +52,7 @@
                 </div>
                 <div class="form-group">
                     <label class="d-block">Courier <span class="text-danger">*</span></label>
-                    <div class="form-control @error('data.courier') is-invalid @enderror">
+                    <div class="border p-2 @error('data.courier') is-invalid @enderror">
                         @foreach (['Pathao', 'SteadFast', 'Manual'] as $provider)
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" class="custom-control-input"
