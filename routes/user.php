@@ -1,10 +1,11 @@
 <?php
 
+use App\Http\Middleware\GoogleTagManagerMiddleware;
 use Illuminate\Support\Facades\Route;
 use Hotash\LaravelMultiUi\Facades\MultiUi;
 
 # Controller Level Namespace
-Route::group(['namespace' => 'User', 'as' => 'user.'], function() {
+Route::group(['namespace' => 'User', 'as' => 'user.', 'middleware' => GoogleTagManagerMiddleware::class], function() {
 
     # User Level Namespace & No Prefix
     MultiUi::routes([

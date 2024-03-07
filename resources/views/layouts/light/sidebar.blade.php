@@ -258,7 +258,7 @@
 
                     <li>
                         <a class="nav-link menu-title link-nav {{ request()->is('admin/settings*') && request('tab')=='sms' ? 'active' : '' }}"
-                            href="#">
+                            href="{{ route('admin.settings', ['tab' => 'sms']) }}">
                             <i data-feather="message-square"> </i>
                             <span>SMS APIs</span>
                         </a>

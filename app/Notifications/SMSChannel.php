@@ -22,25 +22,24 @@ class SMSChannel
             ? '88'.$notifiable->phone_number
             : Str::replaceFirst('+', '', $notifiable->phone_number);
 
-//        dd(Http::get('http://sms.bdwebs.com/smsapi?api_key='.config('services.bdwebs.api_key').'&type=text&contacts=8801783110247&senderid='.config('services.bdwebs.senderid').'&msg="Your OTP for BSBazarBD is: 123465."')->body());
-//        dd(Http::get('http://sms.bdwebs.com/miscapi/'.config('services.bdwebs.api_key').'/getDLR/getAll')->body());
-
+        $BDWebs = setting('BDWebs');
+        if (!$BDWebs->enabled) return;
         // Send notification to the $notifiable instance...
         $data = array_merge([
             'type' => 'text',
             'contacts' => $phone,
             'label' => 'transactional',
-            'api_key' => config('services.bdwebs.api_key'),
-            'senderid' => config('services.bdwebs.senderid'),
+            'api_key' => $BDWebs->api_key,
+            'senderid' => $BDWebs->sender_id,
         ], $notification->toArray($notifiable));
 
-	$this->send_sms($data);
-  //      Log::info($this->send_sms($data));
+        $this->send_sms($data);
+        Log::info($this->send_sms($data));
     }
 
     private function send_sms($data)
     {
-//        Log::info('sending sms:', $data);
+        Log::info('sending sms:', $data);
         $url = "http://sms.bdwebs.com/smsapi";
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);

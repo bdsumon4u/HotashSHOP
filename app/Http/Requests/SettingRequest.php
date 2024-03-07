@@ -61,6 +61,12 @@ class SettingRequest extends FormRequest
             ];
         }
 
+        if ($this->get('tab') == 'sms') {
+            return [
+                'BDWebs' => 'required|array',
+            ];
+        }
+
         if ($this->get('tab') == 'fraud') {
             return [
                 'fraud' => 'required|array',
