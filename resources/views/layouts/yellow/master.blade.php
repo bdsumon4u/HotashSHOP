@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="format-detection" content="telephone=no">
-    <title>{{ setting('company')->name }} - @yield('title')</title>
+    <title>{{ $company->name }} - @yield('title')</title>
     <link rel="icon" type="image/png" href="{{ asset($logo->favicon) }}"><!-- fonts -->
     <!-- css -->
     @include('googletagmanager::head')
@@ -262,6 +262,18 @@
         });
     </script>
     @stack('scripts')
+    @php
+        $phone = preg_replace('/[^\d]/', '', $company->phone);
+        if (strlen($phone) == 11) {
+            $phone = '88' . $phone;
+        }
+    @endphp
+    <a
+        href="https://api.whatsapp.com/send?phone={{$phone}}" target="_blank"
+        style="position:fixed;width:60px;height:60px;bottom:40px;right:40px;background-color:#25d366;color:#FFF;border-radius:50px;text-align:center;font-size:30px;box-shadow: 2px 2px 3px #999;z-index:100;"
+    >
+        <i class="fab fa-whatsapp" style="margin-top: 1rem;"></i>
+    </a>
 </body>
 
 </html>
