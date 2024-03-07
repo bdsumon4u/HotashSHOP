@@ -73,7 +73,7 @@ class CheckoutController extends Controller
                     return $product != null; // Only Available Products
                 })->toArray();
 
-            $data['products'] = json_encode($products);
+            $data['products'] = json_encode($products, JSON_UNESCAPED_UNICODE);
             $user = $this->getUser($data);
             $oldOrders = $user->orders()->get();
             $status = !auth('user')->user() ? 'PENDING' // PENDING

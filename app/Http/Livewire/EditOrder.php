@@ -155,7 +155,7 @@ class EditOrder extends Component
                 'status' => $this->status,
                 'note' => $this->note,
                 'data' => $this->data,
-                'products' => json_encode($this->selectedProducts),
+                'products' => json_encode($this->selectedProducts, JSON_UNESCAPED_UNICODE),
             ]);
 
             if ($confirming) {
@@ -175,7 +175,7 @@ class EditOrder extends Component
                 'data' => $this->data,
                 'type' => Order::MANUAL,
                 'status_at' => now()->toDateTimeString(),
-                'products' => json_encode($this->selectedProducts),
+                'products' => json_encode($this->selectedProducts, JSON_UNESCAPED_UNICODE),
             ])->save();
 
             session()->flash('success', 'Order created successfully.');

@@ -85,7 +85,7 @@ class OrderController extends Controller
             'start' => $start,
             'end' => $end,
             'products' => $orders->get()
-                ->flatMap(fn ($order) => json_decode(json_encode($order->products), true))
+                ->flatMap(fn ($order) => json_decode(json_encode($order->products, JSON_UNESCAPED_UNICODE), true))
                 ->groupBy('id')->map(function ($item) {
                     return [
                         'name' => $item->random()['name'],
@@ -265,7 +265,7 @@ class OrderController extends Controller
             })->toArray();
 
         $order->update([
-            'products' => json_encode($products),
+            'products' => json_encode($products, JSON_UNESCAPED_UNICODE),
             'data' => [
                 'subtotal' => $order->getSubtotal($products),
             ],

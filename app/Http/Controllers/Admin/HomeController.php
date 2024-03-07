@@ -37,7 +37,7 @@ class HomeController extends Controller
 
         $products = (clone $orderQ)->get()
             ->when(request('status'), fn ($query) => $query->where('status', request('status')))
-            ->flatMap(fn ($order) => json_decode(json_encode($order->products), true))
+            ->flatMap(fn ($order) => json_decode(json_encode($order->products, JSON_UNESCAPED_UNICODE), true))
             ->groupBy('id')->map(function ($item) {
                 return [
                     'name' => $item->random()['name'],

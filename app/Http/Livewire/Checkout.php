@@ -192,7 +192,7 @@ class Checkout extends Component
                     return $product != null; // Only Available Products
                 })->toArray();
 
-            $data['products'] = json_encode($products);
+            $data['products'] = json_encode($products, JSON_UNESCAPED_UNICODE);
             $user = $this->getUser($data);
             $oldOrders = $user->orders()->get();
             $status = data_get(config('app.orders', []), 0, 'PENDING'); // Default Status
