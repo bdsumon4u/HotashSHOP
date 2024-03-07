@@ -4,6 +4,7 @@ use App\Order;
 use App\Pathao\Facade\Pathao;
 use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +20,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::get('/fix-orders-products', function () {
+    $orders = Order::all()->mapWithKeys(function ($order) {
+        return [$order->id => collect(json_decode(json_encode($order->products), true))->keyBy('id')->toJson()];
+    });
+
+    DB::statement('UPDATE orders SET products = CASE id ' . $orders->map(function ($products, $id) {
+        return "WHEN $id THEN '$products'";
+    })->implode(' ') . ' END');
 });
 
 Route::group(['namespace' => 'Api', 'as' => 'api.'], function () {
