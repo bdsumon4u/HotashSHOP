@@ -53,31 +53,21 @@
                 <div class="card-header p-3">
                     <form action="">
                         <div class="row">
-                            <div class="col-auto pr-1">
+                            {{-- <div class="col-auto pr-1">
                                 <select name="date_type" id="datetype" class="form-control">
                                     <option value="created_at" @if(request('date_type') == 'created_at') selected @endif>ORDER DATE</option>
                                     <option value="status_at" @if(request('date_type') == 'status_at') selected @endif>UPDATE DATE</option>
                                 </select>
-                            </div>
-                            <div class="col-auto px-1">
+                            </div> --}}
+                            <div class="col-auto pr-1">
                                 <input class="form-control" id="reportrange" type="text">
                                 <input type="hidden" name="start_d" value="{{ $start }}">
                                 <input type="hidden" name="end_d" value="{{ $end }}">
                             </div>
                             <div class="col-auto px-1">
-                                <select name="status" id="status" class="form-control">
-                                    <option value="">Delivery Status</option>
-                                    @foreach(config('app.orders', []) as $status)
-                                    <option value="{{ $status }}" @if(request()->get('status') == $status) selected @endif>{{ $status }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-auto px-1">
-                                <select name="staff_id" id="staff-id" class="form-control">
-                                    <option value="">Select Staff</option>
-                                    @foreach(\App\Admin::where('role_id', \App\Admin::SALESMAN)->get() as $admin)
-                                    <option value="{{ $admin->id }}" @if(request()->get('staff_id') == $admin->id) selected @endif>{{ $admin->name }}</option>
-                                    @endforeach
+                                <select name="top_by" id="topby" class="form-control">
+                                    <option value="order_amount" @if(request('top_by') == 'order_amount') selected @endif>Top by Order-Amount</option>
+                                    <option value="order_count" @if(request('top_by') == 'order_count') selected @endif>Top by Order-Count</option>
                                 </select>
                             </div>
                             <div class="col pl-1">
@@ -87,7 +77,34 @@
                     </form>
                 </div>
                 <div class="card-body p-3">
-                    @include('admin.reports.filtered')
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover datatable" style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th style="min-width: 50px;">S.I.</th>
+                                    <th style="min-width: 50px;">ID</th>
+                                    <th style="min-width: 120px;">Name</th>
+                                    <th style="min-width: 100px;">Phone</th>
+                                    <th style="min-width: 100px;">Order Count</th>
+                                    <th style="min-width: 100px;">Order Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($users as $user)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $user->id }}</td>
+                                        <td>
+                                            <a href="{{ route('admin.orders.index', ['user_id' => $user->id, 'status' => 'COMPLETED', 'start_d' => $start, 'end_d' => $end]) }}" target="_blank">{{ $user->name }}</a>
+                                        </td>
+                                        <td>{{ $user->phone_number }}</td>
+                                        <td>{{ $user->order_count }}</td>
+                                        <td>{!!theMoney($user->order_amount)!!}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Extensions\DatabaseSessionHandler;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\ServiceProvider;
@@ -35,6 +36,15 @@ class AppServiceProvider extends ServiceProvider
 
             return new DatabaseSessionHandler($connection, $table, $lifetime, $app);
         });
+
+        Builder::macro(
+            'withWhereHas',
+            function ($relation, $constraint) {
+                return $this
+                    ->whereHas($relation, $constraint)
+                    ->with([$relation => $constraint]);
+            }
+        );
 
         $this->app->bind("pathao", function () {
             return new \App\Pathao\Manage\Manage(

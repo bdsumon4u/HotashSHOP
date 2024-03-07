@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Order;
 use App\Product;
 use App\Report;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class ReportController extends Controller
 {
@@ -133,6 +135,38 @@ class ReportController extends Controller
     {
         return view('admin.reports.stock', [
             'products' => Product::whereShouldTrack(true)->orderBy('stock_count')->get(),
+        ]);
+    }
+
+    public function customer(Request $request)
+    {
+        $_start = Carbon::parse(\request('start_d'));
+        $start = $_start->format('Y-m-d');
+        $_end = Carbon::parse(\request('end_d'));
+        $end = $_end->format('Y-m-d');
+        $type = $request->get('date_type', 'created_at');
+        $top = $request->get('top_by', 'order_amount');
+
+        $query = User::withWhereHas('orders', function ($query) use ($type, $_start, $_end) {
+            $query->where('status', 'COMPLETED')
+                ->whereBetween($type, [
+                    $_start->startOfDay()->toDateTimeString(),
+                    $_end->endOfDay()->toDateTimeString(),
+                ]);
+        });
+
+        $users = $query->get()->map(function ($user) {
+            $user->order_amount = $user->orders->sum('data.subtotal')
+                + $user->orders->sum('data.shipping_cost')
+                - $user->orders->sum('data.discount');
+            $user->order_count = $user->orders->count();
+            return $user;
+        })->sortByDesc($top);
+
+        return view('admin.reports.customer', [
+            'users' => $users,
+            'start' => $start,
+            'end' => $end,
         ]);
     }
 }

@@ -28,7 +28,11 @@ class OrderController extends Controller
             $orders->where('type', Order::ONLINE);
         } elseif (strtolower($request->type) == 'manual') {
             $orders->where('type', Order::MANUAL);
-        } 
+        }
+
+        if ($request->user_id) {
+            $orders->where('user_id', $request->user_id);
+        }
 
         if ($request->status) {
             $orders->where('status', $request->status);

@@ -35,6 +35,7 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
         Route::any('settings', 'SettingController')->name('settings');
         Route::get('/reports/stock', 'ReportController@stock')->name('reports.stock');
         Route::get('/reports/filter', 'OrderController@filter')->name('orders.filter');
+        Route::get('/reports/customer', 'ReportController@customer')->name('reports.customer');
         Route::get('/orders/invoices', 'OrderController@invoices')->name('orders.invoices');
         Route::get('/orders/courier', 'OrderController@courier')->name('orders.courier');
         Route::post('/orders/change-status', 'OrderController@status')->name('orders.status');
