@@ -59,8 +59,7 @@ class SendOTP extends Notification
     public function toArray($notifiable)
     {
         return [
-            'msg' => 'Your login access token is: ' . $this->otp.'.',
-            //'msg' => 'Your access token for '.config('app.name'). ' is: ' . $this->otp.'.',
+            'msg' => str_replace('{{code}}', $this->otp, setting('SMSTemplates')->otp),
         ];
     }
 }

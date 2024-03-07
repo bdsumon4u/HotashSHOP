@@ -265,7 +265,7 @@
 
         setInterval(function () {
             $('.datatable').DataTable().ajax.reload(function (res) {
-                if (window.ordersTotal !== res.recordsTotal) {
+                if (res.recordsTotal > window.ordersTotal) {
                     window.ordersTotal = res.recordsTotal;
                     $.notify('New orders found', 'success');
                 }

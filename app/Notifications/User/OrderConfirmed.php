@@ -9,7 +9,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Cache;
 
-class OrderPlaced extends Notification
+class OrderConfirmed extends Notification
 {
     use Queueable;
 
@@ -56,12 +56,12 @@ class OrderPlaced extends Notification
      */
     public function toArray($notifiable)
     {
-        $code = Cache::remember('order:confirm:'.$this->order->id, 5*60, function () {
-            return mt_rand(1000, 999999);
-        });
-
         return [
-            'msg' => 'Thanks for shopping. Your order ID is '.$this->order->id.'. Login: '.url('auth'),
+            'msg' => str_replace(
+                ['{{name}}', '{{id}}'],
+                [$this->order->user->name, $this->order->id],
+                setting('SMSTemplates')->confirmation,
+            ),
         ];
     }
 }

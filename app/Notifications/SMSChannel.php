@@ -34,7 +34,6 @@ class SMSChannel
         ], $notification->toArray($notifiable));
 
         $this->send_sms($data);
-        Log::info($this->send_sms($data));
     }
 
     private function send_sms($data)

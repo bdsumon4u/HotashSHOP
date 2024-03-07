@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
+use App\Notifications\User\OrderConfirmed;
 use App\Pathao\Facade\Pathao;
 use App\Product;
 use Illuminate\Support\Carbon;
@@ -214,7 +215,17 @@ class OrderController extends Controller
 
         $data['status'] = $request->status;
         $data['status_at'] = now()->toDateTimeString();
-        Order::whereIn('id', $request->order_id)->update($data);
+        $query = Order::whereIn('id', $request->order_id)->where('status', '!=', $request->status);
+
+        if ($request->status == 'CONFIRMED') {
+            $orders = $query->get();
+        }
+
+        $query->update($data);
+
+        if ($request->status == 'CONFIRMED') {
+            $orders->each(fn ($order) => $order->user->notify(new OrderConfirmed($order)));
+        }
 
         return redirect()->back()->withSuccess('Order Status Has Been Updated.');
     }

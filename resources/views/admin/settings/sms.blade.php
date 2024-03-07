@@ -18,4 +18,20 @@
             <x-error field="BDWebs[sender_id]" />
         </div>
     </div>
+    <div class="form-row border-top border-bottom mt-2 pt-2 mb-4">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="">OTP Template</label>
+                <x-textarea name="SMSTemplates[otp]" id="SMSTemplates[otp]">{{$SMSTemplates->otp ?? null}}</x-textarea>
+                <x-error field="SMSTemplates[otp]" />
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="">Confirmation Template</label>
+                <x-textarea name="SMSTemplates[confirmation]" id="SMSTemplates[confirmation]">{{$SMSTemplates->confirmation ?? null}}</x-textarea>
+                <x-error field="SMSTemplates[confirmation]" />
+            </div>
+        </div>
+    </div>
 </div>

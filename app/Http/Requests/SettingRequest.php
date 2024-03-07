@@ -64,6 +64,7 @@ class SettingRequest extends FormRequest
         if ($this->get('tab') == 'sms') {
             return [
                 'BDWebs' => 'required|array',
+                'SMSTemplates' => 'required|array',
             ];
         }
 

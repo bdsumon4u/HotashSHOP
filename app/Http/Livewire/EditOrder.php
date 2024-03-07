@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Notifications\User\OrderConfirmed;
 use App\Order;
 use App\Pathao\Facade\Pathao;
 use App\Product;
@@ -138,8 +139,12 @@ class EditOrder extends Component
         }
 
         if ($this->order->exists) {
+            $confirming = false;
             if ($this->status != $this->order->status) {
-                $this->order->forceFill(['status_at' => now()->toDateTimeString()]);
+                $confirming = $this->status === 'CONFIRMED';
+                $this->order->forceFill([
+                    'status_at' => now()->toDateTimeString(),
+                ]);
             }
 
             $this->order->update([
@@ -152,6 +157,10 @@ class EditOrder extends Component
                 'data' => $this->data,
                 'products' => json_encode($this->selectedProducts),
             ]);
+
+            if ($confirming) {
+                $this->order->user->notify(new OrderConfirmed($this->order));
+            }
 
             session()->flash('success', 'Order updated successfully.');
         } else {
