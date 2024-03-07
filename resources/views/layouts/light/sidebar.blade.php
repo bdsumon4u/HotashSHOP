@@ -158,13 +158,15 @@
                         </a>
                     </li>
 
-                    <li>
-                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.orders.filter' ? 'active' : '' }}"
-                            href="{{ route('admin.orders.filter') }}">
-                            <i data-feather="pie-chart"> </i>
-                            <span>Top Products</span>
-                        </a>
-                    </li>
+                    @foreach ([null => 'Order', 'COMPLETED' => 'Top Products', 'WAITING' => 'Waiting Products', 'SHIPPING' => 'Shipping Products', 'CONFIRMED' => 'Confirmed Products'] as $status => $title)
+                        <li>
+                            <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.orders.filter' && request('status') == $status ? 'active' : '' }}"
+                                href="{{ route('admin.orders.filter', ['status' => $status]) }}">
+                                <i data-feather="pie-chart"> </i>
+                                <span>{{ $title }}</span>
+                            </a>
+                        </li>
+                    @endforeach
 
                     <li>
                         <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.reports.customer' ? 'active' : '' }}"

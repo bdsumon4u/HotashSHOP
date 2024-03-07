@@ -140,7 +140,7 @@ class ReportController extends Controller
 
     public function customer(Request $request)
     {
-        $_start = Carbon::parse(\request('start_d'));
+        $_start = Carbon::parse(\request('start_d', '1970-01-01'));
         $start = $_start->format('Y-m-d');
         $_end = Carbon::parse(\request('end_d'));
         $end = $_end->format('Y-m-d');
