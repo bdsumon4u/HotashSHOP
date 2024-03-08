@@ -192,7 +192,7 @@ class EditOrder extends Component
         if (strlen($this->search) > 2) {
             $products = Product::with('variations.options')
                 ->whereNotIn('id', array_keys($this->selectedProducts))
-                ->where('name', 'like', "%$this->search%")
+                ->where(fn ($q) => $q->where('name', 'like', "%$this->search%")->orWhere('sku', $this->search))
                 ->whereNull('parent_id')
                 ->whereIsActive(1)
                 ->take(5)

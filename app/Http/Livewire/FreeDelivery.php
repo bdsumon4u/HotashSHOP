@@ -46,6 +46,8 @@ class FreeDelivery extends Component
             'image' => optional($product->base_image)->src,
             'quantity' => $quantity,
         ];
+
+        $this->dispatchBrowserEvent('notify', ['message' => 'Product added successfully.']);
     }
 
     public function increaseQuantity($id)
@@ -66,7 +68,8 @@ class FreeDelivery extends Component
     {
         $products = collect();
         if (strlen($this->search) > 2) {
-            $products = Product::where('name', 'like', "%$this->search%")
+            $products = Product::where(fn ($q) => $q->where('name', 'like', "%$this->search%")->orWhere('sku', $this->search))
+                ->whereNotIn('id', array_keys($this->selectedProducts))
                 ->whereNull('parent_id')
                 ->whereIsActive(1)
                 ->take(5)

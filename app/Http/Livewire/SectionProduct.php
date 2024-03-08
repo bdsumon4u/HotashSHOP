@@ -23,7 +23,7 @@ class SectionProduct extends Component
             return $this->products = [];
         }
         $this->products = Product::whereNull('parent_id')
-            ->where('name', 'like', "%{$this->search}%")
+            ->where(fn ($q) => $q->where('name', 'like', "%$this->search%")->orWhere('sku', $this->search))
             ->take(5)->get()->map(function ($product, $i) {
                 return [
                     'order' => $i + 1,
