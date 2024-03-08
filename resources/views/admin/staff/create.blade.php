@@ -22,12 +22,12 @@
                         <x-error field="name" />
                     </div>
                     <div class="form-group">
-                        <label for="email">Email</label><span class="text-danger">*</span>
+                        <label for="email">Email/Phone</label><span class="text-danger">*</span>
                         <x-input name="email" />
                         <x-error field="email" />
                     </div>
                     <div class="form-group">
-                        <label for="password">Password</label>
+                        <label for="password">Password</label><span class="text-danger">*</span>
                         <x-input name="password" />
                         <x-error field="password" />
                     </div>

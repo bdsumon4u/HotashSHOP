@@ -22,7 +22,7 @@
                         <x-error field="name" />
                     </div>
                     <div class="form-group">
-                        <label for="email">Email</label><span class="text-danger">*</span>
+                        <label for="email">Email/Phone</label><span class="text-danger">*</span>
                         <x-input name="email" :value="$admin->email" />
                         <x-error field="email" />
                     </div>
