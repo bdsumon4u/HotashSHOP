@@ -1,7 +1,7 @@
 <div class="product__info">
     <h3 class="product__name mb-2" data-name="{{$selectedVar->var_name}}">{{ $product->name }}</h1>
     <div class="d-flex justify-content-between border-top pt-2 mb-2">
-        <div>Code: <strong>{{ $selectedVar->sku }}</strong></div>
+        <div>Product Code: <strong>{{ $selectedVar->sku }}</strong></div>
         <div>Availability:
             <strong>
                 @if(! $selectedVar->should_track)
