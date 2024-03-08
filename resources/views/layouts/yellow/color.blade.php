@@ -135,11 +135,17 @@
     .product-card:hover:before {
         box-shadow: inset 0 0 0 2px {{$color->primary->text_color}} !important;
     }
-    .product-card__badge--sale {
-        background: {{$color->primary->background_color}} !important;
+    .product-card__badge.product-card__badge--sale {
+        background: {{$color->badge->background_color}} !important;
+        color: {{$color->badge->text_color}} !important;
     }
-    .product-card__badge--sale:hover {
-        background: {{$color->primary->background_hover}} !important;
+    .product-card__badge.product-card__badge--sale:hover {
+        background: {{$color->badge->background_hover}} !important;
+        color: {{$color->badge->text_hover}} !important;
+    }
+    .page-item.active .page-link {
+        background: {{$color->primary->background_color}} !important;
+        color: {{$color->primary->text_color}} !important;
     }
     .btn-primary {
         background-color: {{$color->primary->background_color}} !important;

@@ -58,6 +58,9 @@
         .products-list[data-layout^=grid-] .product-card .product-card__actions {
             padding: 0 14px 14px 14px;
         }
+        .product-card__badges-list {
+            flex-direction: row;
+        }
         .product-card__name {
             overflow: hidden;
             text-overflow: ellipsis;
