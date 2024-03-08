@@ -44,13 +44,13 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <x-label for="btn_name" />
+                                    <label for="btn_name">Button Text</label>
                                     <x-input name="btn_name" :value="$slide->btn_name" />
                                 </div>
                                 </div>
                                     <div class="col-md-6">
                                 <div class="form-group">
-                                    <x-label for="btn_href">Button Link</x-label>
+                                    <label for="btn_href">Button Link</label>
                                     <x-input name="btn_href" :value="$slide->btn_href" />
                                 </div>
                             </div>

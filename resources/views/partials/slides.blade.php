@@ -1,7 +1,7 @@
 @push('styles')
 <style>
     .block-slideshow__body .owl-carousel .owl-nav {
-        position: absolute;
+        /* position: absolute; */
         height: 100%;
         display: flex;
         width: 100%;
@@ -11,11 +11,19 @@
         top: 0;
     }
     .block-slideshow__body .owl-carousel .owl-nav button {
+        position: absolute;
+        top: 35%;
         height: 60px;
         color: white;
         background: rgba(0, 0, 0, 0.1);
         padding-left: 5px !important;
         padding-right: 5px !important;
+    }
+    .owl-prev {
+        left: 0;
+    }
+    .owl-next {
+        right: 0;
     }
     .block-slideshow__body .owl-carousel .owl-nav button:focus {
         outline: none;
