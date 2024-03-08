@@ -2,9 +2,9 @@
     <div class="col-12 col-md-8 pr-1">
         <div class="card mb-lg-0">
             <div class="card-body p-3">
-                <h5 class="border text-success text-center" style="background: #eee; padding: 2px 10px;">
-                    আপনার নাম, মোবাইল নাম্বার, ঠিকানা, লিখে <span class="text-danger">কনফার্ম অর্ডার</span> বাটনে ক্লিক করুন।
-                </h5>
+                <div class="border text-danger text-center mb-2" style="padding: 2px 10px; font-size: 1.25rem;">
+                    আপনার নাম, মোবাইল নাম্বার, ঠিকানা, লিখে <strong>কনফার্ম অর্ডার</strong> বাটনে ক্লিক করুন।
+                </div>
                 <div class="form-row">
                     <div class="form-group col-md-3 m-0">
                         <label>আপনার নাম: <span class="text-danger">*</span></label>
