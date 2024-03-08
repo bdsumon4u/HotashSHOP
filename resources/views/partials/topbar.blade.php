@@ -12,9 +12,11 @@
             @endforeach
             <marquee class="d-flex align-items-center h-100 mx-2" behavior="" direction="">{!! $scroll_text ?? '' !!}</marquee>
             <div class="topbar__spring"></div>
+            @if($show_option->track_order ?? false)
             <div class="topbar__item topbar__item--link">
                 <a class="topbar-link" href="{{ url('/track-order') }}">Track Order</a>
             </div>
+            @endif
         </div>
     </div>
 </div>

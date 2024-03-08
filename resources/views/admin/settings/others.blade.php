@@ -47,5 +47,21 @@
                 <x-error field="scroll_text" />
             </div>
         </div>
+        <div class="col-md-12">
+            <div class="d-flex form-group">
+                <div class="checkbox checkbox-secondary mr-md-2">
+                    <input type="hidden" name="show_option[track_order]" value="0">
+                    <x-checkbox id="show-track-order" name="show_option[track_order]" value="1"
+                        :checked="!!($show_option->track_order ?? false)" />
+                    <label for="show-track-order">Show `Track Order` Option</label>
+                </div>
+                <div class="checkbox checkbox-secondary ml-md-2">
+                    <input type="hidden" name="show_option[customer_login]" value="0">
+                    <x-checkbox id="show-customer-login" name="show_option[customer_login]" value="1"
+                        :checked="!!($show_option->customer_login ?? false)" />
+                    <label for="show-customer-login">Show `Customer Login` Option</label>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

@@ -209,27 +209,18 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <button class="btn btn-outline-primary"
-                                                    wire:click="decreaseQuantity({{ $product['id'] }})"
-                                                    type="button">
-                                                    <i class="fa fa-minus"></i>
-                                                </button>
-                                            </div>
-                                            <input type="text" style="max-width: 100px;"
-                                                class="form-control text-center border-primary"
+                                        <div class="input-number product__quantity">
+                                            <input type="number" id="quantity-{{ $product['id'] }}"
+                                                class="form-control input-number__input"
                                                 name="quantity[{{ $product['id'] }}]"
-                                                id="quantity-{{ $product['id'] }}"
                                                 value="{{ old('quantity.' . $product['id'], $product['quantity']) }}"
-                                                readonly
+                                                min="1" readonly style="border-radius: 2px;"
                                             >
-                                            <div class="input-group-append">
-                                                <button class="btn btn-outline-primary"
-                                                    wire:click="increaseQuantity({{ $product['id'] }})"
-                                                    type="button">
-                                                    <i class="fa fa-plus"></i>
-                                                </button>
+                                            <div class="input-number__add" wire:click="increaseQuantity({{$product['id']}})">
+
+                                            </div>
+                                            <div class="input-number__sub" wire:click="decreaseQuantity({{$product['id']}})">
+
                                             </div>
                                         </div>
                                     </td>

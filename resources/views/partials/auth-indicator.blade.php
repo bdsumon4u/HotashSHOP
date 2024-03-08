@@ -1,4 +1,5 @@
 @guest('user')
+@if($show_option->customer_login ?? false)
 <div class="indicator ml-2">
     <a href="{{ route('auth') }}" class="indicator__button">
         <span class="indicator__area">
@@ -13,6 +14,7 @@
         </span>
     </a>
 </div>
+@endif
 @else
 <div class="indicator ml-2 indicator--trigger--click indicator--hover">
     <a href="#" class="indicator__button">

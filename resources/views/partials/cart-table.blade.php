@@ -22,7 +22,7 @@
                 </td>
                 <td class="cart-table__column cart-table__column--price" data-title="Price">TK {{$product['price']}}</td>
                 <td class="cart-table__column cart-table__column--quantity" data-title="Quantity">
-                    <div class="input-number">
+                    <div class="input-number product__quantity">
                         <input class="form-control input-number__input" type="number" min="1" value="{{$product['quantity']}}" max="{{$product['max']}}" readonly />
                         <div class="input-number__add" wire:click="increaseQuantity({{$product['id']}})"></div>
                         <div class="input-number__sub" wire:click="decreaseQuantity({{$product['id']}})"></div>

@@ -27,6 +27,61 @@
         display: flex;
         justify-content: center;
       }
+
+      .input-number {
+        display: block;
+        width: 100%;
+        position: relative;
+      }
+      .product__quantity {
+        width: 120px;
+      }
+      .input-number__input {
+        -moz-appearance: textfield;
+        display: block;
+        width: 100%;
+        min-width: 88px;
+        padding: 0 35px 0px 45px;
+        text-align: center;
+      }
+      .input-number__add, .input-number__sub {
+        position: absolute;
+        height: 100%;
+        width: 34px;
+        top: 0;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        opacity: .3;
+        transition: opacity .18s;
+      }
+      .input-number__add {
+        right: 1px;
+        border-left: 1px solid;
+      }
+      .input-number__sub {
+        left: 1px;
+        border-right: 1px solid;
+      }
+      .input-number__add:after, .input-number__add:before, .input-number__sub:after, .input-number__sub:before {
+        display: block;
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        background: currentColor;
+      }
+      .input-number__add:before, .input-number__sub:before {
+        width: 8px;
+        height: 2px;
+      }
+      .input-number__add:after {
+        width: 2px;
+        height: 8px;
+      }
     </style>
     @stack('styles')
     @bukStyles(true)

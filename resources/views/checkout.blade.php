@@ -14,7 +14,7 @@
         margin-bottom: 10px;
     }
     .form-control {
-        border: 2px solid #1783c4;
+        border: 2px solid;
     }
     .input-number .form-control:focus {
         box-shadow: none;

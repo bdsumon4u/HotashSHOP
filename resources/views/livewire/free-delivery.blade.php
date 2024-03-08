@@ -87,24 +87,20 @@
                                         href="{{ route('products.show', $product['slug']) }}">{{ $product['name'] }}</a>
                                 </td>
                                 <td>
-                                    <div class="input-group">
-                                        <button class="btn btn-outline-primary input-group-prepend"
-                                            wire:click="decreaseQuantity({{ $product['id'] }})"
-                                            type="button">
-                                            <i class="fa fa-minus"></i>
-                                        </button>
-                                        <input type="text" style="max-width: 100px;"
-                                            class="form-control text-center border-primary"
+                                    
+                                    <div class="input-number product__quantity">
+                                        <input type="number" id="quantity-{{ $product['id'] }}"
+                                            class="form-control input-number__input"
                                             name="free_delivery[products][{{$product['id']}}]"
-                                            id="quantity-{{ $product['id'] }}"
                                             wire:model="selectedProducts.{{$product['id']}}.quantity"
-                                            readonly
+                                            min="1" readonly style="border-radius: 2px;"
                                         >
-                                        <button class="btn btn-outline-primary input-group-append"
-                                            wire:click="increaseQuantity({{ $product['id'] }})"
-                                            type="button">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
+                                        <div class="input-number__add" wire:click="increaseQuantity({{$product['id']}})">
+
+                                        </div>
+                                        <div class="input-number__sub" wire:click="decreaseQuantity({{$product['id']}})">
+
+                                        </div>
                                     </div>
                                 </td>
                             </tr>
