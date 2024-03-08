@@ -59,7 +59,7 @@
         .zoom-control {
             height: 40px;
             outline: none;
-            border: 2px solid white;
+            border: 2px solid black;
             cursor: pointer;
             opacity: 0.8;
             display: flex;
