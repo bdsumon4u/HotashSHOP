@@ -1,13 +1,13 @@
 <header class="main-nav">
-    <div class="logo-wrapper">
-        <a href="{{ route('/') }}">
-            <span class="h4 m-0">{{ $company->name }}</span>
+    <div class="logo-wrapper px-3 py-2 d-flex align-items-center justify-content-between">
+        <a href="{{ route('admin.home') }}">
+            <img class="img-fluid but-not-fluid" src="{{ asset($logo->mobile ?? '') }}" alt="">
         </a>
-        <div class="back-btn"><i class="fa fa-angle-left"></i></div>
+        <div class="back-btn px-3 py-2"><i class="fa fa-angle-left"></i></div>
         <div class="toggle-sidebar"><i class="status_toggle middle" data-feather="grid" id="sidebar-toggle"> </i></div>
     </div>
     <div class="logo-icon-wrapper">
-        <a href="{{ route('/') }}">
+        <a href="{{ route('admin.home') }}">
             <img class="img-fluid" src="{{ asset($logo->favicon ?? '') }}" width="36" height="36" alt="">
         </a>
     </div>
@@ -17,7 +17,7 @@
             <div id="mainnav">
                 <ul class="nav-menu custom-scrollbar">
                     <li class="back-btn">
-                        <a href="{{ route('/') }}">
+                        <a href="{{ route('admin.home') }}">
                             <img class="img-fluid" src="{{ asset($logo->favicon ?? '') }}" height="36" width="36"
                                 alt="">
                         </a>

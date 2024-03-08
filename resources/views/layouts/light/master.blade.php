@@ -13,6 +13,16 @@
       @media (min-width: 992px) {
         .toggle-sidebar {display: none;}
       }
+      .but-not-fluid {
+          max-height: 65px;
+          height: 65px;
+      }
+      @media (max-width: 767px) {
+          .but-not-fluid {
+              max-height: 45px;
+              height: 45px;
+          }
+      }
       .range_inputs {
         display: flex;
         justify-content: center;
