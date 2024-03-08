@@ -22,24 +22,32 @@ class SMSChannel
             ? '88'.$notifiable->phone_number
             : Str::replaceFirst('+', '', $notifiable->phone_number);
 
-        $BDWebs = setting('BDWebs');
-        if (!$BDWebs->enabled) return;
-        // Send notification to the $notifiable instance...
-        $data = array_merge([
-            'type' => 'text',
-            'contacts' => $phone,
-            'label' => 'transactional',
-            'api_key' => $BDWebs->api_key,
-            'senderid' => $BDWebs->sender_id,
-        ], $notification->toArray($notifiable));
+        $ElitBuzz = setting('ElitBuzz');
+        if ($ElitBuzz->enabled) {
+            return $this->send_sms('https://msg.elitbuzz-bd.com/smsapi', array_merge([
+                'type' => 'text',
+                'contacts' => $phone,
+                'label' => 'transactional',
+                'api_key' => $ElitBuzz->api_key,
+                'senderid' => $ElitBuzz->sender_id,
+            ], $notification->toArray($notifiable)));
+        }
 
-        $this->send_sms($data);
+        $BDWebs = setting('BDWebs');
+        if ($BDWebs->enabled) {
+            return $this->send_sms('http://sms.bdwebs.com/smsapi', array_merge([
+                'type' => 'text',
+                'contacts' => $phone,
+                'label' => 'transactional',
+                'api_key' => $BDWebs->api_key,
+                'senderid' => $BDWebs->sender_id,
+            ], $notification->toArray($notifiable)));
+        }
     }
 
-    private function send_sms($data)
+    private function send_sms($url, $data)
     {
         Log::info('sending sms:', $data);
-        $url = "http://sms.bdwebs.com/smsapi";
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_POST, 1);

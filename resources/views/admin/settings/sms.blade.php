@@ -2,6 +2,25 @@
     <div class="form-row">
         <div class="form-group col-md-auto">
             <div class="checkbox checkbox-secondary">
+                <input type="hidden" name="ElitBuzz[enabled]" value="0">
+                <x-checkbox id="ElitBuzz" name="ElitBuzz[enabled]" value="1"
+                    :checked="!!($ElitBuzz->enabled ?? false)" />
+                <x-label for="ElitBuzz" />
+            </div>
+        </div>
+        <div class="form-group col-md-auto">
+            <x-input name="ElitBuzz[api_key]" :value="$ElitBuzz->api_key ?? ''" placeholder="Type API key here" />
+            <x-error field="ElitBuzz[api_key]" />
+        </div>
+        <div class="form-group col-md-auto">
+            <x-input name="ElitBuzz[sender_id]" :value="$ElitBuzz->sender_id ?? ''"
+                placeholder="Type API sender_id here" />
+            <x-error field="ElitBuzz[sender_id]" />
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-auto">
+            <div class="checkbox checkbox-secondary">
                 <input type="hidden" name="BDWebs[enabled]" value="0">
                 <x-checkbox id="BDWebs" name="BDWebs[enabled]" value="1"
                     :checked="!!($BDWebs->enabled ?? false)" />
