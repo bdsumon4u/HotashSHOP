@@ -199,11 +199,11 @@
                                         <a
                                             href="{{ route('products.show', $product['slug']) }}">{{ $product['name'] }}</a>
                                         
-                                        <div class="d-flex mt-2">
-                                            <div class="mr-2">
+                                        <div class="d-flex mt-2 flex-column flex-md-row">
+                                            <div class="mr-md-2 text-nowrap">
                                                 Unit Price: {{ $product['price'] }}
                                             </div>
-                                            <div class="ml-2">
+                                            <div class="ml-md-2 text-nowrap">
                                                 Total Price: {{ $product['price'] * $product['quantity'] }}
                                             </div>
                                         </div>

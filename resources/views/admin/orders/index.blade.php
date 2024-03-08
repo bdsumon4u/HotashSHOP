@@ -36,13 +36,13 @@
         <div class="col-sm-12">
             <div class="orders-table">
                 <div class="card rounded-0 shadow-sm">
-                    <div class="card-header p-3">
+                    <div class="card-header p-2">
                         <div class="row px-3 justify-content-between align-items-center">
                             <div>All Orders</div>
                             <a href="{{route('admin.orders.create')}}" class="btn btn-sm btn-primary">New Order</a>
                         </div>
                         <div class="row d-none" style="row-gap: .25rem;">
-                            <div class="col-auto pr-1 d-flex align-items-center" check-count></div>
+                            <div class="col-auto pr-0 d-flex align-items-center" check-count></div>
                             <div class="col-auto px-1">
                                 <select name="status" id="status" onchange="changeStatus()" class="form-control form-control-sm">
                                     <option value="">Change Status</option>
@@ -59,8 +59,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col pl-1"></div>
-                            <div class="col-auto">
+                            <div class="col-auto pl-0 ml-auto">
                                 <button onclick="courier()" id="courier" class="btn btn-sm btn-primary mr-1">Courier Booking</button>
                                 <button onclick="printInvoice()" id="invoice" class="btn btn-sm btn-primary ml-1">Invoice</button>
                             </div>
@@ -114,7 +113,7 @@
             });
 
             if (checklist.size > 0) {
-                $('[check-count]').text(checklist.size + ' items');
+                $('[check-count]').text(checklist.size + 'x');
                 $('.card-header > .row:last-child').removeClass('d-none');
                 $('.card-header > .row:first-child').addClass('d-none');
             } else {
