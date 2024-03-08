@@ -1,7 +1,12 @@
 <div class="tab-pane active" id="item-services" role="tabpanel">
     <div class="row">
         <div class="col-sm-12">
-            <h4><small class="border-bottom mb-1">Services</small></h4>
+            <div class="checkbox checkbox-secondary">
+                <input type="hidden" name="services[enabled]" value="0">
+                <x-checkbox id="services" name="services[enabled]" value="1"
+                    :checked="!!($services->enabled ?? false)" />
+                <label for="services">Services [display in home page]</label>
+            </div>
         </div>
     </div>
 
