@@ -68,7 +68,12 @@ class Checkout extends Component
 
     private function shippingCost()
     {
-        $shipping_cost = setting('delivery_charge')->{$this->shipping == 'Inside Dhaka' ? 'inside_dhaka' : 'outside_dhaka'} ?? config('services.shipping.' . $this->shipping);
+        $shipping_cost = 0;
+        if ($this->shipping) {
+            $shipping_cost = setting('delivery_charge')->{
+                $this->shipping == 'Inside Dhaka' ? 'inside_dhaka' : 'outside_dhaka'
+            } ?? config('services.shipping.' . $this->shipping);
+        }
 
         $freeDelivery = setting('free_delivery');
 

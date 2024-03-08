@@ -70,10 +70,12 @@
                             <th>Subtotal</th>
                             <td class="checkout-subtotal">{!!  theMoney($subtotal)  !!}</td>
                         </tr>
+                        @if($shipping)
                         <tr>
                             <th>Delivery Charge</th>
                             <td class="shipping">{!! $shipping_cost ? theMoney($shipping_cost) : 'FREE' !!}</td>
                         </tr>
+                        @endif
                     </tbody>
                     <tfoot class="checkout__totals-footer">
                         <tr>
@@ -116,10 +118,12 @@
                             <th>Subtotal</th>
                             <td class="checkout-subtotal desktop">{!!  theMoney($subtotal)  !!}</td>
                         </tr>
+                        @if($shipping)
                         <tr>
                             <th>Delivery Charge</th>
                             <td class="shipping">{!! $shipping_cost ? theMoney($shipping_cost) : 'FREE' !!}</td>
                         </tr>
+                        @endif
                     </tbody>
                     <tfoot class="checkout__totals-footer">
                         <tr>
