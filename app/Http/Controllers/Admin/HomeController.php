@@ -18,6 +18,10 @@ class HomeController extends Controller
      */
     public function index()
     {
+        if (!request()->has('status')) {
+            return redirect()->route('admin.home', array_merge(request()->all(), ['status' => 'CONFIRMED']));
+        }
+
         $_start = Carbon::parse(\request('start_d'));
         $start = $_start->format('Y-m-d');
         $_end = Carbon::parse(\request('end_d'));
