@@ -108,7 +108,7 @@ class OrderController extends Controller
         return view('admin.orders.invoices', compact('orders'));
     }
 
-    public function courier(Request $request)
+    public function booking(Request $request)
     {
         $request->validate(['order_id' => 'required']);
         $order_ids = explode(',', $request->order_id);
@@ -204,6 +204,19 @@ class OrderController extends Controller
                 'consignment_id' => $data->consignment_id,
             ],
         ]);
+    }
+
+    public function courier(Request $request)
+    {
+        $request->validate([
+            'courier' => 'required',
+            'order_id' => 'required|array',
+        ]);
+
+        Order::whereIn('id', $request->order_id)
+            ->get()->map->update(['data' => ['courier' => $request->courier]]);
+
+        return redirect()->back()->withSuccess('Courier Has Been Updated.');
     }
 
     public function status(Request $request)

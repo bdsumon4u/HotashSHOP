@@ -41,21 +41,27 @@
                             <div>All Orders</div>
                             <a href="{{route('admin.orders.create')}}" class="btn btn-sm btn-primary">New Order</a>
                         </div>
-                        <div class="row d-none">
+                        <div class="row d-none" style="row-gap: .25rem;">
                             <div class="col-auto pr-1 d-flex align-items-center" check-count></div>
                             <div class="col-auto px-1">
-                                <select name="status" id="status" class="form-control form-control-sm">
+                                <select name="status" id="status" onchange="changeStatus()" class="form-control form-control-sm">
                                     <option value="">Change Status</option>
                                     @foreach(config('app.orders', []) as $status)
                                     <option value="{{ $status }}">{{ $status }}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col pl-1">
-                                <button type="button" class="btn btn-sm btn-primary" onclick="changeStatus()">Update</button>
+                            <div class="col-auto px-1">
+                                <select name="courier" id="courier" onchange="changeCourier()" class="form-control form-control-sm">
+                                    <option value="">Change Courier</option>
+                                    @foreach(['Pathao', 'SteadFast', 'Manual'] as $provider)
+                                    <option value="{{ $provider }}">{{ $provider }}</option>
+                                    @endforeach
+                                </select>
                             </div>
+                            <div class="col pl-1"></div>
                             <div class="col-auto">
-                                <button onclick="courier()" id="courier" class="btn btn-sm btn-primary mr-1">Courier</button>
+                                <button onclick="courier()" id="courier" class="btn btn-sm btn-primary mr-1">Courier Booking</button>
                                 <button onclick="printInvoice()" id="invoice" class="btn btn-sm btn-primary ml-1">Invoice</button>
                             </div>
                         </div>
@@ -66,7 +72,7 @@
                                 <thead>
                                 <tr>
                                     <th style="max-width: 5%">
-                                        <input type="checkbox" class="form-control" name="check_all" style="height: 20px;">
+                                        <input type="checkbox" class="form-control" name="check_all" style="min-height: 20px;min-width: 20px;max-height: 20px;max-width: 20px;">
                                     </th>
                                     <th width="80">ID</th>
                                     <th>Customer</th>
@@ -108,7 +114,7 @@
             });
 
             if (checklist.size > 0) {
-                $('[check-count]').text(checklist.size + ' selected');
+                $('[check-count]').text(checklist.size + ' items');
                 $('.card-header > .row:last-child').removeClass('d-none');
                 $('.card-header > .row:first-child').addClass('d-none');
             } else {
@@ -246,6 +252,8 @@
         });
 
         function changeStatus() {
+            $('[name="status"]').prop('disabled', true);
+
             $.post({
                 url: '{{ route('admin.orders.status') }}',
                 data: {
@@ -259,6 +267,32 @@
                     table.draw();
 
                     $.notify('Status updated successfully', 'success');
+                },
+                complete: function () {
+                    $('[name="status"]').prop('disabled', false);
+                }
+            });
+        }
+
+        function changeCourier() {
+            $('[name="courier"]').prop('disabled', true);
+
+            $.post({
+                url: '{{ route('admin.orders.courier') }}',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    order_id: Array.from(checklist),
+                    courier: $('[name="courier"]').val(),
+                },
+                success: function (response) {
+                    // checklist.clear();
+                    // updateBulkMenu();
+                    table.draw();
+
+                    $.notify('Courier updated successfully', 'success');
+                },
+                complete: function () {
+                    $('[name="courier"]').prop('disabled', false);
                 }
             });
         }
@@ -278,7 +312,7 @@
             }).get().join(','), '_blank');
         }
         function courier() {
-            window.open('{{ route('admin.orders.courier') }}?order_id=' + $('[name="order_id[]"]:checked').map(function () {
+            window.open('{{ route('admin.orders.booking') }}?order_id=' + $('[name="order_id[]"]:checked').map(function () {
                 return $(this).val();
             }).get().join(','));
         }

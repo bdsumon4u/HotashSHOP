@@ -78,7 +78,7 @@ class OrderController extends Controller
                 return $row->data->subtotal + $row->data->shipping_cost - ($row->data->discount ?? 0) - ($row->data->advanced ?? 0);
             })
             ->addColumn('checkbox', function ($row) {
-                return '<input type="checkbox" class="form-control" name="order_id[]" value="' . $row->id . '" style="height: 20px;">';
+                return '<input type="checkbox" class="form-control" name="order_id[]" value="' . $row->id . '" style="min-height: 20px;min-width: 20px;max-height: 20px;max-width: 20px;">';
             })
             ->editColumn('customer', function ($row) {
                 return "
@@ -97,7 +97,12 @@ class OrderController extends Controller
                 return $products . '</ul>';
             })
             ->addColumn('courier', function ($row) {
-                if (!($row->data->courier ?? false) || !($row->data->consignment_id ?? false)) return '';
+                if (!($row->data->courier ?? false)) {
+                    return '';
+                }
+                if (!($row->data->consignment_id ?? false)) {
+                    return $row->data->courier;
+                }
 
                 if ($row->data->courier == 'Pathao') {
                     $link = 'https://merchant.pathao.com/tracking?consignment_id=' . $row->data->consignment_id . '&phone=' . Str::after($row->phone, '+88');

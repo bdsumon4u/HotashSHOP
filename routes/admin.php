@@ -37,7 +37,8 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
         Route::get('/reports/filter', 'OrderController@filter')->name('orders.filter');
         Route::get('/reports/customer', 'ReportController@customer')->name('reports.customer');
         Route::get('/orders/invoices', 'OrderController@invoices')->name('orders.invoices');
-        Route::get('/orders/courier', 'OrderController@courier')->name('orders.courier');
+        Route::get('/orders/booking', 'OrderController@booking')->name('orders.booking');
+        Route::post('/orders/change-courier', 'OrderController@courier')->name('orders.courier');
         Route::post('/orders/change-status', 'OrderController@status')->name('orders.status');
         Route::patch('/orders/{order}/update-quantity', 'OrderController@updateQuantity')->name('orders.update-quantity');
         Route::post('/logout-others/{admin}', function (\App\Admin $admin) {
