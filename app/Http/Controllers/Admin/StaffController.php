@@ -109,8 +109,10 @@ class StaffController extends Controller
             'role_id' => 'required',
             'is_active' => 'sometimes',
         ]);
-        if (isset($data['password'])) {
+        if ($data['password']) {
             $data['password'] = bcrypt($data['password']);
+        } else {
+            unset($data['password']);
         }
         if (!isset($data['is_active'])) {
             $data['is_active'] = $data['role_id'] != Admin::SALESMAN;
