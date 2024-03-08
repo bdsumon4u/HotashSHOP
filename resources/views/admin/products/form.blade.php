@@ -31,9 +31,9 @@
     </div>
     <div class="col-md-3">
         <div class="form-group">
-            <x-label for="brand" />
-            <x-category-dropdown :categories="$brands" name="brand" placeholder="Select Brand" id="brand" :selected="old('brand', $product->brand_id)" />
-            <x-error field="brand" class="d-block" />
+            <label for="price">Old Price</label><span class="text-danger">*</span>
+            <x-input name="price" :value="$product->price" />
+            <x-error field="price" />
         </div>
         <div class="form-group">
             <x-label for="categories" /><span class="text-danger">*</span>
@@ -43,14 +43,14 @@
     </div>
     <div class="col-md-3">
         <div class="form-group">
-            <label for="price">Old Price</label><span class="text-danger">*</span>
-            <x-input name="price" :value="$product->price" />
-            <x-error field="price" />
-        </div>
-        <div class="form-group">
-            <x-label for="selling_price" /><span class="text-danger">*</span>
+            <label for="selling_price">New Price</label><span class="text-danger">*</span>
             <x-input name="selling_price" :value="$product->selling_price" />
             <x-error field="selling_price" />
+        </div>
+        <div class="form-group">
+            <x-label for="brand" />
+            <x-category-dropdown :categories="$brands" name="brand" placeholder="Select Brand" id="brand" :selected="old('brand', $product->brand_id)" />
+            <x-error field="brand" class="d-block" />
         </div>
     </div>
     <div class="col-md-6">
@@ -118,7 +118,7 @@
                             <span>Browse</span>
                         </button>
                     </label>
-                    <div class="additional_images-previews d-flex" style="margin-left: -5px;">
+                    <div class="additional_images-previews d-flex flex-wrap" style="margin-left: -5px;">
                         @php
                             $ids = old('additional_images', $product->additional_images->pluck('id')->toArray());
                             $srcs = old('additional_images_srcs', $product->additional_images->pluck('src')->toArray());
