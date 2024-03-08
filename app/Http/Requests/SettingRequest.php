@@ -35,6 +35,7 @@ class SettingRequest extends FormRequest
                 'company.phone' => 'required',
                 'company.tagline' => 'required',
                 'company.address' => 'required',
+                'call_for_order' => 'required',
             ];
         }
 
@@ -94,7 +95,6 @@ class SettingRequest extends FormRequest
         return [
             'products_page' => 'required|array',
             'related_products' => 'required|array',
-            'call_for_order' => 'required',
             'scroll_text' => 'nullable',
         ];
     }

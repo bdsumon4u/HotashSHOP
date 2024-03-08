@@ -6,7 +6,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="form-group">
                 <label for="">Products Page</label>
                 <div class="row borderr py-2">
@@ -23,7 +23,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="form-group">
                 <label for="">Related Products</label>
                 <div class="row borderr py-2">
@@ -38,13 +38,6 @@
                         <x-error field="related_products.cols" />
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <label for="">Call For Order (space separated)</label>
-                <x-input name="call_for_order" id="call_for_order" :value="$call_for_order ?? null" />
-                <x-error field="call_for_order" />
             </div>
         </div>
         <div class="col-md-12">
