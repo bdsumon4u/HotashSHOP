@@ -15,7 +15,7 @@
                     <div class="form-group col-md-6">
                         <x-label for="phone">Phone</x-label> <span
                             class="text-danger">*</span>
-                        <x-input name="phone" wire:model.defer="phone" placeholder="Type your phone number here" />
+                        <x-input type="tel" name="phone" wire:model.defer="phone" placeholder="Type your phone number here" />
                         <x-error field="phone" />
                     </div>
                 </div>

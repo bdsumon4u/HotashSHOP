@@ -55,24 +55,29 @@
             </div>
             <div class="form-group">
                 <label for="company-phone">Company Phone</label>
-                <x-input name="company[phone]" id="company-phone" :value="$company->phone ?? ''" />
+                <x-input type="tel" name="company[phone]" id="company-phone" :value="$company->phone ?? ''" />
                 <x-error field="company.phone" />
+            </div>
+            <div class="form-group">
+                <label for="whatsapp-number">Whatsapp No.</label>
+                <x-input type="tel" name="company[whatsapp]" id="whatsapp-number" :value="$company->whatsapp ?? ''" />
+                <x-error field="company.whatsapp" />
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 <label for="company-tagline">Company Tagline</label>
-                <x-input name="company[tagline]" id="company-tagline" :value="$company->tagline ?? ''" />
+                <x-textarea name="company[tagline]" id="company-tagline">{{ $company->tagline ?? '' }}</x-textarea>
                 <x-error field="company.tagline" />
             </div>
             <div class="form-group">
                 <label for="company-address">Company Address</label>
-                <x-input name="company[address]" id="company-address" :value="$company->address ?? ''" />
+                <x-textarea name="company[address]" id="company-address">{{ $company->address ?? '' }}</x-textarea>
                 <x-error field="company.address" />
             </div>
             <div class="form-group">
                 <label for="">Call For Order (space separated)</label>
-                <x-input name="call_for_order" id="call_for_order" :value="$call_for_order ?? null" />
+                <x-input type="tel" name="call_for_order" id="call_for_order" :value="$call_for_order ?? null" />
                 <x-error field="call_for_order" />
             </div>
         </div>

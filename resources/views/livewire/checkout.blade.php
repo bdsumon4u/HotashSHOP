@@ -19,7 +19,7 @@
                         <label>মোবাইল নম্বর: <span class="text-danger">*</span></label>
                     </div>
                     <div class="form-group col-md-9">
-                        <x-input name="phone" wire:model.defer="phone" placeholder="+880" />
+                        <x-input type="tel" name="phone" wire:model.defer="phone" placeholder="+880" />
                         <x-error field="phone" />
                     </div>
                 </div>

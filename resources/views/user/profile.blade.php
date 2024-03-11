@@ -32,7 +32,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="profile-phone">Phone Number</label>
-                                    <x-input name="phone_number" id="profile-phone" placeholder="Phone Number" :value="$user->phone_number" />
+                                    <x-input type="tel" name="phone_number" id="profile-phone" placeholder="Phone Number" :value="$user->phone_number" />
                                     <x-error field="phone_number" />
                                 </div>
                             </div>
