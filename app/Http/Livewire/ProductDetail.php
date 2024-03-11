@@ -53,7 +53,7 @@ class ProductDetail extends Component
                 'image' => optional($this->selectedVar->base_image)->path,
                 'category' => $this->product->category,
                 'quantity' => min($this->quantity, $this->maxQuantity),
-                'price' => $this->selectedVar->price,
+                'price' => $this->selectedVar->selling_price,
                 'max' => $this->maxQuantity,
             ];
         }

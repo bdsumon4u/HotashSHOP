@@ -23,7 +23,7 @@ class ProductCard extends Component
                 'image' => optional($this->product->base_image)->path,
                 'category' => $this->product->category,
                 'quantity' => 1,
-                'price' => $this->product->price,
+                'price' => $this->product->selling_price,
                 'max' => $this->product->should_track ? min($this->product->stock_count, $fraudQuantity) : $fraudQuantity,
             ];
         }
