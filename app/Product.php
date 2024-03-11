@@ -69,6 +69,10 @@ class Product extends Model
             }
         });
 
+        static::deleting(function ($product) {
+            $product->variations->each->delete();
+        });
+
         static::addGlobalScope('latest', function (Builder $builder) {
             $builder->latest('products.created_at');
         });
