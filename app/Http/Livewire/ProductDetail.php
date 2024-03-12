@@ -13,6 +13,7 @@ class ProductDetail extends Component
     public array $options = [];
     public int $maxQuantity = 0;
     public int $quantity = 1;
+    public bool $showBrandCategory = false;
 
     public function updatedOptions($value, $key)
     {
@@ -83,11 +84,12 @@ class ProductDetail extends Component
     public function mount()
     {
         $maxPerProduct = setting('fraud')->max_qty_per_product;
-        if ($this->product->variations->count() > 0) {
+        if ($this->product->variations->isNotEmpty()) {
             $this->selectedVar = $this->product->variations->where('slug', request()->segment(2))->first()
                 ?? $this->product->variations->random();
         } else {
             $this->selectedVar = $this->product;
+            $this->showBrandCategory = true;
         }
         $this->options = $this->selectedVar->options->pluck('id', 'attribute_id')->toArray();
         $this->maxQuantity = $this->selectedVar->should_track ? min($this->selectedVar->stock_count, $maxPerProduct) : $maxPerProduct;

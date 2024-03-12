@@ -1,5 +1,5 @@
 @extends('layouts.yellow.master')
-
+@php $services = setting('services') @endphp
 @push('styles')
     <link rel="stylesheet" href="{{ asset('strokya/vendor/xzoom/xzoom.css') }}">
     <link rel="stylesheet" href="{{ asset('strokya/vendor/xZoom-master/example/css/demo.css') }}">
@@ -35,7 +35,11 @@
             }
         }
         .product__content {
+            @if (!!$services->enabled)
             grid-template-columns: [gallery] calc(40% - 30px) [info] calc(40% - 35px) [sidebar] calc(25% - 10px);
+            @else
+            grid-template-columns: [gallery] calc(50% - 30px) [info] calc(50% - 35px);
+            @endif
             grid-column-gap: 10px;
         }
 
@@ -118,9 +122,11 @@
                         </div>
                     </div>
                     <!-- .product__info -->
-                    <livewire:product-detail :product="$product" />
+                    <livewire:product-detail :product="$product" :show-brand-category="!$services->enabled" />
                     <!-- .product__info / end -->
+                    @if(!!$services->enabled)
                     <div>
+                        @if($showBrandCategory)
                         <div class="product__footer mt-2 mb-2 border p-3">
                             <div class="product__tags tags">
                                 @if($product->brand)
@@ -136,27 +142,27 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
                         <div class="block-features__list flex-column d-none d-md-block">
-                            @if($services = setting('services'))
-                                @foreach(config('services.services', []) as $num => $icon)
-                                    <div class="block-features__item">
-                                        <div class="block-features__icon">
-                                            <svg width="48px" height="48px">
-                                                <use xlink:href="{{ asset($icon) }}"></use>
-                                            </svg>
-                                        </div>
-                                        <div class="block-features__content">
-                                            <div class="block-features__title">{{ $services->$num->title }}</div>
-                                            <div class="block-features__subtitle">{{ $services->$num->detail }}</div>
-                                        </div>
+                            @foreach(config('services.services', []) as $num => $icon)
+                                <div class="block-features__item">
+                                    <div class="block-features__icon">
+                                        <svg width="48px" height="48px">
+                                            <use xlink:href="{{ asset($icon) }}"></use>
+                                        </svg>
                                     </div>
-                                    @if(!$loop->last)
-                                        <div class="block-features__divider"></div>
-                                    @endif
-                                @endforeach
-                            @endif
+                                    <div class="block-features__content">
+                                        <div class="block-features__title">{{ $services->$num->title }}</div>
+                                        <div class="block-features__subtitle">{{ $services->$num->detail }}</div>
+                                    </div>
+                                </div>
+                                @if(!$loop->last)
+                                    <div class="block-features__divider"></div>
+                                @endif
+                            @endforeach
                         </div>
                     </div>
+                    @endif
                 </div>
             </div>
             <div id="accordion" class="mt-3">

@@ -87,17 +87,12 @@ class SettingRequest extends FormRequest
             return $rules;
         }
 
-        if ($this->get('tab') == 'services') {
-            return [
-                'services' => 'required|array',
-            ];
-        }
-
         return [
             'products_page' => 'required|array',
             'related_products' => 'required|array',
             'scroll_text' => 'nullable',
             'show_option' => 'required|array',
+            'services' => 'required|array',
         ];
     }
 }

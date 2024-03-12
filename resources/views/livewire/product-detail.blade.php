@@ -99,6 +99,23 @@
                 {!! $deliveryText !!}
             </div>
             @endif
+            @if($product->variations->isEmpty() || $showBrandCategory)
+            <div class="product__footer mt-2 mb-2 border p-3">
+                <div class="product__tags tags">
+                    @if($product->brand)
+                        <p class="text-secondary mb-0">
+                            Brand: <a href="{{ route('brands.products', $product->brand) }}" class="text-primary badge badge-light"><big>{{ $product->brand->name }}</big></a>
+                        </p>
+                    @endif
+                    <div class="mt-2">
+                        <p class="text-secondary mb-0 d-inline-block mr-2">Categories:</p>
+                        @foreach($product->categories as $category)
+                            <a href="{{ route('categories.products', $category) }}" class="badge badge-primary">{{ $category->name }}</a>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+            @endif
         </form><!-- .product__options / end -->
     </div><!-- .product__end -->
 </div>

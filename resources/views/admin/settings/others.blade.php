@@ -55,13 +55,42 @@
                         :checked="!!($show_option->track_order ?? false)" />
                     <label for="show-track-order">Show `Track Order` Option</label>
                 </div>
-                <div class="checkbox checkbox-secondary ml-md-2">
+                <div class="checkbox checkbox-secondary mx-md-2">
                     <input type="hidden" name="show_option[customer_login]" value="0">
                     <x-checkbox id="show-customer-login" name="show_option[customer_login]" value="1"
                         :checked="!!($show_option->customer_login ?? false)" />
                     <label for="show-customer-login">Show `Customer Login` Option</label>
                 </div>
+                <div class="checkbox checkbox-secondary ml-md-2">
+                    <input type="hidden" name="services[enabled]" value="0">
+                    <x-checkbox id="services" name="services[enabled]" value="1"
+                        :checked="!!($services->enabled ?? false)" />
+                    <label for="services">Show `Services` Section</label>
+                </div>
             </div>
         </div>
+    </div>
+    <div class="row">
+        @foreach(config('services.services', []) as $num => $icon)
+        <div class="col-md-6">
+            <div class="input-group">
+                <div class="input-group-prepend mr-1">
+                    <span class="input-group-text">
+                        <svg width="24px" height="24px"><use xlink:href="{{ asset($icon) }}"></use></svg>
+                    </span>
+                </div>
+                <div class="" style="flex: 1;">
+                    <div class="form-group mb-1">
+                        <label for="" class="ml-1">Title</label>
+                        <x-input name="services[{{ $num }}][title]" :value="$services->$num->title ?? ''" />
+                    </div>
+                    <div class="form-group mt-2 mb-0">
+                        <label for="" class="ml-1">Detail</label>
+                        <x-input name="services[{{ $num }}][detail]" :value="$services->$num->detail ?? ''" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endforeach
     </div>
 </div>
