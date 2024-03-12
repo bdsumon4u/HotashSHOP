@@ -164,7 +164,7 @@
             var codes = uniqueness.concat(duplicates.map(order => order.id)).join(',');
             var url = '{{route('admin.reports.store')}}';
             var method = 'POST';
-            if ({{isset($report)}}) {
+            if ({{isset($report)?1:0}}) {
                 url = '{{route('admin.reports.update', $report->id??0)}}';
                 method = 'PUT';
             }
@@ -200,7 +200,7 @@
                     total: amount,
                 },
                 success: function (response, status, xhr) {
-                    if ({{isset($report)}})
+                    if ({{isset($report)?1:0}})
                         $.notify('Report updated successfully', 'success');
                     else
                         $.notify('Report saved successfully', 'success');
@@ -310,7 +310,8 @@
                 $('.card-footer table tbody tr:last-child').remove();
             }
 
-            for (var product of order.products) {
+            for (var key in order.products) {
+                var product = order.products[key];
                 var tr = $('.card-footer table tbody tr[data-id="'+product.id+'"]');
 
                 quantity += parseInt(product.quantity);
