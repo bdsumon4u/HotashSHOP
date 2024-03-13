@@ -41,6 +41,9 @@
         page-break-after: always;
         border-top: 2px dashed #000;
     }
+    .page-main-header, .page-header, .card-header, .footer-fix {
+        display: none !important;
+    }
 }
 </style>
 @endpush
@@ -82,6 +85,9 @@
                             </div>
                             <div class="col pl-1">
                                 <button class="btn btn-primary" type="submit">Filter</button>
+                            </div>
+                            <div class="col pl-1">
+                                <button class="btn btn-primary d-block ml-auto" onclick="window.print()">Print</button>
                             </div>
                         </div>
                     </form>
