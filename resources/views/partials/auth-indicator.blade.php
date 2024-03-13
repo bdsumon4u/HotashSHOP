@@ -1,7 +1,7 @@
 @guest('user')
 @if($show_option->customer_login ?? false)
 <div class="indicator ml-2">
-    <a href="{{ route('auth') }}" class="indicator__button">
+    <a href="{{ auth('admin')->check() ? route('admin.home') : route('auth') }}" class="indicator__button">
         <span class="indicator__area">
             <!-- <svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 0 32 32" width="32">
                 <g data-name="1" id="_1">

@@ -21,7 +21,9 @@
       <button style="padding:2px 10px;border:none;background:none;" class="toggle-sidebar"><i class="status_toggle middle" data-feather="grid" id="sidebar-toggle"> </i></button>
     </div>
     <div class="left-menu-header col horizontal-wrapper pl-0">
-
+      <ul class="horizontal-menu">
+        <li class="mega-menu outside"><a class="nav-link" href="{{ url('/') }}" target="_blank">Store Front</a></li>
+      </ul>
     </div>
     <div class="nav-right col-8 pull-right right-menu">
       <ul class="nav-menus">
