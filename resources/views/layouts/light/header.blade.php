@@ -39,7 +39,11 @@
             <img class="b-r-10" src="{{asset('assets/images/dashboard/profile.jpg')}}" alt="">
             <div class="media-body">
               <span>{{ $admin->name }}</span>
-              <p class="mb-0 font-roboto">Admin <i class="middle fa fa-angle-down"></i></p>
+              @foreach(['admin', 'manager', 'salesmana'] as $role)
+                @if($admin->is($role))
+                <p class="mb-0 font-roboto text-capitalize">{{$role}} <i class="middle fa fa-angle-down"></i></p>
+                @endif
+              @endforeach
             </div>
           </div>
           <ul class="profile-dropdown onhover-show-div">
