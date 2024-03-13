@@ -60,6 +60,7 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
 
             return redirect()->back()->withErrors(['password' => 'Password is incorrect']);
         })->name('logout-others');
+        Route::get('/customers', 'CustomerController')->name('customers');
         Route::resources([
             'staffs'       => 'StaffController',
             'slides'        => 'SlideController',

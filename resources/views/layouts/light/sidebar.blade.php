@@ -205,8 +205,8 @@
                     </li>
 
                     <li>
-                        <a class="nav-link menu-title link-nav {{ false ? 'active' : '' }}"
-                            href="#">
+                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.customers' ? 'active' : '' }}"
+                            href="{{ route('admin.customers') }}">
                             <i data-feather="users"> </i>
                             <span>Customers</span>
                         </a>
