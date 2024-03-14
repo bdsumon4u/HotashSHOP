@@ -38,18 +38,41 @@
         </div>
     </div>
     <div class="form-row border-top border-bottom mt-2 pt-2 mb-4">
-        <div class="col-md-12">
+        <div class="col-md-10">
             <div class="form-group">
                 <label for="">OTP Template</label>
                 <x-textarea name="SMSTemplates[otp]" id="SMSTemplates[otp]">{{$SMSTemplates->otp ?? null}}</x-textarea>
                 <x-error field="SMSTemplates[otp]" />
             </div>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="">Short Code(s):</label>
+                <ul>
+                    <li>
+                        <small>OTP Code: <strong>@{{code}}</strong></small>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-10">
             <div class="form-group">
                 <label for="">Confirmation Template</label>
                 <x-textarea name="SMSTemplates[confirmation]" id="SMSTemplates[confirmation]">{{$SMSTemplates->confirmation ?? null}}</x-textarea>
                 <x-error field="SMSTemplates[confirmation]" />
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="">Short Code(s):</label>
+                <ul>
+                    <li>
+                        <small>Order ID: <strong>@{{id}}</strong></small>
+                    </li>
+                    <li>
+                        <small>Customer Name: <strong>@{{name}}</strong></small>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
