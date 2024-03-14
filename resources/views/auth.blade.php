@@ -9,8 +9,13 @@
         <div class="row">
             <div class="col-md-6 offset-md-3 d-flex">
                 <div class="card flex-grow-1 mb-md-0">
-                    <div class="card-body">
+                    <div class="card-header text-center border-bottom py-3">
                         <h3 class="card-title">Login</h3>
+                    </div>
+                    <div class="card-header text-center border-bottom">
+                        <img src="{{ asset(setting('logo')->desktop ?? '') }}" alt="Logo" class="img-fluid">
+                    </div>
+                    <div class="card-body">
                         @php($login = old('login') && (cache()->get('auth:'.old('login')) || session()->has('success')))
                         <x-form :action="route('user.login')" :method="$login ? 'post' : 'get'">
                             <div class="form-group">
