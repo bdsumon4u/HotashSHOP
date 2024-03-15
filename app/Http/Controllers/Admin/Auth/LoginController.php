@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers\Admin\Auth;
 
+use App\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Notifications\Admin\SendOTP;
 use App\Providers\RouteServiceProvider;
 use Hotash\LaravelMultiUi\Backend\AuthenticatesUsers;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
@@ -52,10 +57,74 @@ class LoginController extends Controller
      * Show the application's login form.
      *
      * @return \Illuminate\Http\Response
+     * @throws ValidationException
      */
-    public function showLoginForm()
+    public function showLoginForm(Request $request)
     {
-        return view('admin.auth.login');
+        if (!setting('show_option')->admin_otp) {
+            return view('admin.auth.login');
+        }
+
+        return view('admin.auth');
+    }
+
+    /**
+     * Handle a login request to the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Http\JsonResponse
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function login(Request $request)
+    {
+        $this->validateLogin($request);
+
+        if (!$user = $this->getUser()) {
+            $this->incrementLoginAttempts($request);
+
+            return $this->sendFailedLoginResponse($request);
+        }
+
+        $request->merge([
+            $this->getLoginType($request) => $request->input('login')
+        ]);
+
+        // If the class is using the ThrottlesLogins trait, we can automatically throttle
+        // the login attempts for this application. We'll key this by the login field and
+        // the IP address of the client making these requests into this application.
+        if (method_exists($this, 'hasTooManyLoginAttempts') &&
+            $this->hasTooManyLoginAttempts($request)) {
+            $this->fireLockoutEvent($request);
+
+            return $this->sendLockoutResponse($request);
+        }
+
+        if (setting('show_option')->admin_otp && Hash::check($request->input('password'), $user->password)) {
+            if (!$request->otp) {
+                $this->sendOTP($user);
+                return redirect()->back()->withInput()->withErrors([
+                    'otp' => 'Please enter the OTP.',
+                ])->with('token:sent', 'An OTP has been sent to company phone.');
+            }
+
+            if (Cache::get('auth:'.$request->input('login')) != $request->otp) {
+                return redirect()->back()->withInput()->withErrors([
+                    'otp' => 'Invalid OTP.',
+                ])->with('token:sent', 'Didn\'t match OTP sent to company phone.');
+            }
+        }
+
+        if ($this->attemptLogin($request)) {
+            return $this->sendLoginResponse($request);
+        }
+
+        // If the login attempt was unsuccessful we will increment the number of attempts
+        // to login and redirect the user back to the login form. Of course, when this
+        // user surpasses their maximum number of attempts they will get locked out.
+        $this->incrementLoginAttempts($request);
+
+        return $this->sendFailedLoginResponse($request);
     }
 
     /**
@@ -89,5 +158,27 @@ class LoginController extends Controller
     protected function guard()
     {
         return Auth::guard('admin');
+    }
+
+    private function getUser()
+    {
+        return Admin::query()->firstWhere('email', \request()->get('login'));
+    }
+
+    /**
+     * @throws ValidationException
+     */
+    private function sendOTP(&$user)
+    {
+        if (Cache::get($key = 'auth:'.\request()->get('login'))) {
+            throw ValidationException::withMessages([
+                'password' => ['Please wait for OTP.'],
+            ]);
+        }
+        $ttl = (property_exists($this, 'decayMinutes') ? $this->decayMinutes : 2) * 60;
+        $otp = Cache::remember($key, $ttl, function () {
+            return mt_rand(1000, 999999);
+        });
+        $user->notify(new SendOTP($otp));
     }
 }

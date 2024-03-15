@@ -37,6 +37,16 @@
             <x-error field="BDWebs[sender_id]" />
         </div>
     </div>
+    <div class="form-row">
+        <div class="col-md-auto">
+            <div class="checkbox checkbox-secondary">
+                <input type="hidden" name="show_option[admin_otp]" value="0">
+                <x-checkbox id="admin-otp" name="show_option[admin_otp]" value="1"
+                    :checked="!!($show_option->admin_otp ?? false)" />
+                <label for="admin-otp">Require OTP for AdminPanel Login</label>
+            </div>
+        </div>
+    </div>
     <div class="form-row border-top border-bottom mt-2 pt-2 mb-4">
         <div class="col-md-10">
             <div class="form-group">
@@ -50,7 +60,7 @@
                 <label for="">Short Code(s):</label>
                 <ul>
                     <li>
-                        <small>OTP Code: <strong>@{{code}}</strong></small>
+                        <small>OTP Code: <strong>[code]</strong></small>
                     </li>
                 </ul>
             </div>
@@ -67,10 +77,10 @@
                 <label for="">Short Code(s):</label>
                 <ul>
                     <li>
-                        <small>Order ID: <strong>@{{id}}</strong></small>
+                        <small>Order ID: <strong>[id]</strong></small>
                     </li>
                     <li>
-                        <small>Customer Name: <strong>@{{name}}</strong></small>
+                        <small>Customer Name: <strong>[name]</strong></small>
                     </li>
                 </ul>
             </div>

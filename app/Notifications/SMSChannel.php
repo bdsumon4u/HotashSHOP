@@ -18,9 +18,10 @@ class SMSChannel
      */
     public function send($notifiable, Notification $notification)
     {
-        $phone = Str::startsWith($notifiable->phone_number, '0')
-            ? '88'.$notifiable->phone_number
-            : Str::replaceFirst('+', '', $notifiable->phone_number);
+        $phone = preg_replace('/[^\d]/', '', $notifiable->phone_number);
+        $phone = Str::startsWith($phone, '0')
+            ? '88'.$phone
+            : Str::replaceFirst('+', '', $phone);
 
         $ElitBuzz = setting('ElitBuzz');
         if ($ElitBuzz->enabled) {

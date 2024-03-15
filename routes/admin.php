@@ -26,6 +26,8 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
     #...
     #...
 
+    Route::post('resend-otp', 'Auth\LoginController@resendOTP')->name('resend-otp');
+
     Route::redirect('/admin', '/admin/dashboard', 301); # Permanent Redirect
     Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin']], function () {
         # Admin Level Namespace & 'admin' Prefix

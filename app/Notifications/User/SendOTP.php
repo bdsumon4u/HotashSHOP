@@ -59,7 +59,7 @@ class SendOTP extends Notification
     public function toArray($notifiable)
     {
         return [
-            'msg' => str_replace('{{code}}', $this->otp, setting('SMSTemplates')->otp),
+            'msg' => str_replace('[code]', $this->otp, setting('SMSTemplates')->otp),
         ];
     }
 }

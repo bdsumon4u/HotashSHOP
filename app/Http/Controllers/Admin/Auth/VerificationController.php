@@ -53,4 +53,15 @@ class VerificationController extends Controller
                         ? redirect($this->redirectPath())
                         : view('admin.auth.verify');
     }
+
+    /**
+     * Show the email verification notice.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function otpForm(Request $request)
+    {
+        return view('admin.auth.verify-otp');
+    }
 }

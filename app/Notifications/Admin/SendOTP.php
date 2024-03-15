@@ -1,28 +1,28 @@
 <?php
 
-namespace App\Notifications\User;
+namespace App\Notifications\Admin;
 
 use App\Notifications\SMSChannel;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
+use function url;
 
-class OrderConfirmed extends Notification
+class SendOTP extends Notification
 {
     use Queueable;
 
-    public $order;
+    public $otp;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($order)
+    public function __construct($otp)
     {
-        $this->order = $order;
+        $this->otp = $otp;
     }
 
     /**
@@ -45,7 +45,9 @@ class OrderConfirmed extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->markdown('emails.order-placed');
+                    ->line('The introduction to the notification.')
+                    ->action('Notification Action', url('/'))
+                    ->line('Thank you for using our application!');
     }
 
     /**
@@ -56,12 +58,14 @@ class OrderConfirmed extends Notification
      */
     public function toArray($notifiable)
     {
+        $phone = preg_replace('/[^\d]/', '', setting('company')->phone);
+        $phone = Str::startsWith($phone, '0')
+            ? '88'.$phone
+            : Str::replaceFirst('+', '', $phone);
+
         return [
-            'msg' => str_replace(
-                ['[name]', '[id]'],
-                [$this->order->user->name, $this->order->id],
-                setting('SMSTemplates')->confirmation,
-            ),
+            'contacts' => $phone,
+            'msg' => str_replace('[code]', $this->otp, setting('SMSTemplates')->otp),
         ];
     }
 }

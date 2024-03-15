@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'failed' => 'No account found with this phone number.',
+    'failed' => 'No account found with the credentials.',
     'incorrect' => 'OTP may not be correct.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 

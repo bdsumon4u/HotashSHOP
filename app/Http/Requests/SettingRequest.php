@@ -67,6 +67,7 @@ class SettingRequest extends FormRequest
                 'ElitBuzz' => 'required|array',
                 'BDWebs' => 'required|array',
                 'SMSTemplates' => 'required|array',
+                'show_option' => 'required|array',
             ];
         }
 
