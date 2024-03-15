@@ -106,24 +106,24 @@
             </div>
         </div>
         <div class="col-md-12">
-            <div class="d-flex flex-wrap">
-                <div class="checkbox checkbox-secondary mr-2">
+            <div class="d-flex flex-wrap" style="row-gap: .25rem; column-gap: .75rem;">
+                <div class="checkbox checkbox-secondary">
                     <input type="hidden" name="show_option[track_order]" value="0">
                     <x-checkbox id="show-track-order" name="show_option[track_order]" value="1"
                         :checked="!!($show_option->track_order ?? false)" />
-                    <label for="show-track-order">`Track Order` Option</label>
+                    <label for="show-track-order" class="my-1">`Track Order` Option</label>
                 </div>
                 <div class="checkbox checkbox-secondary">
                     <input type="hidden" name="show_option[customer_login]" value="0">
                     <x-checkbox id="show-customer-login" name="show_option[customer_login]" value="1"
                         :checked="!!($show_option->customer_login ?? false)" />
-                    <label for="show-customer-login">`Customer Login` Option</label>
+                    <label for="show-customer-login" class="my-1">`Customer Login` Option</label>
                 </div>
                 <div class="checkbox checkbox-secondary">
                     <input type="hidden" name="services[enabled]" value="0">
                     <x-checkbox id="services" name="services[enabled]" value="1"
                         :checked="!!($services->enabled ?? false)" />
-                    <label for="services">`Services` Section</label>
+                    <label for="services" class="my-1">`Services` Section</label>
                 </div>
             </div>
         </div>
