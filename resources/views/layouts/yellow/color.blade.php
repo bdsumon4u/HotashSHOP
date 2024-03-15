@@ -133,7 +133,7 @@
         box-shadow: inset 0 0 0 1px {{$color->primary->text_color}} !important;
     }
     .product-card:hover:before {
-        box-shadow: inset 0 0 0 2px {{$color->primary->text_color}} !important;
+        box-shadow: inset 0 0 0 2px {{$color->primary->background_color}} !important;
     }
     .product-card__badge.product-card__badge--sale {
         background: {{$color->badge->background_color}} !important;
