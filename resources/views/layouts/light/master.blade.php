@@ -165,7 +165,9 @@
     @bukScripts(true)
     <script>
       $(window).on('notify', function (ev) {
-        $.notify(ev.detail.message);
+        $.notify(ev.detail.message, {
+          type: ev.detail.type ?? 'info',
+        });
       });
 
         $('[name="shipping"]').on('change', function (ev) {

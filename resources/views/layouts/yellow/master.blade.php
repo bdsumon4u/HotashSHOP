@@ -224,7 +224,9 @@
     @livewireScripts
     <script>
         $(window).on('notify', function (ev) {
-            $.notify(ev.detail.message);
+            $.notify(ev.detail.message, {
+                type: ev.detail.type ?? 'info',
+            });
         });
         $(document).ready(function () {
             // $(document).on('change', '.option-picker', function (ev) {

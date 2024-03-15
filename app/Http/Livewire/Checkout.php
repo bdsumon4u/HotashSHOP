@@ -197,6 +197,10 @@ class Checkout extends Component
                     return $product != null; // Only Available Products
                 })->toArray();
 
+            if (empty($products)) {
+                return $this->dispatchBrowserEvent('notify', ['message' => 'All products are out of stock.', 'type' => 'danger']);
+            }
+
             $data['products'] = json_encode($products, JSON_UNESCAPED_UNICODE);
             $user = $this->getUser($data);
             $oldOrders = $user->orders()->get();
@@ -252,6 +256,8 @@ class Checkout extends Component
     
             return $order;
         });
+
+        if (!$order) return back();
 
         Cache::put('fraud:hourly:' . request()->ip(), Cache::get('fraud:hourly:' . request()->ip(), 0) + 1, now()->addHour());
         Cache::put('fraud:daily:' . request()->ip(), Cache::get('fraud:daily:' . request()->ip(), 0) + 1, now()->addDay());
