@@ -81,6 +81,10 @@ class OrderController extends Controller
             $orders->where('admin_id', $request->staff_id);
         }
 
+        if ($request->courier) {
+            $orders->whereJsonContains('data->courier', $request->courier);
+        }
+
         return view('admin.orders.filter', [
             'start' => $start,
             'end' => $end,

@@ -41,7 +41,7 @@
         page-break-after: always;
         border-top: 2px dashed #000;
     }
-    .page-main-header, .page-header, .card-header, .footer-fix {
+    .page-main-header, .page-header, .footer-fix {
         display: none !important;
     }
 }
@@ -67,7 +67,7 @@
                                 <input type="hidden" name="start_d" value="{{ $start }}">
                                 <input type="hidden" name="end_d" value="{{ $end }}">
                             </div>
-                            <div class="col-auto px-1">
+                            <div class="col-auto px-1 d-none">
                                 <select name="status" id="status" class="form-control">
                                     <option value="">Delivery Status</option>
                                     @foreach(config('app.orders', []) as $status)
@@ -75,6 +75,16 @@
                                     @endforeach
                                 </select>
                             </div>
+                            @if(request('status') == 'SHIPPING')
+                            <div class="col-auto px-1">
+                                <select name="courier" id="courier" class="form-control">
+                                    <option value="">Courier</option>
+                                    @foreach(['Pathao', 'SteadFast', 'Manual'] as $courier)
+                                    <option value="{{ $courier }}" @if(request()->get('courier') == $courier) selected @endif>{{ $courier }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            @endif
                             <div class="col-auto px-1">
                                 <select name="staff_id" id="staff-id" class="form-control">
                                     <option value="">Select Staff</option>
