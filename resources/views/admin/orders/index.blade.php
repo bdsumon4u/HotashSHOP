@@ -43,14 +43,42 @@
                         </div>
                         <div class="row d-none" style="row-gap: .25rem;">
                             <div class="col-auto pr-0 d-flex align-items-center" check-count></div>
+                            @unless(in_array(request('status'), ['CONFIRMED', 'INVOICED']))
                             <div class="col-auto px-1">
                                 <select name="status" id="status" onchange="changeStatus()" class="form-control form-control-sm">
                                     <option value="">Change Status</option>
                                     @foreach(config('app.orders', []) as $status)
-                                    <option value="{{ $status }}">{{ $status }}</option>
+                                        @php $show = false @endphp
+                                        @switch($status)
+                                            @case('WAITING')
+                                                @php $show = in_array(request('status'), ['PENDING', 'CANCELLED']) @endphp
+                                                @break
+                                        
+                                            @case('CONFIRMED')
+                                                @php $show = in_array(request('status'), ['PENDING', 'WAITING', 'CANCELLED']) @endphp
+                                                @break
+                                        
+                                            @case('CANCELLED')
+                                                @php $show = in_array(request('status'), ['PENDING', 'WAITING']) @endphp
+                                                @break
+                                        
+                                            @case('COMPLETED')
+                                            @case('RETURNED')
+                                            @case('LOST')
+                                                @php $show = in_array(request('status'), ['SHIPPING']) @endphp
+                                                @break
+                                        
+                                            @default
+                                                
+                                        @endswitch
+                                        @if($show)
+                                        <option value="{{ $status }}">{{ $status }}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                             </div>
+                            @endunless
+                            @unless(request('status') == 'SHIPPING')
                             <div class="col-auto px-1">
                                 <select name="courier" id="courier" onchange="changeCourier()" class="form-control form-control-sm">
                                     <option value="">Change Courier</option>
@@ -59,9 +87,13 @@
                                     @endforeach
                                 </select>
                             </div>
+                            @endunless
                             <div class="col-auto pl-0 ml-auto">
-                                <button onclick="courier()" id="courier" class="btn btn-sm btn-primary mr-1">Courier Booking</button>
-                                <button onclick="printInvoice()" id="invoice" class="btn btn-sm btn-primary ml-1">Invoice</button>
+                                @if(request('status') == 'CONFIRMED')
+                                <button onclick="printInvoice()" id="invoice" class="btn btn-sm btn-primary ml-1">Print Invoice</button>
+                                @elseif(request('status') == 'INVOICED')
+                                <button onclick="courier()" id="courier" class="btn btn-sm btn-primary ml-1">Courier Booking</button>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -70,9 +102,11 @@
                             <table class="table table-bordered table-striped table-hover datatable" style="width: 100%;">
                                 <thead>
                                 <tr>
+                                    @if($bulk = request('status') && !in_array(request('status'), ['COMPLETED', 'RETURNED', 'LOST']))
                                     <th style="max-width: 5%">
                                         <input type="checkbox" class="form-control" name="check_all" style="min-height: 20px;min-width: 20px;max-height: 20px;max-width: 20px;">
                                     </th>
+                                    @endif
                                     <th width="80">ID</th>
                                     <th>Customer</th>
                                     <th>Products</th>
@@ -174,7 +208,9 @@
             serverSide: true,
             ajax: "{!! route('api.orders', request()->query()) !!}",
             columns: [
+                @if($bulk)
                 { data: 'checkbox', name: 'checkbox', sortable: false, searchable: false},
+                @endif
                 { data: 'id', name: 'id' },
                 { data: 'customer', name: 'customer', sortable: false },
                 { data: 'products', name: 'products', sortable: false },

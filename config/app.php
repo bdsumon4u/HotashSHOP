@@ -17,9 +17,10 @@ return [
 
     'orders' => [
         'PENDING',
-        'CONFIRMED',
-        'SHIPPING',
         'WAITING',
+        'CONFIRMED',
+        'INVOICED',
+        'SHIPPING',
         'COMPLETED',
         'RETURNED',
         'CANCELLED',

@@ -166,7 +166,24 @@
             window.close();
         };
         window.onafterprint = function() {
-            window.close();
+            if (confirm('Update status to INVOCED?')) {
+                $.post({
+                    url: '{{ route('admin.orders.status') }}',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        order_id: @json(explode(',', request('order_id'))),
+                        status: 'INVOICED',
+                    },
+                    success: function (response) {
+                        window.location.href = '{{ route('admin.orders.index', ['status' => 'INVOICED']) }}';
+                    },
+                    complete: function () {
+                        
+                    }
+                });
+            } else {
+                window.close();
+            }
         };
     </script>
   </body>
