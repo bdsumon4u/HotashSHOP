@@ -67,7 +67,8 @@
                     <x-error field="data[courier]" />
                 </div>
                 <div Pathao class="form-row @if (($data['courier'] ?? false) != 'Pathao') d-none @endif">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
+                        <label for="">City</label>
                         <select class="form-control" wire:model="data.city_id">
                             <option value="" selected>Select City</option>
                             @foreach ($cities as $city)
@@ -78,7 +79,8 @@
                         </select>
                         <x-error field="data[city_id]" />
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
+                        <label for="">Area</label>
                         <div wire:loading.class="d-flex" wire:target="data.city_id" class="d-none h-100 align-items-center">
                             Loading Area...
                         </div>
@@ -91,6 +93,10 @@
                             @endforeach
                         </select>
                         <x-error field="data[area_id]" />
+                    </div>
+                    <div class="col-md-4">
+                        <label for="weight">Weight</label>
+                        <input type="number" wire:model.defer="data.weight" class="form-control" placeholder="Weight in KG">
                     </div>
                 </div>
             </div>

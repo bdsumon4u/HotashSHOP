@@ -97,26 +97,28 @@ class OrderController extends Controller
                 return $products . '</ul>';
             })
             ->addColumn('courier', function ($row) {
-                if (!($row->data->courier ?? false)) {
-                    return '';
-                }
-                if (!($row->data->consignment_id ?? false)) {
-                    return $row->data->courier;
-                }
+                $return = $link = '';
+                if (!($row->data->courier ?? false)) return $return;
+                $return .= '<div style="white-space: nowrap;">Carrier: ' . $row->data->courier . '</div>';
 
                 if ($row->data->courier == 'Pathao') {
-                    $link = 'https://merchant.pathao.com/tracking?consignment_id=' . $row->data->consignment_id . '&phone=' . Str::after($row->phone, '+88');
+                    // append city, area and weight
+                    $return .= '<div style="white-space: nowrap;">City ID: ' . ($row->data->city_id ?? '<strong class="text-danger">N/A</strong>') . '</div>';
+                    $return .= '<div style="white-space: nowrap;">Area ID: ' . ($row->data->area_id ?? '<strong class="text-danger">N/A</strong>') . '</div>';
+                    $return .= '<div style="white-space: nowrap;">Weight: ' . ($row->data->weight ?? '0.5') . ' kg</div>';
+
+                    $link = 'https://merchant.pathao.com/tracking?consignment_id=' . ($row->data->consignment_id ?? '') . '&phone=' . Str::after($row->phone, '+88');
                 } else if ($row->data->courier == 'SteadFast') {
-                    $link = 'https://www.steadfast.com.bd/consignment/' . $row->data->consignment_id;
-                } else {
-                    $link = '';
+                    $link = 'https://www.steadfast.com.bd/consignment/' . ($row->data->consignment_id ?? '');
                 }
 
-                return '
-                    <div style="white-space: nowrap;">Carrier: ' . $row->data->courier . '</div>
-                    <div style="white-space: nowrap;">C.ID: <a href="' . $link . '" target="_blank">' . $row->data->consignment_id . '</a></div>
-                    <div style="white-space: nowrap; display: none;">Tracking Code: <a href="https://www.steadfast.com.bd/?tracking_code=" target="_blank"></a></div>
-                ';
+                if ($cid = $row->data->consignment_id ?? false) {
+                    $return .= '<div style="white-space: nowrap;">C.ID: <a href="' . $link . '" target="_blank">' . $cid . '</a></div>';
+                }
+
+                $return .= '<div style="white-space: nowrap; display: none;">Tracking Code: <a href="https://www.steadfast.com.bd/?tracking_code=" target="_blank"></a></div>';
+
+                return $return;
             })
             ->filterColumn('customer', function ($query, $keyword) {
                 $query->where('name', 'like', '%' . $keyword . '%')

@@ -43,6 +43,7 @@ class EditOrder extends Component
                     'courier' => '',
                     'city_id' => '',
                     'area_id' => '',
+                    'weight' => 0.5,
                 ],
             ]);
         } else {
@@ -132,6 +133,7 @@ class EditOrder extends Component
             'data.courier' => 'nullable',
             'data.city_id' => 'nullable',
             'data.area_id' => 'nullable',
+            'data.weight' => 'nullable|numeric',
         ]);
 
         if (empty($this->selectedProducts)) {

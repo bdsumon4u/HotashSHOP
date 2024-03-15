@@ -191,7 +191,7 @@ class OrderController extends Controller
             "item_type"           => 2, // 1 for document, 2 for parcel
             "special_instruction" => $order->note,
             "item_quantity"       => 1, // item quantity
-            "item_weight"         => 0.5, // parcel weight
+            "item_weight"         => $order->data->weight ?? 0.5, // parcel weight
             "amount_to_collect"   => $order->data->shipping_cost + $order->data->subtotal - ($order->data->advanced ?? 0) - ($order->data->discount ?? 0), // - $order->deliveryCharge, // amount to collect
             // "item_description"    => $this->getProductsDetails($order->id), // product details
         ];
