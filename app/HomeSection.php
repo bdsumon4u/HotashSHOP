@@ -41,17 +41,20 @@ class HomeSection extends Model
 
     public function products($paginate = 0)
     {
+        $ids = $this->items ?? [];
         $rows = $this->data->rows ?? 3;
         $cols = $this->data->cols ?? 5;
         if ($this->type == 'carousel-grid') {
             $rows *= $cols;
         }
-        $query = Product::whereIsActive(1)
-            ->whereNull('parent_id')
-            ->whereHas('categories', function ($query) {
+        $query = Product::whereIsActive(1)->whereNull('parent_id');
+        if (($this->data->source??false) == 'specific') {
+            $query->whereHas('categories', function ($query) {
                 $query->whereIn('categories.id', $this->categories->pluck('id')->toArray());
             })
-            ->orWhereIn('id', $ids = $this->items ?? [])
+            ->orWhereIn('id', $ids);
+        }
+        $query
             // ->inRandomOrder()
             ->when(!$paginate, function ($query) use ($rows, $cols) {
                 $query->take($rows * $cols);

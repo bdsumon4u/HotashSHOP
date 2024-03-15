@@ -67,18 +67,29 @@
                                 <x-error field="data.cols" />
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="d-flex h-100 align-items-center pl-4">
+                                <div class="radio radio-secondary mr-md-3">
+                                    <input type="radio" id="available" class="d-none" name="data[source]" value="available"
+                                        @if(old('data.source')=='available') checked @endif />
+                                    <label for="available" class="m-0">Show All Products</label>
+                                </div>
+                                <div class="radio radio-secondary ml-md-3">
+                                    <input type="radio" id="specific" class="d-none" name="data[source]" value="specific"
+                                        @if(old('data.source')=='specific') checked @endif />
+                                    <label for="specific" class="m-0">Show Products From Selected Categories</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <x-category-dropdown :categories="$categories" name="categories[]" placeholder="Select Categories" id="categories" multiple="true" :selected="old('categories')" />
+                            <x-error field="categories" class="d-block" />
+                        </div>
                         <div class="col-md-12">
                             <livewire:section-product />
                         </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="categories">Automatically add products from categories:</label>
-                                <x-category-dropdown :categories="$categories" name="categories[]" placeholder="Select Categories" id="categories" multiple="true" :selected="old('categories')" />
-                                <x-error field="categories" class="d-block" />
-                            </div>
-                        </div>
                     </div>
-                    <button type="submit" class="btn btn-success">
+                    <button type="submit" class="btn btn-success mt-2">
                         Submit
                     </button>
                 </x-form>
