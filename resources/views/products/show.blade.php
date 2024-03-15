@@ -126,7 +126,7 @@
                     <!-- .product__info / end -->
                     @if(!!$services->enabled)
                     <div>
-                        @if($showBrandCategory)
+                        @if($product->variations->isNotEmpty())
                         <div class="product__footer mt-2 mb-2 border p-3">
                             <div class="product__tags tags">
                                 @if($product->brand)
