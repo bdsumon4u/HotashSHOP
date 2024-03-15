@@ -68,8 +68,8 @@
                 </div>
                 <div Pathao class="form-row @if (($data['courier'] ?? false) != 'Pathao') d-none @endif">
                     <div class="form-group col-md-6">
-                        <select class="form-control" selector wire:model="data.city_id">
-                            <option value="">Select City</option>
+                        <select class="form-control" wire:model="data.city_id">
+                            <option value="" selected>Select City</option>
                             @foreach ($cities as $city)
                                 <option value="{{ $city->city_id }}">
                                     {{ $city->city_name }}
@@ -79,8 +79,11 @@
                         <x-error field="data[city_id]" />
                     </div>
                     <div class="form-group col-md-6">
-                        <select class="form-control" selector wire:model.defer="data.area_id">
-                            <option value="">Select Area</option>
+                        <div wire:loading.class="d-flex" wire:target="data.city_id" class="d-none h-100 align-items-center">
+                            Loading Area...
+                        </div>
+                        <select wire:loading.remove wire:target="data.city_id" class="form-control" wire:model.defer="data.area_id">
+                            <option value="" selected>Select Area</option>
                             @foreach ($areas as $area)
                                 <option value="{{ $area->zone_id }}">
                                     {{ $area->zone_name }}
