@@ -61,7 +61,7 @@ class LoginController extends Controller
      */
     public function showLoginForm(Request $request)
     {
-        if (!setting('show_option')->admin_otp) {
+        if (!(setting('show_option')->admin_otp ?? false)) {
             return view('admin.auth.login');
         }
 
@@ -100,7 +100,7 @@ class LoginController extends Controller
             return $this->sendLockoutResponse($request);
         }
 
-        if (setting('show_option')->admin_otp && Hash::check($request->input('password'), $user->password)) {
+        if ((setting('show_option')->admin_otp ?? false) && Hash::check($request->input('password'), $user->password)) {
             if (!$request->otp) {
                 $this->sendOTP($user);
                 return redirect()->back()->withInput()->withErrors([
