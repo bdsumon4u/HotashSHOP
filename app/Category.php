@@ -20,6 +20,7 @@ class Category extends Model
         });
 
         static::deleting(function ($category) {
+            $category->childrens->each->delete();
             optional($category->categoryMenu)->delete();
             cache()->forget('categories:nested');
             cache()->forget('homesections');
