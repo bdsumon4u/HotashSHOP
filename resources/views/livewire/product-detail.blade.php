@@ -70,13 +70,27 @@
                 </div>
                 <div class="product__actions overflow-hidden">
                     @exp($available = !$selectedVar->should_track || $selectedVar->stock_count > 0)
-                    <div class="product__buttons w-100">
-                        <div class="product__actions-item product__actions-item--ordernow">
-                            <button type="button" wire:click="orderNow" class="btn btn-primary product__ordernow btn-lg btn-block" {{ $available ? '' : 'disabled' }}>
-                                <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path d="M7 8V6a5 5 0 1 1 10 0v2h3a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1h3zm0 2H5v10h14V10h-2v2h-2v-2H9v2H7v-2zm2-2h6V6a3 3 0 0 0-6 0v2z"></path></svg>
-                                <span class="ml-1">অর্ডার করুন</span>
+                    @exp($show_option = setting('show_option'))
+                    <div
+                        class="product__buttons @if($show_option->product_detail_buttons_inline??false) d-lg-inline-flex @endif w-100"
+                        @if($show_option->product_detail_buttons_inline??false) style="gap: .5rem;" @endif
+                    >
+                        @if($show_option->product_detail_add_to_cart ?? false)
+                        <div class="product__actions-item product__actions-item--ordernow" @if($show_option->product_detail_buttons_inline??false) style="flex: 1;" @endif>
+                            <button type="button" wire:click="addToCart" class="btn btn-primary product__ordernow btn-lg btn-block" {{ $available ? '' : 'disabled' }}>
+                                {!! $show_option->add_to_cart_icon ?? null !!}
+                                <span class="ml-1">{{ $show_option->add_to_cart_text ?? '' }}</span>
                             </button>
                         </div>
+                        @endif
+                        @if($show_option->product_detail_order_now ?? false)
+                        <div class="product__actions-item product__actions-item--ordernow" @if($show_option->product_detail_buttons_inline??false) style="flex: 1;" @endif>
+                            <button type="button" wire:click="orderNow" class="btn btn-primary product__ordernow btn-lg btn-block" {{ $available ? '' : 'disabled' }}>
+                                {!! $show_option->order_now_icon ?? null !!}
+                                <span class="ml-1">{{ $show_option->order_now_text ?? '' }}</span>
+                            </button>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>

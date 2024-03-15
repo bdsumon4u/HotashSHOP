@@ -3,7 +3,9 @@
 <script src="{{ asset('strokya/vendor/owl-carousel-2.3.4/owl.carousel.min.js') }}"></script>
 <script src="{{ asset('strokya/vendor/nouislider-12.1.0/nouislider.min.js') }}"></script>
 <!-- <script src="{{ asset('strokya/js/number.js') }}"></script> -->
-<script src="{{ asset('strokya/js/main.js') }}"></script><!-- Include AlgoliaSearch JS Client and autocomplete.js library -->
+<script src="{{ asset('strokya/js/main.js') }}"></script>
+<script src="{{asset('assets/js/notify/bootstrap-notify.min.js')}}"></script>
+<!-- Include AlgoliaSearch JS Client and autocomplete.js library -->
 <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearchLite.min.js"></script>
 <script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.min.js"></script>
 <script src="{{ asset('strokya/js/algolia.js') }}"></script>

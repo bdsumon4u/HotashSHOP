@@ -223,6 +223,9 @@
     @include('layouts.yellow.js')
     @livewireScripts
     <script>
+        $(window).on('notify', function (ev) {
+            $.notify(ev.detail.message);
+        });
         $(document).ready(function () {
             // $(document).on('change', '.option-picker', function (ev) {
             //     var options = [];

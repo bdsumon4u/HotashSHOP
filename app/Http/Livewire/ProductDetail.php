@@ -40,8 +40,9 @@ class ProductDetail extends Component
         }
     }
 
-    public function orderNow()
+    public function addToCart()
     {
+
         $cart = session()->get('cart', []);
         if (isset($cart[$this->selectedVar->id])) {
             $cart[$this->selectedVar->id]['quantity'] = min($this->quantity, $this->maxQuantity);
@@ -77,6 +78,15 @@ class ProductDetail extends Component
             'ecommerce' => $ecommerce,
         ]);
         session()->put('cart', $cart);
+
+        $this->emit('cartUpdated');
+
+        $this->dispatchBrowserEvent('notify', ['message' => 'Product added to cart']);
+    }
+
+    public function orderNow()
+    {
+        $this->addToCart();
 
         return redirect()->route('checkout');
     }

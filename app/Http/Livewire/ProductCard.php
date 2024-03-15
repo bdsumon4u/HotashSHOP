@@ -10,7 +10,7 @@ class ProductCard extends Component
 {
     public Product $product;
 
-    public function orderNow()
+    public function addToCart()
     {
         $cart = session()->get('cart', []);
         $fraudQuantity = setting('fraud')->max_qty_per_product;
@@ -46,6 +46,15 @@ class ProductCard extends Component
             'ecommerce' => $ecommerce,
         ]);
         session()->put('cart', $cart);
+
+        $this->emit('cartUpdated');
+
+        $this->dispatchBrowserEvent('notify', ['message' => 'Product added to cart']);
+    }
+
+    public function orderNow()
+    {
+        $this->addToCart();
 
         return redirect()->route('checkout');
     }
