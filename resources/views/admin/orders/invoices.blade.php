@@ -171,7 +171,7 @@
                     url: '{{ route('admin.orders.status') }}',
                     data: {
                         _token: '{{ csrf_token() }}',
-                        order_id: @json(explode(',', request('order_id'))),
+                        order_id: {!! json_encode(explode(',', request('order_id'))) !!},
                         status: 'INVOICED',
                     },
                     success: function (response) {
