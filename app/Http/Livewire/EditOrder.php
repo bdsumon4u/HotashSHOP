@@ -6,6 +6,7 @@ use App\Notifications\User\OrderConfirmed;
 use App\Order;
 use App\Pathao\Facade\Pathao;
 use App\Product;
+use Illuminate\Support\Str;
 use Livewire\Component;
 
 class EditOrder extends Component
@@ -119,6 +120,9 @@ class EditOrder extends Component
 
     public function updateOrder()
     {
+        if (Str::startsWith($this->phone, '01')) {
+            $this->phone = '+88' . $this->phone;
+        }
         $this->validate([
             'name' => 'required',
             'phone' => 'required|regex:/^\+8801\d{9}$/',
