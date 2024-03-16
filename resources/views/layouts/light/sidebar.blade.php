@@ -158,7 +158,7 @@
                         </a>
                     </li>
 
-                    @foreach (['COMPLETED' => 'Top Products', 'WAITING' => 'Waiting Products', 'PENDING' => 'Pending Products', 'SHIPPING' => 'Shipping Products', 'CONFIRMED' => 'Confirmed Products'] as $status => $title)
+                    @foreach (['COMPLETED' => 'Top Products', 'PENDING' => 'Pending Products', 'SHIPPING' => 'Shipping Products'] as $status => $title)
                         <li>
                             <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.orders.filter' && request('status') == $status ? 'active' : '' }}"
                                 href="{{ route('admin.orders.filter', ['status' => $status]) }}">

@@ -67,7 +67,7 @@
                                 <input type="hidden" name="start_d" value="{{ $start }}">
                                 <input type="hidden" name="end_d" value="{{ $end }}">
                             </div>
-                            <div class="col-auto px-1 d-none">
+                            <div class="col-auto px-1">
                                 <select name="status" id="status" class="form-control">
                                     <option value="">Delivery Status</option>
                                     @foreach(config('app.orders', []) as $status)
