@@ -31,14 +31,14 @@
     </div>
     <div class="col-md-6">
         <div class="row">
-            <div class="col-6">
+            <div class="col-md-6">
                 <div class="form-group">
                     <label for="price">Old Price</label><span class="text-danger">*</span>
                     <x-input name="price" :value="$product->price" />
                     <x-error field="price" />
                 </div>
             </div>
-            <div class="col-6">
+            <div class="col-md-6">
                 <div class="form-group">
                     <label for="selling_price">New Price</label><span class="text-danger">*</span>
                     <x-input name="selling_price" :value="$product->selling_price" />
