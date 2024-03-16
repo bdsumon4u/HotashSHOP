@@ -22,11 +22,11 @@
     </div>
     <div class="left-menu-header col horizontal-wrapper pl-0">
       <ul class="horizontal-menu">
-        <li class="mega-menu outside"><a class="nav-link" href="{{ url('/') }}" target="_blank">Store Front</a></li>
+        <li class=""><a class="nav-link text-nowrap" href="{{ url('/') }}" target="_blank">Store Front</a></li>
       </ul>
     </div>
     <div class="nav-right col-8 pull-right right-menu">
-      <ul class="nav-menus">
+      <ul class="nav-menus mr-0">
 
         <li>
           <a href="{{ route('admin.orders.create') }}" class="border px-2 py-1">
