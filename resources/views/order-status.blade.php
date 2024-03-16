@@ -19,7 +19,7 @@
             @endif
           <div class="order-header">
             <h5 class="order-header__title">Order #{{ $order->id }}</h5>
-            <div class="order-header__actions"><a href="{{ route('track-order') }}" class="btn btn-xs btn-secondary">Back to Form</a></div>
+            <div class="order-header__actions"><a href="{{ url('/') }}" class="btn btn-xs btn-secondary">Back to Home</a></div>
             <div class="order-header__subtitle">Was placed on <mark class="order-header__date">{{ $order->created_at->format('d-m-Y') }}</mark> and currently status is <mark class="order-header__status">{{ $order->status }}</mark>.</div>
               @if(false && $order->status == 'PENDING')
             <div class="order-header__subtitle">
