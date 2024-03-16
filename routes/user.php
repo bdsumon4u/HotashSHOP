@@ -31,9 +31,6 @@ Route::group(['namespace' => 'User', 'as' => 'user.', 'middleware' => GoogleTagM
             ->name('password.change');
         Route::match(['get', 'post'], '/edit-profile', 'ProfileController')
             ->name('profile.edit');
-        Route::get('example', function() {
-            dump('bdsumon4u');
-        })->name('example');
         #...
         Route::middleware('auth:user')->group(function () {
             Route::get('/orders', 'OrderController')->name('orders');

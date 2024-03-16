@@ -20,6 +20,7 @@ class SlideController extends Controller
      */
     public function index()
     {
+        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
         return $this->view([
             'slides' => Slide::all(),
         ]);

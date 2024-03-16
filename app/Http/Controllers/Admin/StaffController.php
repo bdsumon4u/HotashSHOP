@@ -16,6 +16,7 @@ class StaffController extends Controller
      */
     public function index()
     {
+        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
         $admins = Admin::query();
         if (request()->has('role_id')) {
             $admins->where('role_id', request()->role_id);

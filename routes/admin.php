@@ -2,9 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use Hotash\LaravelMultiUi\Facades\MultiUi;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 
 # Controller Level Namespace
 Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
@@ -43,25 +40,7 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
         Route::post('/orders/change-courier', 'OrderController@courier')->name('orders.courier');
         Route::post('/orders/change-status', 'OrderController@status')->name('orders.status');
         Route::patch('/orders/{order}/update-quantity', 'OrderController@updateQuantity')->name('orders.update-quantity');
-        Route::post('/logout-others/{admin}', function (\App\Admin $admin) {
-            if (Hash::check(request()->get('password'), $admin->password)) {
-                $authUser = Auth::guard('admin')->user();
-                Auth::guard('admin')->setUser($admin)->logoutOtherDevices(request()->get('password'));
-
-                if (!$admin->is($authUser)) {
-                    DB::table('sessions')
-                        ->where('userable_type', \App\Admin::class)
-                        ->where('userable_id', $admin->id)
-                        ->delete();
-                }
-
-                Auth::guard('admin')->setUser($authUser);
-
-                return redirect()->back()->with('success', 'Logged Out From Other Devices');
-            }
-
-            return redirect()->back()->withErrors(['password' => 'Password is incorrect']);
-        })->name('logout-others');
+        Route::post('/logout-others/{admin}', 'ApiController@logoutOthers')->name('logout-others');
         Route::get('/customers', 'CustomerController')->name('customers');
         Route::resources([
             'staffs'       => 'StaffController',
