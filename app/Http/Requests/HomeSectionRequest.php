@@ -30,7 +30,7 @@ class HomeSectionRequest extends FormRequest
             'categories' => 'nullable|array',
             'data.rows' => 'required|integer',
             'data.cols' => 'required|integer',
-            'data.source' => 'required',
+            'data.source' => 'nullable',
         ];
     }
 }
