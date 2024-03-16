@@ -220,8 +220,8 @@
         @include('partials.footer')
         <!-- site__footer / end -->
     </div><!-- site / end -->
-    @include('layouts.yellow.js')
     @livewireScripts
+    @include('layouts.yellow.js')
     <script>
         $(window).on('notify', function (ev) {
             $.notify(ev.detail.message, {
