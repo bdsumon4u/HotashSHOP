@@ -15,6 +15,7 @@ class PageController extends Controller
      */
     public function index()
     {
+        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
         return $this->view([
             'pages' => Page::all(),
         ]);
