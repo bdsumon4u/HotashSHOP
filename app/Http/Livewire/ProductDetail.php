@@ -119,7 +119,7 @@ class ProductDetail extends Component
             return $text;
         }
 
-        if (array_key_exists($this->product->id, $products = (array)$freeDelivery->products ?? [])) {
+        if (array_key_exists($this->product->id, $products = ((array)($freeDelivery->products ?? [])) ?? [])) {
             return 'কমপক্ষে <strong class="text-danger">'.$products[$this->product->id].'</strong> টি অর্ডার করুন';
         }
 
