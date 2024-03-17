@@ -1,5 +1,6 @@
 <div class="tab-pane active" id="item-courier" role="tabpanel">
     <div class="form-row">
+        @exp($Pathao = optional($Pathao ?? null))
         <div class="form-group col-md-auto">
             <div class="checkbox checkbox-secondary">
                 <input type="hidden" name="Pathao[enabled]" value="0">
@@ -30,6 +31,7 @@
         </div>
     </div>
     <div class="form-row">
+        @exp($SteadFast = optional($SteadFast ?? null))
         <div class="form-group col-md-auto">
             <div class="checkbox checkbox-secondary">
                 <input type="hidden" name="SteadFast[enabled]" value="0">
