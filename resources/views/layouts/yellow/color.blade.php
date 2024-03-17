@@ -157,16 +157,6 @@
         border-color: {{$color->primary->background_hover}} !important;
         color: {{$color->primary->text_hover}} !important;
     }
-    /* .btn-secondary {
-        background-color: {{$color->secondary->background_color}} !important;
-        border-color: {{$color->secondary->background_color}} !important;
-        color: {{$color->secondary->text_color}} !important;
-    }
-    .btn-secondary:hover {
-        background-color: {{$color->secondary->background_hover}} !important;
-        border-color: {{$color->secondary->background_hover}} !important;
-        color: {{$color->secondary->text_hover}} !important;
-    } */
     .product-card__addtocart, .product__addtocart {
         background-color: {{$color->add_to_cart->background_color}} !important;
         border-color: {{$color->add_to_cart->background_color}} !important;
