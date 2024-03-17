@@ -18,7 +18,7 @@ class HomeSectionController extends Controller
      */
     public function index()
     {
-        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
+        abort_if(request()->user()->is('salesman'), 403, 'You don\'t have permission.');
         if (request()->has('orders')) {
             $orders = request('orders');
             DB::statement('UPDATE home_sections SET `order` = CASE id ' . implode(' ', array_map(function ($id) use ($orders) {
@@ -41,7 +41,7 @@ class HomeSectionController extends Controller
      */
     public function create()
     {
-        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
+        abort_if(request()->user()->is('salesman'), 403, 'You don\'t have permission.');
         return $this->view([
             'categories' => Category::nested(),
         ]);
@@ -55,7 +55,7 @@ class HomeSectionController extends Controller
      */
     public function store(HomeSectionRequest $request)
     {
-        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
+        abort_if(request()->user()->is('salesman'), 403, 'You don\'t have permission.');
         $data = $request->validationData();
         $homeSection = HomeSection::create($data);
         if (isset($data['categories'])) {
@@ -85,7 +85,7 @@ class HomeSectionController extends Controller
      */
     public function edit(HomeSection $homeSection)
     {
-        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
+        abort_if(request()->user()->is('salesman'), 403, 'You don\'t have permission.');
         return $this->view([
             'section' => $homeSection,
             'categories' => Category::nested(),
@@ -101,7 +101,7 @@ class HomeSectionController extends Controller
      */
     public function update(HomeSectionRequest $request, HomeSection $homeSection)
     {
-        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
+        abort_if(request()->user()->is('salesman'), 403, 'You don\'t have permission.');
         $data = $request->validated();
         $homeSection->update($data);
         if (isset($data['categories'])) {
@@ -120,7 +120,7 @@ class HomeSectionController extends Controller
      */
     public function destroy(HomeSection $homeSection)
     {
-        abort_unless(request()->user()->is('admin'), 403, 'Not Allowed.');
+        abort_unless(request()->user()->is('admin'), 403, 'You don\'t have permission.');
         $homeSection->delete();
 
         return back()->withSuccess('Section Has Been Deleted.');

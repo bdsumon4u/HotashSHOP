@@ -20,7 +20,7 @@ class ImageController extends Controller
      */
     public function index()
     {
-        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
+        abort_if(request()->user()->is('salesman'), 403, 'You don\'t have permission.');
         return $this->view();
     }
 
@@ -32,7 +32,7 @@ class ImageController extends Controller
      */
     public function store(Request $request)
     {
-        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
+        abort_if(request()->user()->is('salesman'), 403, 'You don\'t have permission.');
         $request->validate([
             'file' => 'required|image',
         ]);
@@ -55,7 +55,7 @@ class ImageController extends Controller
 
     public function update(Request $request, Image $image)
     {
-        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
+        abort_if(request()->user()->is('salesman'), 403, 'You don\'t have permission.');
         $request->validate([
             'filename' => 'required|string',
         ]);
@@ -74,7 +74,7 @@ class ImageController extends Controller
      */
     public function destroy(Image $image)
     {
-        abort_unless(request()->user()->is('admin'), 403, 'Not Allowed.');
+        abort_unless(request()->user()->is('admin'), 403, 'You don\'t have permission.');
         if ($image->products->isNotEmpty()) {
             return request()->expectsJson()
                 ? response()->json(['danger' => 'Image Is Used.'])

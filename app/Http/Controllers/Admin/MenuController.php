@@ -15,7 +15,7 @@ class MenuController extends Controller
      */
     public function index()
     {
-        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
+        abort_if(request()->user()->is('salesman'), 403, 'You don\'t have permission.');
         return $this->view([
             'menus' => Menu::all(),
         ]);
@@ -28,7 +28,7 @@ class MenuController extends Controller
      */
     public function create()
     {
-        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
+        abort_if(request()->user()->is('salesman'), 403, 'You don\'t have permission.');
         return $this->view();
     }
 
@@ -40,7 +40,7 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
+        abort_if(request()->user()->is('salesman'), 403, 'You don\'t have permission.');
         $data = $request->validate([
             'name' => 'required',
             'slug' => 'required|unique:menus',
@@ -57,7 +57,7 @@ class MenuController extends Controller
      */
     public function edit(Menu $menu)
     {
-        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
+        abort_if(request()->user()->is('salesman'), 403, 'You don\'t have permission.');
         return $this->view();
     }
 }

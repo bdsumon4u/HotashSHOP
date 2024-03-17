@@ -15,7 +15,7 @@ class AttributeController extends Controller
      */
     public function index()
     {
-        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
+        abort_if(request()->user()->is('salesman'), 403, 'You don\'t have permission.');
         return $this->view([
             'attributes' => Attribute::all(),
         ]);
@@ -39,7 +39,7 @@ class AttributeController extends Controller
      */
     public function store(Request $request)
     {
-        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
+        abort_if(request()->user()->is('salesman'), 403, 'You don\'t have permission.');
         Attribute::create($request->validate([
             'name' => 'required',
         ]));
@@ -78,7 +78,7 @@ class AttributeController extends Controller
      */
     public function update(Request $request, Attribute $attribute)
     {
-        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
+        abort_if(request()->user()->is('salesman'), 403, 'You don\'t have permission.');
         $attribute->update($request->validate([
             'name' => 'required',
         ]));
@@ -94,7 +94,7 @@ class AttributeController extends Controller
      */
     public function destroy(Attribute $attribute)
     {
-        abort_unless(request()->user()->is('admin'), 403, 'Not Allowed.');
+        abort_unless(request()->user()->is('admin'), 403, 'You don\'t have permission.');
         $attribute->delete();
 
         return redirect()->action([static::class, 'index']);

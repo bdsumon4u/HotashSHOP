@@ -20,7 +20,7 @@ class SlideController extends Controller
      */
     public function index()
     {
-        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
+        abort_if(request()->user()->is('salesman'), 403, 'You don\'t have permission.');
         return $this->view([
             'slides' => Slide::all(),
         ]);
@@ -44,7 +44,7 @@ class SlideController extends Controller
      */
     public function store(Request $request)
     {
-        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
+        abort_if(request()->user()->is('salesman'), 403, 'You don\'t have permission.');
         $request->validate([
             'file' => 'required|image',
         ]);
@@ -84,7 +84,7 @@ class SlideController extends Controller
      */
     public function edit(Slide $slide)
     {
-        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
+        abort_if(request()->user()->is('salesman'), 403, 'You don\'t have permission.');
         return $this->view(compact('slide'));
     }
 
@@ -97,7 +97,7 @@ class SlideController extends Controller
      */
     public function update(Request $request, Slide $slide)
     {
-        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
+        abort_if(request()->user()->is('salesman'), 403, 'You don\'t have permission.');
         $data = $request->validate([
             'title' => 'nullable|max:255',
             'text' => 'nullable|max:255',
@@ -119,7 +119,7 @@ class SlideController extends Controller
      */
     public function destroy(Slide $slide)
     {
-        abort_unless(request()->user()->is('admin'), 403, 'Not Allowed.');
+        abort_unless(request()->user()->is('admin'), 403, 'You don\'t have permission.');
         Storage::disk('public')->delete(Str::after($slide->mobile_src, 'storage'));
         Storage::disk('public')->delete(Str::after($slide->desktop_src, 'storage'));
         $slide->delete();

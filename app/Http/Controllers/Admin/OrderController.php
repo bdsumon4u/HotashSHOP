@@ -63,7 +63,7 @@ class OrderController extends Controller
 
     public function filter(Request $request)
     {
-        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
+        abort_if(request()->user()->is('salesman'), 403, 'You don\'t have permission.');
         $_start = Carbon::parse(\request('start_d', '1970-01-01'));
         $start = $_start->format('Y-m-d');
         $_end = Carbon::parse(\request('end_d'));
@@ -300,7 +300,7 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        abort_unless(request()->user()->is('admin'), 403, 'Not Allowed.');
+        abort_unless(request()->user()->is('admin'), 403, 'You don\'t have permission.');
         $products = is_array($order->products) ? $order->products : get_object_vars($order->products);
         array_map(function ($product) {
             if ($product = Product::find($product->id)) {

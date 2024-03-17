@@ -15,7 +15,7 @@ class PageController extends Controller
      */
     public function index()
     {
-        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
+        abort_if(request()->user()->is('salesman'), 403, 'You don\'t have permission.');
         return $this->view([
             'pages' => Page::all(),
         ]);
@@ -28,7 +28,7 @@ class PageController extends Controller
      */
     public function create()
     {
-        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
+        abort_if(request()->user()->is('salesman'), 403, 'You don\'t have permission.');
         return $this->view();
     }
 
@@ -40,7 +40,7 @@ class PageController extends Controller
      */
     public function store(Request $request)
     {
-        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
+        abort_if(request()->user()->is('salesman'), 403, 'You don\'t have permission.');
         $data = $request->validate([
             'title' => 'required',
             'slug' => 'required|unique:pages',
@@ -60,7 +60,7 @@ class PageController extends Controller
      */
     public function edit(Page $page)
     {
-        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
+        abort_if(request()->user()->is('salesman'), 403, 'You don\'t have permission.');
         return $this->view();
     }
 
@@ -73,7 +73,7 @@ class PageController extends Controller
      */
     public function update(Request $request, Page $page)
     {
-        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
+        abort_if(request()->user()->is('salesman'), 403, 'You don\'t have permission.');
         $data = $request->validate([
             'title' => 'required',
             'slug' => 'required|unique:pages,id,' . $page->id,
@@ -93,7 +93,7 @@ class PageController extends Controller
      */
     public function destroy(Page $page)
     {
-        abort_unless(request()->user()->is('admin'), 403, 'Not Allowed.');
+        abort_unless(request()->user()->is('admin'), 403, 'You don\'t have permission.');
         $page->delete();
         return back()->withSuccess('Page Deleted.');
     }

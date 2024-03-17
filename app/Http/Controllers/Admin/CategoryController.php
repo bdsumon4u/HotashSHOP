@@ -16,7 +16,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
+        abort_if(request()->user()->is('salesman'), 403, 'You don\'t have permission.');
         return $this->view([
             'categories' => Category::nested(),
         ]);
@@ -40,7 +40,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
+        abort_if(request()->user()->is('salesman'), 403, 'You don\'t have permission.');
         $data = $request->validate([
             'parent_id' => 'nullable|integer',
             'name' => 'required|unique:categories',
@@ -83,7 +83,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
+        abort_if(request()->user()->is('salesman'), 403, 'You don\'t have permission.');
         $data = $request->validate([
             'parent_id' => 'nullable|integer',
             'name' => 'required|unique:categories,id,' . $category->id,
@@ -103,7 +103,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        abort_unless(request()->user()->is('admin'), 403, 'Not Allowed.');
+        abort_unless(request()->user()->is('admin'), 403, 'You don\'t have permission.');
         DB::transaction(function () use ($category) {
             $category->childrens()->delete();
             $category->delete();

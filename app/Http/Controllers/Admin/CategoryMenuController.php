@@ -21,7 +21,7 @@ class CategoryMenuController extends Controller
      */
     public function index()
     {
-        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
+        abort_if(request()->user()->is('salesman'), 403, 'You don\'t have permission.');
         $remaining_cats = Category::with('parent')->whereDoesntHave('categoryMenu')->get();
         $selected_cats = CategoryMenu::nestedWithParent();
         return view('admin.categories.menu', compact('remaining_cats', 'selected_cats'));
@@ -35,7 +35,7 @@ class CategoryMenuController extends Controller
      */
     public function store(Request $request)
     {
-        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
+        abort_if(request()->user()->is('salesman'), 403, 'You don\'t have permission.');
         if ($request->has('category')) {
             $data = $request->validate([
                 'category' => 'required|array',
@@ -77,7 +77,7 @@ class CategoryMenuController extends Controller
      */
     public function destroy(CategoryMenu $categoryMenu)
     {
-        abort_unless(request()->user()->is('admin'), 403, 'Not Allowed.');
+        abort_unless(request()->user()->is('admin'), 403, 'You don\'t have permission.');
         return DB::transaction(function () use ($categoryMenu) {
             $categoryMenu->childrens()->delete();
             $categoryMenu->delete();
