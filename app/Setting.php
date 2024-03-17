@@ -31,10 +31,10 @@ class Setting extends Model
     public function setValueAttribute($value)
     {
         if (is_array($value)) {
-            $value = json_encode(array_merge((array)$this->value, $value));
+            $value = array_merge((array)$this->value, $value);
         }
 
-        $this->attributes['value'] = $value;
+        $this->attributes['value'] = json_encode($value);
     }
 
     public function getValueAttribute($value)
