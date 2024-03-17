@@ -157,7 +157,7 @@
         border-color: {{$color->primary->background_hover}} !important;
         color: {{$color->primary->text_hover}} !important;
     }
-    .btn-secondary {
+    /* .btn-secondary {
         background-color: {{$color->secondary->background_color}} !important;
         border-color: {{$color->secondary->background_color}} !important;
         color: {{$color->secondary->text_color}} !important;
@@ -166,5 +166,25 @@
         background-color: {{$color->secondary->background_hover}} !important;
         border-color: {{$color->secondary->background_hover}} !important;
         color: {{$color->secondary->text_hover}} !important;
+    } */
+    .product-card__addtocart, .product__addtocart {
+        background-color: {{$color->add_to_cart->background_color}} !important;
+        border-color: {{$color->add_to_cart->background_color}} !important;
+        color: {{$color->add_to_cart->text_color}} !important;
+    }
+    .product-card__addtocart:hover, .product__addtocart:hover {
+        background-color: {{$color->add_to_cart->background_hover}} !important;
+        border-color: {{$color->add_to_cart->background_hover}} !important;
+        color: {{$color->add_to_cart->text_hover}} !important;
+    }
+    .product-card__ordernow, .product__ordernow {
+        background-color: {{$color->order_now->background_color}} !important;
+        border-color: {{$color->order_now->background_color}} !important;
+        color: {{$color->order_now->text_color}} !important;
+    }
+    .product-card__ordernow:hover, .product__ordernow:hover {
+        background-color: {{$color->order_now->background_hover}} !important;
+        border-color: {{$color->order_now->background_hover}} !important;
+        color: {{$color->order_now->text_hover}} !important;
     }
 </style>
