@@ -63,6 +63,7 @@ class OrderController extends Controller
 
     public function filter(Request $request)
     {
+        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
         $_start = Carbon::parse(\request('start_d', '1970-01-01'));
         $start = $_start->format('Y-m-d');
         $_end = Carbon::parse(\request('end_d'));

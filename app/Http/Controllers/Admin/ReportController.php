@@ -133,6 +133,7 @@ class ReportController extends Controller
 
     public function stock(Request $request)
     {
+        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
         return view('admin.reports.stock', [
             'products' => Product::whereShouldTrack(true)->orderBy('stock_count')->get(),
         ]);
@@ -140,6 +141,7 @@ class ReportController extends Controller
 
     public function customer(Request $request)
     {
+        abort_if(request()->user()->is('salesman'), 403, 'Not Allowed.');
         $_start = Carbon::parse(\request('start_d', '1970-01-01'));
         $start = $_start->format('Y-m-d');
         $_end = Carbon::parse(\request('end_d'));
