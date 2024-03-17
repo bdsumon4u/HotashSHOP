@@ -212,15 +212,31 @@ class EditOrder extends Component
         }
 
         $areas = [];
-        $cities = cache()->remember('pathao_cities', now()->addDay(), function () {
-            return Pathao::area()->city()->data;
+        $exception = false;
+        $cities = cache()->remember('pathao_cities', now()->addDay(), function () use (&$exception) {
+            try {
+                return Pathao::area()->city()->data;
+            } catch (\Exception $e) {
+                $exception = true;
+                return [];
+            }
         });
 
+        if ($exception) cache()->forget('pathao_cities');
+
+        $exception = false;
         if ($this->data['city_id'] ?? false) {
-            $areas = cache()->remember('pathao_areas:' . $this->data['city_id'], now()->addDay(), function () {
-                return Pathao::area()->zone($this->data['city_id'])->data;
+            $areas = cache()->remember('pathao_areas:' . $this->data['city_id'], now()->addDay(), function () use (&$exception) {
+                try {
+                    return Pathao::area()->zone($this->data['city_id'])->data;
+                } catch (\Exception $e) {
+                    $exception = true;
+                    return [];
+                }
             });
         }
+
+        if ($exception) cache()->forget('pathao_areas:' . $this->data['city_id']);
 
         return view('livewire.edit-order', [
             'cities' => $cities,
