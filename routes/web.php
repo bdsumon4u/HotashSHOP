@@ -36,4 +36,5 @@ Route::middleware(GoogleTagManagerMiddleware::class)->group(function () {
 Route::get('/storage-link', 'ApiController@storageLink');
 Route::get('/scout-flush', 'ApiController@scoutFlush');
 Route::get('/scout-import', 'ApiController@scoutImport');
-Route::get('/clear-cache', 'ApiController@clearCache')->name('clear.cache');
+Route::get('/link-optimize', 'ApiController@linkOptimize');
+Route::get('/cache-clear', 'ApiController@clearCache')->name('clear.cache');
