@@ -305,6 +305,7 @@
                 },
                 complete: function () {
                     $('[name="status"]').prop('disabled', false);
+                    $('[name="status"]').val('');
                 }
             });
         }
@@ -328,6 +329,7 @@
                 },
                 complete: function () {
                     $('[name="courier"]').prop('disabled', false);
+                    $('[name="courier"]').val('');
                 }
             });
         }
