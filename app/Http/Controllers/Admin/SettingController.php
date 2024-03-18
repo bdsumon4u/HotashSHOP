@@ -44,16 +44,18 @@ class SettingController extends Controller
         if ($type == 'desktop') {
             return $this->uploadImage($file, [
                 'dir' => 'logo',
-                'width' => config('services.logo.desktop.width', 260),
-                'height' => config('services.logo.desktop.height', 54),
+                'resize' => false,
+                // 'width' => config('services.logo.desktop.width', 260),
+                // 'height' => config('services.logo.desktop.height', 54),
             ]);
         }
 
         if ($type == 'mobile') {
             return $this->uploadImage($file, [
                 'dir' => 'logo',
-                'width' => config('services.logo.mobile.width', 192),
-                'height' => config('services.logo.mobile.height', 40),
+                'resize' => false,
+                // 'width' => config('services.logo.mobile.width', 192),
+                // 'height' => config('services.logo.mobile.height', 40),
             ]);
         }
 

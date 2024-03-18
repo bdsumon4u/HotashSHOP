@@ -6,7 +6,7 @@
         <div class="site-header__middle container">
             <div class="site-header__logo">
                 <a href="{{ url('/') }}">
-                    <img src="{{ asset($logo->desktop ?? '') }}" width="{{ config('services.logo.desktop.width', 260) }}" height="{{ config('services.logo.desktop.height', 54) }}" alt="Logo" style="max-width: 100%;">
+                    <img src="{{ asset($logo->desktop ?? '') }}" alt="Logo" style="max-width: 100%;">
                 </a>
             </div>
             <div class="site-header__search">

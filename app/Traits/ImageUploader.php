@@ -21,8 +21,9 @@ trait ImageUploader
         ]).'-'.preg_replace('/\s+/', '-', $file->getClientOriginalName());
 
         $image = Image::make($file);
-        data_get($arg, 'resize', true)
-            && $image = $image->{$arg['method'] ?? 'resize'}($arg['width'], $arg['height']);
+        if (data_get($arg, 'resize', true)) {
+            $image = $image->{$arg['method'] ?? 'resize'}($arg['width'], $arg['height']);
+        }
         Storage::disk($arg['disk'] ?? 'public')->put($path, (string)$image->encode());
 
         return Storage::url($path);
