@@ -25,6 +25,6 @@ Route::group(['namespace' => 'Api', 'as' => 'api.'], function () {
     Route::get('areas/{city_id}', 'ApiController@areas');
     Route::get('categories', 'ApiController@categories');
     Route::get('products/{search}', 'ApiController@products');
-    Route::get('pending-count/{admin}', 'Api\ApiController@pendingCount');
-    Route::get('pathao-webhook', 'Api\ApiController@pathaoWebhook');    
+    Route::get('pending-count/{admin}', 'ApiController@pendingCount');
+    Route::get('pathao-webhook', 'ApiController@pathaoWebhook');    
 });
