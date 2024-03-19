@@ -88,6 +88,12 @@ class SettingRequest extends FormRequest
             return $rules;
         }
 
+        if ($this->get('tab') == 'social') {
+            return [
+                'social' => 'required|array',
+            ];
+        }
+
         return [
             'products_page' => 'required|array',
             'related_products' => 'required|array',
