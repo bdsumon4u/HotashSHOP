@@ -146,7 +146,8 @@ class OrderController extends Controller
 
     private function steadFast($order_ids)
     {
-        if (!setting('SteadFast')->enabled) return;
+        $SteadFast = setting('SteadFast');
+        if (!$SteadFast->enabled) return;
         $orders = Order::whereIn('id', $order_ids)->where('data->courier', 'SteadFast')->get()->map(function ($order) {
             return [
                 'invoice' => $order->id,
@@ -159,8 +160,8 @@ class OrderController extends Controller
         })->toJson();
 
         $response = Http::withHeaders([
-            'Api-Key' => config('services.stdfst.key'),
-            'Secret-Key' => config('services.stdfst.secret'),
+            'Api-Key' => $SteadFast->key,
+            'Secret-Key' => $SteadFast->secret,
             'Content-Type' => 'application/json'
         ])->post($this->base_url . '/create_order/bulk-order', [
             'data' => $orders,
