@@ -65,17 +65,17 @@
                   @exp($data = $order->data)
                   <tr>
                     <th>Subtotal</th>
-                    <td>{!! theMoney($data->subtotal) !!}</td>
+                    <td>{!! theMoney($data['subtotal']) !!}</td>
                   </tr>
                   <tr>
                     <th>Delivery Charge</th>
-                    <td>{!! theMoney($data->shipping_cost) !!}</td>
+                    <td>{!! theMoney($data['shipping_cost']) !!}</td>
                   </tr>
                 </tbody>
                 <tfoot>
                   <tr>
                     <th>Total</th>
-                    <td>{!! theMoney($data->subtotal + $data->shipping_cost) !!}</td>
+                    <td>{!! theMoney($data['subtotal'] + $data['shipping_cost']) !!}</td>
                   </tr>
                 </tfoot>
               </table>

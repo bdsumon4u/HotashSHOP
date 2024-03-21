@@ -9,56 +9,56 @@
                     <div class="form-group col-md-6">
                         <x-label for="name">Name</x-label> <span
                             class="text-danger">*</span>
-                        <x-input name="name" wire:model.defer="name" placeholder="Type your name here" />
+                        <x-input name="name" wire:model.defer="order.name" placeholder="Type your name here" />
                         <x-error field="name" />
                     </div>
                     <div class="form-group col-md-6">
                         <x-label for="phone">Phone</x-label> <span
                             class="text-danger">*</span>
-                        <x-input type="tel" name="phone" wire:model.defer="phone" placeholder="Type your phone number here" />
+                        <x-input type="tel" name="phone" wire:model.defer="order.phone" placeholder="Type your phone number here" />
                         <x-error field="phone" />
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-12">
                         <x-label for="email">Email Address</x-label>
-                        <x-input type="email" name="email" wire:model.defer="email" placeholder="Email Address" />
+                        <x-input type="email" name="email" wire:model.defer="order.email" placeholder="Email Address" />
                         <x-error field="email" />
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="d-block">Delivery Charge City <span
                             class="text-danger">*</span></label>
-                    <div class="form-control h-auto @error('shipping') is-invalid @enderror">
+                    <div class="form-control h-auto @error('order.data.shipping') is-invalid @enderror">
                         <div class="custom-control custom-radio custom-control-inline">
                             <input type="radio" class="custom-control-input" id="inside-dhaka"
-                                name="shipping" wire:model="shipping" value="Inside Dhaka">
+                                name="shipping" wire:model="order.data.shipping_area" value="Inside Dhaka">
                             <label class="custom-control-label" for="inside-dhaka">Inside
                                 Dhaka</label>
                         </div>
                         <div class="custom-control custom-radio custom-control-inline">
                             <input type="radio" class="custom-control-input"
-                                id="outside-dhaka" name="shipping" wire:model="shipping" value="Outside Dhaka">
+                                id="outside-dhaka" name="shipping" wire:model="order.data.shipping_area" value="Outside Dhaka">
                             <label class="custom-control-label" for="outside-dhaka">Outside
                                 Dhaka</label>
                         </div>
                     </div>
-                    <x-error field="shipping" />
+                    <x-error field="order.data.shipping_area" />
                 </div>
                 <div class="form-group">
                     <x-label for="address">Address</x-label> <span class="text-danger">*</span>
-                    <x-input name="address" wire:model.defer="address" placeholder="Enter Correct Address" />
+                    <x-input name="address" wire:model.defer="order.address" placeholder="Enter Correct Address" />
                     <x-error field="address" />
                 </div>
                 <div class="form-group">
                     <label class="d-block">Courier <span class="text-danger">*</span></label>
-                    <div class="border p-2 @error('data.courier') is-invalid @enderror">
+                    <div class="border p-2 @error('order.data.courier') is-invalid @enderror">
                         @foreach (['Pathao', 'SteadFast', 'Manual'] as $provider)
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" class="custom-control-input"
-                                    id="{{ $provider }}" wire:model="data.courier"
+                                    id="{{ $provider }}" wire:model="order.data.courier"
                                     value="{{ $provider }}"
-                                    {{ ($data['courier'] ?? false) == $provider ? 'checked' : '' }}>
+                                    {{ ($order->data['courier'] ?? false) == $provider ? 'checked' : '' }}>
                                 <label class="custom-control-label"
                                     for="{{ $provider }}">{{ $provider }}</label>
                             </div>
@@ -66,10 +66,10 @@
                     </div>
                     <x-error field="data[courier]" />
                 </div>
-                <div Pathao class="form-row @if (($data['courier'] ?? false) != 'Pathao') d-none @endif">
+                <div Pathao class="form-row @if (($order->data['courier'] ?? false) != 'Pathao') d-none @endif">
                     <div class="form-group col-md-4">
                         <label for="">City</label>
-                        <select class="form-control" wire:model="data.city_id">
+                        <select class="form-control" wire:model="order.data.city_id">
                             <option value="" selected>Select City</option>
                             @foreach ($cities as $city)
                                 <option value="{{ $city->city_id }}">
@@ -81,10 +81,10 @@
                     </div>
                     <div class="form-group col-md-4">
                         <label for="">Area</label>
-                        <div wire:loading.class="d-flex" wire:target="data.city_id" class="d-none h-100 align-items-center">
+                        <div wire:loading.class="d-flex" wire:target="order.data.city_id" class="d-none h-100 align-items-center">
                             Loading Area...
                         </div>
-                        <select wire:loading.remove wire:target="data.city_id" class="form-control" wire:model.defer="data.area_id">
+                        <select wire:loading.remove wire:target="order.data.city_id" class="form-control" wire:model.defer="order.data.area_id">
                             <option value="" selected>Select Area</option>
                             @foreach ($areas as $area)
                                 <option value="{{ $area->zone_id }}">
@@ -96,7 +96,7 @@
                     </div>
                     <div class="col-md-4">
                         <label for="weight">Weight</label>
-                        <input type="number" wire:model.defer="data.weight" class="form-control" placeholder="Weight in KG">
+                        <input type="number" wire:model.defer="order.data.weight" class="form-control" placeholder="Weight in KG">
                     </div>
                 </div>
             </div>
@@ -140,8 +140,8 @@
                                         }
                                     }
         
-                                    $dataId = $selectedVar->id;
-                                    $dataMax = $selectedVar->should_track ? $selectedVar->stock_count : -1;
+                                    $order->dataId = $selectedVar->id;
+                                    $order->dataMax = $selectedVar->should_track ? $selectedVar->stock_count : -1;
         
                                     $optionGroup = $product->variations->pluck('options')->flatten()->unique('id')->groupBy('attribute_id');
                                     $attributes = \App\Attribute::find($optionGroup->keys());
@@ -252,7 +252,7 @@
                         <tr>
                             <th>Order Status</th>
                             <td>
-                                <select wire:model.defer="status" id="status" class="form-control">
+                                <select wire:model.defer="order.status" id="status" class="form-control">
                                     @foreach (config('app.orders', []) as $stat)
                                         <option value="{{ $stat }}">{{ $stat }}</option>
                                     @endforeach
@@ -261,14 +261,14 @@
                         </tr>
                         <tr>
                             <th>Subtotal</th>
-                            <td class="checkout-subtotal">{!! theMoney($data['subtotal']) !!}</td>
+                            <td class="checkout-subtotal">{!! theMoney($order->data['subtotal']) !!}</td>
                         </tr>
                         <tr>
                             <th>Delivery Charge</th>
                             <td class="shipping">
                                 <input class="shipping form-control"
                                     style="height: auto; padding: 2px 8px;" type="text"
-                                    wire:model="data.shipping_cost" value="{!! $data['shipping_cost'] ?? 0 !!}"
+                                    wire:model.debounce.350ms="order.data.shipping_cost"
                                     class="form-control">
                             </td>
                         </tr>
@@ -278,7 +278,7 @@
                             <th>Advanced</th>
                             <td>
                                 <input style="height: auto; padding: 2px 8px;" type="text"
-                                    wire:model="data.advanced" value="{!! $data['advanced'] ?? 0 !!}"
+                                    wire:model.debounce.350ms="order.data.advanced"
                                     class="form-control">
                             </td>
                         </tr>
@@ -286,19 +286,19 @@
                             <th>Discount</th>
                             <td>
                                 <input style="height: auto; padding: 2px 8px;" type="text"
-                                    wire:model="data.discount" value="{!! $data['discount'] ?? 0 !!}"
+                                    wire:model.debounce.350ms="order.data.discount"
                                     class="form-control">
                             </td>
                         </tr>
                         <tr>
                             <th>Grand Total</th>
-                            <th class="checkout-subtotal"><strong>{!! theMoney($data['subtotal'] + $data['shipping_cost'] - ($data['advanced'] ?? 0) - ($data['discount'] ?? 0)) !!}</strong></td>
+                            <th class="checkout-subtotal"><strong>{!! theMoney(intval($order->data['subtotal']) + intval($order->data['shipping_cost']) - intval($order->data['advanced'] ?? 0) - intval($order->data['discount'] ?? 0)) !!}</strong></td>
                         </tr>
                         <tr>
                             <th>Note <small>(Optional)</small></th>
                             <td>
                                 <div class="form-group">
-                                    <x-textarea name="note" wire:model.defer="note" rows="4"></x-textarea>
+                                    <x-textarea name="note" wire:model.defer="order.note" rows="4"></x-textarea>
                                     <x-error field="note" />
                                 </div>
                             </td>

@@ -60,10 +60,10 @@ class OrderController extends Controller
             ->addIndexColumn()
             ->setRowAttr([
                 'style' => function ($row) {
-                    if ($row->data->is_fraud ?? false) {
+                    if ($row->data['is_fraud'] ?? false) {
                         return 'background: #ff9e9e';
                     }
-                    if (!($row->data->is_fraud ?? false) && ($row->data->is_repeat ?? false)) {
+                    if (!($row->data['is_fraud'] ?? false) && ($row->data['is_repeat'] ?? false)) {
                         return 'background: #ffeeaa';
                     }
                 },
@@ -75,7 +75,7 @@ class OrderController extends Controller
                 return "<div class='text-nowrap'>" . $row->created_at->format('d-M-Y') . "<br>" . $row->created_at->format('h:i A') . "</div>";
             })
             ->addColumn('amount', function ($row) {
-                return $row->data->subtotal + $row->data->shipping_cost - ($row->data->discount ?? 0) - ($row->data->advanced ?? 0);
+                return intval($row->data['subtotal']) + intval($row->data['shipping_cost']) - intval($row->data['discount'] ?? 0) - ($row->data['advanced'] ?? 0);
             })
             ->addColumn('checkbox', function ($row) {
                 return '<input type="checkbox" class="form-control" name="order_id[]" value="' . $row->id . '" style="min-height: 20px;min-width: 20px;max-height: 20px;max-width: 20px;">';
@@ -98,21 +98,21 @@ class OrderController extends Controller
             })
             ->addColumn('courier', function ($row) {
                 $return = $link = '';
-                if (!($row->data->courier ?? false)) return $return;
-                $return .= '<div style="white-space: nowrap;">Carrier: ' . $row->data->courier . '</div>';
+                if (!($row->data['courier'] ?? false)) return $return;
+                $return .= '<div style="white-space: nowrap;">Carrier: ' . $row->data['courier'] . '</div>';
 
-                if ($row->data->courier == 'Pathao') {
+                if ($row->data['courier'] == 'Pathao') {
                     // append city, area and weight
-                    $return .= '<div style="white-space: nowrap;">City ID: ' . ($row->data->city_id ?? '<strong class="text-danger">N/A</strong>') . '</div>';
-                    $return .= '<div style="white-space: nowrap;">Area ID: ' . ($row->data->area_id ?? '<strong class="text-danger">N/A</strong>') . '</div>';
-                    $return .= '<div style="white-space: nowrap;">Weight: ' . ($row->data->weight ?? '0.5') . ' kg</div>';
+                    $return .= '<div style="white-space: nowrap;">City ID: ' . ($row->data['city_id'] ?? '<strong class="text-danger">N/A</strong>') . '</div>';
+                    $return .= '<div style="white-space: nowrap;">Area ID: ' . ($row->data['area_id'] ?? '<strong class="text-danger">N/A</strong>') . '</div>';
+                    $return .= '<div style="white-space: nowrap;">Weight: ' . ($row->data['weight'] ?? '0.5') . ' kg</div>';
 
-                    $link = 'https://merchant.pathao.com/tracking?consignment_id=' . ($row->data->consignment_id ?? '') . '&phone=' . Str::after($row->phone, '+88');
-                } else if ($row->data->courier == 'SteadFast') {
-                    $link = 'https://www.steadfast.com.bd/consignment/' . ($row->data->consignment_id ?? '');
+                    $link = 'https://merchant.pathao.com/tracking?consignment_id=' . ($row->data['consignment_id'] ?? '') . '&phone=' . Str::after($row->phone, '+88');
+                } else if ($row->data['courier'] == 'SteadFast') {
+                    $link = 'https://www.steadfast.com.bd/consignment/' . ($row->data['consignment_id'] ?? '');
                 }
 
-                if ($cid = $row->data->consignment_id ?? false) {
+                if ($cid = $row->data['consignment_id'] ?? false) {
                     $return .= '<div style="white-space: nowrap;">C.ID: <a href="' . $link . '" target="_blank">' . $cid . '</a></div>';
                 }
 

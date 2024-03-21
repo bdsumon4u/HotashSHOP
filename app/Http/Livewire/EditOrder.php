@@ -11,9 +11,7 @@ use Livewire\Component;
 
 class EditOrder extends Component
 {
-    public ?Order $order = null;
-
-    public array $data = [];
+    public Order $order;
 
     public array $selectedProducts = [];
 
@@ -21,46 +19,39 @@ class EditOrder extends Component
 
     public $options = [];
 
-    public ?string $name = '';
-    public ?string $phone = '';
-    public ?string $email = null;
-    public ?string $status = '';
-    public ?string $address = '';
-    public ?string $shipping = '';
-    public ?string $note = null;
-
-    public function mount(?Order $order = null)
+    public function rules()
     {
-        if (! $order->exists) {
-            $this->order = new Order([
-                'admin_id' => auth('admin')->id(),
-                'status' => 'CONFIRMED',
-                'phone' => '+880',
-                'data' => [
-                    'subtotal' => 0,
-                    'shipping_cost' => 0,
-                    'advanced' => 0,
-                    'discount' => 0,
-                    'courier' => '',
-                    'city_id' => '',
-                    'area_id' => '',
-                    'weight' => 0.5,
-                ],
-            ]);
-        } else {
-            $this->order = $order;
-        }
-
-        $this->data = (array)$this->order->data;
-        $this->shipping = $this->data['shipping_area'] ?? '';
-        $this->selectedProducts = json_decode(json_encode($this->order->products), true) ?? [];
-        $this->fill($this->order->only('name', 'phone', 'email', 'address', 'status', 'note'));
+        return [
+            'order.name' => 'required',
+            'order.phone' => 'required|regex:/^\+8801\d{9}$/',
+            'order.email' => 'nullable',
+            'order.address' => 'required',
+            'order.note' => 'nullable',
+            'order.status' => 'required',
+            'order.data.discount' => 'nullable|integer',
+            'order.data.advanced' => 'nullable|integer',
+            'order.data.shipping_area' => 'required|integer',
+            'order.data.shipping_cost' => 'required|integer',
+            'order.data.courier' => 'nullable',
+            'order.data.city_id' => 'nullable',
+            'order.data.area_id' => 'nullable',
+            'order.data.weight' => 'nullable|numeric',
+        ];
     }
 
-    public function updatedShipping($value)
+    protected function prepareForValidation($attributes): array
     {
-        $this->data['shipping_area'] = $value;
-        $this->data['shipping_cost'] = setting('delivery_charge')->{$value == 'Inside Dhaka' ? 'inside_dhaka' : 'outside_dhaka'} ?? config('services.shipping.' . $value, 0);
+        if (Str::startsWith($attributes['order']['phone'], '01')) {
+            $attributes['order']['phone'] = '+88' . $attributes['order']['phone'];
+        }
+
+        return $attributes;
+    }
+
+    public function mount(Order $order)
+    {
+        $this->order = $order;
+        $this->selectedProducts = json_decode(json_encode($this->order->products), true) ?? [];
     }
 
     public function addProduct(Product $product)
@@ -92,7 +83,7 @@ class EditOrder extends Component
             'total' => $quantity * $product->selling_price,
         ];
 
-        $this->data['subtotal'] = $this->order->getSubtotal($this->selectedProducts);
+        $this->order->data['subtotal'] = $this->order->getSubtotal($this->selectedProducts);
 
         $this->search = '';
         $this->dispatchBrowserEvent('notify', ['message' => 'Product added successfully.']);
@@ -103,7 +94,7 @@ class EditOrder extends Component
         $this->selectedProducts[$id]['quantity']++;
         $this->selectedProducts[$id]['total'] = $this->selectedProducts[$id]['quantity'] * $this->selectedProducts[$id]['price'];
 
-        $this->data['subtotal'] = $this->order->getSubtotal($this->selectedProducts);
+        $this->order->data['subtotal'] = $this->order->getSubtotal($this->selectedProducts);
     }
 
     public function decreaseQuantity($id)
@@ -115,52 +106,25 @@ class EditOrder extends Component
             unset($this->selectedProducts[$id]);
         }
 
-        $this->data['subtotal'] = $this->order->getSubtotal($this->selectedProducts);
+        $this->order->data['subtotal'] = $this->order->getSubtotal($this->selectedProducts);
     }
 
     public function updateOrder()
     {
-        if (Str::startsWith($this->phone, '01')) {
-            $this->phone = '+88' . $this->phone;
-        }
-        $this->validate([
-            'name' => 'required',
-            'phone' => 'required|regex:/^\+8801\d{9}$/',
-            'email' => 'nullable',
-            'address' => 'required',
-            'note' => 'nullable',
-            'status' => 'required',
-            'shipping' => 'required',
-            'data.discount' => 'nullable|integer',
-            'data.advanced' => 'nullable|integer',
-            'data.shipping_cost' => 'required|integer',
-            'data.courier' => 'nullable',
-            'data.city_id' => 'nullable',
-            'data.area_id' => 'nullable',
-            'data.weight' => 'nullable|numeric',
-        ]);
-
         if (empty($this->selectedProducts)) {
             return session()->flash('error', 'Please add products to the order.');
         }
 
         if ($this->order->exists) {
             $confirming = false;
-            if ($this->status != $this->order->status) {
-                $confirming = $this->status === 'CONFIRMED';
+            if ($this->order->isDirty('status')) {
+                $confirming = $this->order->status === 'CONFIRMED';
                 $this->order->forceFill([
                     'status_at' => now()->toDateTimeString(),
                 ]);
             }
 
             $this->order->update([
-                'name' => $this->name,
-                'phone' => $this->phone,
-                'email' => $this->email,
-                'address' => $this->address,
-                'status' => $this->status,
-                'note' => $this->note,
-                'data' => $this->data,
                 'products' => json_encode($this->selectedProducts, JSON_UNESCAPED_UNICODE),
             ]);
 
@@ -172,13 +136,6 @@ class EditOrder extends Component
         } else {
             $this->order->fill([
                 'admin_id' => auth('admin')->id(),
-                'name' => $this->name,
-                'phone' => $this->phone,
-                'email' => $this->email,
-                'address' => $this->address,
-                'status' => $this->status,
-                'note' => $this->note,
-                'data' => $this->data,
                 'type' => Order::MANUAL,
                 'status_at' => now()->toDateTimeString(),
                 'products' => json_encode($this->selectedProducts, JSON_UNESCAPED_UNICODE),
@@ -225,10 +182,10 @@ class EditOrder extends Component
         if ($exception) cache()->forget('pathao_cities');
 
         $exception = false;
-        if ($this->data['city_id'] ?? false) {
-            $areas = cache()->remember('pathao_areas:' . $this->data['city_id'], now()->addDay(), function () use (&$exception) {
+        if ($this->order->data['city_id'] ?? false) {
+            $areas = cache()->remember('pathao_areas:' . $this->order->data['city_id'], now()->addDay(), function () use (&$exception) {
                 try {
-                    return Pathao::area()->zone($this->data['city_id'])->data;
+                    return Pathao::area()->zone($this->order->data['city_id'])->data;
                 } catch (\Exception $e) {
                     $exception = true;
                     return [];
@@ -236,7 +193,13 @@ class EditOrder extends Component
             });
         }
 
-        if ($exception) cache()->forget('pathao_areas:' . $this->data['city_id']);
+        if ($exception) cache()->forget('pathao_areas:' . $this->order->data['city_id']);
+
+        $this->order->fill(['data' => [
+            'shipping_cost' => setting('delivery_charge')->{
+                $this->order->data['shipping_area'] == 'Inside Dhaka' ? 'inside_dhaka' : 'outside_dhaka'
+            } ?? config('services.shipping.' . $this->order->data['shipping_area'], 0),
+        ]]);
 
         return view('livewire.edit-order', [
             'cities' => $cities,

@@ -26,7 +26,7 @@
                                     <td><a href="{{ route('track-order', ['order' => $order->id]) }}">#{{ $order->id }}</a></td>
                                     <td>{{ $order->created_at->format('d-M-Y') }}</td>
                                     <td>{{ $order->status }}</td>
-                                    <td>{!! theMoney($order->data->subtotal) !!}</td>
+                                    <td>{!! theMoney($order->data['subtotal']) !!}</td>
                                 </tr>
                                 @endforeach
                                 </tbody>

@@ -241,7 +241,7 @@ class Checkout extends Component
                 'ecommerce' => [
                     'currency' => 'BDT',
                     'transaction_id' => $order->id,
-                    'value' => $order->data->subtotal,
+                    'value' => $order->data['subtotal'],
                     'items' => array_map(function ($product) {
                         return [
                             'item_id' => $product['id'],

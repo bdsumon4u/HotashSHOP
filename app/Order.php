@@ -17,6 +17,10 @@ class Order extends Model
         'admin_id', 'user_id', 'type', 'name', 'phone', 'email', 'address', 'status', 'status_at', 'products', 'note', 'data',
     ];
 
+    protected $attributes = [
+        'data' => '{"subtotal":0,"shipping_cost":0,"advanced":0,"discount":0,"courier":"","city_id":"","area_id":"","weight":0.5}',
+    ];
+
     protected static $logOnlyDirty = true;
 
     protected static $logFillable = true;
@@ -43,12 +47,12 @@ class Order extends Model
 
     public function getDataAttribute($data)
     {
-        return json_decode($data);
+        return json_decode($data, true);
     }
 
     public function setDataAttribute($data)
     {
-        $this->attributes['data'] = json_encode(array_merge((array)$this->data, $data));
+        $this->attributes['data'] = json_encode(array_merge($this->data, $data));
     }
 
     public function user()

@@ -10,5 +10,5 @@ return [
     | this is by default "true"
     |
     */
-    'default' => env('HTML_MINIFY', true),
+    'default' => env('HTML_MINIFY', false),
 ];

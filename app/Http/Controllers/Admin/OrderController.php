@@ -154,7 +154,7 @@ class OrderController extends Controller
                 'recipient_name' => $order->name ?? 'N/A',
                 'recipient_address' => $order->address ?? 'N/A',
                 'recipient_phone' => $order->phone ?? '',
-                'cod_amount' => $order->data->shipping_cost + $order->data->subtotal - ($order->data->advanced ?? 0) - ($order->data->discount ?? 0),
+                'cod_amount' => intval($order->data['shipping_cost']) + intval($order->data['subtotal']) - intval($order->data['advanced'] ?? 0) - intval($order->data['discount'] ?? 0),
                 'note' => $order->note,
             ];
         })->toJson();
@@ -190,15 +190,15 @@ class OrderController extends Controller
             "recipient_name"      => $order->name ?? 'N/A', // Customer name
             "recipient_phone"     => Str::after($order->phone, '+88') ?? '', // Customer phone
             "recipient_address"   => $order->address ?? 'N/A', // Customer address
-            "recipient_city"      => $order->data->city_id, // Find in city method
-            "recipient_zone"      => $order->data->area_id, // Find in zone method
+            "recipient_city"      => $order->data['city_id'], // Find in city method
+            "recipient_zone"      => $order->data['area_id'], // Find in zone method
             // "recipient_area"      => "", // Find in Area method
             "delivery_type"       => 48, // 48 for normal delivery or 12 for on demand delivery
             "item_type"           => 2, // 1 for document, 2 for parcel
             "special_instruction" => $order->note,
             "item_quantity"       => 1, // item quantity
-            "item_weight"         => $order->data->weight ?? 0.5, // parcel weight
-            "amount_to_collect"   => $order->data->shipping_cost + $order->data->subtotal - ($order->data->advanced ?? 0) - ($order->data->discount ?? 0), // - $order->deliveryCharge, // amount to collect
+            "item_weight"         => $order->data['weight'] ?? 0.5, // parcel weight
+            "amount_to_collect"   => intval($order->data['shipping_cost']) + intval($order->data['subtotal']) - intval($order->data['advanced'] ?? 0) - intval($order->data['discount'] ?? 0), // - $order->deliveryCharge, // amount to collect
             // "item_description"    => $this->getProductsDetails($order->id), // product details
         ];
 
