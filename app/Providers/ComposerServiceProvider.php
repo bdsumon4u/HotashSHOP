@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Category;
 use App\CategoryMenu;
 use App\Menu;
 use App\Setting;
@@ -55,7 +56,7 @@ class ComposerServiceProvider extends ServiceProvider
         }
 
         View::composer(['layouts.yellow.master',], function ($view) {
-            $view->with('categories', CategoryMenu::nested());
+            $view->with('categories', Category::nested());
         });
 
         $settingsPages = [

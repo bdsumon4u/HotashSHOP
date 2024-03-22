@@ -8,7 +8,7 @@
                 <ul class="departments__links">
                     @foreach($categories as $category)
                         <li class="departments__item @if($category->childrens->isNotEmpty()) departments__item--menu @endif">
-                            <a href="{{ route('categories.products', $category->category) }}">{{ $category->category->name }}
+                            <a href="{{ route('categories.products', $category) }}">{{ $category->name }}
                                 @if ($category->childrens->isNotEmpty())
                                     <svg class="departments__link-arrow" width="6px" height="9px">
                                         <use
@@ -23,7 +23,7 @@
                                     <ul class="menu menu--layout--classic">
                                         @foreach ($category->childrens as $category)
                                             <li>
-                                                <a href="{{ route('categories.products', $category->category) }}">{{ $category->category->name }}
+                                                <a href="{{ route('categories.products', $category) }}">{{ $category->name }}
                                                     @if ($category->childrens->isNotEmpty())
                                                         <svg class="menu__arrow" width="6px" height="9px">
                                                             <use
@@ -37,7 +37,7 @@
                                                         <!-- .menu -->
                                                         <ul class="menu menu--layout--classic">
                                                             @foreach($category->childrens as $category)
-                                                                <li><a href="{{ route('categories.products', $category->category) }}">{{ $category->category->name }}</a></li>
+                                                                <li><a href="{{ route('categories.products', $category) }}">{{ $category->name }}</a></li>
                                                             @endforeach
                                                         </ul>
                                                         <!-- .menu / end -->

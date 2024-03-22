@@ -9,20 +9,39 @@
 <li class="breadcrumb-item">Categories</li>
 @endsection
 
-
 @push('styles')
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
 <style>
+    .footer {
+        z-index: 1;
+    }
+    .route {position: relative;list-style-type: none;border: 0;margin: 0;padding: 0;top: 0px;margin-top: 0px;max-height: 100% !important;width: 100%;background: #bcf;border-radius: 2px;z-index: 1;}
+    .route span {position: absolute;top: 11px;left: 17px;transform: scale(2);z-index: 10;}
+    .route .title {position: absolute;border: 0;margin: 0;padding: 0;padding-top: 4px;font-size: 1rem;height: 30px;text-indent: 50px;border-radius: 2px;box-shadow: 0px 0px 0px 2px #29f;}
+    .first-title { margin-bottom: 10px; }
+    .space{background:white;position: relative;list-style-type: none;border: 1px dashed red;margin: 0;padding: 0;margin-left: 45px;top: 35px;padding-bottom: 15px;height: 100%;z-index: 1;}
+    .first-space {margin-left: 0;margin-bottom: 10px; top: 0;}
+    .space .space{min-height: 35px;}
+    .space button[type="button"] {
+        z-index: 9999;
+        display: block;
+        top: 1px;
+        height: 35px;
+        right: 1px;
+        position: absolute;
+        padding: 0.375rem 0.75rem;
+    }
+
     .nav-tabs .nav-item .nav-link {
         border-top-left-radius: 0;
         border-top-right-radius: 0;
     }
     .formatted-categories ul {
         list-style: none;
-        padding: 0;
     }
     .formatted-categories ul li {
         background-color: #f3f3f3;
-        padding: 5px 10px;
+        padding: 5px 0px 35px 5px;
         margin-bottom: 2px;
     }
     .formatted-categories ul li:hover {
@@ -31,9 +50,8 @@
     .formatted-categories ul li:hover a {
         text-decoration: none;
     }
-    .formatted-categories ul li:hover,
-    .formatted-categories ul li.active,
-    .formatted-categories ul li.active a {
+    .formatted-categories ul li > a:hover,
+    .formatted-categories ul li.active > a {
         color: deeppink;
         text-decoration: none;
     }
@@ -51,7 +69,7 @@
             <div class="card-body p-3">
                 <div class="row">
                     <div class="col-md-7">
-                        <div class="formatted-categories mb-3">
+                        <div class="formatted-categories">
                             @if($categories->isEmpty())
                             <div class="alert alert-danger py-2"><strong>No Categories Found.</strong></div>
                             @else
@@ -109,7 +127,25 @@
                                                     <label for="create-parent-id">Select Parent</label>
                                                     <x-category-dropdown :categories="$categories" name="parent_id" placeholder="Select parent" id="create-parent-id" :selected="request('active_id', 0)" />
                                                 </div>
-                                                <button type="submit" class="btn btn-sm btn-success d-block ml-auto"><i class="fa fa-check"></i> Submit</button>
+                                                <div class="form-group">
+                                                    <!-- Button to Open the Modal -->
+                                                    <label for="base_image" class="d-block mb-0">
+                                                        <strong>Category Image</strong>
+                                                        <button type="button" class="btn single btn-light px-2" data-toggle="modal" data-target="#single-picker" style="background: transparent; margin-left: 5px;">
+                                                            <i class="fa fa-image text-secondary mr-1"></i>
+                                                            <span>Browse</span>
+                                                        </button>
+                                                    </label>
+                                                    <div id="preview-image" class="base_image-preview @unless(old('base_image')) d-none @endunless" style="height: 150px; width: 150px; margin: 5px; margin-left: 0px;">
+                                                        <img src="{{ old('base_image_src') }}" alt="Category Image" data-toggle="modal" data-target="#single-picker" id="base_image-preview" class="img-thumbnail img-responsive" style="display: {{ old('base_image_src') ? '' : 'none' }};">
+                                                        <input type="hidden" name="base_image_src" value="{{ old('base_image_src') }}">
+                                                        <input type="hidden" name="base_image" value="{{ old('base_image') }}" id="base-image" class="form-control">
+                                                    </div>
+                                                    @error('base_image')
+                                                        <small class="text-danger">{{ $message }}</small>
+                                                    @enderror
+                                                </div>
+                                                <button type="submit" class="btn btn-sm btn-success d-block ml-auto"><i class="fa fa-check"></i> Create</button>
                                             </form>
                                         </div>
                                         @if(request('active_id'))
@@ -135,8 +171,25 @@
                                                 <div class="form-group">
                                                     <label for="edit-parent-id">Select Parent</label>
                                                     <x-category-dropdown :categories="$categories" name="parent_id" placeholder="Select parent" id="edit-parent-id" :selected="$active->parent->id ?? 0" :disabled="$active->id" />
+                                                </div><div class="form-group">
+                                                    <!-- Button to Open the Modal -->
+                                                    <label for="base_image" class="d-block mb-0">
+                                                        <strong>Category Image</strong>
+                                                        <button type="button" class="btn single btn-light px-2" data-toggle="modal" data-target="#single-picker" style="background: transparent; margin-left: 5px;">
+                                                            <i class="fa fa-image text-secondary mr-1"></i>
+                                                            <span>Browse</span>
+                                                        </button>
+                                                    </label>
+                                                    <div id="preview-{{$active->image_id}}" class="base_image-preview @unless(old('base_image', $active->image_id)) d-none @endunless" style="height: 150px; width: 150px; margin: 5px; margin-left: 0px;">
+                                                        <img src="{{ old('base_image_src', asset(optional($active->image)->src)) }}" alt="Category Image" data-toggle="modal" data-target="#single-picker" id="base_image-preview" class="img-thumbnail img-responsive" style="display: {{ old('base_image_src', optional($active->image)->src) ? '' : 'none' }};">
+                                                        <input type="hidden" name="base_image_src" value="{{ old('base_image_src', asset(optional($active->image)->src)) }}">
+                                                        <input type="hidden" name="base_image" value="{{ old('base_image', $active->image_id) }}" id="base-image" class="form-control">
+                                                    </div>
+                                                    @error('base_image')
+                                                        <small class="text-danger">{{ $message }}</small>
+                                                    @enderror
                                                 </div>
-                                                <button type="submit" class="btn btn-sm btn-success d-block ml-auto"><i class="fa fa-check"></i> Submit</button>
+                                                <button type="submit" class="btn btn-sm btn-success d-block ml-auto"><i class="fa fa-check"></i> Edit</button>
                                             </form>
                                         </div>
                                         @endif
@@ -150,11 +203,145 @@
         </div>
     </div>
 </div>
+@include('admin.images.single-picker', ['selected' => old('base_image', 0)])
 @endsection
 
 @push('scripts')
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 <script>
-    $(document).ready(function () {
+    $(document).ready(function(){
+
+        // calcWidth($('#title0'));
+
+        window.onresize = function(event) {
+            console.log("window resized");
+
+            //method to execute one time after a timer
+
+        };
+
+//recursively calculate the Width all titles
+        function calcWidth(obj){
+            console.log('---- calcWidth -----');
+
+            var titles =
+                $(obj).siblings('.space').children('.route').children('.title');
+
+            $(titles).each(function(index, element){
+                var pTitleWidth = parseInt($(obj).css('width'));
+                var leftOffset = parseInt($(obj).siblings('.space').css('margin-left'));
+
+                var newWidth = pTitleWidth - leftOffset;
+
+                if ($(obj).attr('id') == 'title0'){
+                    console.log("called");
+
+                    newWidth = newWidth - 10;
+                }
+
+                $(element).css({
+                    'width': newWidth,
+                })
+
+                calcWidth(element);
+            });
+
+        }
+
+        var updated = [];
+        var space = $('.space').sortable({
+            connectWith:'.space',
+// handle:'.title',
+// placeholder: ....,
+            tolerance:'intersect',
+            create:function(event,ui){
+                // calcWidth($('#title0'));
+            },
+            over:function(event,ui){
+            },
+            receive:function(event, ui){
+                // calcWidth($(this).siblings('.title'));
+            },
+            update:function (event, ui) {
+                $('#space-0 .route').each(function(idx, el) {
+                    reorder(idx, $(el));
+                })
+
+                console.log(updated)
+            },
+        });
+
+        function reorder(idx, el) {
+            var parent_id = el.parent().attr('data-space');
+            if (el.attr('data-parent') != parent_id) {
+                el.attr('data-parent', parent_id);
+                ($.inArray(el.attr('id'), updated) == -1) && updated.push(el.attr('id'))
+            }
+
+            if (el.attr('data-order') != idx + 1) {
+                el.attr('data-order', idx + 1);
+                ($.inArray(el.attr('id'), updated) == -1) && updated.push(el.attr('id'))
+            }
+
+            el.find('.space .route').each(function (idx, cel) {
+                reorder(idx, $(cel));
+            })
+        }
+
+        $('.space').disableSelection();
+
+        $(document).ready(function () {
+            $(document).on('submit', '.formatted-categories form', function (e) {
+                e.preventDefault();
+
+                var arr = [], uplen = updated.length;
+
+                $('li.route').each(function (idx, el) {
+                    el = $(el);
+                    var arri = $.inArray(el.attr('id'), updated);
+                    if (arri != -1) {
+                        arr.push(Object.assign({
+                            id: el.attr('id').replace('space-item-', ''),
+                            order: el.attr('data-order'),
+                        }, el.attr('data-parent') == 0 ? {} : {parent_id: el.attr('data-parent')}))
+                    }
+                });
+                // console.log(arr)
+
+                $(e.target).addClass('disabled')
+                $.ajax({
+                    url: route('admin.categories.store'),
+                    type: 'POST',
+                    data: {categories: arr},
+                    success: function(response) {
+                        $.notify('Categories are reordered successfully.', 'success');
+                    },
+                    error: function(err) {
+                        // console.log(err)
+                    },
+                    complete: function() {
+                        $(e.target).removeClass('disabled')
+                    }
+                })
+            })
+        })
+
+        $(document).on('click', '.delete-item', function(e) {
+            e.preventDefault()
+
+            $(e.target).addClass('disabled')
+            var id = $(this).attr('data-id')
+            $.ajax({
+                url: route('admin.category-menus.destroy', id),
+                type: 'DELETE',
+                _method: 'DELETE',
+                complete: function () {
+                    $(e.target).removeClass('disabled')
+                    window.location.reload();
+                }
+            })
+        });
+
         $('[name="name"]').keyup(function () {
             $($(this).data('target')).val(slugify($(this).val()));
         });

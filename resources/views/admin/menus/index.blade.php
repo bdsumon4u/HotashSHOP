@@ -28,13 +28,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                {{-- <tr>
                                     <td>0</td>
                                     <td>category-menu</td>
                                     <td>
                                         <a href="{{ route('admin.category-menus.index') }}" class="btn btn-primary">Build</a>
                                     </td>
-                                </tr>
+                                </tr> --}}
                                 @foreach($menus as $menu)
                                 <tr>
                                     <td>{{ $menu->id }}</td>

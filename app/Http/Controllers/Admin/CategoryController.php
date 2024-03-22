@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
@@ -41,11 +42,27 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         abort_if(request()->user()->is('salesman'), 403, 'You don\'t have permission.');
+        if ($request->has('categories')) {
+            $data = $request->validate([
+                'categories' => 'required|array',
+            ]);
+
+            collect($data['categories'])
+                ->each(function ($data) {
+                    Category::find($data['id'])->update($data);
+                });
+
+            cache()->forget('categories:nested');
+            return true;
+        }
         $data = $request->validate([
             'parent_id' => 'nullable|integer',
             'name' => 'required|unique:categories',
             'slug' => 'required|unique:categories',
+            'base_image' => 'nullable|integer',
         ]);
+
+        $data['image_id'] = Arr::pull($data, 'base_image');
 
         Category::create($data);
 
@@ -88,7 +105,10 @@ class CategoryController extends Controller
             'parent_id' => 'nullable|integer',
             'name' => 'required|unique:categories,id,' . $category->id,
             'slug' => 'required|unique:categories,id,' . $category->id,
+            'base_image' => 'nullable|integer',
         ]);
+
+        $data['image_id'] = Arr::pull($data, 'base_image');
 
         $category->update($data);
 

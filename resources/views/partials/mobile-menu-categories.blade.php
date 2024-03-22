@@ -12,7 +12,7 @@
             @foreach($categories as $category)
                 <li class="mobile-links__item" data-collapse-item>
                     <div class="mobile-links__item-title">
-                        <a href="{{ route('categories.products', $category->category) }}" class="mobile-links__item-link">{{ $category->category->name }}</a>
+                        <a href="{{ route('categories.products', $category) }}" class="mobile-links__item-link">{{ $category->name }}</a>
                         @if($category->childrens->isNotEmpty())
                             <button class="mobile-links__item-toggle" type="button" data-collapse-trigger>
                                 <svg class="mobile-links__item-arrow" width="12px" height="7px">
@@ -27,7 +27,7 @@
                                 @foreach($category->childrens as $category)
                                     <li class="mobile-links__item" data-collapse-item>
                                         <div class="mobile-links__item-title">
-                                            <a href="{{ route('categories.products', $category->category) }}" class="mobile-links__item-link">{{ $category->category->name }}</a>
+                                            <a href="{{ route('categories.products', $category) }}" class="mobile-links__item-link">{{ $category->name }}</a>
                                             @if($category->childrens->isNotEmpty())
                                                 <button class="mobile-links__item-toggle" type="button" data-collapse-trigger>
                                                     <svg class="mobile-links__item-arrow" width="12px" height="7px">
@@ -42,7 +42,7 @@
                                                     @foreach($category->childrens as $category)
                                                         <li class="mobile-links__item" data-collapse-item>
                                                             <div class="mobile-links__item-title">
-                                                                <a href="{{ route('categories.products', $category->category) }}" class="mobile-links__item-link">{{ $category->category->name }}</a>
+                                                                <a href="{{ route('categories.products', $category) }}" class="mobile-links__item-link">{{ $category->name }}</a>
                                                             </div>
                                                         </li>
                                                     @endforeach

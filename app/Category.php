@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     protected $fillable = [
-        'parent_id', 'name', 'slug',
+        'parent_id', 'image_id', 'name', 'slug', 'order',
     ];
 
     public static function booted()
@@ -15,17 +15,17 @@ class Category extends Model
         static::saved(function ($category) {
             cache()->forget('categories:nested');
             cache()->forget('homesections');
-            cache()->forget('catmenu:nested');
-            cache()->forget('catmenu:nestedwithparent');
+            // cache()->forget('catmenu:nested');
+            // cache()->forget('catmenu:nestedwithparent');
         });
 
         static::deleting(function ($category) {
             $category->childrens->each->delete();
-            optional($category->categoryMenu)->delete();
+            // optional($category->categoryMenu)->delete();
             cache()->forget('categories:nested');
             cache()->forget('homesections');
-            cache()->forget('catmenu:nested');
-            cache()->forget('catmenu:nestedwithparent');
+            // cache()->forget('catmenu:nested');
+            // cache()->forget('catmenu:nestedwithparent');
         });
     }
 
@@ -39,14 +39,19 @@ class Category extends Model
         return $this->belongsTo(static::class, 'parent_id');
     }
 
+    public function image()
+    {
+        return $this->belongsTo(Image::class);
+    }
+
     public static function nested($count = 0)
     {
         $query = self::whereNull('parent_id')
             ->with(['childrens' => function ($category) {
-                $category->with('childrens');
+                $category->with('childrens')->orderBy('order');
             }])
             ->withCount('childrens')
-            ->orderBy('childrens_count', 'desc');
+            ->orderBy('order');
         $count && $query->take($count);
 
         return cache()->rememberForever('categories:nested', function () use ($query) {
