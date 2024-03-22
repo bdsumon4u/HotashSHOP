@@ -9,29 +9,9 @@ use App\Order;
 use App\Pathao\Facade\Pathao;
 use App\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class ApiController extends Controller
 {
-    public function fixOrdersProducts()
-    {
-        $orders = Order::all()->mapWithKeys(function ($order) {
-            return [
-                $order->id => collect(json_decode(json_encode($order->products), true))
-                    ->map(function ($product) {
-                        $product['image'] = preg_replace('/https?:\/\/[^\/]+/', '', $product['image']);
-                        return $product;
-                    })
-                    ->keyBy('id')
-                    ->toJson(JSON_UNESCAPED_UNICODE),
-            ];
-        });
-    
-        DB::statement('UPDATE orders SET products = CASE id ' . $orders->map(function ($products, $id) {
-            return "WHEN $id THEN '$products'";
-        })->implode(' ') . ' END');
-    }
-
     public function areas($city_id)
     {
         return Pathao::area()->zone($city_id)->data;

@@ -51,7 +51,10 @@ class EditOrder extends Component
     public function mount(Order $order)
     {
         $this->order = $order;
-        $this->selectedProducts = json_decode(json_encode($this->order->products), true) ?? [];
+        $products = json_decode(json_encode($this->order->products), true) ?? [];
+        foreach ($products as $product) {
+            $this->selectedProducts[$product['id']] = $product;
+        }
     }
 
     public function addProduct(Product $product)
@@ -83,7 +86,9 @@ class EditOrder extends Component
             'total' => $quantity * $product->selling_price,
         ];
 
-        $this->order->data['subtotal'] = $this->order->getSubtotal($this->selectedProducts);
+        $this->order->fill(['data' => [
+            'subtotal' => $this->order->getSubtotal($this->selectedProducts),
+        ]]);
 
         $this->search = '';
         $this->dispatchBrowserEvent('notify', ['message' => 'Product added successfully.']);
@@ -94,7 +99,9 @@ class EditOrder extends Component
         $this->selectedProducts[$id]['quantity']++;
         $this->selectedProducts[$id]['total'] = $this->selectedProducts[$id]['quantity'] * $this->selectedProducts[$id]['price'];
 
-        $this->order->data['subtotal'] = $this->order->getSubtotal($this->selectedProducts);
+        $this->order->fill(['data' => [
+            'subtotal' => $this->order->getSubtotal($this->selectedProducts),
+        ]]);
     }
 
     public function decreaseQuantity($id)
@@ -106,7 +113,9 @@ class EditOrder extends Component
             unset($this->selectedProducts[$id]);
         }
 
-        $this->order->data['subtotal'] = $this->order->getSubtotal($this->selectedProducts);
+        $this->order->fill(['data' => [
+            'subtotal' => $this->order->getSubtotal($this->selectedProducts),
+        ]]);
     }
 
     public function updatedOrderDataShippingArea($value)
@@ -116,6 +125,10 @@ class EditOrder extends Component
                 $this->order->data['shipping_area'] == 'Inside Dhaka' ? 'inside_dhaka' : 'outside_dhaka'
             } ?? config('services.shipping.' . $this->order->data['shipping_area'], 0),
         ]]);
+
+        $this->order->fill(['data' => [
+            'subtotal' => $this->order->getSubtotal($this->selectedProducts),
+        ]]);
     }
 
     public function updateOrder()
@@ -123,6 +136,10 @@ class EditOrder extends Component
         if (empty($this->selectedProducts)) {
             return session()->flash('error', 'Please add products to the order.');
         }
+
+        $this->order->fill(['data' => [
+            'subtotal' => $this->order->getSubtotal($this->selectedProducts),
+        ]]);
 
         if ($this->order->exists) {
             $confirming = false;

@@ -18,6 +18,7 @@ class Order extends Model
     ];
 
     protected $attributes = [
+        'status' => 'CONFIRMED',
         'data' => '{"subtotal":0,"shipping_cost":0,"advanced":0,"discount":0,"courier":"","city_id":"","area_id":"","weight":0.5}',
     ];
 

@@ -91,7 +91,7 @@ class OrderController extends Controller
             })
             ->editColumn('products', function ($row) {
                 $products = '<ul style="list-style: auto; padding-left: 1rem;">';
-                foreach ($row->products as $product) {
+                foreach ((array)($row->products) ?? [] as $product) {
                     $products .= "<li><a class='text-underline' href='" . route('products.show', $product->slug) . "' target='_blank'>{$product->name}</a> x{$product->quantity}</li>";
                 }
                 return $products . '</ul>';

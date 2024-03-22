@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['namespace' => 'Api', 'as' => 'api.'], function () {
-    Route::get('fix-orders-products', 'ApiController@fixOrdersProducts');
     Route::get('products', 'ProductController')->name('products');
     Route::get('images', 'ImageController@index')->name('images.index');
     Route::get('images/single', 'ImageController@single')->name('images.single');
