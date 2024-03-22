@@ -35,7 +35,7 @@
             }
         }
         .product__content {
-            @if (!!$services->enabled)
+            @if ($services->enabled ?? false)
             grid-template-columns: [gallery] calc(40% - 30px) [info] calc(40% - 35px) [sidebar] calc(25% - 10px);
             @else
             grid-template-columns: [gallery] calc(50% - 30px) [info] calc(50% - 35px);
@@ -122,9 +122,9 @@
                         </div>
                     </div>
                     <!-- .product__info -->
-                    <livewire:product-detail :product="$product" :show-brand-category="!$services->enabled" />
+                    <livewire:product-detail :product="$product" :show-brand-category="!($services->enabled ?? false)" />
                     <!-- .product__info / end -->
-                    @if(!!$services->enabled)
+                    @if($services->enabled ?? false)
                     <div>
                         @if($product->variations->isNotEmpty())
                         <div class="product__footer mt-2 mb-2 border p-3">

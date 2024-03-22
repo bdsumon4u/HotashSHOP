@@ -271,7 +271,7 @@
     </script>
     @stack('scripts')
     @php
-        $phone = preg_replace('/[^\d]/', '', $company->whatsapp);
+        $phone = preg_replace('/[^\d]/', '', $company->whatsapp ?? '');
         if (strlen($phone) == 11) {
             $phone = '88' . $phone;
         }

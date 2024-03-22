@@ -13,7 +13,7 @@ class ProductCard extends Component
     public function addToCart()
     {
         $cart = session()->get('cart', []);
-        $fraudQuantity = setting('fraud')->max_qty_per_product;
+        $fraudQuantity = setting('fraud')->max_qty_per_product ?? 3;
         if (!isset($cart[$this->product->id])) {
             $cart[$this->product->id] = [
                 'id' => $this->product->id,

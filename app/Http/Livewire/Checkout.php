@@ -168,7 +168,7 @@ class Checkout extends Component
             $products = Product::find(array_keys($this->cart))
                 ->mapWithKeys(function (Product $product) use ($fraud) {
                     $id = $product->id;
-                    $quantity = min($this->cart[$id]['quantity'], $fraud->max_qty_per_product);
+                    $quantity = min($this->cart[$id]['quantity'], $fraud->max_qty_per_product ?? 3);
 
                     if ($quantity <= 0) {
                         return null;

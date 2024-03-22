@@ -93,7 +93,7 @@ class ProductDetail extends Component
 
     public function mount()
     {
-        $maxPerProduct = setting('fraud')->max_qty_per_product;
+        $maxPerProduct = setting('fraud')->max_qty_per_product ?? 3;
         if ($this->product->variations->isNotEmpty()) {
             $this->selectedVar = $this->product->variations->where('slug', request()->segment(2))->first()
                 ?? $this->product->variations->random();
@@ -107,7 +107,7 @@ class ProductDetail extends Component
 
     public function deliveryText($freeDelivery)
     {
-        if ($freeDelivery->for_all) {
+        if ($freeDelivery->for_all ?? false) {
             $text = '<ul class="mb-0 p-0 pl-4 list-unstyled">';
             if ($freeDelivery->min_quantity > 0) {
                 $text .= '<li>কমপক্ষে <strong class="text-danger">'.$freeDelivery->min_quantity.'</strong> টি প্রোডাক্ট অর্ডার করুন</li>';

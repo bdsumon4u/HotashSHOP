@@ -24,6 +24,11 @@
         background-color: #f3f3f3;
         padding: 5px 10px;
         margin-bottom: 2px;
+        display: flex;
+        align-items: center;
+    }
+    .formatted-categories ul li button {
+        margin-left: auto;
     }
     .formatted-categories ul li:hover {
         background-color: aliceblue;
@@ -194,6 +199,26 @@
 @push('scripts')
 <script>
     $(document).ready(function () {
+        $(document).on('click', '.delete-item', function(e) {
+            e.preventDefault();
+
+            if (!confirm('Are you sure to delete?')) {
+                return false;
+            }
+
+            $(e.target).addClass('disabled')
+            var id = $(this).attr('data-id')
+            $.ajax({
+                url: route('admin.attributes.destroy', id),
+                type: 'DELETE',
+                _method: 'DELETE',
+                complete: function () {
+                    $(e.target).removeClass('disabled')
+                    window.location.reload();
+                }
+            })
+        });
+
         $('[name="name"]').keyup(function () {
             $($(this).data('target')).val(slugify($(this).val()));
         });

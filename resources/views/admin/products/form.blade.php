@@ -17,7 +17,7 @@
                     <div class="input-group-text">{{ url('/product') }}/</div>
                 </div>
                 <x-input name="slug" :value="$product->slug" />
-                <button class="input-group-append align-items-center btn btn-secondary" type="button" onclick="window.open('{{url('/products').'/'}}'+this.previousSibling.value, '_blank')">VISIT</button>
+                <button class="input-group-append align-items-center btn btn-secondary" type="button" onclick="window.open('{{url('/products').'/'}}'+this.previousElementSibling.value, '_blank')">VISIT</button>
             </div>
             <x-error field="slug" />
         </div>
