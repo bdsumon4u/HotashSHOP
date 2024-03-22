@@ -24,6 +24,11 @@
         background-color: #f3f3f3;
         padding: 5px 10px;
         margin-bottom: 2px;
+        display: flex;
+        align-items: center;
+    }
+    .formatted-categories ul li button {
+        margin-left: auto;
     }
     .formatted-categories ul li:hover {
         background-color: aliceblue;
@@ -74,7 +79,7 @@
                                                 role="tab" aria-controls="edit-brand" aria-selected="false">Edit</a>
                                         </li>
                                         <li class="nav-item ml-auto">
-                                            <x-form action="{{ route('admin.brands.destroy', request('active_id', 0)) }}" method="delete">
+                                            <x-form action="{{ route('admin.brands.destroy', request('active_id', 0)) }}" method="delete" onsubmit="return confirm('Are you sure to delete?');">
                                                 <button type="submit" class="nav-link btn btn-danger btn-square delete-action">Delete</button>
                                             </x-form>
                                         </li>
@@ -147,6 +152,26 @@
 @push('scripts')
 <script>
     $(document).ready(function () {
+        $(document).on('click', '.delete-item', function(e) {
+            e.preventDefault();
+
+            if (!confirm('Are you sure to delete?')) {
+                return false;
+            }
+
+            $(e.target).addClass('disabled')
+            var id = $(this).attr('data-id')
+            $.ajax({
+                url: route('admin.brands.destroy', id),
+                type: 'DELETE',
+                _method: 'DELETE',
+                complete: function () {
+                    $(e.target).removeClass('disabled')
+                    window.location.reload();
+                }
+            })
+        });
+
         $('[name="name"]').keyup(function () {
             $($(this).data('target')).val(slugify($(this).val()));
         });

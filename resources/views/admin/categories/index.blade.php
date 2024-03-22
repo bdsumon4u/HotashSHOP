@@ -73,7 +73,10 @@
                             @if($categories->isEmpty())
                             <div class="alert alert-danger py-2"><strong>No Categories Found.</strong></div>
                             @else
-                            <x-categories.tree :categories="$categories" />
+                            <form action="">
+                                <x-categories.tree :categories="$categories" />
+                                <button type="submit" class="btn btn-primary">Save Order</button>
+                            </form>
                             @endif
                         </div>
                     </div>
