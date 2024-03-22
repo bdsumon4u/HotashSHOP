@@ -92,7 +92,7 @@
                                                 role="tab" aria-controls="edit-category" aria-selected="false">Edit</a>
                                         </li>
                                         <li class="nav-item ml-auto">
-                                            <x-form action="{{ route('admin.categories.destroy', request('active_id', 0)) }}" method="delete">
+                                            <x-form action="{{ route('admin.categories.destroy', request('active_id', 0)) }}" method="delete" onsubmit="return confirm('Are you sure to delete?');">
                                                 <button type="submit" class="nav-link btn btn-danger btn-square delete-action">Delete</button>
                                             </x-form>
                                         </li>
@@ -327,12 +327,16 @@
         })
 
         $(document).on('click', '.delete-item', function(e) {
-            e.preventDefault()
+            e.preventDefault();
+
+            if (!confirm('Are you sure to delete?')) {
+                return false;
+            }
 
             $(e.target).addClass('disabled')
             var id = $(this).attr('data-id')
             $.ajax({
-                url: route('admin.category-menus.destroy', id),
+                url: route('admin.categories.destroy', id),
                 type: 'DELETE',
                 _method: 'DELETE',
                 complete: function () {
