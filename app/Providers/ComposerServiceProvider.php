@@ -56,7 +56,7 @@ class ComposerServiceProvider extends ServiceProvider
         }
 
         View::composer(['layouts.yellow.master',], function ($view) {
-            $view->with('categories', Category::nested());
+            $view->with('categories', Category::nested(10));
         });
 
         $settingsPages = [

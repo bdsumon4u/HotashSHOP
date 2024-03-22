@@ -54,6 +54,8 @@ class Category extends Model
             ->orderBy('order');
         $count && $query->take($count);
 
+        if ($count) return $query->get();
+
         return cache()->rememberForever('categories:nested', function () use ($query) {
             return $query->get();
         });
