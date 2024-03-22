@@ -130,11 +130,13 @@ class OrderController extends Controller
                     ->orWhere('data->consignment_id', 'like', '%' . $keyword . '%');
             })
             ->filterColumn('created_at', function ($query, $keyword) {
-                [$start, $end] = explode(' - ', $keyword);
-                $query->whereBetween('created_at', [
-                    Carbon::parse($start)->startOfDay(),
-                    Carbon::parse($end)->endOfDay(),
-                ]);
+                if (str_contains($keyword, ' - ')) {
+                    [$start, $end] = explode(' - ', $keyword);
+                    $query->whereBetween('created_at', [
+                        Carbon::parse($start)->startOfDay(),
+                        Carbon::parse($end)->endOfDay(),
+                    ]);
+                }
             })
             ->rawColumns(['checkbox', 'id', 'customer', 'products', 'courier', 'created_at', 'actions'])
             ->make(true);
