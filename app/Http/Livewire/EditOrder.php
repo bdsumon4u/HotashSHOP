@@ -109,6 +109,15 @@ class EditOrder extends Component
         $this->order->data['subtotal'] = $this->order->getSubtotal($this->selectedProducts);
     }
 
+    public function updatedOrderDataShippingArea($value)
+    {
+        $this->order->fill(['data' => [
+            'shipping_cost' => setting('delivery_charge')->{
+                $this->order->data['shipping_area'] == 'Inside Dhaka' ? 'inside_dhaka' : 'outside_dhaka'
+            } ?? config('services.shipping.' . $this->order->data['shipping_area'], 0),
+        ]]);
+    }
+
     public function updateOrder()
     {
         if (empty($this->selectedProducts)) {
@@ -194,12 +203,6 @@ class EditOrder extends Component
         }
 
         if ($exception) cache()->forget('pathao_areas:' . $this->order->data['city_id']);
-
-        $this->order->fill(['data' => [
-            'shipping_cost' => setting('delivery_charge')->{
-                $this->order->data['shipping_area'] == 'Inside Dhaka' ? 'inside_dhaka' : 'outside_dhaka'
-            } ?? config('services.shipping.' . $this->order->data['shipping_area'], 0),
-        ]]);
 
         return view('livewire.edit-order', [
             'cities' => $cities,
