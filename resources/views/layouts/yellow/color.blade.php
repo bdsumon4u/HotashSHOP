@@ -131,7 +131,7 @@
         color: {{$color->footer->text_hover ?? null}} !important;
     }
     .product-card:before {
-        box-shadow: inset 0 0 0 1px {{$color->primary->text_color ?? null}} !important;
+        box-shadow: inset 0 0 0 1px {{$color->primary->background_color ?? null}} !important;
     }
     .product-card:hover:before {
         box-shadow: inset 0 0 0 2px {{$color->primary->background_color ?? null}} !important;
