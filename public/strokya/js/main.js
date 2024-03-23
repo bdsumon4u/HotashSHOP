@@ -317,6 +317,16 @@
                 stagePadding: 1
             };
             const layoutOptions = {
+                'grid-cat': {
+                    responsive: {
+                        1200: {items: 8, margin: 14},
+                        992:  {items: 8, margin: 10},
+                        768:  {items: 5, margin: 10},
+                        576:  {items: 5, margin: 5},
+                        475:  {items: 3, margin: 5},
+                        0:    {items: 3, margin: 2}
+                    }
+                },
                 'grid-4': {
                     responsive: {
                         1200: {items: 4, margin: 14},

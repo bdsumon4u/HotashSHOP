@@ -1,10 +1,29 @@
 <?php
 
+use App\Category;
+use App\Image;
 use App\Page;
 use App\Product;
 use App\Setting;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
+
+if (! function_exists('categories')) {
+    function categories() {
+        return Category::with('image')
+        ->inRandomOrder()
+        ->get()
+        ->map(function ($category) {
+            if (!$image = $category->image) {
+                $image = Image::whereHas('products.categories', function ($query) use ($category) {
+                    $query->where('category_id', $category->id);
+                })->inRandomOrder()->first();
+            }
+            $category->image_src = asset($image->path ?? 'https://placehold.co/600x600?text=No+Product');
+            return $category;
+        });
+    }
+}
 
 if (! function_exists('pageRoutes')) {
     function pageRoutes() {

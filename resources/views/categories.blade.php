@@ -15,7 +15,7 @@
     <div class="container">
         <div class="products-view__list products-list" data-layout="grid-5-full" data-with-features="false">
             <div class="products-list__body">
-                @foreach($categories as $category)
+                @foreach(categories() as $category)
                     <div class="products-list__item">
                         <div class="product-card">
                             <div class="product-card__image">

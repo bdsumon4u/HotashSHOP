@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\HomeSection;
 use App\Slide;
 use Illuminate\Http\Request;

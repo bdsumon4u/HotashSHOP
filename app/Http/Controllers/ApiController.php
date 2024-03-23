@@ -2,29 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
-use App\Image;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 
 class ApiController extends Controller
 {
     public function categories()
     {
-        return view('categories', [
-            'categories' => Category::with('image')
-                ->inRandomOrder()
-                ->get()
-                ->map(function ($category) {
-                    if (!$image = $category->image) {
-                        $image = Image::whereHas('products.categories', function ($query) use ($category) {
-                            $query->where('category_id', $category->id);
-                        })->inRandomOrder()->first();
-                    }
-                    $category->image_src = asset($image->path ?? 'https://placehold.co/600x600?text=No+Product');
-                    return $category;
-                }),
-        ]);
+        return view('categories');
     }
 
     public function storageLink()
