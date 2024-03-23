@@ -31,11 +31,11 @@
                         <div class="form-control @error('shipping') is-invalid @enderror h-auto">
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" wire:model="shipping" class="custom-control-input" id="inside-dhaka" name="shipping" value="Inside Dhaka">
-                                <label class="custom-control-label" for="inside-dhaka">ঢাকা শহর</label>
+                                <label class="custom-control-label" for="inside-dhaka">ঢাকা শহর (৳ {{setting('delivery_charge')->inside_dhaka}})</label>
                             </div>
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" wire:model="shipping" class="custom-control-input" id="outside-dhaka" name="shipping" value="Outside Dhaka">
-                                <label class="custom-control-label" for="outside-dhaka">ঢাকার বাইরে</label>
+                                <label class="custom-control-label" for="outside-dhaka">ঢাকার বাইরে (৳ {{setting('delivery_charge')->outside_dhaka}})</label>
                             </div>
                         </div>
                         <x-error field="shipping" />
