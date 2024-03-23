@@ -94,6 +94,12 @@ class SettingRequest extends FormRequest
             ];
         }
 
+        if ($this->get('tab') == 'categories') {
+            return [
+                'show_option' => 'required|array',
+            ];
+        }
+
         return [
             'products_page' => 'required|array',
             'related_products' => 'required|array',

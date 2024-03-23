@@ -32,6 +32,7 @@
 </div><!-- .block-features / end -->
 @endif
 
+@if(($show_option = setting('show_option'))->category_carousel ?? false)
 <div class="block block-products-carousel" data-layout="grid-cat">
     <div class="container">
         <div class="block-header">
@@ -81,6 +82,7 @@
         </div>
     </div>
 </div>
+@endif
 
 @foreach($sections as $section)
 <!-- .block-products-carousel -->

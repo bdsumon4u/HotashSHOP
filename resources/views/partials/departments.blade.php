@@ -1,3 +1,4 @@
+@if(setting('show_option')->category_dropdown ?? false)
 <div class="nav-panel__departments">
     <!-- .departments -->
     <div
@@ -77,3 +78,4 @@
         </button>
     </div><!-- .departments / end -->
 </div>
+@endif

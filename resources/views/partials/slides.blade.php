@@ -69,7 +69,7 @@
 <div class="block-slideshow block-slideshow--layout--with-departments block">
     <div id="slideshow-container" class="container">
         <div class="row">
-            <div class="col-12 col-lg-9 offset-lg-3">
+            <div class="col-12 @if(setting('show_option')->category_dropdown ?? false) col-lg-9 offset-lg-3 @endif">
                 <div class="block-slideshow__body">
                     <div class="owl-carousel">
                         @foreach($slides as $slide)

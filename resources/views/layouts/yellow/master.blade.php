@@ -246,7 +246,7 @@
             //     });
             // });
 
-            $(window).on('scroll', function() {
+            function onScroll() {
                 $('input, textarea').blur();
                 var scrollTop = $(this).scrollTop()
                 if (scrollTop > 32) {
@@ -266,7 +266,10 @@
                         $('.departments').addClass('departments--opened departments--fixed');
                     $('.departments--opened.departments--fixed .departments__body').css('min-height', '458px');
                 }
-            });
+            }
+
+            $(window).on('scroll', onScroll);
+            onScroll();
         });
     </script>
     @stack('scripts')

@@ -200,6 +200,44 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="card rounded-0 shadow-sm">
+                            <div class="card-header p-3">
+                                <strong>Category Settings</strong>
+                            </div>
+                            <div class="card-body p-3">
+                                <x-form :action="route('admin.settings')" method="POST">
+                                    <input type="hidden" name="tab" value="categories">
+                                    @if ($errors->any())
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        @foreach ($errors->all() as $error)
+                                            <p class="mb-0">{{ $error }}</p>
+                                        @endforeach
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    @endif
+                                    <div class="form-group pl-3">
+                                        @php $show_option = setting('show_option'); @endphp
+                                        <div class="checkbox checkbox-secondary">
+                                            <input type="hidden" name="show_option[category_dropdown]" value="0">
+                                            <x-checkbox id="show-dropdown" class="d-none" name="show_option[category_dropdown]" value="1"
+                                                :checked="!!old('show_option.category_dropdown', $show_option->category_dropdown ?? false)" />
+                                            <label for="show-dropdown" class="m-0">Show Category Dropdown</label>
+                                        </div>
+                                        <div class="checkbox checkbox-secondary">
+                                            <input type="hidden" name="show_option[category_carousel]" value="0">
+                                            <x-checkbox id="show-carousel" class="d-none" name="show_option[category_carousel]" value="1"
+                                                :checked="!!old('show_option.category_carousel', $show_option->category_carousel ?? false)" />
+                                            <label for="show-carousel" class="m-0">Show Category Carousel</label>
+                                        </div>
+                                    </div>
+
+                                    <button class="btn btn-primary">Submit</button>
+                                </x-form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
