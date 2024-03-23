@@ -77,6 +77,14 @@ class OrderController extends Controller
             ->addColumn('amount', function ($row) {
                 return intval($row->data['subtotal']) + intval($row->data['shipping_cost']) - intval($row->data['discount'] ?? 0) - ($row->data['advanced'] ?? 0);
             })
+            ->editColumn('status', function ($row) {
+                $return = '<select data-id="'.$row->id.'" onchange="changeStatus" class="status-column">';
+                foreach (config('app.orders', []) as $status) {
+                    $return .= '<option value="'.$status.'" '.($status == $row->status ? 'selected' : '').'>'.$status.'</option>';
+                }
+                $return .= '</select>';
+                return $return;
+            })
             ->addColumn('checkbox', function ($row) {
                 return '<input type="checkbox" class="form-control" name="order_id[]" value="' . $row->id . '" style="min-height: 20px;min-width: 20px;max-height: 20px;max-width: 20px;">';
             })
@@ -97,9 +105,15 @@ class OrderController extends Controller
                 return $products . '</ul>';
             })
             ->addColumn('courier', function ($row) {
-                $return = $link = '';
-                if (!($row->data['courier'] ?? false)) return $return;
-                $return .= '<div style="white-space: nowrap;">Carrier: ' . $row->data['courier'] . '</div>';
+                $link = ''; $selected = $row->data['courier'] ?? 'Manual';
+
+                $return = '<select data-id="'.$row->id.'" onchange="changeCourier" class="courier-column">';
+                foreach (['Pathao', 'SteadFast', 'Manual'] as $provider) {
+                    $return .= '<option value="'.$provider.'" '.($provider == $selected ? 'selected' : '').'>'.$provider.'</option>';
+                }
+                $return .= '</select>';
+
+                if (!($row->data['courier']??false)) return $return;
 
                 if ($row->data['courier'] == 'Pathao') {
                     // append city, area and weight
@@ -138,7 +152,7 @@ class OrderController extends Controller
                     ]);
                 }
             })
-            ->rawColumns(['checkbox', 'id', 'customer', 'products', 'courier', 'created_at', 'actions'])
+            ->rawColumns(['checkbox', 'id', 'customer', 'products', 'status', 'courier', 'created_at', 'actions'])
             ->make(true);
     }
 }

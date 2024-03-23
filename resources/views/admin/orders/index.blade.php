@@ -286,15 +286,24 @@
             pageLength: 50,
         });
 
+        $(document).on('change', '.status-column', changeStatus);
+
         function changeStatus() {
             $('[name="status"]').prop('disabled', true);
+
+            var order_id = Array.from(checklist);
+            var status = $('[name="status"]').val();
+            if ($(this).data('id')) {
+                order_id = [$(this).data('id')];
+                status = $(this).val();
+            }
 
             $.post({
                 url: '{{ route('admin.orders.status') }}',
                 data: {
                     _token: '{{ csrf_token() }}',
-                    order_id: Array.from(checklist),
-                    status: $('[name="status"]').val(),
+                    order_id: order_id,
+                    status: status,
                 },
                 success: function (response) {
                     checklist.clear();
@@ -310,15 +319,24 @@
             });
         }
 
+        $(document).on('change', '.courier-column', changeCourier);
+
         function changeCourier() {
             $('[name="courier"]').prop('disabled', true);
+
+            var order_id = Array.from(checklist);
+            var courier = $('[name="courier"]').val();
+            if ($(this).data('id')) {
+                order_id = [$(this).data('id')];
+                courier = $(this).val();
+            }
 
             $.post({
                 url: '{{ route('admin.orders.courier') }}',
                 data: {
                     _token: '{{ csrf_token() }}',
-                    order_id: Array.from(checklist),
-                    courier: $('[name="courier"]').val(),
+                    order_id: order_id,
+                    courier: courier,
                 },
                 success: function (response) {
                     // checklist.clear();
