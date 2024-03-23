@@ -6,6 +6,8 @@ use App\Notifications\User\OrderConfirmed;
 use App\Order;
 use App\Pathao\Facade\Pathao;
 use App\Product;
+use App\User;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Livewire\Component;
 
@@ -154,13 +156,14 @@ class EditOrder extends Component
                 'products' => json_encode($this->selectedProducts, JSON_UNESCAPED_UNICODE),
             ]);
 
-            if ($confirming) {
-                $this->order->user->notify(new OrderConfirmed($this->order));
+            if ($confirming && ($user = $this->order->user)) {
+                $user->notify(new OrderConfirmed($this->order));
             }
 
             session()->flash('success', 'Order updated successfully.');
         } else {
             $this->order->fill([
+                'user_id' => $this->getUser()->id,
                 'admin_id' => auth('admin')->id(),
                 'type' => Order::MANUAL,
                 'status_at' => now()->toDateTimeString(),
@@ -175,6 +178,28 @@ class EditOrder extends Component
         return redirect()->route('admin.orders.edit', $this->order);
     }
 
+    private function getUser()
+    {
+        if ($user = auth('user')->user()) {
+            return $user;
+        }
+
+        $user = User::query()->firstOrCreate(
+            ['phone_number' => $this->order->phone],
+            array_merge([
+                'name' => $this->order->name,
+                'email' => $this->order->email,
+            ], [
+                'email_verified_at' => now(),
+                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+                'remember_token' => Str::random(10),
+            ])
+        );
+
+        // $user->notify(new AccountCreated());
+
+        return $user;
+    }
     public function render()
     {
         $products = collect();
