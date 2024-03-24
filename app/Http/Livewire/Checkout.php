@@ -77,11 +77,11 @@ class Checkout extends Component
 
         $freeDelivery = setting('free_delivery');
 
-        if (!$freeDelivery->enabled) {
+        if (!($freeDelivery->enabled ?? false)) {
             return $shipping_cost;
         }
 
-        if ($freeDelivery->for_all) {
+        if ($freeDelivery->for_all ?? false) {
             if ($this->subtotal < $freeDelivery->min_amount) {
                 return $shipping_cost;
             }
