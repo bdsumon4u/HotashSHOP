@@ -14,7 +14,7 @@
             <x-error field="Pathao[username]" />
         </div>
         <div class="form-group col-md-auto">
-            <x-input type="password" name="Pathao[password]" placeholder="Type Pathao password here" />
+            <x-input type="password" name="Pathao[password]" :value="$Pathao->password" placeholder="Type Pathao password here" />
             <x-error field="Pathao[password]" />
         </div>
         <div class="form-group col-md-auto">
