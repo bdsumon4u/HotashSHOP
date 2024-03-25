@@ -71,7 +71,7 @@
                                             @default
                                                 
                                         @endswitch
-                                        @if($show)
+                                        @if($show || true)
                                         <option value="{{ $status }}">{{ $status }}</option>
                                         @endif
                                     @endforeach
