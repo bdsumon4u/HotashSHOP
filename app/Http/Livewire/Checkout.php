@@ -161,7 +161,7 @@ class Checkout extends Component
             || Cache::get('fraud:daily:' . request()->ip()) >= ($fraud->allow_per_day ?? 7)
             || Cache::get('fraud:daily:' . $data['phone']) >= ($fraud->allow_per_day ?? 7)
         ) {
-            return redirect()->back()->with('error', 'প্রিয় গ্রাহক, আরও অর্ডার করতে চাইলে আমাদের হেল্প লাইন নাম্বারে কল দিয়ে সরাসরি কথা বলুন।');
+            return redirect()->back()->with('error', 'প্রিয় গ্রাহক, আরও অর্ডার করতে চাইলে আমাদের হেল্প লাইন '.setting('company')->phone.' নাম্বারে কল দিয়ে সরাসরি কথা বলুন।');
         }
 
         $order = DB::transaction(function () use ($data, &$order, $fraud) {
