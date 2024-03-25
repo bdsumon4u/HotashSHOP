@@ -75,19 +75,19 @@
                         class="product__buttons @if($show_option->product_detail_buttons_inline??false) d-lg-inline-flex @endif w-100"
                         @if($show_option->product_detail_buttons_inline??false) style="gap: .5rem;" @endif
                     >
-                        @if($show_option->product_detail_add_to_cart ?? false)
-                        <div class="product__actions-item product__actions-item--addtocart" @if($show_option->product_detail_buttons_inline??false) style="flex: 1;" @endif>
-                            <button type="button" wire:click="addToCart" class="btn btn-primary product__addtocart btn-lg btn-block" {{ $available ? '' : 'disabled' }}>
-                                {!! $show_option->add_to_cart_icon ?? null !!}
-                                <span class="ml-1">{{ $show_option->add_to_cart_text ?? '' }}</span>
-                            </button>
-                        </div>
-                        @endif
                         @if($show_option->product_detail_order_now ?? false)
                         <div class="product__actions-item product__actions-item--ordernow" @if($show_option->product_detail_buttons_inline??false) style="flex: 1;" @endif>
                             <button type="button" wire:click="orderNow" class="btn btn-primary product__ordernow btn-lg btn-block" {{ $available ? '' : 'disabled' }}>
                                 {!! $show_option->order_now_icon ?? null !!}
                                 <span class="ml-1">{{ $show_option->order_now_text ?? '' }}</span>
+                            </button>
+                        </div>
+                        @endif
+                        @if($show_option->product_detail_add_to_cart ?? false)
+                        <div class="product__actions-item product__actions-item--addtocart" @if($show_option->product_detail_buttons_inline??false) style="flex: 1;" @endif>
+                            <button type="button" wire:click="addToCart" class="btn btn-primary product__addtocart btn-lg btn-block" {{ $available ? '' : 'disabled' }}>
+                                {!! $show_option->add_to_cart_icon ?? null !!}
+                                <span class="ml-1">{{ $show_option->add_to_cart_text ?? '' }}</span>
                             </button>
                         </div>
                         @endif
