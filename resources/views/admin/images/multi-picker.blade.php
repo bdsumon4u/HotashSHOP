@@ -102,12 +102,12 @@
             });
         }
         selected.push($(this).data('id'));
-        $('.additional_images-previews').append('<div id="preview-'+$(this).data('id')+'" class="additional_images-preview position-relative" style="height: 150px; width: 150px; margin: 5px;">
+        $('.additional_images-previews').append('<div id="preview-'+$(this).data('id')+`" class="additional_images-preview position-relative" style="height: 150px; width: 150px; margin: 5px;">
             <i class="fa fa-times text-danger position-absolute" style="font-size: large; top: 0; right: 0; background: #ddd; padding: 2px; border-radius: 3px; cursor: pointer;" onclick="this.parentNode.remove()"></i>
-            <img src="'+$(this).data('src')+'" alt="Additional Image" data-toggle="modal" data-target="#multi-picker" id="additional_image-preview" class="img-thumbnail img-responsive">
-            <input type="hidden" name="additional_images[]" value="'+$(this).data('id')+'">
-            <input type="hidden" name="additional_images_srcs[]" value="'+$(this).data('src')+'">
-        </div>');
+            <img src="`+$(this).data('src')+`" alt="Additional Image" data-toggle="modal" data-target="#multi-picker" id="additional_image-preview" class="img-thumbnail img-responsive">
+            <input type="hidden" name="additional_images[]" value="`+$(this).data('id')+`">
+            <input type="hidden" name="additional_images_srcs[]" value="`+$(this).data('src')+`">
+        </div>`);
         $.notify('<i class="fa fa-bell-o mr-1"></i> Additional image selected', {
             type: 'success',
             allow_dismiss: true,
