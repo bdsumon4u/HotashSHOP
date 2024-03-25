@@ -78,7 +78,7 @@ class OrderController extends Controller
                 return intval($row->data['subtotal']) + intval($row->data['shipping_cost']) - intval($row->data['discount'] ?? 0) - ($row->data['advanced'] ?? 0);
             })
             ->editColumn('status', function ($row) {
-                $return = '<select data-id="'.$row->id.'" onchange="changeStatus" class="status-column">';
+                $return = '<select data-id="'.$row->id.'" onchange="changeStatus" class="status-column form-control-sm">';
                 foreach (config('app.orders', []) as $status) {
                     $return .= '<option value="'.$status.'" '.($status == $row->status ? 'selected' : '').'>'.$status.'</option>';
                 }
@@ -98,16 +98,16 @@ class OrderController extends Controller
                     "</div>";
             })
             ->editColumn('products', function ($row) {
-                $products = '<ul style="list-style: auto; padding-left: 1rem;">';
+                $products = '<ul style="list-style: none; padding-left: 1rem;">';
                 foreach ((array)($row->products) ?? [] as $product) {
-                    $products .= "<li><a class='text-underline' href='" . route('products.show', $product->slug) . "' target='_blank'>{$product->name}</a> x{$product->quantity}</li>";
+                    $products .= "<li>{$product->quantity} x <a class='text-underline' href='" . route('products.show', $product->slug) . "' target='_blank'>{$product->name}</a></li>";
                 }
                 return $products . '</ul>';
             })
             ->addColumn('courier', function ($row) {
                 $link = ''; $selected = $row->data['courier'] ?? 'Manual';
 
-                $return = '<select data-id="'.$row->id.'" onchange="changeCourier" class="courier-column">';
+                $return = '<select data-id="'.$row->id.'" onchange="changeCourier" class="courier-column form-control-sm">';
                 foreach (['Pathao', 'SteadFast', 'Manual'] as $provider) {
                     $return .= '<option value="'.$provider.'" '.($provider == $selected ? 'selected' : '').'>'.$provider.'</option>';
                 }

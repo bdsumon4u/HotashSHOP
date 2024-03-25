@@ -39,13 +39,13 @@
                     <div class="card-header p-2">
                         <div class="row px-3 justify-content-between align-items-center">
                             <div>All Orders</div>
-                            <a href="{{route('admin.orders.create')}}" class="btn btn-sm btn-primary">New Order</a>
+                            <a href="{{route('admin.orders.create')}}" class="btn btn-primary">New Order</a>
                         </div>
                         <div class="row d-none" style="row-gap: .25rem;">
                             <div class="col-auto pr-0 d-flex align-items-center" check-count></div>
                             @unless(in_array(request('status'), ['CONFIRMED', 'INVOICED']))
                             <div class="col-auto px-1">
-                                <select name="status" id="status" onchange="changeStatus()" class="form-control form-control-sm">
+                                <select name="status" id="status" onchange="changeStatus()" class="form-control bg-primary text-white">
                                     <option value="">Change Status</option>
                                     @foreach(config('app.orders', []) as $status)
                                         @php $show = false @endphp
@@ -80,7 +80,7 @@
                             @endunless
                             @unless(request('status') == 'SHIPPING')
                             <div class="col-auto px-1">
-                                <select name="courier" id="courier" onchange="changeCourier()" class="form-control form-control-sm">
+                                <select name="courier" id="courier" onchange="changeCourier()" class="form-control bg-primary text-white">
                                     <option value="">Change Courier</option>
                                     @foreach(['Pathao', 'SteadFast', 'Manual'] as $provider)
                                     <option value="{{ $provider }}">{{ $provider }}</option>
@@ -90,9 +90,9 @@
                             @endunless
                             <div class="col-auto pl-0 ml-auto">
                                 @if(request('status') == 'CONFIRMED')
-                                <button onclick="printInvoice()" id="invoice" class="btn btn-sm btn-primary ml-1">Print Invoice</button>
+                                <button onclick="printInvoice()" id="invoice" class="btn btn btn-primary ml-1">Print Invoice</button>
                                 @elseif(request('status') == 'INVOICED')
-                                <button onclick="courier()" id="courier" class="btn btn-sm btn-primary ml-1">Courier Booking</button>
+                                <button onclick="courier()" id="courier" class="btn btn btn-primary ml-1">Courier Booking</button>
                                 @endif
                             </div>
                         </div>
