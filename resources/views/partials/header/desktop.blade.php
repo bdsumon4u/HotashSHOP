@@ -71,7 +71,7 @@
             <div class="site-header__phone d-flex align-items-center">
                 <img style="height: 35px;" class="img-responsive mr-1" src="{{ asset('call-now.gif') }}">
                 <div>
-                    <div class="site-header__phone-title mb-0">Customer Service</div>
+                    <div class="site-header__phone-title mb-0">Help Line</div>
                     <div class="site-header__phone-number">
                         <div class="topbar__item topbar__item--link">
                             <a style="font-family: monospace; font-size: 16px;" class="topbar-link" href="tel:{{ $company->phone ?? '' }}">{{ $company->phone ?? '' }}</a>
