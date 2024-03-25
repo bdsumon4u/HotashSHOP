@@ -1,4 +1,9 @@
 <div class="row">
+    @if(session()->has('error'))
+    <div class="col-12">
+        <div class="text-danger py-5 text-center"><h4>{{session('error')}}</h4></div>
+    </div>
+    @else
     <div class="col-12 col-md-8 pr-1">
         <div class="card mb-lg-0">
             <div class="card-body p-3">
@@ -152,4 +157,5 @@
             </div>
         </div>
     </div>
+    @endif
 </div>

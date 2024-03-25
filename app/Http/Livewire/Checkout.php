@@ -155,13 +155,13 @@ class Checkout extends Component
 
         $fraud = setting('fraud');
 
-        if (Cache::has('fraud:hourly:' . request()->ip()) || Cache::has('fraud:daily:' . $data['phone'])) {
-            if (Cache::get('fraud:hourly:' . request()->ip()) >= ($fraud->allow_per_hour ?? 3)) {
-                abort(429, 'You have reached the maximum limit of orders per hour.');
-            }
-            if (Cache::get('fraud:daily:' . request()->ip()) >= ($fraud->allow_per_day ?? 7)) {
-                abort(429, 'You have reached the maximum limit of orders per day.');
-            }
+        if (
+            Cache::get('fraud:hourly:' . request()->ip()) >= ($fraud->allow_per_hour ?? 3)
+            || Cache::get('fraud:hourly:' . $data['phone']) >= ($fraud->allow_per_hour ?? 3)
+            || Cache::get('fraud:daily:' . request()->ip()) >= ($fraud->allow_per_day ?? 7)
+            || Cache::get('fraud:daily:' . $data['phone']) >= ($fraud->allow_per_day ?? 7)
+        ) {
+            return redirect()->back()->with('error', 'প্রিয় গ্রাহক, আরও অর্ডার করতে চাইলে আমাদের হেল্প লাইন নাম্বারে কল দিয়ে সরাসরি কথা বলুন।');
         }
 
         $order = DB::transaction(function () use ($data, &$order, $fraud) {
@@ -259,8 +259,17 @@ class Checkout extends Component
 
         if (!$order) return back();
 
-        Cache::put('fraud:hourly:' . request()->ip(), Cache::get('fraud:hourly:' . request()->ip(), 0) + 1, now()->addHour());
-        Cache::put('fraud:daily:' . request()->ip(), Cache::get('fraud:daily:' . request()->ip(), 0) + 1, now()->addDay());
+        Cache::add('fraud:hourly:' . request()->ip(), 0, now()->addHour());
+        Cache::add('fraud:daily:' . request()->ip(), 0, now()->addDay());
+
+        Cache::increment('fraud:hourly:' . request()->ip());
+        Cache::increment('fraud:daily:' . request()->ip());
+
+        Cache::add('fraud:hourly:' . $data['phone'], 0, now()->addHour());
+        Cache::add('fraud:daily:' . $data['phone'], 0, now()->addDay());
+
+        Cache::increment('fraud:hourly:' . $data['phone']);
+        Cache::increment('fraud:daily:' . $data['phone']);
 
         // Undefined index email.
         // $data['email'] && Mail::to($data['email'])->queue(new OrderPlaced($order));
