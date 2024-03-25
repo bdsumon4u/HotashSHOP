@@ -10,7 +10,7 @@
             <div class="form-group">
                 <label for="desktop-logo" class="d-block">
                     <div>Desktop Logo ({{ config('services.logo.desktop.width', 260) }}x{{ config('services.logo.desktop.height', 54) }})</div>
-                    <img src="{{ asset($logo->desktop ?? '') ?? '' }}" alt="desktop Logo" class="img-responsive d-block" width="{{ config('services.logo.desktop.width', 260) }}" height="{{ config('services.logo.desktop.height', 54) }}" style="@unless($logo->desktop ?? '') display:none; @endunless">
+                    <img src="{{ asset($logo->desktop ?? '') ?? '' }}" alt="desktop Logo" class="img-responsive d-block" height="{{ config('services.logo.desktop.height', 54) }}" style="@unless($logo->desktop ?? '') display:none; @endunless">
                 </label>
                 <input type="file" name="logo[desktop]" id="desktop-logo" class="form-control mb-1 @if($logo->desktop ?? '') d-none @endif">
             </div>
@@ -19,7 +19,7 @@
             <div class="form-group">
                 <label for="mobile-logo" class="d-block">
                     <div>Mobile Logo ({{ config('services.logo.mobile.width', 192) }}x{{ config('services.logo.mobile.height', 40) }})</div>
-                    <img src="{{ asset($logo->mobile ?? '') ?? '' }}" alt="mobile Logo" class="img-responsiv d-blocke" width="{{ config('services.logo.mobile.width', 192) }}" height="{{ config('services.logo.mobile.height', 40) }}" style="@unless($logo->mobile ?? '') display:none; @endunless">
+                    <img src="{{ asset($logo->mobile ?? '') ?? '' }}" alt="mobile Logo" class="img-responsiv d-blocke" height="{{ config('services.logo.mobile.height', 40) }}" style="@unless($logo->mobile ?? '') display:none; @endunless">
                 </label>
                 <input type="file" name="logo[mobile]" id="mobile-logo" class="form-control mb-1 @if($logo->mobile ?? '') d-none @endif">
             </div>
@@ -28,7 +28,7 @@
             <div class="form-group">
                 <label for="favicon-logo" class="d-block">
                     <div>Favicon ({{ config('services.logo.favicon.width', 56) }}x{{ config('services.logo.favicon.height', 56) }})</div>
-                    <img src="{{ asset($logo->favicon ?? '') ?? '' }}" alt="Favicon" class="img-responsive d-block" width="{{ config('services.logo.favicon.width', 56) }}" height="{{ config('services.logo.favicon.height', 56) }}" style="@unless($logo->favicon ?? '') display:none; @endunless">
+                    <img src="{{ asset($logo->favicon ?? '') ?? '' }}" alt="Favicon" class="img-responsive d-block" height="{{ config('services.logo.favicon.height', 56) }}" style="@unless($logo->favicon ?? '') display:none; @endunless">
                 </label>
                 <input type="file" name="logo[favicon]" id="favicon-logo" class="form-control mb-1 @if($logo->favicon ?? '') d-none @endif">
             </div>

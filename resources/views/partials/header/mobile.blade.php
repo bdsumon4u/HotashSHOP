@@ -11,7 +11,7 @@
                         </svg>
                     </button>
                     <a class="mobile-header__logo" href="{{ url('/') }}">
-                        <img src="{{ asset($logo->mobile ?? '') }}" alt="Logo" style="max-width: 100%;">
+                        <img src="{{ asset($logo->mobile ?? '') }}" alt="Logo" style="max-width: 100%; max-height: 54px;">
                     </a>
                     <div class="mobile-header__search">
                         <div class="search mobile-header__search-form">

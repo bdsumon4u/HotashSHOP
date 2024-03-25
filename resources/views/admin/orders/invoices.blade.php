@@ -61,7 +61,7 @@
                         <div class="col-6">
                             <div class="media">
                                 <div class="media-left">
-                                    <img class="media-object" src="{{asset($logo->mobile)}}" alt="" width="180" height="54">
+                                    <img class="media-object" src="{{asset($logo->mobile)}}" alt="{{$company->name}}" style="max-width: 100%; max-height: 54px;">
                                 </div>
                                 <div class="media-body m-l-20">
                                     <h4 class="media-heading">{{ $company->name }}</h4>
