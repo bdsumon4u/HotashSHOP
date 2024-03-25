@@ -166,7 +166,7 @@
             window.close();
         };
         window.onafterprint = function() {
-            // if (confirm('Update status to INVOCED?')) {
+            if (confirm('Update status to INVOCED?')) {
                 $.post({
                     url: '{{ route('admin.orders.status') }}',
                     data: {
@@ -181,9 +181,9 @@
                         
                     }
                 });
-            // } else {
-            //     window.close();
-            // }
+            } else {
+                window.close();
+            }
         };
     </script>
   </body>

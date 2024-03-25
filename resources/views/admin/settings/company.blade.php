@@ -84,6 +84,8 @@
     </div>
 </div>
 
+@include('admin.settings.social')
+
 @push('scripts')
 <script>
     $(document).ready(function() {

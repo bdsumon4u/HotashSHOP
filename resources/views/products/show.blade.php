@@ -96,7 +96,7 @@
             'active' => $product->name,
         ])
     </div>
-    <div class="block mt-1">
+    <div class="block mt-3 mt-md-0">
         <div class="container">
             <div class="product product--layout--standard" data-layout="standard">
                 <div class="product__content">

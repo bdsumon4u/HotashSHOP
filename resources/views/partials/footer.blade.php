@@ -44,9 +44,9 @@
                                     </a>
                                 </li>
                                 @foreach($social ?? [] as $item => $data)
-                                    @if($data->display ?? false)
+                                    @if(($link = $data->link ?? false) && $link != '#')
                                     <li class="footer-newsletter__social-link footer-newsletter__social-link--{{ $item }}">
-                                        <a href="{{ url($data->link ?? '#') }}" target="_blank">
+                                        <a href="{{ url($link ?? '#') }}" target="_blank">
                                             @switch($item)
                                                 @case('facebook')
                                                 <i class="fab fa-facebook-f"></i>

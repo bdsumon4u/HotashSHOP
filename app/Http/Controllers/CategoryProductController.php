@@ -17,10 +17,16 @@ class CategoryProductController extends Controller
     public function __invoke(Request $request, Category $category)
     {
         $per_page = $request->get('per_page', 50);
-        $products = $category->products()
-            ->whereIsActive(1)
-            ->latest('id')
-            ->paginate($per_page)->appends(request()->query());
+        $sorted = setting('show_option')->product_sort ?? 'random';
+        $products = $category->products()->whereIsActive(1);
+        if ($sorted == 'random') {
+            $products->inRandomOrder();
+        } else if ($sorted == 'updated_at') {
+            $products->latest('updated_at');
+        } else if ($sorted == 'selling_price') {
+            $products->orderBy('selling_price');
+        }
+        $products = $products->paginate($per_page)->appends(request()->query());
 
         GoogleTagManagerFacade::set([
             'event' => 'view_item_list',

@@ -44,6 +44,7 @@ class HomeSection extends Model
         $ids = $this->items ?? [];
         $rows = $this->data->rows ?? 3;
         $cols = $this->data->cols ?? 5;
+        $sorted = setting('show_option')->product_sort ?? 'random';
         if ($this->type == 'carousel-grid') {
             $rows *= $cols;
         }
@@ -60,7 +61,21 @@ class HomeSection extends Model
                 $query->take($rows * $cols);
             });
         if ($ids) {
-            $query->orderByRaw(DB::raw("CASE WHEN id IN (".implode(',', $ids).") THEN 0 ELSE 1 END"));
+            if ($sorted == 'random') {
+                $query->orderByRaw(DB::raw("CASE WHEN id IN (".implode(',', $ids).") THEN 0 ELSE RAND()*(10-1)+1 END"));
+            } else if ($sorted == 'updated_at') {
+                $query->orderByRaw(DB::raw("CASE WHEN id IN (".implode(',', $ids).") THEN '2038' ELSE updated_at END") . ' DESC');
+            } else if ($sorted == 'selling_price') {
+                $query->orderByRaw(DB::raw("CASE WHEN id IN (".implode(',', $ids).") THEN 0 ELSE selling_price END"));
+            }
+        } else {
+            if ($sorted == 'random') {
+                $query->inRandomOrder();
+            } else if ($sorted == 'updated_at') {
+                $query->latest('updated_at');
+            } else if ($sorted == 'selling_price') {
+                $query->orderBy('selling_price');
+            }
         }
 
         return $paginate

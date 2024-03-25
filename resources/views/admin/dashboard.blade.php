@@ -48,11 +48,19 @@
              <div class="col-12">
                  <div class="mb-3">
                      @foreach(config('app.orders', []) as $status)
-                         <a href="" class="btn @if($status == request('status')) btn-primary text-white @else btn-light @endif px-2 py-1 m-1" onclick="event.preventDefault(); window._status = '{{ $status }}'; refresh();">
-                             <span>{{ $status }}</span>
-                         </a>
+                        <a class="btn btn-light px-2 py-1 m-1" href="{{
+                           route('admin.orders.index', array_merge(array_merge([
+                              'start_d' => date('Y-m-d'), 'end_d' => date('Y-m-d'),
+                           ], request()->query()), ['status' => $status == 'All' ? '' : $status]))
+                        }}">
+                           <span>{{ $status }}</span>
+                        </a>
                      @endforeach
-                     <a href="" class="btn @if(request('status') == '') btn-primary text-white @else btn-light @endif px-2 py-1 m-1" onclick="event.preventDefault(); window._status = ''; refresh();">
+                     <a href="{{
+                        route('admin.orders.index', array_merge(array_merge([
+                           'start_d' => date('Y-m-d'), 'end_d' => date('Y-m-d'),
+                        ], request()->query()), ['status' => '']))
+                     }}" class="btn btn-light px-2 py-1 m-1">
                         <span>All</span>
                      </a>
                  </div>
@@ -128,8 +136,9 @@
          </div>
 
          <div class="card rounded-0 shadow-sm">
-            <div class="card-header p-3">
-               <strong>{{ request('status') ?? 'Ordered' }} Products</strong>
+            <div class="card-header p-3 d-flex justify-content-between align-items-center">
+               <strong>Processing Products</strong>
+               <small>CONFIRMED+INVOICED+SHIPPING</small>
             </div>
             <div class="card-body p-3">
                @include('admin.reports.filtered')

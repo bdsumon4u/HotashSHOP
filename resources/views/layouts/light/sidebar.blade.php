@@ -82,10 +82,6 @@
                         </a>
                     </li>
 
-                    {{-- <li class="sidebar-title">
-                        <h6>Gallery</h6>
-                    </li> --}}
-
                     <li>
                         <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.images.index' ? 'active' : '' }}"
                             href="{{ route('admin.images.index') }}">
@@ -99,34 +95,10 @@
                     </li>
 
                     <li>
-                        <a class="nav-link menu-title link-nav {{ request()->is('admin/settings*') && request('tab')=='color' ? 'active' : '' }}"
-                            href="{{ route('admin.settings', ['tab' => 'color']) }}">
-                            <i data-feather="droplet"> </i>
-                            <span>Color</span>
-                        </a>
-                    </li>
-
-                    <li>
                         <a class="nav-link menu-title link-nav {{ request()->is('admin/slides*') ? 'active' : '' }}"
                             href="{{ route('admin.slides.index') }}">
                             <i data-feather="sliders"> </i>
                             <span>Slider</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a class="nav-link menu-title link-nav {{ request()->is('admin/home-sections*') ? 'active' : '' }}"
-                            href="{{ route('admin.home-sections.index') }}">
-                            <i data-feather="layers"> </i>
-                            <span>Sections</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a class="nav-link menu-title link-nav {{ request()->is('admin/menus*', 'admin/category-menus*') ? 'active' : '' }}"
-                            href="{{ route('admin.menus.index') }}">
-                            <i data-feather="menu"> </i>
-                            <span>Menus</span>
                         </a>
                     </li>
 
@@ -143,6 +115,14 @@
                     </li>
 
                     <li>
+                        <a class="nav-link menu-title link-nav {{ request()->is('admin/reports', 'admin/reports/*/edit') ? 'active' : '' }}"
+                            href="{{ route('admin.reports.index') }}">
+                            <i data-feather="pie-chart"> </i>
+                            <span>Scans</span>
+                        </a>
+                    </li>
+
+                    <li>
                         <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.reports.stock' ? 'active' : '' }}"
                             href="{{ route('admin.reports.stock') }}">
                             <i data-feather="pie-chart"> </i>
@@ -151,28 +131,26 @@
                     </li>
 
                     <li>
-                        <a class="nav-link menu-title link-nav {{ request()->is('admin/reports', 'admin/reports/*/edit') ? 'active' : '' }}"
-                            href="{{ route('admin.reports.index') }}">
+                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.orders.filter' && !request()->has('courier') ? 'active' : '' }}"
+                            href="{{ route('admin.orders.filter') }}">
                             <i data-feather="pie-chart"> </i>
-                            <span>Scans</span>
+                            <span>Order</span>
                         </a>
                     </li>
 
-                    @foreach (['COMPLETED' => 'Top Products', 'PENDING' => 'Pending Products', 'SHIPPING' => 'Shipping Products'] as $status => $title)
-                        <li>
-                            <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.orders.filter' && request('status') == $status ? 'active' : '' }}"
-                                href="{{ route('admin.orders.filter', ['status' => $status]) }}">
-                                <i data-feather="pie-chart"> </i>
-                                <span>{{ $title }}</span>
-                            </a>
-                        </li>
-                    @endforeach
+                    <li>
+                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.orders.filter' && request('status') == 'SHIPPING' && request()->has('courier') ? 'active' : '' }}"
+                            href="{{ route('admin.orders.filter', ['status' => 'SHIPPING', 'courier' => '']) }}">
+                            <i data-feather="pie-chart"> </i>
+                            <span>Courier</span>
+                        </a>
+                    </li>
 
                     <li>
                         <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.reports.customer' ? 'active' : '' }}"
                             href="{{ route('admin.reports.customer') }}">
                             <i data-feather="pie-chart"> </i>
-                            <span>Top Customers</span>
+                            <span>Customer</span>
                         </a>
                     </li>
 
@@ -181,26 +159,10 @@
                     </li>
 
                     <li>
-                        <a class="nav-link menu-title link-nav {{ request()->is('admin/staffs') && request('role_id') == \App\Admin::ADMIN ? 'active' : '' }}"
-                            href="{{ route('admin.staffs.index', ['role_id' => \App\Admin::ADMIN]) }}">
+                        <a class="nav-link menu-title link-nav {{ request()->is('admin/staffs') ? 'active' : '' }}"
+                            href="{{ route('admin.staffs.index') }}">
                             <i data-feather="users"> </i>
-                            <span>Admin</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a class="nav-link menu-title link-nav {{ request()->is('admin/staffs') && request('role_id') == \App\Admin::MANAGER ? 'active' : '' }}"
-                            href="{{ route('admin.staffs.index', ['role_id' => \App\Admin::MANAGER]) }}">
-                            <i data-feather="users"> </i>
-                            <span>Manager</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a class="nav-link menu-title link-nav {{ request()->is('admin/staffs') && request('role_id') == \App\Admin::SALESMAN ? 'active' : '' }}"
-                            href="{{ route('admin.staffs.index', ['role_id' => \App\Admin::SALESMAN]) }}">
-                            <i data-feather="users"> </i>
-                            <span>Salesman</span>
+                            <span>Staffs</span>
                         </a>
                     </li>
 
@@ -217,14 +179,6 @@
                     </li>
 
                     <li>
-                        <a class="nav-link menu-title link-nav {{ request()->is('admin/settings') && request('tab')=='company' ? 'active' : '' }}"
-                            href="{{ route('admin.settings', ['tab' => 'company']) }}">
-                            <i data-feather="info"> </i>
-                            <span>Company</span>
-                        </a>
-                    </li>
-
-                    <li>
                         <a class="nav-link menu-title link-nav {{ request()->is('admin/profile*') ? 'active' : '' }}"
                             href="{{ route('admin.password.change') }}">
                             <i data-feather="user"> </i>
@@ -233,10 +187,34 @@
                     </li>
 
                     <li>
+                        <a class="nav-link menu-title link-nav {{ request()->is('admin/settings') && request('tab')=='company' ? 'active' : '' }}"
+                            href="{{ route('admin.settings', ['tab' => 'company']) }}">
+                            <i data-feather="info"> </i>
+                            <span>Company</span>
+                        </a>
+                    </li>
+
+                    <li>
                         <a class="nav-link menu-title link-nav {{ request()->is('admin/settings*') && request('tab')=='delivery' ? 'active' : '' }}"
                             href="{{ route('admin.settings', ['tab' => 'delivery']) }}">
                             <i data-feather="truck"> </i>
                             <span>Delivery Charges</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="nav-link menu-title link-nav {{ request()->is('admin/home-sections*') ? 'active' : '' }}"
+                            href="{{ route('admin.home-sections.index') }}">
+                            <i data-feather="layers"> </i>
+                            <span>Sections</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="nav-link menu-title link-nav {{ request()->is('admin/menus*', 'admin/category-menus*') ? 'active' : '' }}"
+                            href="{{ route('admin.menus.index') }}">
+                            <i data-feather="menu"> </i>
+                            <span>Menus</span>
                         </a>
                     </li>
 
@@ -281,14 +259,6 @@
                     </li>
 
                     <li>
-                        <a class="nav-link menu-title link-nav {{ request()->is('admin/settings*') && request('tab')=='social' ? 'active' : '' }}"
-                            href="{{ route('admin.settings', ['tab' => 'social']) }}">
-                            <i data-feather="globe"> </i>
-                            <span>Social Media</span>
-                        </a>
-                    </li>
-
-                    <li>
                         <a class="nav-link menu-title link-nav {{ request()->is('admin/settings*') && request('tab')=='currency' ? 'active' : '' }}"
                             href="#">
                             <i data-feather="dollar-sign"> </i>
@@ -301,6 +271,14 @@
                             href="{{ route('admin.settings', ['tab' => 'others']) }}">
                             <i data-feather="more-horizontal"> </i>
                             <span>Others</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="nav-link menu-title link-nav {{ request()->is('admin/settings*') && request('tab')=='color' ? 'active' : '' }}"
+                            href="{{ route('admin.settings', ['tab' => 'color']) }}">
+                            <i data-feather="droplet"> </i>
+                            <span>Color</span>
                         </a>
                     </li>
 

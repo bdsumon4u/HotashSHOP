@@ -64,6 +64,13 @@
             </div>
         </div>
         <div class="border col-md-12 my-3"></div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="">Scroll Text</label>
+                <x-textarea name="scroll_text" id="scroll_text">{{$scroll_text ?? null}}</x-textarea>
+                <x-error field="scroll_text" />
+            </div>
+        </div>
         <div class="col-6">
             <div class="form-group">
                 <label for="" class="mb-0">Products Page</label>
@@ -98,15 +105,19 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-3">
             <div class="form-group">
-                <label for="">Scroll Text</label>
-                <x-textarea name="scroll_text" id="scroll_text">{{$scroll_text ?? null}}</x-textarea>
-                <x-error field="scroll_text" />
+                <label for="product-sort">Product Sorted By</label>
+                @php $sorted = $show_option->product_sort ?? false; @endphp
+                <select name="show_option[product_sort]" id="product-sort" class="form-control">
+                    <option value="random" @if($sorted == 'random') selected @endif>Random</option>
+                    <option value="updated_at" @if($sorted == 'updated_at') selected @endif>Last Update</option>
+                    <option value="selling_price" @if($sorted == 'selling_price') selected @endif>Cheap Price</option>
+                </select>
             </div>
         </div>
-        <div class="col-md-12">
-            <div class="d-flex flex-wrap" style="row-gap: .25rem; column-gap: .75rem;">
+        <div class="col-md-9">
+            <div class="mt-4 d-flex flex-wrap" style="row-gap: .25rem; column-gap: .75rem;">
                 <div class="checkbox checkbox-secondary">
                     <input type="hidden" name="show_option[track_order]" value="0">
                     <x-checkbox id="show-track-order" name="show_option[track_order]" value="1"

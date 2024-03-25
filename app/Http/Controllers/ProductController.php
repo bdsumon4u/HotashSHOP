@@ -46,9 +46,17 @@ class ProductController extends Controller
                 ->whereNull('parent_id')
                 ->when($request->search, function ($query) use ($request) {
                     $query->search($request->search, null, true);
-                })
-                ->latest('id')
-                ->paginate($per_page);
+                });
+
+            $sorted = setting('show_option')->product_sort ?? 'random';
+            if ($sorted == 'random') {
+                $products->inRandomOrder();
+            } else if ($sorted == 'updated_at') {
+                $products->latest('updated_at');
+            } else if ($sorted == 'selling_price') {
+                $products->orderBy('selling_price');
+            }
+            $products = $products->paginate($per_page);
         }
         $products = $products
             ->appends(request()->query());

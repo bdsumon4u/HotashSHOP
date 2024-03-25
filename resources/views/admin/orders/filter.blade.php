@@ -67,20 +67,21 @@
                                 <input type="hidden" name="start_d" value="{{ $start }}">
                                 <input type="hidden" name="end_d" value="{{ $end }}">
                             </div>
-                            <div class="col-auto px-1">
-                                <select name="status" id="status" class="form-control">
-                                    <option value="">Delivery Status</option>
-                                    @foreach(config('app.orders', []) as $status)
-                                    <option value="{{ $status }}" @if(request()->get('status') == $status) selected @endif>{{ $status }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            @if(request('status') == 'SHIPPING')
+                            @if(request('status') == 'SHIPPING' && request()->has('courier'))
                             <div class="col-auto px-1">
                                 <select name="courier" id="courier" class="form-control">
                                     <option value="">Courier</option>
                                     @foreach(['Pathao', 'SteadFast', 'Manual'] as $courier)
                                     <option value="{{ $courier }}" @if(request()->get('courier') == $courier) selected @endif>{{ $courier }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            @else
+                            <div class="col-auto px-1">
+                                <select name="status" id="status" class="form-control">
+                                    <option value="">Delivery Status</option>
+                                    @foreach(config('app.orders', []) as $status)
+                                    <option value="{{ $status }}" @if(request()->get('status') == $status) selected @endif>{{ $status }}</option>
                                     @endforeach
                                 </select>
                             </div>

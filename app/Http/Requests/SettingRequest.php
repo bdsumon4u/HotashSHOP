@@ -36,6 +36,7 @@ class SettingRequest extends FormRequest
                 'company.tagline' => 'required',
                 'company.address' => 'required',
                 'call_for_order' => 'required',
+                'social' => 'required|array',
             ];
         }
 
@@ -86,12 +87,6 @@ class SettingRequest extends FormRequest
                 }
             }
             return $rules;
-        }
-
-        if ($this->get('tab') == 'social') {
-            return [
-                'social' => 'required|array',
-            ];
         }
 
         if ($this->get('tab') == 'categories') {

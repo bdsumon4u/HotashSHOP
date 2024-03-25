@@ -1,9 +1,9 @@
-@if(setting('show_option')->category_dropdown ?? false)
 <div class="nav-panel__departments">
     <!-- .departments -->
+    @php $fixed = request()->is('/') && (setting('show_option')->category_dropdown ?? false); @endphp
     <div
-        class="departments {{ request()->is('/') ? 'departments--opened departments--fixed' : '' }}"
-        data-departments-fixed-by="{{ request()->is('/') ? '.block-slideshow' : '' }}">
+        class="departments {{ $fixed ? 'departments--opened departments--fixed' : '' }}"
+        data-departments-fixed-by="{{ $fixed ? '.block-slideshow' : '' }}">
         <div class="departments__body">
             <div class="departments__links-wrapper">
                 <ul class="departments__links">
@@ -78,4 +78,3 @@
         </button>
     </div><!-- .departments / end -->
 </div>
-@endif

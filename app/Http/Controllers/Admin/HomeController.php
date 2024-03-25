@@ -18,10 +18,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if (!request()->has('status')) {
-            return redirect()->route('admin.home', array_merge(request()->all(), ['status' => 'CONFIRMED']));
-        }
-
         $_start = Carbon::parse(\request('start_d'));
         $start = $_start->format('Y-m-d');
         $_end = Carbon::parse(\request('end_d'));
@@ -40,7 +36,7 @@ class HomeController extends Controller
         }
 
         $products = (clone $orderQ)->get()
-            ->when(request('status'), fn ($query) => $query->where('status', request('status')))
+            ->whereIn('status', ['CONFIRMED', 'INVOICED', 'SHIPPING'])
             ->flatMap(fn ($order) => json_decode(json_encode($order->products, JSON_UNESCAPED_UNICODE), true))
             ->groupBy('id')->map(function ($item) {
                 return [
