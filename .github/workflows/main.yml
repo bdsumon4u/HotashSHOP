@@ -2,18 +2,33 @@ name: Continuous Deployment
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - name: Deploy to Production
-      uses: appleboy/ssh-action@master
-      with:
-        key: ${{ secrets.KEY }}
-        host: ${{ secrets.HOST }}
-        port: ${{ secrets.PORT }}
-        username: ${{ secrets.USERNAME }}
-        passphrase: ${{ secrets.PASSPHRASE }}
-        script: ${{ secrets.SCRIPT }}
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install SSH client
+        run: sudo apt-get install -y openssh-client
+
+      - name: Create SSH directory and known_hosts file
+        run: mkdir -p ~/.ssh && touch ~/.ssh/known_hosts
+
+      - name: Add SSH known hosts
+        run: ssh-keyscan -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
+
+      - name: Store private key in a temporary file
+        run: echo "${{ secrets.KEY }}" > /tmp/private_key && chmod 600 /tmp/private_key
+
+      - name: Deploy to Servers
+        run: |
+          for username in $(echo "${{ vars.USERNAMES }}" | tr ',' '\n'); do
+            ssh -o "IdentitiesOnly=yes" -i /tmp/private_key -p ${{ secrets.PORT }} $username@${{ secrets.HOST }} "${{ secrets.SCRIPT }}"
+          done
+          ssh -o "IdentitiesOnly=yes" -i /tmp/private_key -p ${{ secrets.PORT }} cyber32n@${{ secrets.HOST }} "cd ecom1.cyber32.net && ./server_deploy.sh"
+
+      - name: Cleanup temporary files
+        run: rm /tmp/private_key
