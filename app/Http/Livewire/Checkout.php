@@ -27,7 +27,7 @@ class Checkout extends Component
     public $total = 0;
 
     public $name = '';
-    public $phone = '+880';
+    public $phone = '';
     public $shipping = '';
     public $address = '';
     public $note = '';
@@ -125,9 +125,15 @@ class Checkout extends Component
 
     public function mount()
     {
+        if (!(setting('show_option')->hide_phone_prefix ?? false)) {
+            $this->phone = '+880';
+        }
+
         if ($user = auth('user')->user()) {
             $this->name = $user->name;
-            $this->phone = $user->phone ?? '+880';
+            if ($user->phone_number) {
+                $this->phone = $user->phone_number;
+            }
             $this->address = $user->address ?? '';
             $this->note = $user->note ?? '';
         }

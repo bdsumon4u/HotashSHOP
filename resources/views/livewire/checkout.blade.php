@@ -24,7 +24,7 @@
                         <label>মোবাইল নম্বর: <span class="text-danger">*</span></label>
                     </div>
                     <div class="form-group col-md-9">
-                        <x-input type="tel" name="phone" wire:model.defer="phone" placeholder="+880" />
+                        <x-input type="tel" name="phone" wire:model.defer="phone" placeholder="{{(setting('show_option')->hide_phone_prefix ?? false) ? '' : '+880'}}" />
                         <x-error field="phone" />
                     </div>
                 </div>
@@ -55,6 +55,7 @@
                         <x-error field="address" />
                     </div>
                 </div>
+                @unless(setting('show_option')->hide_checkout_note ?? false)
                 <div class="form-row">
                     <div class="form-group col-md-3 m-0">
                         <label>নোট (অপশনাল):</label>
@@ -64,6 +65,7 @@
                         <x-error field="note" />
                     </div>
                 </div>
+                @endunless
             </div>
             <div class="card-divider d-md-none"></div>
             <div class="card-body d-md-none">

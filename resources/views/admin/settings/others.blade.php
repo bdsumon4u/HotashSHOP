@@ -117,7 +117,7 @@
             </div>
         </div>
         <div class="col-md-9">
-            <div class="mt-4 d-flex flex-wrap" style="row-gap: .25rem; column-gap: .75rem;">
+            <div class="mt-2 d-flex flex-wrap" style="row-gap: .25rem; column-gap: .75rem;">
                 <div class="checkbox checkbox-secondary">
                     <input type="hidden" name="show_option[track_order]" value="0">
                     <x-checkbox id="show-track-order" name="show_option[track_order]" value="1"
@@ -135,6 +135,18 @@
                     <x-checkbox id="services" name="services[enabled]" value="1"
                         :checked="!!($services->enabled ?? false)" />
                     <label for="services" class="my-1">`Services` Section</label>
+                </div>
+                <div class="checkbox checkbox-secondary">
+                    <input type="hidden" name="show_option[hide_phone_prefix]" value="1">
+                    <x-checkbox id="hide-phone-prefix" name="show_option[hide_phone_prefix]" value="0"
+                        :checked="!($show_option->hide_phone_prefix ?? false)" />
+                    <label for="hide-phone-prefix" class="my-1">Prefix +880</label>
+                </div>
+                <div class="checkbox checkbox-secondary">
+                    <input type="hidden" name="show_option[hide_checkout_note]" value="1">
+                    <x-checkbox id="hide-checkout-note" name="show_option[hide_checkout_note]" value="0"
+                        :checked="!($show_option->hide_checkout_note ?? false)" />
+                    <label for="hide-checkout-note" class="my-1">Checkout Note</label>
                 </div>
             </div>
         </div>
