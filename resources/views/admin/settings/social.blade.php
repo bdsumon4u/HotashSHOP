@@ -11,7 +11,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fa fa-facebook"></i></span>
                 </div>
-                <x-input name="social[facebook][link]" :value="$social->facebook->link ?? ''" />
+                <x-input type="url" name="social[facebook][link]" :value="$social->facebook->link ?? ''" />
             </div>
         </div>
         <div class="col-md-6">
@@ -19,7 +19,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fa fa-twitter"></i></span>
                 </div>
-                <x-input name="social[twitter][link]" :value="$social->twitter->link ?? ''" />
+                <x-input type="url" name="social[twitter][link]" :value="$social->twitter->link ?? ''" />
             </div>
         </div>
         <div class="col-md-6">
@@ -27,7 +27,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fa fa-instagram"></i></span>
                 </div>
-                <x-input name="social[instagram][link]" :value="$social->instagram->link ?? ''" />
+                <x-input type="url" name="social[instagram][link]" :value="$social->instagram->link ?? ''" />
             </div>
         </div>
         <div class="col-md-6">
@@ -35,7 +35,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fa fa-youtube"></i></span>
                 </div>
-                <x-input name="social[youtube][link]" :value="$social->youtube->link ?? ''" />
+                <x-input type="url" name="social[youtube][link]" :value="$social->youtube->link ?? ''" />
             </div>
         </div>
     </div>
