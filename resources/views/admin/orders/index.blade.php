@@ -43,7 +43,7 @@
                         </div>
                         <div class="row d-none" style="row-gap: .25rem;">
                             <div class="col-auto pr-0 d-flex align-items-center" check-count></div>
-                            @unless(true || in_array(request('status'), ['CONFIRMED', 'INVOICED']))
+                            @unless(false || in_array(request('status'), ['CONFIRMED', 'INVOICED']))
                             <div class="col-auto px-1">
                                 <select name="status" id="status" onchange="changeStatus()" class="form-control form-control-sm bg-primary text-white">
                                     <option value="">Change Status</option>
