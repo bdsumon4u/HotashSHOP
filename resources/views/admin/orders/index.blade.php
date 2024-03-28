@@ -114,7 +114,7 @@
                                     <th width="10">Status</th>
                                     <th>Courier</th>
                                     <th>Staff</th>
-                                    <th style="min-width: 80px;">DateTime</th>
+                                    <th width="150">DateTime</th>
                                 </tr>
                                 </thead>
                             </table>
@@ -236,7 +236,6 @@
                         var input = document.createElement("input");
                         input.classList.add('form-control', 'border-primary');
                         if (i === 8) {
-                            input.style.minWidth = '200px';
                             $(input).appendTo($(th)).on('apply.daterangepicker', function (ev, picker) {
                                 column.search(picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format('YYYY-MM-DD')).draw();
                             }).daterangepicker({
