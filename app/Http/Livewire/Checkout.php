@@ -283,7 +283,7 @@ class Checkout extends Component
         session()->forget('cart');
         session()->flash('completed', 'Dear ' . $data['name'] . ', Your Order is Successfully Recieved. Thanks For Your Order.');
 
-        return redirect()->route('track-order', [
+        return redirect()->route('thank-you', [
             'order' => optional($order)->getKey(),
         ]);
     }

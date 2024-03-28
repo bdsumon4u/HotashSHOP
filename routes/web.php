@@ -28,6 +28,7 @@ Route::middleware(GoogleTagManagerMiddleware::class)->group(function () {
 
     Route::view('/cart', 'cart')->name('cart');
     Route::match(['get', 'post'], '/checkout', 'CheckoutController')->name('checkout');
+    Route::get('/thank-you', 'OrderTrackController')->name('thank-you');
     Route::match(['get', 'post'], 'track-order', 'OrderTrackController')->name('track-order');
 
     pageRoutes();

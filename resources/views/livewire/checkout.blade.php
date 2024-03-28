@@ -51,7 +51,7 @@
                         <label>আপনার ঠিকানা: <span class="text-danger">*</span></label>
                     </div>
                     <div class="form-group col-md-9">
-                        <x-textarea name="address" wire:model.defer="address" placeholder="এখানে আপনার পুরো ঠিকানা লিখুন।">{{old('address',$address)}}</x-textarea>
+                        <x-textarea name="address" wire:model.defer="address" placeholder="এখানে আপনার পুরো ঠিকানা লিখুন।"></x-textarea>
                         <x-error field="address" />
                     </div>
                 </div>
@@ -61,7 +61,7 @@
                         <label>নোট (অপশনাল):</label>
                     </div>
                     <div class="form-group col-md-9">
-                        <x-textarea name="note" wire:model.defer="note" placeholder="আপনি চাইলে কোন নোট লিখতে পারেন।">{{old('note',$note)}}</x-textarea>
+                        <x-textarea name="note" wire:model.defer="note" placeholder="আপনি চাইলে কোন নোট লিখতে পারেন।"></x-textarea>
                         <x-error field="note" />
                     </div>
                 </div>
