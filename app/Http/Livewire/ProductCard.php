@@ -34,7 +34,7 @@ class ProductCard extends Component
 
         $this->dispatchBrowserEvent('dataLayer', [
             'event' => 'add_to_cart',
-            'ecomerce' => [
+            'ecommerce' => [
                 'currency' => 'BDT',
                 'value' => $product['price']*$product['quantity'],
                 'items' => [
