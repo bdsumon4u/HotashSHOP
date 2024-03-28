@@ -228,6 +228,9 @@
                 type: ev.detail.type ?? 'info',
             });
         });
+        $(window).on('dataLayer', function (ev) {
+            window.dataLayer.push(ev.detail);
+        });
         $(document).ready(function () {
             // $(document).on('change', '.option-picker', function (ev) {
             //     var options = [];

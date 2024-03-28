@@ -14,6 +14,7 @@ class ProductCard extends Component
     {
         $cart = session()->get('cart', []);
         $fraudQuantity = setting('fraud')->max_qty_per_product ?? 3;
+
         if (!isset($cart[$this->product->id])) {
             $cart[$this->product->id] = [
                 'id' => $this->product->id,
@@ -28,27 +29,27 @@ class ProductCard extends Component
             ];
         }
 
-        $ecommerce = [
-            'currency' => 'BDT',
-            'value' => $cart[$this->product->id]['price']*$cart[$this->product->id]['quantity'],
-            'items' => array_values(array_map(function ($product) {
-                return [
-                    'item_id' => $product['id'],
-                    'item_name' => $product['name'],
-                    'item_category' => $product['category'],
-                    'price' => $product['price'],
-                    'quantity' => $product['quantity'],
-                ];
-            }, $cart)),
-        ];
-        GoogleTagManagerFacade::flash([
-            'event' => 'add_to_cart',
-            'ecommerce' => $ecommerce,
-        ]);
         session()->put('cart', $cart);
+        $product = $cart[$this->product->id];
+
+        $this->dispatchBrowserEvent('dataLayer', [
+            'event' => 'add_to_cart',
+            'ecomerce' => [
+                'currency' => 'BDT',
+                'value' => $product['price']*$product['quantity'],
+                'items' => [
+                    [
+                        'item_id' => $product['id'],
+                        'item_name' => $product['name'],
+                        'item_category' => $product['category'],
+                        'price' => $product['price'],
+                        'quantity' => $product['quantity'],
+                    ]
+                ],
+            ],
+        ]);
 
         $this->emit('cartUpdated');
-
         $this->dispatchBrowserEvent('notify', ['message' => 'Product added to cart']);
     }
 

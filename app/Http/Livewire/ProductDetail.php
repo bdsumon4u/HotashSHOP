@@ -42,7 +42,6 @@ class ProductDetail extends Component
 
     public function addToCart()
     {
-
         $cart = session()->get('cart', []);
         if (isset($cart[$this->selectedVar->id])) {
             $cart[$this->selectedVar->id]['quantity'] = min($this->quantity, $this->maxQuantity);
@@ -60,27 +59,27 @@ class ProductDetail extends Component
             ];
         }
 
-        $ecommerce = [
-            'currency' => 'BDT',
-            'value' => $cart[$this->selectedVar->id]['price']*$cart[$this->selectedVar->id]['quantity'],
-            'items' => array_values(array_map(function ($product) {
-                return [
-                    'item_id' => $product['id'],
-                    'item_name' => $product['name'],
-                    'item_category' => $product['category'],
-                    'price' => $product['price'],
-                    'quantity' => $product['quantity'],
-                ];
-            }, $cart)),
-        ];
-        GoogleTagManagerFacade::flash([
-            'event' => 'add_to_cart',
-            'ecommerce' => $ecommerce,
-        ]);
         session()->put('cart', $cart);
+        $product = $cart[$this->selectedVar->id];
+
+        $this->dispatchBrowserEvent('dataLayer', [
+            'event' => 'add_to_cart',
+            'ecomerce' => [
+                'currency' => 'BDT',
+                'value' => $product['price']*$product['quantity'],
+                'items' => [
+                    [
+                        'item_id' => $product['id'],
+                        'item_name' => $product['name'],
+                        'item_category' => $product['category'],
+                        'price' => $product['price'],
+                        'quantity' => $product['quantity'],
+                    ]
+                ],
+            ],
+        ]);
 
         $this->emit('cartUpdated');
-
         $this->dispatchBrowserEvent('notify', ['message' => 'Product added to cart']);
     }
 

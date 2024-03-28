@@ -13,6 +13,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Spatie\GoogleTagManager\GoogleTagManagerFacade;
 
 class CheckoutController extends Controller
 {
@@ -26,6 +27,27 @@ class CheckoutController extends Controller
     {
         if ($request->isMethod('GET')) {
             //\LaravelFacebookPixel::createEvent('AddToCart', $parameters = []);
+
+            $cart = session()->get('cart', []);
+            GoogleTagManagerFacade::set([
+                'event' => 'begin_checkout',
+                'ecommerce' => [
+                    'currency' => 'BDT',
+                    'value' => array_sum(array_map(function ($product) {
+                        return $product['price'] * $product['quantity'];
+                    }, $cart)),
+                    'items' => array_values(array_map(function ($product) {
+                        return [
+                            'item_id' => $product['id'],
+                            'item_name' => $product['name'],
+                            'item_category' => $product['category'],
+                            'price' => $product['price'],
+                            'quantity' => $product['quantity'],
+                        ];
+                    }, $cart)),
+                ],
+            ]);
+
             return view('checkout');
         }
 

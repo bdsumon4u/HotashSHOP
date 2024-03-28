@@ -95,8 +95,6 @@ class Checkout extends Component
             return 0;
         }
 
-        // dd($this->cart, (array)$freeDelivery->products ?? []);
-        
         foreach ((array)$freeDelivery->products ?? [] as $id => $qty) {
             if (collect($this->cart)->where('parent_id', $id)->where('quantity', '>=', $qty)->count()) {
                 return 0;
