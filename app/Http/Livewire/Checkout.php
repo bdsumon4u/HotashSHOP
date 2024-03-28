@@ -248,7 +248,7 @@ class Checkout extends Component
                     'currency' => 'BDT',
                     'transaction_id' => $order->id,
                     'value' => $order->data['subtotal'],
-                    'items' => array_map(function ($product) {
+                    'items' => array_values(array_map(function ($product) {
                         return [
                             'item_id' => $product['id'],
                             'item_name' => $product['name'],
@@ -256,7 +256,7 @@ class Checkout extends Component
                             'price' => $product['price'],
                             'quantity' => $product['quantity'],
                         ];
-                    }, $products),
+                    }, $products)),
                 ],
             ]);
     
