@@ -11,9 +11,11 @@
             s.parentNode.insertBefore(t,s)}(window, document,'script',
             'https://connect.facebook.net/en_US/fbevents.js');
         @foreach($id AS $i)
+            @if($i)
             fbq('init', '{{ $i }}');
+            @endif
         @endforeach
-        fbq('track', 'PageView');
+        // fbq('track', 'PageView');
     </script>
     @foreach($id AS $i)
         @if($i = trim($i))
