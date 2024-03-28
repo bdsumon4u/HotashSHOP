@@ -24,7 +24,7 @@ class SMSChannel
             : Str::replaceFirst('+', '', $phone);
 
         $ElitBuzz = setting('ElitBuzz');
-        if ($ElitBuzz->enabled) {
+        if ($ElitBuzz->enabled ?? false) {
             return $this->send_sms('https://msg.elitbuzz-bd.com/smsapi', array_merge([
                 'type' => 'text',
                 'contacts' => $phone,
@@ -35,7 +35,7 @@ class SMSChannel
         }
 
         $BDWebs = setting('BDWebs');
-        if ($BDWebs->enabled) {
+        if ($BDWebs->enabled ?? false) {
             return $this->send_sms('http://sms.bdwebs.com/smsapi', array_merge([
                 'type' => 'text',
                 'contacts' => $phone,
