@@ -15,7 +15,7 @@
             fbq('init', '{{ $i }}');
             @endif
         @endforeach
-        // fbq('track', 'PageView');
+        fbq('track', 'PageView');
     </script>
     @foreach($id AS $i)
         @if($i = trim($i))
