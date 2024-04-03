@@ -1,7 +1,7 @@
 <header class="main-nav">
-    <div class="logo-wrapper px-3 py-2 d-flex align-items-center justify-content-between">
+    <div class="bg-dark logo-wrapper px-3 py-2 d-flex align-items-center justify-content-between">
         <a href="{{ route('admin.home') }}">
-            <img class="img-fluid but-not-fluid" src="{{ asset($logo->mobile ?? '') }}" alt="">
+            <img class="img-fluid but-not-fluid" src="{{ asset($logo->desktop ?? '') }}" alt="">
         </a>
         <div class="back-btn px-3 py-2"><i class="fa fa-angle-left"></i></div>
         <div class="toggle-sidebar"><i class="status_toggle middle" data-feather="grid" id="sidebar-toggle"> </i></div>
