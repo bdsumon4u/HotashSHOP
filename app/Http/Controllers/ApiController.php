@@ -11,6 +11,11 @@ class ApiController extends Controller
         return view('categories');
     }
 
+    public function brands()
+    {
+        return view('brands');
+    }
+
     public function storageLink()
     {
         return Artisan::call('storage:link');

@@ -89,7 +89,7 @@ class SettingRequest extends FormRequest
             return $rules;
         }
 
-        if ($this->get('tab') == 'categories') {
+        if (in_array($this->get('tab'), ['categories', 'brands'])) {
             return [
                 'show_option' => 'required|array',
             ];

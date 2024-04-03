@@ -110,6 +110,24 @@
                                                         <span class="invalid-feedback">{{ $message }}</span>
                                                     @enderror
                                                 </div>
+                                                <div class="form-group">
+                                                    <!-- Button to Open the Modal -->
+                                                    <label for="base_image" class="d-block mb-0">
+                                                        <strong>Brand Image</strong>
+                                                        <button type="button" class="btn single btn-light px-2" data-toggle="modal" data-target="#single-picker" style="background: transparent; margin-left: 5px;">
+                                                            <i class="fa fa-image text-secondary mr-1"></i>
+                                                            <span>Browse</span>
+                                                        </button>
+                                                    </label>
+                                                    <div id="preview-image" class="base_image-preview @unless(old('base_image')) d-none @endunless" style="height: 150px; width: 150px; margin: 5px; margin-left: 0px;">
+                                                        <img src="{{ old('base_image_src') }}" alt="Brand Image" data-toggle="modal" data-target="#single-picker" id="base_image-preview" class="img-thumbnail img-responsive" style="display: {{ old('base_image_src') ? '' : 'none' }};">
+                                                        <input type="hidden" name="base_image_src" value="{{ old('base_image_src') }}">
+                                                        <input type="hidden" name="base_image" value="{{ old('base_image') }}" id="base-image" class="form-control">
+                                                    </div>
+                                                    @error('base_image')
+                                                        <small class="text-danger">{{ $message }}</small>
+                                                    @enderror
+                                                </div>
                                                 <button type="submit" class="btn btn-sm btn-success d-block ml-auto"><i class="fa fa-check"></i> Submit</button>
                                             </form>
                                         </div>
@@ -132,6 +150,23 @@
                                                     @error('slug')
                                                         <span class="invalid-feedback">{{ $message }}</span>
                                                     @enderror
+                                                </div><div class="form-group">
+                                                    <!-- Button to Open the Modal -->
+                                                    <label for="base_image" class="d-block mb-0">
+                                                        <strong>Brand Image</strong>
+                                                        <button type="button" class="btn single btn-light px-2" data-toggle="modal" data-target="#single-picker" style="background: transparent; margin-left: 5px;">
+                                                            <i class="fa fa-image text-secondary mr-1"></i>
+                                                            <span>Browse</span>
+                                                        </button>
+                                                    </label>
+                                                    <div id="preview-{{$active->image_id}}" class="base_image-preview @unless(old('base_image', $active->image_id)) d-none @endunless" style="height: 150px; width: 150px; margin: 5px; margin-left: 0px;">
+                                                        <img src="{{ old('base_image_src', asset(optional($active->image)->src)) }}" alt="Brand Image" data-toggle="modal" data-target="#single-picker" id="base_image-preview" class="img-thumbnail img-responsive" style="display: {{ old('base_image_src', optional($active->image)->src) ? '' : 'none' }};">
+                                                        <input type="hidden" name="base_image_src" value="{{ old('base_image_src', asset(optional($active->image)->src)) }}">
+                                                        <input type="hidden" name="base_image" value="{{ old('base_image', $active->image_id) }}" id="base-image" class="form-control">
+                                                    </div>
+                                                    @error('base_image')
+                                                        <small class="text-danger">{{ $message }}</small>
+                                                    @enderror
                                                 </div>
                                                 <button type="submit" class="btn btn-sm btn-success d-block ml-auto"><i class="fa fa-check"></i> Submit</button>
                                             </form>
@@ -141,12 +176,45 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="card rounded-0 shadow-sm">
+                            <div class="card-header p-3">
+                                <strong>Brand Settings</strong>
+                            </div>
+                            <div class="card-body p-3">
+                                <x-form :action="route('admin.settings')" method="POST">
+                                    <input type="hidden" name="tab" value="brands">
+                                    @if ($errors->any())
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        @foreach ($errors->all() as $error)
+                                            <p class="mb-0">{{ $error }}</p>
+                                        @endforeach
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    @endif
+                                    <div class="form-group pl-3">
+                                        @php $show_option = setting('show_option'); @endphp
+                                        <div class="checkbox checkbox-secondary">
+                                            <input type="hidden" name="show_option[brand_carousel]" value="0">
+                                            <x-checkbox id="show-carousel" class="d-none" name="show_option[brand_carousel]" value="1"
+                                                :checked="!!old('show_option.brand_carousel', $show_option->brand_carousel ?? false)" />
+                                            <label for="show-carousel" class="m-0">Show Brand Carousel</label>
+                                        </div>
+                                    </div>
+
+                                    <button class="btn btn-primary">Submit</button>
+                                </x-form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+@include('admin.images.single-picker', ['selected' => old('base_image', 0)])
 @endsection
 
 @push('scripts')

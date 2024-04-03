@@ -1,5 +1,6 @@
 <?php
 
+use App\Brand;
 use App\Category;
 use App\Image;
 use App\Page;
@@ -21,6 +22,23 @@ if (! function_exists('categories')) {
             }
             $category->image_src = asset($image->path ?? 'https://placehold.co/600x600?text=No+Product');
             return $category;
+        });
+    }
+}
+
+if (! function_exists('brands')) {
+    function brands() {
+        return Brand::with('image')
+        ->inRandomOrder()
+        ->get()
+        ->map(function ($brand) {
+            if (!$image = $brand->image) {
+                $image = Image::whereHas('products.brand', function ($query) use ($brand) {
+                    $query->where('brand_id', $brand->id);
+                })->inRandomOrder()->first();
+            }
+            $brand->image_src = asset($image->path ?? 'https://placehold.co/600x600?text=No+Product');
+            return $brand;
         });
     }
 }

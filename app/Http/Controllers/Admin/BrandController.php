@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Brand;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Arr;
 
 class BrandController extends Controller
 {
@@ -43,7 +44,10 @@ class BrandController extends Controller
         $data = $request->validate([
             'name' => 'required|unique:brands',
             'slug' => 'required|unique:brands',
+            'base_image' => 'nullable|integer',
         ]);
+
+        $data['image_id'] = Arr::pull($data, 'base_image');
 
         Brand::create($data);
 
@@ -63,7 +67,10 @@ class BrandController extends Controller
         $data = $request->validate([
             'name' => 'required|unique:brands,id,' . $brand->id,
             'slug' => 'required|unique:brands,id,' . $brand->id,
+            'base_image' => 'nullable|integer',
         ]);
+
+        $data['image_id'] = Arr::pull($data, 'base_image');
 
         $brand->update($data);
 

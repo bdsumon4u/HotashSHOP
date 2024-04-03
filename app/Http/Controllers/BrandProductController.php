@@ -25,7 +25,7 @@ class BrandProductController extends Controller
         } else if ($sorted == 'selling_price') {
             $products->orderBy('selling_price');
         }
-        $products->paginate($per_page)->appends(request()->query());
+        $products = $products->paginate($per_page)->appends(request()->query());
         return view('products.index', [
             'products' => $products,
             'per_page' => $per_page,

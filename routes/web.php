@@ -18,7 +18,8 @@ Route::middleware(GoogleTagManagerMiddleware::class)->group(function () {
     Route::get('auth', 'User\\Auth\\LoginController@showLoginForm')->middleware('guest:user')->name('auth');
 
     Route::get('/categories', 'ApiController@categories')->name('categories');
-    
+    Route::get('/brands', 'ApiController@brands')->name('brands');
+
     Route::get('/', 'HomeController')->name('/');
     Route::get('/sections/{section}/products', 'HomeSectionProductController')->name('home-sections.products');
     Route::get('/shop', 'ProductController@index')->name('products.index');
