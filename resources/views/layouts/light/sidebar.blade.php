@@ -190,15 +190,15 @@
                         <a class="nav-link menu-title link-nav {{ request()->is('admin/settings') && request('tab')=='company' ? 'active' : '' }}"
                             href="{{ route('admin.settings', ['tab' => 'company']) }}">
                             <i data-feather="info"> </i>
-                            <span>Company</span>
+                            <span>Company Info</span>
                         </a>
                     </li>
 
                     <li>
-                        <a class="nav-link menu-title link-nav {{ request()->is('admin/settings*') && request('tab')=='delivery' ? 'active' : '' }}"
-                            href="{{ route('admin.settings', ['tab' => 'delivery']) }}">
-                            <i data-feather="truck"> </i>
-                            <span>Delivery Charges</span>
+                        <a class="nav-link menu-title link-nav {{ request()->is('admin/settings*') && request('tab')=='others' ? 'active' : '' }}"
+                            href="{{ route('admin.settings', ['tab' => 'others']) }}">
+                            <i data-feather="more-horizontal"> </i>
+                            <span>Feature Control</span>
                         </a>
                     </li>
 
@@ -215,6 +215,14 @@
                             href="{{ route('admin.menus.index') }}">
                             <i data-feather="menu"> </i>
                             <span>Menus</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="nav-link menu-title link-nav {{ request()->is('admin/settings*') && request('tab')=='delivery' ? 'active' : '' }}"
+                            href="{{ route('admin.settings', ['tab' => 'delivery']) }}">
+                            <i data-feather="truck"> </i>
+                            <span>Delivery Charges</span>
                         </a>
                     </li>
 
@@ -263,14 +271,6 @@
                             href="#">
                             <i data-feather="dollar-sign"> </i>
                             <span>Currency</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a class="nav-link menu-title link-nav {{ request()->is('admin/settings*') && request('tab')=='others' ? 'active' : '' }}"
-                            href="{{ route('admin.settings', ['tab' => 'others']) }}">
-                            <i data-feather="more-horizontal"> </i>
-                            <span>Others</span>
                         </a>
                     </li>
 
