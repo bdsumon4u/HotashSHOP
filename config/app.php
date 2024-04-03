@@ -23,8 +23,8 @@ return [
         'SHIPPING',
         'COMPLETED',
         'RETURNED',
-        'CANCELLED',
         'LOST',
+        'CANCELLED',
     ],
 
     /*
