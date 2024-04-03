@@ -4,7 +4,7 @@
             <img class="img-fluid but-not-fluid" src="{{ asset($logo->desktop ?? '') }}" alt="">
         </a>
         <div class="back-btn px-3 py-2"><i class="fa fa-angle-left"></i></div>
-        <div class="toggle-sidebar"><i class="status_toggle middle" data-feather="grid" id="sidebar-toggle"> </i></div>
+        <button type="button" id="sidebar-toggle" class="toggle-sidebar"><i class="status_toggle middle" data-feather="grid"> </i></button>
     </div>
     <div class="logo-icon-wrapper">
         <a href="{{ route('admin.home') }}">
