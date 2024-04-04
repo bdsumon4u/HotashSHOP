@@ -8,7 +8,7 @@
         <div class="card mb-lg-0">
             <div class="card-body p-3">
                 <div class="border text-danger text-center mb-2" style="padding: 2px 10px; font-size: 1.25rem;">
-                    আপনার নাম, মোবাইল নাম্বার, ঠিকানা, লিখে <strong>কনফার্ম অর্ডার</strong> বাটনে ক্লিক করুন।
+                    নিচের তথ্যগুলো সঠিকভাবে পূরণ করে <strong>কনফার্ম অর্ডার</strong> বাটনে ক্লিক করুন।
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-3 m-0">
@@ -43,11 +43,11 @@
                         <div class="form-control @error('shipping') is-invalid @enderror h-auto">
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" wire:model="shipping" class="custom-control-input" id="inside-dhaka" name="shipping" value="Inside Dhaka">
-                                <label class="custom-control-label" for="inside-dhaka">ঢাকা শহর (৳ {{setting('delivery_charge')->inside_dhaka}})</label>
+                                <label class="custom-control-label" for="inside-dhaka">ঢাকা শহর ({{setting('delivery_charge')->inside_dhaka}} টাকা)</label>
                             </div>
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" wire:model="shipping" class="custom-control-input" id="outside-dhaka" name="shipping" value="Outside Dhaka">
-                                <label class="custom-control-label" for="outside-dhaka">ঢাকার বাইরে (৳ {{setting('delivery_charge')->outside_dhaka}})</label>
+                                <label class="custom-control-label" for="outside-dhaka">ঢাকার বাইরে ({{setting('delivery_charge')->outside_dhaka}} টাকা)</label>
                             </div>
                         </div>
                         <x-error field="shipping" />
