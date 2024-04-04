@@ -248,6 +248,7 @@
                 const next = activeG === lastG ? 0 : (activeG + 1);
                 gallery.eq(next).trigger('click');
             });
+            setInterval(() => $('.zoom-control.right').trigger('click'), 2000);
         });
     </script>
 @endpush
