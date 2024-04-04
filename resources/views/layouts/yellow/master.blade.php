@@ -250,7 +250,7 @@
             // });
 
             function onScroll() {
-                $('input, textarea').blur();
+                // $('input, textarea').blur();
                 var scrollTop = $(this).scrollTop()
                 if (scrollTop > 32) {
                     $('.site__header.position-fixed .topbar').hide();
