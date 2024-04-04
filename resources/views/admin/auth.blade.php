@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-5">
             <div class="card">
-                <div class="card-header text-center bg-dark">
+                <div class="card-header text-center">
                     <img src="{{ asset(setting('logo')->desktop ?? '') }}" alt="Logo" class="img-fluid" style="max-width: 100%; max-height: 84px;">
                 </div>
 

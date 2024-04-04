@@ -1,5 +1,5 @@
 <header class="main-nav">
-    <div class="bg-dark logo-wrapper px-3 py-2 d-flex align-items-center justify-content-between">
+    <div class="logo-wrapper px-3 py-2 d-flex align-items-center justify-content-between">
         <a href="{{ route('admin.home') }}">
             <img class="img-fluid but-not-fluid" src="{{ asset($logo->desktop ?? '') }}" alt="">
         </a>
