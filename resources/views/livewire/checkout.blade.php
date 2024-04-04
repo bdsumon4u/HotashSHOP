@@ -24,8 +24,15 @@
                         <label>মোবাইল নম্বর: <span class="text-danger">*</span></label>
                     </div>
                     <div class="form-group col-md-9">
-                        <x-input type="tel" name="phone" wire:model.defer="phone" placeholder="{{(setting('show_option')->hide_phone_prefix ?? false) ? '' : '+880'}}" />
-                        <x-error field="phone" />
+                        <div class="input-group">
+                            @unless(setting('show_option')->hide_phone_prefix ?? false)
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">+880</span>
+                            </div>
+                            @endunless
+                            <x-input type="tel" name="phone" wire:model.defer="phone" placeholder="আপনার ফোন নম্বর লিখুন।" />
+                            <x-error field="phone" />
+                        </div>
                     </div>
                 </div>
                 <div class="form-row">

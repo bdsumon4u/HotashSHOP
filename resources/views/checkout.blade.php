@@ -13,9 +13,6 @@
     .checkout__totals {
         margin-bottom: 10px;
     }
-    .form-control {
-        border: 2px solid;
-    }
     .input-number .form-control:focus {
         box-shadow: none;
     }
