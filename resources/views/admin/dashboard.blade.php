@@ -30,7 +30,7 @@
                <input class="form-control" id="reportrange" type="text">
 
                <select name="staff_id" id="staff-id" class="form-control input-group-append" style="max-width: 150px;">
-                  <option value="">Select Staff</option>
+                  <option value="">Select Salesman</option>
                   @foreach(\App\Admin::where('role_id', \App\Admin::SALESMAN)->get() as $admin)
                   <option value="{{ $admin->id }}" @if(request()->get('staff_id') == $admin->id) selected @endif>{{ $admin->name }}</option>
                   @endforeach
