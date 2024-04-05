@@ -26,10 +26,10 @@ jobs:
       - name: Deploy to Servers
         run: |
           echo "Deploying to cyber32n"
-          ssh -o "IdentitiesOnly=yes" -i /tmp/private_key -p ${{ secrets.PORT }} cyber32n@${{ secrets.HOST }} "cd ecom1.cyber32.net && ./server_deploy.sh"
+          ssh -o "IdentitiesOnly=yes" -i /tmp/private_key -p ${{ secrets.PORT }} cyber32n@${{ secrets.HOST }} "cd ecom1.cyber32.net && ./server_deploy.sh" || echo -e "\e[31mError deploying to cyber32n\e[0m" # Red color
           for username in $(echo "${{ vars.USERNAMES }}" | tr ',' '\n'); do
             echo "Deploying to $username"
-            ssh -o "IdentitiesOnly=yes" -i /tmp/private_key -p ${{ secrets.PORT }} $username@${{ secrets.HOST }} "${{ secrets.SCRIPT }}"
+            ssh -o "IdentitiesOnly=yes" -i /tmp/private_key -p ${{ secrets.PORT }} $username@${{ secrets.HOST }} "${{ secrets.SCRIPT }}" || echo -e "\e[31mError deploying to $username\e[0m" # Red color
           done
 
       - name: Cleanup temporary files
