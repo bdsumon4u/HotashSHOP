@@ -44,7 +44,12 @@ class OrderController extends Controller
     public function show(Order $order)
     {
         return $this->view([
-            'orders' => Order::where('user_id', $order->user_id)->where('id', '!=', $order->id)->orderBy('id', 'desc')->get(),
+            'orders' => Order::with('admin')
+                // ->where('user_id', $order->user_id)
+                ->where('phone', $order->phone)
+                ->where('id', '!=', $order->id)
+                ->orderBy('id', 'desc')
+                ->get(),
         ]);
     }
 
@@ -57,7 +62,12 @@ class OrderController extends Controller
     public function edit(Order $order)
     {
         return $this->view([
-            'orders' => Order::with('admin')->where('user_id', $order->user_id)->where('id', '!=', $order->id)->orderBy('id', 'desc')->get(),
+            'orders' => Order::with('admin')
+                // ->where('user_id', $order->user_id)
+                ->where('phone', $order->phone)
+                ->where('id', '!=', $order->id)
+                ->orderBy('id', 'desc')
+                ->get(),
         ]);
     }
 
