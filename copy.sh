@@ -17,7 +17,7 @@ if [ -f "$env_file" ]; then
         # Check if the key is one of the variables you want to extract
         if [[ " ${variables[@]} " =~ " $key " ]]; then
             # Remove leading/trailing whitespace from the value
-            value=$(echo "$value" | sed -e 's/^"//' -e 's/"$//' -e "s/^'//" -e "s/'$//")
+            # value=$(echo "$value" | sed -e 's/^"//' -e 's/"$//' -e "s/^'//" -e "s/'$//")
 
             # Export the key-value pair as shell variables
             export "$key"="$value"
@@ -89,7 +89,7 @@ rm site_backup.zip database_backup.sql
 
 # Unzip files and import database on the target
 ssh -i $ssh_private_key $target_username@$ssh_host "unzip -o site_backup.zip -d $target_root_dir && rm site_backup.zip"
-ssh -i $ssh_private_key $target_username@$ssh_host "mysql -u $target_db_uname -p$target_db_upass $target_db_dbase < database_backup.sql && rm database_backup.sql"
+ssh -i $ssh_private_key $target_username@$ssh_host "cd $target_root_dir && mysql -u $target_db_uname -p$target_db_upass $target_db_dbase < database_backup.sql && rm database_backup.sql"
 
 # Update .env file on the target
 scp -i $ssh_private_key .env $target_username@$ssh_host:$target_root_dir/.env
