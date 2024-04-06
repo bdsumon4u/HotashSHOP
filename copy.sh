@@ -43,6 +43,15 @@ read -p "Enter support@$ssh_host password: " target_mail_pass
 read -p "Enter target site root directory: " -ei "$default_root_dir" target_root_dir
 echo
 
+# Function to check if the public key is installed on the target server
+check_public_key_installed() {
+    # Check if the public key exists in the authorized_keys file on the server
+    ssh -i $ssh_private_key $target_username@$ssh_host "grep -q '$(cat $ssh_private_key.pub)' .ssh/authorized_keys"
+    
+    # Return the exit status of the previous command
+    return $?
+}
+
 # Function to connect to target server via SSH
 connect_to_target() {
     # Attempt to connect to target server via SSH
@@ -59,18 +68,23 @@ connect_to_target() {
 
 # Try to connect to the target server
 connect_to_target || {
-    # Prompt the user to add the public key
-    echo
-    echo "Please add the following public key to the target server:"
-    echo "Name: $KEY_NAME"
-    echo "Public Key:"
-    cat "$ssh_private_key.pub"
-    echo
-    read -p "Press Enter after authorizing the public key, or enter 'q' to quit: " response
+    # Check if the public key is installed on the target server
+    check_public_key_installed
     
-    # If the user enters 'q', exit the script
-    if [ "$response" = "q" ]; then
-        exit 1
+    # If the public key is not installed, prompt the user to add it
+    if [ $? -ne 0 ]; then
+        echo
+        echo "Please add the following public key to the target server:"
+        echo "Name: $KEY_NAME"
+        echo "Public Key:"
+        cat "$ssh_private_key.pub"
+        echo
+        read -p "Press Enter after authorizing the public key, or enter 'q' to quit: " response
+
+        # If the user enters 'q', exit the script
+        if [ "$response" = "q" ]; then
+            exit 1
+        fi
     fi
     
     # Retry connecting to the target server
