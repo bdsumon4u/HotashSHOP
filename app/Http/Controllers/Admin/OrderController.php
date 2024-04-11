@@ -74,7 +74,7 @@ class OrderController extends Controller
     public function filter(Request $request)
     {
         abort_if(request()->user()->is('salesman'), 403, 'You don\'t have permission.');
-        $_start = Carbon::parse(\request('start_d', '1970-01-01'));
+        $_start = Carbon::parse(\request('start_d', date('Y-m-d')));
         $start = $_start->format('Y-m-d');
         $_end = Carbon::parse(\request('end_d'));
         $end = $_end->format('Y-m-d');
@@ -150,8 +150,7 @@ class OrderController extends Controller
         }
 
         return redirect()->back() //$this->invoices($request);
-            ->withSuccess('Orders are sent to Courier.')
-        ;
+            ->withSuccess('Orders are sent to Courier.');
     }
 
     private function steadFast($order_ids)
