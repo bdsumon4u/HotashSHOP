@@ -22,6 +22,7 @@ class Checkout extends Component
 
     protected $listeners = ['cartBoxUpdated' => 'refresh'];
 
+    public $isFreeDelivery = false;
     public $shipping_cost = 0;
     public $subtotal = 0;
     public $total = 0;
@@ -90,11 +91,15 @@ class Checkout extends Component
                 return $shipping_cost;
             }
 
+            $this->isFreeDelivery = true;
+
             return 0;
         }
 
         foreach ((array)$freeDelivery->products ?? [] as $id => $qty) {
             if (collect($this->cart)->where('parent_id', $id)->where('quantity', '>=', $qty)->count()) {
+                $this->isFreeDelivery = true;
+
                 return 0;
             }
         }
