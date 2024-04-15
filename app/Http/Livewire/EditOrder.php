@@ -32,7 +32,7 @@ class EditOrder extends Component
             'order.status' => 'required',
             'order.data.discount' => 'nullable|integer',
             'order.data.advanced' => 'nullable|integer',
-            'order.data.shipping_area' => 'required|integer',
+            'order.data.shipping_area' => 'required',
             'order.data.shipping_cost' => 'required|integer',
             'order.data.courier' => 'required',
             'order.data.city_id' => 'nullable|integer',
