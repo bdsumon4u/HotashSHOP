@@ -10,7 +10,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label for="pixel-ids">Pixel IDs (space separated)</label>
-                <x-input name="pixel_ids" id="pixel-ids" :value="$pixel_ids ?? null" />
+                <x-textarea name="pixel_ids" id="pixel-ids">{{$pixel_ids ?? null}}</x-textarea>
                 <x-error field="pixel_ids" />
             </div>
         </div>
