@@ -34,9 +34,9 @@ class EditOrder extends Component
             'order.data.advanced' => 'nullable|integer',
             'order.data.shipping_area' => 'required|integer',
             'order.data.shipping_cost' => 'required|integer',
-            'order.data.courier' => 'nullable',
-            'order.data.city_id' => 'nullable',
-            'order.data.area_id' => 'nullable',
+            'order.data.courier' => 'required',
+            'order.data.city_id' => 'nullable|integer',
+            'order.data.area_id' => 'nullable|integer',
             'order.data.weight' => 'nullable|numeric',
         ];
     }
@@ -123,9 +123,7 @@ class EditOrder extends Component
     public function updatedOrderDataShippingArea($value)
     {
         $this->order->fill(['data' => [
-            'shipping_cost' => setting('delivery_charge')->{
-                $this->order->data['shipping_area'] == 'Inside Dhaka' ? 'inside_dhaka' : 'outside_dhaka'
-            } ?? config('services.shipping.' . $this->order->data['shipping_area'], 0),
+            'shipping_cost' => setting('delivery_charge')->{$this->order->data['shipping_area'] == 'Inside Dhaka' ? 'inside_dhaka' : 'outside_dhaka'} ?? config('services.shipping.' . $this->order->data['shipping_area'], 0),
         ]]);
 
         $this->order->fill(['data' => [
@@ -135,6 +133,8 @@ class EditOrder extends Component
 
     public function updateOrder()
     {
+        $this->validate();
+
         if (empty($this->selectedProducts)) {
             return session()->flash('error', 'Please add products to the order.');
         }
@@ -211,7 +211,7 @@ class EditOrder extends Component
                 ->whereIsActive(1)
                 ->take(5)
                 ->get();
-            
+
             foreach ($products as $product) {
                 if ($product->variations->isNotEmpty() && !isset($this->options[$product->id])) {
                     $this->options[$product->id] = $product->variations->random()->options->pluck('id', 'attribute_id');

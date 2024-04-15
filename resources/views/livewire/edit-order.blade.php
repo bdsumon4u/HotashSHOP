@@ -9,30 +9,30 @@
                     <div class="form-group col-md-6">
                         <x-label for="name">Name</x-label> <span
                             class="text-danger">*</span>
-                        <x-input name="name" wire:model.defer="order.name" placeholder="Type your name here" />
-                        <x-error field="name" />
+                        <x-input name="order.name" wire:model.defer="order.name" placeholder="Type your name here" />
+                        <x-error field="order.name" />
                     </div>
                     <div class="form-group col-md-6">
                         <x-label for="phone">Phone</x-label> <span
                             class="text-danger">*</span>
-                        <x-input type="tel" name="phone" wire:model.defer="order.phone" placeholder="Type your phone number here" />
-                        <x-error field="phone" />
+                        <x-input type="tel" name="order.phone" wire:model.defer="order.phone" placeholder="Type your phone number here" />
+                        <x-error field="order.phone" />
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-12">
                         <x-label for="email">Email Address</x-label>
-                        <x-input type="email" name="email" wire:model.defer="order.email" placeholder="Email Address" />
-                        <x-error field="email" />
+                        <x-input type="email" name="order.email" wire:model.defer="order.email" placeholder="Email Address" />
+                        <x-error field="order.email" />
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="d-block">Delivery Charge City <span
                             class="text-danger">*</span></label>
-                    <div class="form-control h-auto @error('order.data.shipping') is-invalid @enderror">
+                    <div class="form-control h-auto @error('order.data.shipping_area') is-invalid @enderror">
                         <div class="custom-control custom-radio custom-control-inline">
                             <input type="radio" class="custom-control-input" id="inside-dhaka"
-                                name="shipping" wire:model="order.data.shipping_area" value="Inside Dhaka">
+                                name="order.data.shipping" wire:model="order.data.shipping_area" value="Inside Dhaka">
                             <label class="custom-control-label" for="inside-dhaka">Inside
                                 Dhaka</label>
                         </div>
@@ -47,8 +47,8 @@
                 </div>
                 <div class="form-group">
                     <x-label for="address">Address</x-label> <span class="text-danger">*</span>
-                    <x-input name="address" wire:model.defer="order.address" placeholder="Enter Correct Address" />
-                    <x-error field="address" />
+                    <x-input name="order.address" wire:model.defer="order.address" placeholder="Enter Correct Address" />
+                    <x-error field="order.address" />
                 </div>
                 <div class="form-group">
                     <label class="d-block">Courier <span class="text-danger">*</span></label>
@@ -64,7 +64,7 @@
                             </div>
                         @endforeach
                     </div>
-                    <x-error field="data[courier]" />
+                    <x-error field="order.data.courier" />
                 </div>
                 <div Pathao class="form-row @if (($order->data['courier'] ?? false) != 'Pathao') d-none @endif">
                     <div class="form-group col-md-4">
