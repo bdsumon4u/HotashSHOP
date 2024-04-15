@@ -282,7 +282,7 @@
                 <tr data-id="${order.id}" class="${phones.includes(order.phone) ? 'border border-danger' : ''}">
                     <td>${1+$('.card-body table tbody tr').length}</td>
                     <td><a target="_blank" href="{{route('admin.orders.show', '')}}/${order.id}">${order.id}</a></td>
-                    <td>${order.name}&nbsp;${order.phone}</td>
+                    <td>${order.name}<br>${order.phone}<br>${order.address}</td>
                     <td>${order.note ?? 'N/A'}</td>
                     <td>${order.data.courier ?? 'N/A'}</td>
                     <td>${order.status}</td>
