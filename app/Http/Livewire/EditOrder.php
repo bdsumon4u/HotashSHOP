@@ -142,6 +142,10 @@ class EditOrder extends Component
             return session()->flash('error', 'Please add products to the order.');
         }
 
+        $this->order->fill(['data' => [
+            'subtotal' => $this->order->getSubtotal($this->selectedProducts),
+        ]]);
+
         if ($this->order->exists) {
             $confirming = false;
             if ($this->order->isDirty('status')) {
