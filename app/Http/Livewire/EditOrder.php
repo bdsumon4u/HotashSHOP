@@ -48,15 +48,22 @@ class EditOrder extends Component
         }
 
         $data = Arr::get($attributes, 'order.data', []);
+
         if ($data['discount'] ?? false) {
-            $data['discount'] = ltrim($data['discount'], '0') ?? 0;
+            $data['discount'] = ltrim($data['discount'], '0');
         }
+        if (!$data['discount']) $data['discount'] = '0';
+
         if ($data['advanced'] ?? false) {
-            $data['advanced'] = ltrim($data['advanced'], '0') ?? 0;
+            $data['advanced'] = ltrim($data['advanced'], '0');
         }
+        if (!$data['advanced']) $data['advanced'] = '0';
+
         if ($data['shipping_cost'] ?? false) {
-            $data['shipping_cost'] = ltrim($data['shipping_cost'], '0') ?? 0;
+            $data['shipping_cost'] = ltrim($data['shipping_cost'], '0');
         }
+        if (!$data['shipping_cost']) $data['shipping_cost'] = '0';
+
         $attributes['order']['data'] = $data;
 
         return $attributes;
