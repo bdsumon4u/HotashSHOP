@@ -100,10 +100,6 @@ class EditOrder extends Component
             'total' => $quantity * $product->selling_price,
         ];
 
-        $this->order->fill(['data' => [
-            'subtotal' => $this->order->getSubtotal($this->selectedProducts),
-        ]]);
-
         $this->search = '';
         $this->dispatchBrowserEvent('notify', ['message' => 'Product added successfully.']);
     }
@@ -112,10 +108,6 @@ class EditOrder extends Component
     {
         $this->selectedProducts[$id]['quantity']++;
         $this->selectedProducts[$id]['total'] = $this->selectedProducts[$id]['quantity'] * $this->selectedProducts[$id]['price'];
-
-        $this->order->fill(['data' => [
-            'subtotal' => $this->order->getSubtotal($this->selectedProducts),
-        ]]);
     }
 
     public function decreaseQuantity($id)
@@ -126,20 +118,12 @@ class EditOrder extends Component
         } else {
             unset($this->selectedProducts[$id]);
         }
-
-        $this->order->fill(['data' => [
-            'subtotal' => $this->order->getSubtotal($this->selectedProducts),
-        ]]);
     }
 
     public function updatedOrderDataShippingArea($value)
     {
         $this->order->fill(['data' => [
             'shipping_cost' => setting('delivery_charge')->{$this->order->data['shipping_area'] == 'Inside Dhaka' ? 'inside_dhaka' : 'outside_dhaka'} ?? config('services.shipping.' . $this->order->data['shipping_area'], 0),
-        ]]);
-
-        $this->order->fill(['data' => [
-            'subtotal' => $this->order->getSubtotal($this->selectedProducts),
         ]]);
     }
 
@@ -150,10 +134,6 @@ class EditOrder extends Component
         if (empty($this->selectedProducts)) {
             return session()->flash('error', 'Please add products to the order.');
         }
-
-        $this->order->fill(['data' => [
-            'subtotal' => $this->order->getSubtotal($this->selectedProducts),
-        ]]);
 
         if ($this->order->exists) {
             $confirming = false;
@@ -257,6 +237,10 @@ class EditOrder extends Component
         }
 
         if ($exception) cache()->forget('pathao_areas:' . $this->order->data['city_id']);
+
+        $this->order->fill(['data' => [
+            'subtotal' => $this->order->getSubtotal($this->selectedProducts),
+        ]]);
 
         return view('livewire.edit-order', [
             'cities' => $cities,
