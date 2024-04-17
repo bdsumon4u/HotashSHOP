@@ -62,7 +62,7 @@ class OrderApi extends BaseApi
             ]);
         }
 
-        $response = $this->authorization()->send("POST", "aladdin/api/v1/orders/bulk", $array);
+        $response = $this->authorization()->send("POST", "aladdin/api/v1/orders/bulk", ['orders' => $array]);
         return $response->data;
     }
 
