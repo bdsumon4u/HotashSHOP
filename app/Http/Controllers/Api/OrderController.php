@@ -106,7 +106,7 @@ class OrderController extends Controller
             })
             ->addColumn('courier', function ($row) {
                 $link = '';
-                $selected = $row->data['courier'] ? $row->data['courier'] : 'Other';
+                $selected = ($row->data['courier'] ?? false) ? $row->data['courier'] : 'Other';
 
                 $return = '<select data-id="' . $row->id . '" onchange="changeCourier" class="courier-column form-control-sm">';
                 foreach (['Pathao', 'SteadFast', 'Other'] as $provider) {
