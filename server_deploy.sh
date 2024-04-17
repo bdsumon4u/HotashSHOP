@@ -3,13 +3,20 @@ set -e
 
 echo "Deploying application ..."
 
+# Check if --dev argument is passed
+if [ "$1" = "--dev" ]; then
+    branch="dev"
+else
+    branch="master"
+fi
+
 # Enter maintenance mode
 # (php artisan down --message 'The app is being (quickly!) updated. Please try again in a minute.') || true
 (php artisan down) || true
     # Update codebase
     # git fetch origin production
     # git reset --hard origin/production
-    git pull origin master --force
+    git pull origin $branch --force
 
     # Install dependencies based on lock file
     # composer install #--no-interaction --prefer-dist --optimize-autoloader

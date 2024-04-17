@@ -28,7 +28,7 @@ jobs:
       - name: Deploy to Server
         run: |
           echo "Deploying to cyber32n"
-          ssh -vvv -o "IdentitiesOnly=yes" -i /tmp/private_key -p ${{ secrets.PORT }} cyber32n@${{ secrets.HOST }} "cd ecom1.cyber32.net && ./server_deploy.sh" || echo -e "\e[31mError deploying to cyber32n\e[0m" # Red color
+          ssh -vvv -o "IdentitiesOnly=yes" -i /tmp/private_key -p ${{ secrets.PORT }} cyber32n@${{ secrets.HOST }} "cd ecom1.cyber32.net && ./server_deploy.sh --dev" || echo -e "\e[31mError deploying to cyber32n\e[0m" # Red color
 
       - name: Cleanup temporary files
         run: rm /tmp/private_key
