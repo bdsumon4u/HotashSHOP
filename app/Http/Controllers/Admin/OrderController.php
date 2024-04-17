@@ -211,7 +211,7 @@ class OrderController extends Controller
             ];
         })->toArray();
 
-        \App\Pathao\Facade\Pathao::order()->bulk($orders);
+        \App\Pathao\Facade\Pathao::order()->bulk(['orders' => $orders]);
     }
 
     public function courier(Request $request)
