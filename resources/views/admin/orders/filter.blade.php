@@ -103,7 +103,40 @@
                         </div>
                     </form>
                 </div>
-                <div class="card-body p-3">
+                <div class="card-body p-3 d-print-none">
+                    <div class="row">
+                        @foreach($orders as $status => $count)
+                        <div class="col-xl-3 box-col- col-lg-3 col-md-3">
+                            <div class="card rounded-sm o-hidden">
+                                <div class="card-body p-3">
+                                    <div class="media">
+                                        <div class="media-body">
+                                        @php
+                                            $statData = compact('status');
+                                            if ($loop->index == 0) {
+                                                $statData = ['status' => ''];
+                                            } else if ($loop->index < 3) {
+                                                $statData = ['status' => '', 'type' => $status];
+                                            }
+                                        @endphp
+                                            <a href="{{
+                                            route('admin.orders.index', array_merge(array_merge([
+                                                'start_d' => date('Y-m-d'), 'end_d' => date('Y-m-d'),
+                                            ], request()->query()), $statData))
+                                        }}">
+                                                <p class="f-w-500 font-roboto mb-2">{{ $status }} Orders</p>
+                                                <h4 class="f-w-500 mb-0 f-26"><span class="-counter-">{{ $count }}</span></h4>
+                                                <span class="-counter-">Taka: {{ $amounts[$status] }}</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+                <div class="card-footer p-3">
                     @include('admin.reports.filtered')
                 </div>
             </div>
