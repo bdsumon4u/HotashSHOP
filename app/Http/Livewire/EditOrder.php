@@ -252,6 +252,11 @@ class EditOrder extends Component
         $this->order->fill(['data' => [
             'subtotal' => $this->order->getSubtotal($this->selectedProducts),
         ]]);
+        if (empty($this->order->data['courier'] ?? '')) {
+            $this->order->fill(['data' => [
+                'courier' => 'Other',
+            ]]);
+        }
 
         return view('livewire.edit-order', [
             'cities' => $cities,

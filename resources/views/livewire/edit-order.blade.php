@@ -57,8 +57,7 @@
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" class="custom-control-input"
                                     id="{{ $provider }}" wire:model="order.data.courier"
-                                    value="{{ $provider }}"
-                                    {{ ($order->data['courier'] ?? false) == $provider ? 'checked' : '' }}>
+                                    value="{{ $provider }}">
                                 <label class="custom-control-label"
                                     for="{{ $provider }}">{{ $provider }}</label>
                             </div>
