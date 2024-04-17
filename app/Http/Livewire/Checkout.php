@@ -237,6 +237,7 @@ class Checkout extends Component
                 'status_at' => now()->toDateTimeString(),
                 // Additional Data
                 'data' => [
+                    'courier' => 'Other',
                     'is_fraud' => $oldOrders->whereIn('status', ['CANCELLED', 'RETURNED'])->count() > 0,
                     'is_repeat' => $oldOrders->count() > 0,
                     'shipping_area' => $data['shipping'],
