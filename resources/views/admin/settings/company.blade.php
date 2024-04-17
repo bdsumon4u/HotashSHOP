@@ -63,11 +63,21 @@
                 <x-input type="tel" name="company[whatsapp]" id="whatsapp-number" :value="$company->whatsapp ?? ''" />
                 <x-error field="company.whatsapp" />
             </div>
+            <div class="form-group">
+                <label for="">Call For Order (space separated)</label>
+                <x-input type="tel" name="call_for_order" id="call_for_order" :value="$call_for_order ?? null" />
+                <x-error field="call_for_order" />
+            </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
+                <label for="company-contact_name">Contact Person Name</label>
+                <x-input name="company[contact_name]" id="company-contact_name" :value="$company->contact_name ?? ''" />
+                <x-error field="company.contact_name" />
+            </div>
+            <div class="form-group">
                 <label for="company-tagline">Company Tagline</label>
-                <x-textarea name="company[tagline]" id="company-tagline">{{ $company->tagline ?? '' }}</x-textarea>
+                <x-input name="company[tagline]" id="company-tagline" :value="$company->tagline ?? ''" />
                 <x-error field="company.tagline" />
             </div>
             <div class="form-group">
@@ -76,9 +86,16 @@
                 <x-error field="company.address" />
             </div>
             <div class="form-group">
-                <label for="">Call For Order (space separated)</label>
-                <x-input type="tel" name="call_for_order" id="call_for_order" :value="$call_for_order ?? null" />
-                <x-error field="call_for_order" />
+                <label for="company-office_time">Office Time</label>
+                <x-textarea name="company[office_time]" id="company-office_time">{{ $company->office_time ?? '' }}</x-textarea>
+                <x-error field="company.office_time" />
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="gmap-ecode">Google Map Embed Code</label>
+                <x-input name="company[gmap_ecode]" id="gmap-ecode" :value="$company->gmap_ecode ?? null" />
+                <x-error field="company[gmap_ecode]" />
             </div>
         </div>
     </div>

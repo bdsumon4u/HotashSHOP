@@ -37,6 +37,36 @@ class OrderApi extends BaseApi
     }
 
     /**
+     * Bulk Create
+     *
+     * @param array $array
+     *
+     * @return mixed
+     * @throws PathaoException
+     * @throws GuzzleException|PathaoCourierValidationException
+     */
+    public function bulk($array)
+    {
+        foreach ($array as $item) {
+            $this->validation($item, [
+                "store_id",
+                "recipient_name",
+                "recipient_phone",
+                "recipient_address",
+                "recipient_city",
+                "recipient_zone",
+                "delivery_type",
+                "item_type",
+                "item_quantity",
+                "amount_to_collect",
+            ]);
+        }
+
+        $response = $this->authorization()->send("POST", "aladdin/api/v1/orders/bulk", ['orders' => $array]);
+        return $response->data;
+    }
+
+    /**
      * Order Details
      *
      * @param string $consignmentId

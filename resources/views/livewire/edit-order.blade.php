@@ -53,7 +53,7 @@
                 <div class="form-group">
                     <label class="d-block">Courier <span class="text-danger">*</span></label>
                     <div class="border p-2 @error('order.data.courier') is-invalid @enderror">
-                        @foreach (['Pathao', 'SteadFast', 'Manual'] as $provider)
+                        @foreach (['Pathao', 'SteadFast', 'Other'] as $provider)
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" class="custom-control-input"
                                     id="{{ $provider }}" wire:model="order.data.courier"

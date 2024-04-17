@@ -183,6 +183,7 @@ class OrderController extends Controller
 
             $order->update([
                 'status' => 'SHIPPING',
+                'status_at' => now()->toDateTimeString(),
                 'data' => [
                     'consignment_id' => $item['consignment_id'],
                     'tracking_code' => $item['tracking_code'],
@@ -215,6 +216,7 @@ class OrderController extends Controller
 
         $order->update([
             'status' => 'SHIPPING',
+            'status_at' => now()->toDateTimeString(),
             'data' => [
                 'consignment_id' => $data->consignment_id,
             ],

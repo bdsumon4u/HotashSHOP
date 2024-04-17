@@ -71,7 +71,7 @@
                             <div class="col-auto px-1">
                                 <select name="courier" id="courier" class="form-control">
                                     <option value="">Courier</option>
-                                    @foreach(['Pathao', 'SteadFast', 'Manual'] as $courier)
+                                    @foreach(['Pathao', 'SteadFast', 'Other'] as $courier)
                                     <option value="{{ $courier }}" @if(request()->get('courier') == $courier) selected @endif>{{ $courier }}</option>
                                     @endforeach
                                 </select>

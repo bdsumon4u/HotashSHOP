@@ -78,9 +78,9 @@ class OrderController extends Controller
                 return intval($row->data['subtotal']) + intval($row->data['shipping_cost']) - intval($row->data['discount'] ?? 0) - intval($row->data['advanced'] ?? 0);
             })
             ->editColumn('status', function ($row) {
-                $return = '<select data-id="'.$row->id.'" onchange="changeStatus" class="status-column form-control-sm">';
+                $return = '<select data-id="' . $row->id . '" onchange="changeStatus" class="status-column form-control-sm">';
                 foreach (config('app.orders', []) as $status) {
-                    $return .= '<option value="'.$status.'" '.($status == $row->status ? 'selected' : '').'>'.$status.'</option>';
+                    $return .= '<option value="' . $status . '" ' . ($status == $row->status ? 'selected' : '') . '>' . $status . '</option>';
                 }
                 $return .= '</select>';
                 return $return;
@@ -105,15 +105,16 @@ class OrderController extends Controller
                 return $products . '</ul>';
             })
             ->addColumn('courier', function ($row) {
-                $link = ''; $selected = $row->data['courier'] ?? 'Manual';
+                $link = '';
+                $selected = $row->data['courier'] ? $row->data['courier'] : 'Other';
 
-                $return = '<select data-id="'.$row->id.'" onchange="changeCourier" class="courier-column form-control-sm">';
-                foreach (['Pathao', 'SteadFast', 'Manual'] as $provider) {
-                    $return .= '<option value="'.$provider.'" '.($provider == $selected ? 'selected' : '').'>'.$provider.'</option>';
+                $return = '<select data-id="' . $row->id . '" onchange="changeCourier" class="courier-column form-control-sm">';
+                foreach (['Pathao', 'SteadFast', 'Other'] as $provider) {
+                    $return .= '<option value="' . $provider . '" ' . ($provider == $selected ? 'selected' : '') . '>' . $provider . '</option>';
                 }
                 $return .= '</select>';
 
-                if (!($row->data['courier']??false)) return $return;
+                if (!($row->data['courier'] ?? false)) return $return;
 
                 if ($row->data['courier'] == 'Pathao') {
                     // append city, area and weight

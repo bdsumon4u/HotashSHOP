@@ -31,10 +31,13 @@ class SettingRequest extends FormRequest
                 'logo.*' => 'nullable|image',
                 'company' => 'required|array',
                 'company.name' => 'required',
+                'company.contact_name' => 'required',
                 'company.email' => 'required',
                 'company.phone' => 'required',
                 'company.tagline' => 'required',
                 'company.address' => 'required',
+                'company.office_time' => 'required',
+                'company.gmap_ecode' => 'nullable',
                 'call_for_order' => 'required',
                 'social' => 'required|array',
             ];
@@ -81,7 +84,7 @@ class SettingRequest extends FormRequest
         if ($this->get('tab') == 'color') {
             $rules = [];
             foreach (['topbar', 'header', 'search', 'navbar', 'category_menu', 'section', 'badge', 'footer', 'primary', 'add_to_cart', 'order_now'] as $key) {
-                $rules['color.'.$key] = 'required|array';
+                $rules['color.' . $key] = 'required|array';
                 foreach (['background_color', 'background_hover', 'text_color', 'text_hover'] as $color) {
                     $rules['color.' . $key . '.' . $color] = ['required', 'regex:/^#([a-f0-9]{6}|[a-f0-9]{3})$/i'];
                 }

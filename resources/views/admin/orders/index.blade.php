@@ -82,7 +82,7 @@
                             <div class="col-auto px-1">
                                 <select name="courier" id="courier" onchange="changeCourier()" class="form-control form-control-sm bg-primary text-white">
                                     <option value="">Change Courier</option>
-                                    @foreach(['Pathao', 'SteadFast', 'Manual'] as $provider)
+                                    @foreach(['Pathao', 'SteadFast', 'Other'] as $provider)
                                     <option value="{{ $provider }}">{{ $provider }}</option>
                                     @endforeach
                                 </select>
@@ -368,7 +368,7 @@
         function courier() {
             window.open('{{ route('admin.orders.booking') }}?order_id=' + $('[name="order_id[]"]:checked').map(function () {
                 return $(this).val();
-            }).get().join(','));
+            }).get().join(','), '_self');
         }
     </script>
 

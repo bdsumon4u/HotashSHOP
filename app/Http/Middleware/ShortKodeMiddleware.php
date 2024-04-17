@@ -23,6 +23,7 @@ class ShortKodeMiddleware
         $content = $response->content();
 
         $stack = [
+            '[CONTACT_PAGE]' => 'contact-page',
             '[CONTACT_FORM]' => 'contact-form',
             '[FAQs]'         => 'faqs',
             '<!-- pagebreak -->' => 'pagebreak',
