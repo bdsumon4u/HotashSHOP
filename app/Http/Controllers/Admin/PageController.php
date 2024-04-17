@@ -76,7 +76,7 @@ class PageController extends Controller
         abort_if(request()->user()->is('salesman'), 403, 'You don\'t have permission.');
         $data = $request->validate([
             'title' => 'required',
-            'slug' => 'required|unique:pages,id,' . $page->id,
+            'slug' => 'required|unique:pages,slug,' . $page->id,
             'content' => 'required',
         ]);
 

@@ -47,9 +47,9 @@ class ProductRequest extends FormRequest
             'desc_img_pos' => 'required_if:desc_img,1',
         ];
 
-        if (! $this->isMethod('POST')) {
-            $rules['slug'] = 'required|max:255|unique:products,id,'.$this->route('product')->id;
-            $rules['sku'] = 'required|unique:products,id,'.$this->route('product')->id;
+        if (!$this->isMethod('POST')) {
+            $rules['slug'] = 'required|max:255|unique:products,slug,' . $this->route('product')->id;
+            $rules['sku'] = 'required|unique:products,sku,' . $this->route('product')->id;
         }
 
         return $rules;
