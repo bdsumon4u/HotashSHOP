@@ -146,7 +146,7 @@ class ReportController extends Controller
         $start = $_start->format('Y-m-d');
         $_end = Carbon::parse(\request('end_d'));
         $end = $_end->format('Y-m-d');
-        $type = $request->get('date_type', 'created_at');
+        $type = $request->get('date_type', 'status_at');
         $top = $request->get('top_by', 'order_amount');
 
         $query = User::withWhereHas('orders', function ($query) use ($type, $_start, $_end) {

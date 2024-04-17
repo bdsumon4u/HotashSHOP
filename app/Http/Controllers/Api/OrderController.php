@@ -43,7 +43,7 @@ class OrderController extends Controller
         }
 
         if ($request->has('start_d') && $request->has('end_d')) {
-            $orders->whereBetween(request('date_type', 'created_at'), [
+            $orders->whereBetween(request('date_type', 'status_at'), [
                 $_start->startOfDay()->toDateTimeString(),
                 $_end->endOfDay()->toDateTimeString(),
             ]);
