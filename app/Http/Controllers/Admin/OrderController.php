@@ -79,27 +79,60 @@ class OrderController extends Controller
         $_end = Carbon::parse(\request('end_d'));
         $end = $_end->format('Y-m-d');
 
-        $orders = Order::select('id', 'products');
-        if ($request->status) {
-            $orders->where('status', $request->status);
-        }
-        $orders->whereBetween($request->get('date_type', 'created_at'), [
+        $totalSQL = 'COUNT(*) as order_count, SUM(JSON_UNQUOTE(JSON_EXTRACT(data, "$.subtotal"))) + SUM(JSON_UNQUOTE(JSON_EXTRACT(data, "$.shipping_cost"))) - COALESCE(SUM(JSON_UNQUOTE(JSON_EXTRACT(data, "$.discount"))), 0) as total_amount';
+
+        $orderQ = Order::select('id', 'products')
+            ->whereBetween(request('date_type', 'created_at'), [
+                $_start->startOfDay()->toDateTimeString(),
+                $_end->endOfDay()->toDateTimeString(),
+            ]);
+
+        $orderQ->whereBetween($request->get('date_type', 'created_at'), [
             $_start->startOfDay()->toDateTimeString(),
             $_end->endOfDay()->toDateTimeString(),
         ]);
 
         if ($request->staff_id) {
-            $orders->where('admin_id', $request->staff_id);
+            $orderQ->where('admin_id', $request->staff_id);
         }
 
         if ($request->courier) {
-            $orders->whereJsonContains('data->courier', $request->courier);
+            $orderQ->whereJsonContains('data->courier', $request->courier);
+        }
+
+        $data = (clone $orderQ)
+            ->selectRaw($totalSQL)
+            ->first();
+        $orders['Total'] = $data->order_count;
+        $amounts['Total'] = $data->total_amount;
+
+        $data = (clone $orderQ)->where('type', Order::ONLINE)
+            ->selectRaw($totalSQL)
+            ->first();
+        $orders['Online'] = $data->order_count;
+        $amounts['Online'] = $data->total_amount;
+
+        $data = (clone $orderQ)->where('type', Order::MANUAL)
+            ->selectRaw($totalSQL)
+            ->first();
+        $orders['Manual'] = $data->order_count;
+        $amounts['Manual'] = $data->total_amount;
+
+        foreach (config('app.orders', []) as $status) {
+            $data = (clone $orderQ)->where('status', $status)
+                ->selectRaw($totalSQL)
+                ->first();
+            $orders[$status] = $data->order_count ?? 0;
+            $amounts[$status] = $data->total_amount ?? 0;
         }
 
         return view('admin.orders.filter', [
             'start' => $start,
             'end' => $end,
-            'products' => $orders->get()
+            'orders' => $orders,
+            'amounts' => $amounts,
+            'products' => $orderQ
+                ->when($request->status, fn ($q) => $q->where('status', $request->status))->get()
                 ->flatMap(fn ($order) => json_decode(json_encode($order->products, JSON_UNESCAPED_UNICODE), true))
                 ->groupBy('id')->map(function ($item) {
                     return [
