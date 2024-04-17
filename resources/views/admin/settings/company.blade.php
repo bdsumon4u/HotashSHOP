@@ -28,9 +28,9 @@
             <div class="form-group">
                 <label for="login-logo" class="d-block">
                     <div>Dashboard Logo ({{ config('services.logo.desktop.width', 192) }}x{{ config('services.logo.desktop.height', 40) }})</div>
-                    <img src="{{ asset($logo->login ?? '') ?? '' }}" alt="login Logo" class="img-responsiv d-blocke" height="{{ config('services.logo.desktop.height', 40) }}" style="@unless($logo->desktop ?? '') display:none; @endunless">
+                    <img src="{{ asset($logo->login ?? $logo->desktop ?? '') ?? '' }}" alt="login Logo" class="img-responsiv d-blocke" height="{{ config('services.logo.desktop.height', 40) }}" style="@unless($logo->desktop ?? '') display:none; @endunless">
                 </label>
-                <input type="file" name="logo[login]" id="login-logo" class="form-control mb-1 @if($logo->login ?? '') d-none @endif">
+                <input type="file" name="logo[login]" id="login-logo" class="form-control mb-1 @if($logo->login ?? $logo->desktop ?? '') d-none @endif">
             </div>
         </div>
         <div class="col-md-3">
