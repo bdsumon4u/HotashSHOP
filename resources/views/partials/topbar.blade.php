@@ -1,10 +1,12 @@
 <div class="site-header__topbar topbar text-nowrap">
     <div class="topbar__container container">
         <div class="topbar__row">
+            @if ($show_option->topbar_phone ?? false)
             <div class="topbar__item topbar__item--link d-md-none">
                 <img style="height: 35px;" class="img-responsive " src="https://www.himelshop.com/front_asset/call-now.gif" alt="Call 7colors" title="7colors">&nbsp;
                 <a style="font-family: monospace;" class="topbar-link" href="tel:{{ $company->phone ?? '' }}">{{ $company->phone ?? '' }}</a>
             </div>
+            @endif
             @foreach($menuItems as $item)
             <div class="topbar__item topbar__item--link d-none d-md-flex">
                 <a class="topbar-link" href="{{ url($item->href) }}">{!! $item->name !!}</a>
