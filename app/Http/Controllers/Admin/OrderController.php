@@ -82,12 +82,12 @@ class OrderController extends Controller
         $totalSQL = 'COUNT(*) as order_count, SUM(JSON_UNQUOTE(JSON_EXTRACT(data, "$.subtotal"))) + SUM(JSON_UNQUOTE(JSON_EXTRACT(data, "$.shipping_cost"))) - COALESCE(SUM(JSON_UNQUOTE(JSON_EXTRACT(data, "$.discount"))), 0) as total_amount';
 
         $orderQ = Order::select('id', 'products')
-            ->whereBetween(request('date_type', 'created_at'), [
+            ->whereBetween(request('date_type', 'status_at'), [
                 $_start->startOfDay()->toDateTimeString(),
                 $_end->endOfDay()->toDateTimeString(),
             ]);
 
-        $orderQ->whereBetween($request->get('date_type', 'created_at'), [
+        $orderQ->whereBetween($request->get('date_type', 'status_at'), [
             $_start->startOfDay()->toDateTimeString(),
             $_end->endOfDay()->toDateTimeString(),
         ]);
