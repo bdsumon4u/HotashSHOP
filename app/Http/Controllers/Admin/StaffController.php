@@ -107,7 +107,7 @@ class StaffController extends Controller
         abort_if($staff->email == 'support@cyber32.com' && request()->user()->email != 'support@cyber32.com', 403, 'You don\'t have permission.');
         $data = $request->validate([
             'name' => 'required',
-            'email' => 'required|unique:admins,id,' . $staff->id,
+            'email' => 'required|unique:admins,email,' . $staff->id,
             'password' => 'nullable',
             'role_id' => 'required',
             'is_active' => 'sometimes',

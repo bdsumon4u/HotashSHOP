@@ -65,8 +65,8 @@ class BrandController extends Controller
     {
         abort_if(request()->user()->is('salesman'), 403, 'You don\'t have permission.');
         $data = $request->validate([
-            'name' => 'required|unique:brands,id,' . $brand->id,
-            'slug' => 'required|unique:brands,id,' . $brand->id,
+            'name' => 'required|unique:brands,name,' . $brand->id,
+            'slug' => 'required|unique:brands,slug,' . $brand->id,
             'base_image' => 'nullable|integer',
         ]);
 

@@ -103,8 +103,8 @@ class CategoryController extends Controller
         abort_if(request()->user()->is('salesman'), 403, 'You don\'t have permission.');
         $data = $request->validate([
             'parent_id' => 'nullable|integer',
-            'name' => 'required|unique:categories,id,' . $category->id,
-            'slug' => 'required|unique:categories,id,' . $category->id,
+            'name' => 'required|unique:categories,name,' . $category->id,
+            'slug' => 'required|unique:categories,slug,' . $category->id,
             'base_image' => 'nullable|integer',
         ]);
 
