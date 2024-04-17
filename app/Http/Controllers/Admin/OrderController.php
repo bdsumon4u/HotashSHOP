@@ -136,17 +136,13 @@ class OrderController extends Controller
             return redirect()->back()->withDanger($e->getMessage());
         }
 
-        if (setting('Pathao')->enabled) {
-            foreach (Order::whereIn('id', $order_ids)->where('data->courier', 'Pathao')->get() as $order) {
-                try {
-                    $this->pathao($order);
-                } catch (\App\Pathao\Exceptions\PathaoException $e) {
-                    $errors = collect($e->errors)->values()->flatten()->toArray();
-                    return back()->withDanger($errors[0] ?? $e->getMessage());
-                } catch (\Exception $e) {
-                    return back()->withDanger($e->getMessage());
-                }
-            }
+        try {
+            $this->pathao($order_ids);
+        } catch (\App\Pathao\Exceptions\PathaoException $e) {
+            $errors = collect($e->errors)->values()->flatten()->toArray();
+            return back()->withDanger($errors[0] ?? $e->getMessage());
+        } catch (\Exception $e) {
+            return back()->withDanger($e->getMessage());
         }
 
         return redirect()->back() //$this->invoices($request);
@@ -191,34 +187,31 @@ class OrderController extends Controller
         }
     }
 
-    private function pathao($order)
+    private function pathao($order_ids)
     {
-        $data = [
-            "store_id"            => setting('Pathao')->store_id, // Find in store list,
-            "merchant_order_id"   => $order->id, // Unique order id
-            "recipient_name"      => $order->name ?? 'N/A', // Customer name
-            "recipient_phone"     => Str::after($order->phone, '+88') ?? '', // Customer phone
-            "recipient_address"   => $order->address ?? 'N/A', // Customer address
-            "recipient_city"      => $order->data['city_id'], // Find in city method
-            "recipient_zone"      => $order->data['area_id'], // Find in zone method
-            // "recipient_area"      => "", // Find in Area method
-            "delivery_type"       => 48, // 48 for normal delivery or 12 for on demand delivery
-            "item_type"           => 2, // 1 for document, 2 for parcel
-            "special_instruction" => $order->note,
-            "item_quantity"       => 1, // item quantity
-            "item_weight"         => $order->data['weight'] ?? 0.5, // parcel weight
-            "amount_to_collect"   => intval($order->data['shipping_cost']) + intval($order->data['subtotal']) - intval($order->data['advanced'] ?? 0) - intval($order->data['discount'] ?? 0), // - $order->deliveryCharge, // amount to collect
-            // "item_description"    => $this->getProductsDetails($order->id), // product details
-        ];
+        $Pathao = setting('Pathao');
+        if (!$Pathao->enabled) return;
+        $orders = Order::whereIn('id', $order_ids)->where('data->courier', 'Pathao')->get()->map(function ($order) use (&$Pathao) {
+            return [
+                "store_id"            => $Pathao->store_id, // Find in store list,
+                "merchant_order_id"   => $order->id, // Unique order id
+                "recipient_name"      => $order->name ?? 'N/A', // Customer name
+                "recipient_phone"     => Str::after($order->phone, '+88') ?? '', // Customer phone
+                "recipient_address"   => $order->address ?? 'N/A', // Customer address
+                "recipient_city"      => $order->data['city_id'], // Find in city method
+                "recipient_zone"      => $order->data['area_id'], // Find in zone method
+                // "recipient_area"      => "", // Find in Area method
+                "delivery_type"       => 48, // 48 for normal delivery or 12 for on demand delivery
+                "item_type"           => 2, // 1 for document, 2 for parcel
+                "special_instruction" => $order->note,
+                "item_quantity"       => 1, // item quantity
+                "item_weight"         => $order->data['weight'] ?? 0.5, // parcel weight
+                "amount_to_collect"   => intval($order->data['shipping_cost']) + intval($order->data['subtotal']) - intval($order->data['advanced'] ?? 0) - intval($order->data['discount'] ?? 0), // - $order->deliveryCharge, // amount to collect
+                // "item_description"    => $this->getProductsDetails($order->id), // product details
+            ];
+        })->toArray();
 
-        $data = \App\Pathao\Facade\Pathao::order()->create($data);
-
-        $order->update([
-            'status' => 'SHIPPING',
-            'data' => [
-                'consignment_id' => $data->consignment_id,
-            ],
-        ]);
+        \App\Pathao\Facade\Pathao::order()->bulk($orders);
     }
 
     public function courier(Request $request)

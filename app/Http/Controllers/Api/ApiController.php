@@ -52,23 +52,26 @@ class ApiController extends Controller
         //     'collected_amount',
         // ]);
         // $order->forceFill(['courier' => ['booking' => 'Pathao'] + $courier]);
-    
-        if ($request->order_status_slug == 'Pickup_Cancelled') {
+
+        if ($request->order_status_slug == 'Pickup_Requested') {
+            $order->fill([
+                'status' => 'SHIPPING',
+                'data' => [
+                    'consignment_id' => $request->consignment_id,
+                ],
+            ]);
+        } else if ($request->order_status_slug == 'Pickup_Cancelled') {
             $order->status = 'CANCELLED';
             $order->status_at = now();
-        }
-        if ($request->order_status_slug == 'On_Hold') {
+        } else if ($request->order_status_slug == 'On_Hold') {
             $order->status = 'WAITING';
             $order->status_at = now();
-        }
-        if ($request->order_status_slug == 'Delivered') {
+        } else if ($request->order_status_slug == 'Delivered') {
             $order->status = 'COMPLETED';
             $order->status_at = now();
-        }
-        if ($request->order_status_slug == 'Payment_Invoice') {
+        } else if ($request->order_status_slug == 'Payment_Invoice') {
             
-        }
-        if ($request->order_status_slug == 'Return') {
+        } else if ($request->order_status_slug == 'Return') {
             $order->status = 'RETURNED';
             $order->status_at = now();
             // TODO: add to stock
