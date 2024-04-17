@@ -59,6 +59,15 @@ class SettingController extends Controller
             ]);
         }
 
+        if ($type == 'login') {
+            return $this->uploadImage($file, [
+                'dir' => 'logo',
+                'resize' => false,
+                // 'width' => config('services.logo.desktop.width', 260),
+                // 'height' => config('services.logo.desktop.height', 54),
+            ]);
+        }
+
         if ($type == 'favicon') {
             return $this->uploadImage($file, [
                 'dir' => 'logo',
