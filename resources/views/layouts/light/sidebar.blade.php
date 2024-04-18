@@ -14,7 +14,7 @@
         <div class="main-navbar">
             <div class="left-arrow" id="left-arrow"><i data-feather="arrow-left"></i></div>
             <div id="mainnav">
-                <ul class="nav-menu hotash-scrollbar">
+                <ul class="nav-menu custom-scrollbar pb-5">
                     <li class="back-btn">
                         <a href="{{ route('admin.home') }}">
                             <img class="img-fluid" src="{{ asset($logo->favicon ?? '') }}" height="36" width="36"
