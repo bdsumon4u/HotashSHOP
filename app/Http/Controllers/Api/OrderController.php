@@ -131,6 +131,8 @@ class OrderController extends Controller
 
                 if ($cid = $row->data['consignment_id'] ?? false) {
                     $return .= '<div style="white-space: nowrap;">C.ID: <a href="' . $link . '" target="_blank">' . $cid . '</a></div>';
+                } else {
+                    $return .= '<a href="' . route('admin.orders.booking', ['order_id' => $row->id]) . '" class="btn btn-sm btn-primary">Submit</a>';
                 }
 
                 $return .= '<div style="white-space: nowrap; display: none;">Tracking Code: <a href="https://www.steadfast.com.bd/?tracking_code=" target="_blank"></a></div>';

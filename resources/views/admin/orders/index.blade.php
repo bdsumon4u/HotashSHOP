@@ -92,7 +92,7 @@
                                 @if(request('status') == 'CONFIRMED')
                                 <button onclick="printInvoice()" id="invoice" class="btn btn-sm btn-primary ml-1">Print Invoice</button>
                                 @elseif(request('status') == 'INVOICED')
-                                <button onclick="courier()" id="courier" class="btn btn-sm btn-primary ml-1">Courier Booking</button>
+                                <button onclick="courier()" id="courier" class="btn btn-sm btn-primary ml-1">Send to Courier</button>
                                 @endif
                             </div>
                         </div>

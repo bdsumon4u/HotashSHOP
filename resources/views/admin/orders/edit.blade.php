@@ -25,7 +25,7 @@
                         <strong>Edit Order</strong>
                         <div>
                             <a href="{{ route('admin.orders.invoices', ['order_id' => $order->id]) }}" class="btn btn-sm btn-primary ml-1">Invoice</a>
-                            <a href="{{ route('admin.orders.booking', ['order_id' => $order->id]) }}" class="btn btn-sm btn-primary ml-1">Booking</a>
+                            <a href="{{ route('admin.orders.booking', ['order_id' => $order->id]) }}" class="btn btn-sm btn-primary ml-1">Send to Courier</a>
                         </div>
                     </div>
                     <div class="card-body p-3">
