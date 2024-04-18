@@ -58,8 +58,10 @@
                         <table class="table table-bordered table-striped table-hover datatable" style="width: 100%;">
                             <thead>
                                 <tr>
-                                    <th style="min-width: 50px;">Order ID</th>
-                                    <th>Customer</th>
+                                    <th style="min-width: 50px;">ID</th>
+                                    <th>Name</th>
+                                    <th>Phone</th>
+                                    <th>Address</th>
                                     <th>Note</th>
                                     <th style="min-width: 80px;">Courier</th>
                                     <th style="min-width: 80px;">Status</th>
@@ -93,9 +95,11 @@
                         <table class="table table-bordered table-striped table-hover datatable" style="width: 100%;">
                             <thead>
                                 <tr>
-                                    <th style="min-width: 50px;">S.I</th>
-                                    <th style="min-width: 50px;">Order ID</th>
-                                    <th>Customer</th>
+                                    <th style="min-width: 50px;">SI</th>
+                                    <th style="min-width: 50px;">ID</th>
+                                    <th>Name</th>
+                                    <th>Phone</th>
+                                    <th>Address</th>
                                     <th>Note</th>
                                     <th style="min-width: 80px;">Courier</th>
                                     <th style="min-width: 80px;">Status</th>
@@ -223,7 +227,9 @@
                 var tr = `
                     <tr data-id="${order.id}">
                         <td><a target="_blank" href="{{route('admin.orders.show', '')}}/${order.id}">${order.id}</a></td>
-                        <td>${order.name}<br>${order.phone}<br>${order.address}</td>
+                        <td>${order.name}</td>
+                        <td>${order.phone}</td>
+                        <td>${order.address}</td>
                         <td>${order.note ?? 'N/A'}</td>
                         <td>${order.data.courier ?? 'N/A'}</td>
                         <td>${order.status}</td>
@@ -282,7 +288,9 @@
                 <tr data-id="${order.id}" class="${phones.includes(order.phone) ? 'border border-danger' : ''}">
                     <td>${1+$('.card-body table tbody tr').length}</td>
                     <td><a target="_blank" href="{{route('admin.orders.show', '')}}/${order.id}">${order.id}</a></td>
-                    <td>${order.name}<br>${order.phone}<br>${order.address}</td>
+                    <td>${order.name}</td>
+                    <td>${order.phone}</td>
+                    <td>${order.address}</td>
                     <td>${order.note ?? 'N/A'}</td>
                     <td>${order.data.courier ?? 'N/A'}</td>
                     <td>${order.status}</td>
@@ -298,7 +306,7 @@
             });
 
             if (! $('.card-body table tbody tr:last-child').hasClass('summary')) {
-                $('.card-body table tbody').append('<tr class="summary"><th colspan="6" class="text-right">Total</th><th>'+subtotal+'</th><th>'+shipping+'</th><th>'+total+'</th></tr>');
+                $('.card-body table tbody').append('<tr class="summary"><th colspan="8" class="text-right">Total</th><th>'+subtotal+'</th><th>'+shipping+'</th><th>'+total+'</th></tr>');
             } else {
                 $('.card-body table tbody tr:last-child').find('th:nth-child(2)').text(subtotal);
                 $('.card-body table tbody tr:last-child').find('th:nth-child(3)').text(shipping);
