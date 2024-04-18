@@ -380,7 +380,10 @@
                 complete: function () {
                     $('[name="staff"]').prop('disabled', false);
                     $('[name="staff"]').val('');
-                }
+                },
+                error: function (response) {
+                    $.notify(response?.responseJSON?.message || 'Staff update failed.', {type: 'danger'});
+                },
             });
         }
 

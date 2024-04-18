@@ -295,6 +295,7 @@ class OrderController extends Controller
 
     public function staff(Request $request)
     {
+        abort_if(request()->user()->is('salesman'), 403, 'You don\'t have permission.');
         $request->validate([
             'admin_id' => 'required',
             'order_id' => 'required|array',
