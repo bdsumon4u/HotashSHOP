@@ -163,8 +163,9 @@ class OrderController extends Controller
         $order_ids = array_map('trim', $order_ids);
         $order_ids = array_filter($order_ids);
 
+        $booked = 0;
         try {
-            $this->steadFast($order_ids);
+            $booked = $this->steadFast($order_ids);
         } catch (\Exception $e) {
             return redirect()->back()->withDanger($e->getMessage());
         }
@@ -173,9 +174,14 @@ class OrderController extends Controller
             foreach (Order::whereIn('id', $order_ids)->where('data->courier', 'Pathao')->get() as $order) {
                 try {
                     $this->pathao($order);
+                    $booked++;
                 } catch (\App\Pathao\Exceptions\PathaoException $e) {
                     $errors = collect($e->errors)->values()->flatten()->toArray();
-                    return back()->withDanger($errors[0] ?? $e->getMessage());
+                    $message = $errors[0] ?? $e->getMessage();
+                    if ($message == 'Too many attempts') {
+                        $message = 'Booked ' . $booked . ' out of ' . count($order_ids) . ' orders. Please try again later.';
+                    }
+                    return back()->withDanger($message);
                 } catch (\Exception $e) {
                     return back()->withDanger($e->getMessage());
                 }
@@ -188,7 +194,7 @@ class OrderController extends Controller
 
     private function steadFast($order_ids)
     {
-        if (!(($SteadFast = setting('SteadFast'))->enabled ?? false)) return;
+        if (!(($SteadFast = setting('SteadFast'))->enabled ?? false)) return 0;
         $orders = Order::whereIn('id', $order_ids)->where('data->courier', 'SteadFast')->get()->map(function ($order) {
             return [
                 'invoice' => $order->id,
@@ -222,6 +228,8 @@ class OrderController extends Controller
                 ],
             ]);
         }
+
+        return count($data['data'] ?? []);
     }
 
     private function pathao($order)
