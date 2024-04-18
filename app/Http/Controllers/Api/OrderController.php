@@ -118,8 +118,8 @@ class OrderController extends Controller
 
                 if ($row->data['courier'] == 'Pathao') {
                     // append city, area and weight
-                    $return .= '<div style="white-space: nowrap;">City ID: ' . ($row->data['city_id'] ?? '<strong class="text-danger">N/A</strong>') . '</div>';
-                    $return .= '<div style="white-space: nowrap;">Area ID: ' . ($row->data['area_id'] ?? '<strong class="text-danger">N/A</strong>') . '</div>';
+                    $return .= '<div style="white-space: nowrap;">City: ' . ($row->data['city_name'] ?? '<strong class="text-danger">N/A</strong>') . '</div>';
+                    $return .= '<div style="white-space: nowrap;">Area: ' . ($row->data['area_name'] ?? '<strong class="text-danger">N/A</strong>') . '</div>';
                     $return .= '<div style="white-space: nowrap;">Weight: ' . ($row->data['weight'] ?? '0.5') . ' kg</div>';
 
                     $link = 'https://merchant.pathao.com/tracking?consignment_id=' . ($row->data['consignment_id'] ?? '') . '&phone=' . Str::after($row->phone, '+88');

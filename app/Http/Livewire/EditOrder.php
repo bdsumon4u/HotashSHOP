@@ -7,6 +7,7 @@ use App\Order;
 use App\Pathao\Facade\Pathao;
 use App\Product;
 use App\User;
+use Fuse\Fuse;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Livewire\Component;
@@ -203,6 +204,7 @@ class EditOrder extends Component
 
         return $user;
     }
+
     public function render()
     {
         $products = collect();
@@ -222,40 +224,11 @@ class EditOrder extends Component
             }
         }
 
-        $areas = [];
-        $exception = false;
-        $cities = cache()->remember('pathao_cities', now()->addDay(), function () use (&$exception) {
-            try {
-                return Pathao::area()->city()->data;
-            } catch (\Exception $e) {
-                $exception = true;
-                return [];
-            }
-        });
-
-        if ($exception) cache()->forget('pathao_cities');
-
-        $exception = false;
-        if ($this->order->data['city_id'] ?? false) {
-            $areas = cache()->remember('pathao_areas:' . $this->order->data['city_id'], now()->addDay(), function () use (&$exception) {
-                try {
-                    return Pathao::area()->zone($this->order->data['city_id'])->data;
-                } catch (\Exception $e) {
-                    $exception = true;
-                    return [];
-                }
-            });
-        }
-
-        if ($exception) cache()->forget('pathao_areas:' . $this->order->data['city_id']);
-
         $this->order->fill(['data' => [
             'subtotal' => $this->order->getSubtotal($this->selectedProducts),
         ]]);
 
         return view('livewire.edit-order', [
-            'cities' => $cities,
-            'areas' => $areas,
             'products' => $products,
         ]);
     }
