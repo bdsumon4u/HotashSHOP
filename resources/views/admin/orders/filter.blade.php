@@ -59,7 +59,7 @@
                             <div class="col-auto pr-1">
                                 <select name="date_type" id="datetype" class="form-control">
                                     <option value="created_at" @if(request('date_type') == 'created_at') selected @endif>ORDER DATE</option>
-                                    <option value="status_at" @if(request('date_type') == 'status_at') selected @endif>UPDATE DATE</option>
+                                    <option value="status_at" @if(request('date_type', 'status_at') == 'status_at') selected @endif>UPDATE DATE</option>
                                 </select>
                             </div>
                             <div class="col-auto px-1">

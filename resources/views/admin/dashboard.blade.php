@@ -25,7 +25,7 @@
             <div class="input-group">
                <select name="date_type" id="datetype" class="form-control input-group-prepend" style="max-width: 150px;">
                   <option value="created_at" @if(request('date_type') == 'created_at') selected @endif>ORDER DATE</option>
-                  <option value="status_at" @if(request('date_type') == 'status_at') selected @endif>UPDATE DATE</option>
+                  <option value="status_at" @if(request('date_type', 'status_at') == 'status_at') selected @endif>UPDATE DATE</option>
                </select>
                <input class="form-control" id="reportrange" type="text">
 

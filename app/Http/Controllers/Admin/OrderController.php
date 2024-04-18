@@ -169,7 +169,7 @@ class OrderController extends Controller
             return redirect()->back()->withDanger($e->getMessage());
         }
 
-        if (setting('Pathao')->enabled) {
+        if (setting('Pathao')->enabled ?? false) {
             foreach (Order::whereIn('id', $order_ids)->where('data->courier', 'Pathao')->get() as $order) {
                 try {
                     $this->pathao($order);
@@ -188,8 +188,7 @@ class OrderController extends Controller
 
     private function steadFast($order_ids)
     {
-        $SteadFast = setting('SteadFast');
-        if (!$SteadFast->enabled) return;
+        if (!(($SteadFast = setting('SteadFast'))->enabled ?? false)) return;
         $orders = Order::whereIn('id', $order_ids)->where('data->courier', 'SteadFast')->get()->map(function ($order) {
             return [
                 'invoice' => $order->id,
