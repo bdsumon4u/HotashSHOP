@@ -293,6 +293,19 @@ class OrderController extends Controller
         return redirect()->back()->withSuccess('Order Status Has Been Updated.');
     }
 
+    public function staff(Request $request)
+    {
+        $request->validate([
+            'admin_id' => 'required',
+            'order_id' => 'required|array',
+        ]);
+
+        $data['admin_id'] = $request->admin_id;
+        Order::whereIn('id', $request->order_id)->where('admin_id', '!=', $request->admin_id)->update($data);
+
+        return redirect()->back()->withSuccess('Order Staff Has Been Updated.');
+    }
+
     public function updateQuantity(Request $request, Order $order)
     {
         $quantities = $request->quantity;
