@@ -15,7 +15,7 @@
                         <label>আপনার নাম: <span class="text-danger">*</span></label>
                     </div>
                     <div class="form-group col-md-9">
-                        <x-input name="name" wire:model.defer="name" placeholder="এখানে আপনার নাম লিখুন।" />
+                        <x-input name="name" wire:model.defer="name" place-holder="এখানে আপনার নাম লিখুন।" placeholder="Type your name here." />
                         <x-error field="name" />
                     </div>
                 </div>
@@ -30,7 +30,7 @@
                                 <span class="input-group-text">+880</span>
                             </div>
                             @endunless
-                            <x-input type="tel" name="phone" wire:model.defer="phone" placeholder="আপনার ফোন নম্বর লিখুন।" />
+                            <x-input type="tel" name="phone" wire:model.defer="phone" place-holder="আপনার ফোন নম্বর লিখুন।" placeholder="Type your phone number." />
                             <x-error field="phone" />
                         </div>
                     </div>
@@ -58,7 +58,7 @@
                         <label>আপনার ঠিকানা: <span class="text-danger">*</span></label>
                     </div>
                     <div class="form-group col-md-9">
-                        <x-textarea name="address" wire:model.defer="address" placeholder="এখানে আপনার পুরো ঠিকানা লিখুন।"></x-textarea>
+                        <x-textarea name="address" wire:model.defer="address" place-holder="এখানে আপনার পুরো ঠিকানা লিখুন।" placeholder="Type your address here."></x-textarea>
                         <x-error field="address" />
                     </div>
                 </div>
