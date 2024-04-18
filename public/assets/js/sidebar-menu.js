@@ -171,7 +171,8 @@ if ($("#pageWrapper").hasClass("compact-wrapper")) {
 $nav = $(".main-nav");
 $header = $(".page-main-header");
 $toggle_nav_top = $(".toggle-sidebar");
-$toggle_nav_top.click(function() {
+$(window).on('click', '.toggle-sidebar', function() {
+// $toggle_nav_top.click(function() {
     $this = $(this);
     $nav = $(".main-nav");
     $nav.toggleClass("close_icon");
@@ -187,7 +188,8 @@ $(window).resize(function() {
     $nav = $(".main-nav");
     $header = $(".page-main-header");
     $toggle_nav_top = $(".toggle-sidebar");
-    $toggle_nav_top.click(function() {
+    $(document).on('click', '.toggle-sidebar', function() {
+    // $toggle_nav_top.click(function() {
         $this = $(this);
         $nav = $(".main-nav");
         $nav.toggleClass("close_icon");
