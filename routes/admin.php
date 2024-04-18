@@ -39,6 +39,7 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
         Route::get('/orders/booking', 'OrderController@booking')->name('orders.booking');
         Route::post('/orders/change-courier', 'OrderController@courier')->name('orders.courier');
         Route::post('/orders/change-status', 'OrderController@status')->name('orders.status');
+        Route::post('/orders/change-staff', 'OrderController@staff')->name('orders.staff');
         Route::patch('/orders/{order}/update-quantity', 'OrderController@updateQuantity')->name('orders.update-quantity');
         Route::post('/logout-others/{admin}', 'ApiController@logoutOthers')->name('logout-others');
         Route::get('/customers', 'CustomerController')->name('customers');

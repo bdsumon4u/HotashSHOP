@@ -217,7 +217,7 @@
                 { data: 'amount', name: 'amount', sortable: false },
                 { data: 'status', name: 'status', sortable: false },
                 { data: 'courier', name: 'courier', sortable: false },
-                { data: 'admin.name', name: 'admin.name', sortable: false },
+                { data: 'staff', name: 'admin.name', sortable: false },
                 { data: 'created_at', name: 'created_at' },
             ],
             initComplete: function (settings, json) {
@@ -347,6 +347,39 @@
                 complete: function () {
                     $('[name="courier"]').prop('disabled', false);
                     $('[name="courier"]').val('');
+                }
+            });
+        }
+
+        $(document).on('change', '.staff-column', changeStaff);
+
+        function changeStaff() {
+            $('[name="staff"]').prop('disabled', true);
+
+            var order_id = Array.from(checklist);
+            var staff = $('[name="staff"]').val();
+            if ($(this).data('id')) {
+                order_id = [$(this).data('id')];
+                staff = $(this).val();
+            }
+
+            $.post({
+                url: '{{ route('admin.orders.staff') }}',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    order_id: order_id,
+                    admin_id: staff,
+                },
+                success: function (response) {
+                    checklist.clear();
+                    updateBulkMenu();
+                    table.draw();
+
+                    $.notify('Staff updated successfully', 'success');
+                },
+                complete: function () {
+                    $('[name="staff"]').prop('disabled', false);
+                    $('[name="staff"]').val('');
                 }
             });
         }

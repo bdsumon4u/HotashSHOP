@@ -56,6 +56,8 @@ class OrderController extends Controller
             $orders->latest('id');
         });
 
+        $salesmans = Admin::where('role_id', Admin::SALESMAN)->get(['id', 'name'])->pluck('name', 'id');
+
         return DataTables::of($orders)
             ->addIndexColumn()
             ->setRowAttr([
@@ -144,6 +146,17 @@ class OrderController extends Controller
                 $query->where('data->courier', 'like', '%' . $keyword . '%')
                     ->orWhere('data->consignment_id', 'like', '%' . $keyword . '%');
             })
+            ->editColumn('staff', function ($row) use ($salesmans) {
+                $return = '<select data-id="' . $row->id . '" onchange="changeStaff" class="staff-column form-control-sm">';
+                if (!isset($salesmans[$row->admin_id])) {
+                    $return .= '<option value="' . $row->admin_id . '" selected>' . $row->admin->name . '</option>';
+                }
+                foreach ($salesmans as $id => $name) {
+                    $return .= '<option value="' . $id . '" ' . ($id == $row->admin_id ? 'selected' : '') . '>' . $name . '</option>';
+                }
+                $return .= '</select>';
+                return $return;
+            })
             ->filterColumn('created_at', function ($query, $keyword) {
                 if (str_contains($keyword, ' - ')) {
                     [$start, $end] = explode(' - ', $keyword);
@@ -153,7 +166,7 @@ class OrderController extends Controller
                     ]);
                 }
             })
-            ->rawColumns(['checkbox', 'id', 'customer', 'products', 'status', 'courier', 'created_at', 'actions'])
+            ->rawColumns(['checkbox', 'id', 'customer', 'products', 'status', 'courier', 'staff', 'created_at', 'actions'])
             ->make(true);
     }
 }
