@@ -18,7 +18,7 @@
           <img class="img-fluid" src="{{asset($logo->desktop ?? '')}}" alt="Logo">
         </a>
       </div>
-      <button style="padding:2px 10px;border:none;background:none;" class="toggle-sidebar"><i class="status_toggle middle" data-feather="grid" id="sidebar-toggle"> </i></button>
+      <button style="padding:2px 10px;border:none;background:none;" class="toggle-sidebar" id="sidebar-toggle"><i class="status_toggle middle" data-feather="grid"> </i></button>
     </div>
     <div class="left-menu-header col horizontal-wrapper pl-0">
       <ul class="horizontal-menu">
