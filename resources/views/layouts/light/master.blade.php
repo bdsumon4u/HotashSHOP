@@ -149,6 +149,11 @@
         $header = $(".page-main-header");
         $nav.toggleClass('close_icon');
         $header.toggleClass('close_icon');
+        if ($nav.hasClass("close_icon")) {
+          $("body").css("overflow-y", "auto");
+        } else {
+          $("body").css("overflow-y", "hidden");
+        }
       });
       window.slugify = function (src) {
         return src.toLowerCase()
