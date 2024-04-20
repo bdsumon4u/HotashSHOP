@@ -142,6 +142,14 @@
     @include('layouts.light.js')
     @livewireScripts
     <script>
+      $(document).on('click', '#sidebar-toggler', function (ev) {
+        console.log(ev);
+        ev.preventDefault();
+        $nav = $(".main-nav");
+        $header = $(".page-main-header");
+        $nav.toggleClass('close_icon');
+        $header.toggleClass('close_icon');
+      });
       window.slugify = function (src) {
         return src.toLowerCase()
             .replace(/e|é|è|ẽ|ẻ|ẹ|ê|ế|ề|ễ|ể|ệ/gi, 'e')
