@@ -58,7 +58,7 @@
             <div>
                 <div>
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-5">
                             <div class="media">
                                 <div class="media-left">
                                     <img class="media-object" src="{{asset($logo->mobile)}}" alt="{{$company->name}}" style="max-width: 100%; max-height: 54px;">
@@ -71,7 +71,7 @@
                             </div>
                             <!-- End Info-->
                         </div>
-                        <div class="col-6">
+                        <div class="col-4">
                             <div class="text-md-right">
                                 <h3>Invoice #<span class="digits counter">{{ $order->id }}</span></h3>
                                 <p>
@@ -81,12 +81,17 @@
                             </div>
                             <!-- End Title-->
                         </div>
+                        <div class="col-3">
+                            <div class="text-md-right" id="project">
+                                <img height="80" src="https://barcode.tec-it.com/barcode.ashx?data={{$order->barcode}}&code=Code128&translate-esc=true" alt="Barcode">
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <hr>
                 <!-- End InvoiceTop-->
                 <div class="row">
-                    <div class="col-5">
+                    <div class="col-7">
                         <div class="media">
                             <div class="media-body m-l-20">
                                 <h6 class="mb-0">Customer Information:</h6>
@@ -98,11 +103,6 @@
                     </div>
                     <div class="col-5">
                         <span class="text-danger">{{$order->note ?? null}}</span>
-                    </div>
-                    <div class="col-2">
-                        <div class="text-md-right" id="project">
-                            <img height="80" src="https://barcode.tec-it.com/barcode.ashx?data={{$order->id}}&code=Code128&translate-esc=true" alt="Barcode">
-                        </div>
                     </div>
                 </div>
                 <!-- End Invoice Mid-->
