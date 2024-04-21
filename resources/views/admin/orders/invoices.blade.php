@@ -58,7 +58,7 @@
             <div>
                 <div>
                     <div class="row">
-                        <div class="col-5">
+                        <div class="col-4">
                             <div class="media">
                                 <div class="media-left">
                                     <img class="media-object" src="{{asset($logo->mobile)}}" alt="{{$company->name}}" style="max-width: 100%; max-height: 54px;">
@@ -81,7 +81,7 @@
                             </div>
                             <!-- End Title-->
                         </div>
-                        <div class="col-3">
+                        <div class="col-4">
                             <div class="text-md-right" id="project">
                                 <img height="80" src="https://barcode.tec-it.com/barcode.ashx?data={{$order->barcode}}&code=Code128&translate-esc=true" alt="Barcode">
                             </div>
