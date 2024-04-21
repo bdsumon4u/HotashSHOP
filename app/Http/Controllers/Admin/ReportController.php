@@ -32,7 +32,8 @@ class ReportController extends Controller
     public function create()
     {
         if (request()->has('code')) {
-            if ($order = Order::find(request('code'))) {
+            $code = ltrim(str_replace('-', '', request('code')), '0');
+            if ($order = Order::find($code)) {
                 return $order;
             }
             return null;

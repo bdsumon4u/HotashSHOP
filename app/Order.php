@@ -56,6 +56,13 @@ class Order extends Model
         $this->attributes['data'] = json_encode(array_merge($this->data, $data));
     }
 
+    public function getBarcodeAttribute()
+    {
+        $pad = str_pad($this->id, 10, '0', STR_PAD_LEFT);
+
+        return substr($pad, 0, 3) . '-' . substr($pad, 3, 3) . '-' . substr($pad, 6, 4);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
