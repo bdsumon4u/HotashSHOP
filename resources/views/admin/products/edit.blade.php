@@ -18,6 +18,7 @@
 
 
 @push('styles')
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
 <style>
     .nav-tabs {
         border: 2px solid #ddd;
@@ -251,8 +252,10 @@
 @endpush
 
 @push('scripts')
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 <script>
     $(document).ready(function () {
+        $('.additional_images-previews').sortable();
         // $('[name="name"]').keyup(function () {
         //     $($(this).data('target')).val(slugify($(this).val()));
         // });
