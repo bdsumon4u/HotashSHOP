@@ -131,7 +131,7 @@ class OrderController extends Controller
 
                 if ($cid = $row->data['consignment_id'] ?? false) {
                     $return .= '<div style="white-space: nowrap;">C.ID: <a href="' . $link . '" target="_blank">' . $cid . '</a></div>';
-                } else {
+                } else if ($row->data['courier'] != 'Other') {
                     $return .= '<a href="' . route('admin.orders.booking', ['order_id' => $row->id]) . '" class="btn btn-sm btn-primary">Submit</a>';
                 }
 
