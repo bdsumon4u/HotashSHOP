@@ -126,20 +126,20 @@
                             <span>Browse</span>
                         </button>
                     </label>
-                    <div class="additional_images-previews d-flex flex-wrap" style="margin-left: -5px;">
+                    <ul id="sortable" class="additional_images-previews d-flex flex-wrap" style="margin-left: -5px;">
                         @php
                             $ids = old('additional_images', $product->additional_images->pluck('id')->toArray());
                             $srcs = old('additional_images_srcs', $product->additional_images->pluck('src')->toArray());
                         @endphp
                         @foreach($srcs as $src)
-                            <div id="preview-{{$ids[$loop->index]}}" class="additional_images-preview position-relative" style="height: 150px; width: 150px; margin: 5px;">
+                            <li id="preview-{{$ids[$loop->index]}}" class="additional_images-preview position-relative" style="height: 150px; width: 150px; margin: 5px;">
                                 <i class="fa fa-times text-danger position-absolute" style="font-size: large; top: 0; right: 0; background: #ddd; padding: 2px; border-radius: 3px; cursor: pointer;" onclick="this.parentNode.remove()"></i>
                                 <img src="{{ $src }}" alt="Additional Image" data-toggle="modal" data-target="#multi-picker" id="additional_image-preview" class="img-thumbnail img-responsive">
                                 <input type="hidden" name="additional_images[]" value="{{ $ids[$loop->index] }}" style="margin: 5px;">
                                 <input type="hidden" name="additional_images_srcs[]" value="{{ $src }}" style="margin: 5px;">
-                            </div>
+                            </li>
                         @endforeach
-                    </div>
+                    </ul>
                     <div class="clearfix"></div>
                     @error('additional_images')
                         <small class="text-danger">{{ $message }}</small>

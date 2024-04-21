@@ -114,7 +114,8 @@ class Product extends Model
     public function images()
     {
         return $this->belongsToMany(Image::class)
-            ->withPivot('img_type')
+            ->withPivot(['img_type', 'order'])
+            ->orderBy('order')
             ->withTimestamps();
     }
 
