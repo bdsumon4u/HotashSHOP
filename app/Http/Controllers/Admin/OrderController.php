@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\PathaoExport;
 use App\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -11,6 +12,7 @@ use App\Notifications\User\OrderConfirmed;
 use App\Pathao\Facade\Pathao;
 use App\Product;
 use Illuminate\Support\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
 
 class OrderController extends Controller
 {
@@ -154,6 +156,11 @@ class OrderController extends Controller
 
         $orders = Order::whereIn('id', $order_ids)->get();
         return view('admin.orders.invoices', compact('orders'));
+    }
+
+    public function csv(Request $request)
+    {
+        return Excel::download(new PathaoExport, 'pathao.csv');
     }
 
     public function booking(Request $request)

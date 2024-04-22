@@ -52,7 +52,7 @@ class Order extends Model
             # 3. Somethingb. Bariasomething
             # 4. Brahmanbaria => Barishal
 
-            if (empty($order->data['city_id'] ?? '')) {
+            if (false && empty($order->data['city_id'] ?? '')) {
                 $matches = [];
                 foreach ($order->getCityList() as $city) {
                     if ($match = $fuse->search($city->city_name)) {
@@ -64,11 +64,12 @@ class Order extends Model
                     $city = current(array_filter($order->getCityList(), fn ($c) => $c->city_name === key($matches)));
                     $order->fill(['data' => ['city_id' => $city->city_id, 'city_name' => $city->city_name]]);
                 }
+                end:
             } else {
                 $order->fill(['data' => ['city_name' => current(array_filter($order->getCityList(), fn ($c) => $c->city_id == $order->data['city_id']))->city_name]]);
             }
 
-            if (empty($order->data['area_id'] ?? '')) {
+            if (false && empty($order->data['area_id'] ?? '')) {
                 $matches = [];
                 foreach ($order->getAreaList() as $area) {
                     if ($match = $fuse->search($area->zone_name)) {
@@ -111,6 +112,11 @@ class Order extends Model
         $pad = str_pad($this->id, 10, '0', STR_PAD_LEFT);
 
         return substr($pad, 0, 3) . '-' . substr($pad, 3, 3) . '-' . substr($pad, 6, 4);
+    }
+
+    public function getConditionAttribute()
+    {
+        return intval($this->data['subtotal']) + intval($this->data['shipping_cost']) - intval($this->data['advanced'] ?? 0) - intval($this->data['discount'] ?? 0);
     }
 
     public function user()

@@ -35,6 +35,7 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
         Route::get('/reports/stock', 'ReportController@stock')->name('reports.stock');
         Route::get('/reports/filter', 'OrderController@filter')->name('orders.filter');
         Route::get('/reports/customer', 'ReportController@customer')->name('reports.customer');
+        Route::get('/orders/pathao-csv', 'OrderController@csv')->name('orders.pathao-csv');
         Route::get('/orders/invoices', 'OrderController@invoices')->name('orders.invoices');
         Route::get('/orders/booking', 'OrderController@booking')->name('orders.booking');
         Route::post('/orders/change-courier', 'OrderController@courier')->name('orders.courier');

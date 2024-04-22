@@ -132,7 +132,7 @@
                             @endforeach
                             <tr>
                                 <th class="py-1" rowspan="5" colspan="3" style="text-align: center; vertical-align: middle; font-size: 24px;">
-                                    <span style="font-weight: 400;">Condition</span>: TK. {{ intval($order->data['subtotal']) + intval($order->data['shipping_cost']) - intval($order->data['advanced'] ?? 0) - intval($order->data['discount'] ?? 0) }}
+                                    <span style="font-weight: 400;">Condition</span>: TK. {{ $order->condition }}
                                 </th>
                             </tr>
                             <tr>
