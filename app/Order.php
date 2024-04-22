@@ -41,6 +41,8 @@ class Order extends Model
     public static function booted()
     {
         static::saving(function (Order $order) {
+            if (! $order->isDirty('data')) return;
+
             $fuse = new \Fuse\Fuse([['area' => $order->address]], [
                 'keys' => ['area'],
                 'includeScore' => true,
@@ -62,14 +64,13 @@ class Order extends Model
                 if ($matches) {
                     asort($matches);
                     $city = current(array_filter($order->getCityList(), fn ($c) => $c->city_name === key($matches)));
-                    $order->fill(['data' => ['city_id' => $city->city_id, 'city_name' => $city->city_name]]);
+                    $order->fill(['data' => ['city_id' => $city->city_id, 'city_name' => $city->city_name ?? 'N/A']]);
                 }
-                end:
             } else {
-                $order->fill(['data' => ['city_name' => current(array_filter($order->getCityList(), fn ($c) => $c->city_id == $order->data['city_id']))->city_name]]);
+                $order->fill(['data' => ['city_name' => current(array_filter($order->getCityList(), fn ($c) => $c->city_id == $order->data['city_id']))->city_name ?? 'N/A']]);
             }
 
-            if (false && empty($order->data['area_id'] ?? '')) {
+            if (false) {
                 $matches = [];
                 foreach ($order->getAreaList() as $area) {
                     if ($match = $fuse->search($area->zone_name)) {
@@ -79,10 +80,10 @@ class Order extends Model
                 if ($matches) {
                     asort($matches);
                     $area = current(array_filter($order->getAreaList(), fn ($a) => $a->zone_name === key($matches)));
-                    $order->fill(['data' => ['area_id' => $area->zone_id, 'area_name' => $area->zone_name]]);
+                    $order->fill(['data' => ['area_id' => $area->zone_id, 'area_name' => $area->zone_name ?? 'N/A']]);
                 }
             } else {
-                $order->fill(['data' => ['area_name' => current(array_filter($order->getAreaList(), fn ($a) => $a->zone_id == $order->data['area_id']))->zone_name]]);
+                $order->fill(['data' => ['area_name' => current(array_filter($order->getAreaList(), fn ($a) => $a->zone_id == $order->data['area_id']))->zone_name ?? 'N/A']]);
             }
         });
     }
