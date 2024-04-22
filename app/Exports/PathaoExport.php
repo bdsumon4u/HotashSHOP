@@ -16,7 +16,7 @@ class PathaoExport implements FromCollection, WithHeadings, WithMapping
     {
         $this->storeName = current(array_filter(Pathao::store()->list()->data, function ($store) {
             return $store->store_id == setting('Pathao')->store_id ?? 0;
-        }))->store_name;
+        }))->store_name ?? 'N/A';
     }
 
     public function headings(): array
