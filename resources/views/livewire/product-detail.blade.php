@@ -23,8 +23,8 @@
     </div>
 
     @foreach($attributes as $attribute)
-    <div class="form-group product__option mb-1">
-        <label class="product__option-label">{{$attribute->name}}</label>
+    <div class="form-group product__option mb-1 d-flex align-items-center" style="column-gap: .5rem;">
+        <label class="product__option-label">{{$attribute->name}}:</label>
         @if (strtolower($attribute->name) == 'color')
         <div class="input-radio-color">
             <div class="input-radio-color__list">
