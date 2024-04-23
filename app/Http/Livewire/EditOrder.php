@@ -103,9 +103,9 @@ class EditOrder extends Component
             'name' => $product->var_name,
             'slug' => $product->slug,
             'image' => optional($product->base_image)->src,
-            'price' => $product->selling_price,
+            'price' => $selling = $product->getPrice($quantity),
             'quantity' => $quantity,
-            'total' => $quantity * $product->selling_price,
+            'total' => $quantity * $selling,
         ];
 
         $this->search = '';

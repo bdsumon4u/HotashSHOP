@@ -17,7 +17,7 @@ class Product extends Model
     protected $with = ['images'];
 
     protected $fillable = [
-        'brand_id', 'name', 'slug', 'description', 'price', 'selling_price', 'sku',
+        'brand_id', 'name', 'slug', 'description', 'price', 'selling_price', 'wholesale', 'sku',
         'should_track', 'stock_count', 'desc_img', 'desc_img_pos', 'is_active',
     ];
 
@@ -132,6 +132,43 @@ class Product extends Model
     public function options()
     {
         return $this->belongsToMany(Option::class);
+    }
+
+    public function setWholesaleAttribute($value)
+    {
+        $data = [];
+        foreach ($value['quantity'] as $key => $quantity) {
+            $data[$quantity] = $value['price'][$key];
+        }
+        ksort($data);
+        $this->attributes['wholesale'] = json_encode($data);
+    }
+
+    public function getWholesaleAttribute($value)
+    {
+        $data = json_decode($value, true) ?? [];
+        if (empty($data) && $this->parent_id) {
+            return $this->parent->wholesale;
+        }
+
+        return [
+            'quantity' => array_keys($data),
+            'price' => array_values($data),
+        ];
+    }
+
+    public function getPrice(int $quantity)
+    {
+        $wholesale = $this->wholesale;
+        $price = $this->selling_price;
+
+        foreach ($wholesale['quantity'] as $key => $value) {
+            if ($quantity >= $value) {
+                $price = $wholesale['price'][$key];
+            }
+        }
+
+        return $price;
     }
 
     public function getBaseImageAttribute()

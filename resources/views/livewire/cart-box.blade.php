@@ -12,7 +12,7 @@
                     <a href="{{route('products.show', $product['slug'])}}">{{$product['name']}}</a>
                 </div>
                 <div class="dropcart__product-meta">
-                    <span class="dropcart__product-quantity">{{$product['quantity']}}</span> x <span class="dropcart__product-price">TK {{$product['price']*$product['quantity']}}</span>
+                    <span class="dropcart__product-quantity">{{$product['quantity']}}</span> x <span class="dropcart__product-price">TK {{$product['price']}}</span>
                 </div>
             </div>
             <button type="button" class="dropcart__product-remove btn btn-light btn-sm btn-svg-icon" wire:click="remove({{$product['id']}})">

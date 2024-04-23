@@ -108,9 +108,13 @@ class ProductVariationController extends Controller
         $variation->update($request->validate([
             'price' => 'required|numeric',
             'selling_price' => 'required|numeric',
+            'wholesale.quantity' => 'sometimes|array',
+            'wholesale.price' => 'sometimes|array',
+            'wholesale.quantity.*' => 'required|integer|gt:1',
+            'wholesale.price.*' => 'required|integer|min:1',
             'should_track' => 'required|boolean',
             'stock_count' => 'nullable|numeric',
-            'sku' => 'required|unique:products,sku,'.$variation->id,
+            'sku' => 'required|unique:products,sku,' . $variation->id,
         ]));
 
         // $query = "UPDATE products SET ";
