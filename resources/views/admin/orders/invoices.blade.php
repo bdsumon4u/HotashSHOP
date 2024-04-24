@@ -111,7 +111,9 @@
                         <table class="table table-sm table-bordered table-striped">
                             <thead>
                             <tr>
+                                @unless (setting('show_option')->hide_invoice_image ?? false)
                                 <th>Image</th>
+                                @endunless
                                 <th>Name</th>
                                 <th width="95">Price</th>
                                 <th width="10">Quantity</th>
@@ -121,9 +123,11 @@
                             <tbody>
                             @foreach($order->products as $product)
                                 <tr>
+                                    @unless (setting('show_option')->hide_invoice_image ?? false)
                                     <td>
                                         <img src="{{ asset($product->image) }}" alt="Image" width="70" height="60">
                                     </td>
+                                    @endunless
                                     <td>{{ $product->name }}</td>
                                     <td>{{ $product->price }}</td>
                                     <td>{{ $product->quantity }}</td>
@@ -131,7 +135,7 @@
                                 </tr>
                             @endforeach
                             <tr>
-                                <th class="py-1" rowspan="5" colspan="3" style="text-align: center; vertical-align: middle; font-size: 24px;">
+                                <th class="py-1" rowspan="5" colspan="{{(setting('show_option')->hide_invoice_image ?? false)?2:3}}" style="text-align: center; vertical-align: middle; font-size: 24px;">
                                     <span style="font-weight: 400;">Condition</span>: TK. {{ $order->condition }}
                                 </th>
                             </tr>
