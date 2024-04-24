@@ -5,7 +5,10 @@
             <div class="product-card__badge product-card__badge--sale">Sold</div>
         @endif
         @if($product->price != $product->selling_price)
-            <div class="product-card__badge product-card__badge--sale"><small>Discount:</small> {{ round(($product->price - $product->selling_price) * 100 / $product->price, 0, PHP_ROUND_HALF_UP) }}%</div>
+            <div class="product-card__badge product-card__badge--sale">
+                @exp($percent = round(($product->price - $product->selling_price) * 100 / $product->price, 0, PHP_ROUND_HALF_UP))
+                {!! str_replace('[percent]', $percent, setting('discount_text') ?? '<small>Discount:</small> [percent]%') !!}
+            </div>
         @endif
     </div>
     <div class="product-card__image">

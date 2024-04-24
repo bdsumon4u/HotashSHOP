@@ -64,11 +64,18 @@
             </div>
         </div>
         <div class="border col-md-12 my-3"></div>
-        <div class="col-md-12">
+        <div class="col-md-8">
             <div class="form-group">
                 <label for="">Scroll Text</label>
                 <x-textarea name="scroll_text" id="scroll_text">{{$scroll_text ?? null}}</x-textarea>
                 <x-error field="scroll_text" />
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="discount-text">Discount Text</label>
+                <x-input name="discount_text" id="discount-text" :value="$discount_text ?? '<small>Discount:</small> [percent]%'" />
+                <small>Short Code: <strong>[percent]</strong></small>
             </div>
         </div>
         <div class="col-6">
