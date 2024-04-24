@@ -204,10 +204,10 @@ class Checkout extends Component
                         'name' => $product->var_name,
                         'slug' => $product->slug,
                         'image' => optional($product->base_image)->src,
-                        'price' => $product->selling_price,
+                        'price' => $selling = $product->getPrice($quantity),
                         'quantity' => $quantity,
                         'category' => $product->category,
-                        'total' => $quantity * $product->selling_price,
+                        'total' => $quantity * $selling,
                     ]];
                 })->filter(function ($product) {
                     return $product != null; // Only Available Products

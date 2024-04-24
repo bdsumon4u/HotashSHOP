@@ -24,6 +24,8 @@
         "laravel/scout": "^8.3",
         "laravel/tinker": "^2.0",
         "livewire/livewire": "^2.9",
+        "maatwebsite/excel": "^3.1",
+        "loilo/fuse": "^7.0",
         "nicolaslopezj/searchable": "^1.13",
         "spatie/laravel-activitylog": "^3.17",
         "spatie/laravel-googletagmanager": "^2.7",

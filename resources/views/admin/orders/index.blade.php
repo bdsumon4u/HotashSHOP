@@ -39,7 +39,10 @@
                     <div class="card-header p-2">
                         <div class="row px-3 justify-content-between align-items-center">
                             <div>All Orders</div>
-                            <a href="{{route('admin.orders.create')}}" class="btn btn-sm btn-primary">New Order</a>
+                            <div>
+                                <a href="{{route('admin.orders.create')}}" class="btn btn-sm btn-primary">New Order</a>
+                                <a href="{{ route('admin.orders.pathao-csv') }}" class="btn btn-sm btn-primary ml-1">Pathao CSV</a>
+                            </div>
                         </div>
                         <div class="row d-none" style="row-gap: .25rem;">
                             <div class="col-auto pr-0 d-flex align-items-center" check-count></div>

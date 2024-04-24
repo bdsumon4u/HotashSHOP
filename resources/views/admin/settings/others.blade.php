@@ -154,6 +154,12 @@
                         :checked="!($show_option->hide_checkout_note ?? false)" />
                     <label for="hide-checkout-note" class="my-1">Checkout Note</label>
                 </div>
+                <div class="checkbox checkbox-secondary">
+                    <input type="hidden" name="show_option[hide_invoice_image]" value="1">
+                    <x-checkbox id="hide-invoice-image" name="show_option[hide_invoice_image]" value="0"
+                        :checked="!($show_option->hide_invoice_image ?? false)" />
+                    <label for="hide-invoice-image" class="my-1">Show IMAGE on INVOICE</label>
+                </div>
             </div>
         </div>
     </div>

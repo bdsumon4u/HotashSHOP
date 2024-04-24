@@ -49,6 +49,7 @@ class ProductController extends Controller
     {
         abort_if($request->user()->is('salesman'), 403, 'You don\'t have permission.');
         $data = $request->validationData();
+        dd($data);
         event(new ProductCreated($product = Product::create($data), $data));
         return redirect()->action([self::class, 'edit'], $product)->with('success', 'Product Has Been Created.');
     }

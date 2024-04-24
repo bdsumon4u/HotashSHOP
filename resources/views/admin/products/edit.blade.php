@@ -193,6 +193,32 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="card rounded-0 shadow-sm">
+                                                <div class="card-header p-1">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <strong>Wholesale (Quantity|Price)</strong>
+                                                        <button type="button" class="btn btn-primary btn-sm add-wholesale">+</button>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body p-1">
+                                                    @foreach (old('wholesale.price', $variation->wholesale['price'] ?? []) as $price)
+                                                        <div class="form-group mb-1">
+                                                            <div class="input-group">
+                                                                <x-input name="wholesale[quantity][]" placeholder="Quantity" value="{{old('wholesale.quantity', $variation->wholesale['quantity'] ?? [])[$loop->index]}}" />
+                                                                <x-input name="wholesale[price][]" placeholder="Price" value="{{$price}}" />
+                                                                <div class="input-group-append">
+                                                                    <button type="button" class="btn btn-danger btn-sm remove-wholesale">x</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
+                                                    <ul>
+                                                        @foreach ([$errors->first('wholesale.price.*'), $errors->first('wholesale.quantity.*')] as $error)
+                                                            <li class="text-danger">{{ $error }}</li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="tab-pane active" id="var-invent-{{$variation->id}}" role="tabpanel">
                                             <div class="row">
@@ -255,6 +281,28 @@
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 <script>
     $(document).ready(function () {
+        $('.add-wholesale').click(function (e) {
+            e.preventDefault();
+            
+            $(this).closest('.card').find('.card-body').append(`
+                <div class="form-group mb-1">
+                    <div class="input-group">
+                        <x-input name="wholesale[quantity][]" placeholder="Quantity" />
+                        <x-input name="wholesale[price][]" placeholder="Price" />
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-danger btn-sm remove-wholesale">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `);
+        });
+        $(document).on('click', '.remove-wholesale', function (e) {
+            e.preventDefault();
+
+            $(this).closest('.form-group').remove();
+        });
         $('.additional_images-previews').sortable();
         // $('[name="name"]').keyup(function () {
         //     $($(this).data('target')).val(slugify($(this).val()));

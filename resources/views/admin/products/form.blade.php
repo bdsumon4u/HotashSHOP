@@ -33,20 +33,6 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="price">Old Price</label><span class="text-danger">*</span>
-                    <x-input name="price" :value="$product->price" />
-                    <x-error field="price" />
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="selling_price">New Price</label><span class="text-danger">*</span>
-                    <x-input name="selling_price" :value="$product->selling_price" />
-                    <x-error field="selling_price" />
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
                     <x-label for="categories" /><span class="text-danger">*</span>
                     <x-category-dropdown :categories="$categories" name="categories[]" placeholder="Select Category" id="categories" multiple="true" :selected="old('categories', $product->categories->pluck('id')->toArray())" />
                     <x-error field="categories" class="d-block" />
@@ -59,10 +45,6 @@
                     <x-error field="brand" class="d-block" />
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="row">
             <div class="col-sm-12">
                 <h4><small class="border-bottom mb-1">Inventory</small></h4>
             </div>
@@ -89,6 +71,54 @@
                     <x-input name="stock_count" :value="$product->stock_count" />
                     <x-error field="stock_count" />
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="price">Old Price</label><span class="text-danger">*</span>
+                    <x-input name="price" :value="$product->price" />
+                    <x-error field="price" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="selling_price">New Price</label><span class="text-danger">*</span>
+                    <x-input name="selling_price" :value="$product->selling_price" />
+                    <x-error field="selling_price" />
+                </div>
+            </div>
+        </div>
+        <div class="card rounded-0 shadow-sm">
+            <div class="card-header p-1">
+                <div class="d-flex justify-content-between align-items-center">
+                    <strong>Wholesale (Quantity|Price)</strong>
+                    <button type="button" class="btn btn-primary btn-sm add-wholesale">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body p-1">
+                @foreach (old('wholesale.price', $product->wholesale['price'] ?? []) as $price)
+                    <div class="form-group mb-1">
+                        <div class="input-group">
+                            <x-input name="wholesale[quantity][]" placeholder="Quantity" value="{{old('wholesale.quantity', $product->wholesale['quantity'] ?? [])[$loop->index]}}" />
+                            <x-input name="wholesale[price][]" placeholder="Price" value="{{$price}}" />
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-danger btn-sm remove-wholesale">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+                <ul>
+                    @foreach ([$errors->first('wholesale.price.*'), $errors->first('wholesale.quantity.*')] as $error)
+                        <li class="text-danger">{{ $error }}</li>
+                    @endforeach
+                </ul>
             </div>
         </div>
     </div>

@@ -70,7 +70,7 @@
                         <label for="">City</label>
                         <select class="form-control" wire:model="order.data.city_id">
                             <option value="" selected>Select City</option>
-                            @foreach ($cities as $city)
+                            @foreach ($order->getCityList() as $city)
                                 <option value="{{ $city->city_id }}">
                                     {{ $city->city_name }}
                                 </option>
@@ -85,7 +85,7 @@
                         </div>
                         <select wire:loading.remove wire:target="order.data.city_id" class="form-control" wire:model.defer="order.data.area_id">
                             <option value="" selected>Select Area</option>
-                            @foreach ($areas as $area)
+                            @foreach ($order->getAreaList() as $area)
                                 <option value="{{ $area->zone_id }}">
                                     {{ $area->zone_name }}
                                 </option>

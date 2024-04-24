@@ -44,7 +44,8 @@ class ProductDetail extends Component
     {
         $cart = session()->get('cart', []);
         if (isset($cart[$this->selectedVar->id])) {
-            $cart[$this->selectedVar->id]['quantity'] = min($this->quantity, $this->maxQuantity);
+            $quantity = $cart[$this->selectedVar->id]['quantity'] = min($this->quantity, $this->maxQuantity);
+            $cart[$this->selectedVar->id]['price'] = $this->selectedVar->getPrice($quantity);
         } else {
             $cart[$this->selectedVar->id] = [
                 'id' => $this->selectedVar->id,
@@ -53,8 +54,8 @@ class ProductDetail extends Component
                 'slug' => $this->selectedVar->slug,
                 'image' => optional($this->selectedVar->base_image)->path,
                 'category' => $this->product->category,
-                'quantity' => min($this->quantity, $this->maxQuantity),
-                'price' => $this->selectedVar->selling_price,
+                'quantity' => $quantity = min($this->quantity, $this->maxQuantity),
+                'price' => $this->selectedVar->getPrice($quantity),
                 'max' => $this->maxQuantity,
             ];
         }

@@ -122,6 +122,29 @@
 @push('scripts')
 <script>
     $(document).ready(function(){
+        $('.add-wholesale').click(function (e) {
+            e.preventDefault();
+            
+            $(this).closest('.card').find('.card-body').append(`
+                <div class="form-group mb-1">
+                    <div class="input-group">
+                        <x-input name="wholesale[quantity][]" placeholder="Quantity" />
+                        <x-input name="wholesale[price][]" placeholder="Price" />
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-danger btn-sm remove-wholesale">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `);
+        });
+        $(document).on('click', '.remove-wholesale', function (e) {
+            e.preventDefault();
+
+            $(this).closest('.form-group').remove();
+        });
+        $('.additional_images-previews').sortable();
         $('[name="name"]').keyup(function () {
             $($(this).data('target')).val(slugify($(this).val()));
         });

@@ -2,9 +2,11 @@
 
 namespace App;
 
+use App\Pathao\Facade\Pathao;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Symfony\Component\Routing\Matcher\Dumper\StaticPrefixCollection;
 
 class Order extends Model
 {
@@ -36,6 +38,56 @@ class Order extends Model
 
     protected static $logAttributes = ['data->courier', 'data->advanced', 'data->discount', 'data->shipping_cost', 'data->subtotal'];
 
+    public static function booted()
+    {
+        static::saving(function (Order $order) {
+            if (! $order->isDirty('data')) return;
+
+            $fuse = new \Fuse\Fuse([['area' => $order->address]], [
+                'keys' => ['area'],
+                'includeScore' => true,
+                'includeMatches' => true,
+            ]);
+            # Problems:
+            # 1. Dhaka, Tangail, Mirzapur.
+            # 2. Mirjapur, Tangal, Dhaka.
+            # 3. Somethingb. Bariasomething
+            # 4. Brahmanbaria => Barishal
+
+            if (false && empty($order->data['city_id'] ?? '')) {
+                $matches = [];
+                foreach ($order->getCityList() as $city) {
+                    if ($match = $fuse->search($city->city_name)) {
+                        $matches[$city->city_name] = $match[0]['score'];
+                    }
+                }
+                if ($matches) {
+                    asort($matches);
+                    $city = current(array_filter($order->getCityList(), fn ($c) => $c->city_name === key($matches)));
+                    $order->fill(['data' => ['city_id' => $city->city_id, 'city_name' => $city->city_name ?? 'N/A']]);
+                }
+            } else {
+                $order->fill(['data' => ['city_name' => current(array_filter($order->getCityList(), fn ($c) => $c->city_id == $order->data['city_id']))->city_name ?? 'N/A']]);
+            }
+
+            if (false) {
+                $matches = [];
+                foreach ($order->getAreaList() as $area) {
+                    if ($match = $fuse->search($area->zone_name)) {
+                        $matches[$area->zone_name] = $match[0]['score'];
+                    }
+                }
+                if ($matches) {
+                    asort($matches);
+                    $area = current(array_filter($order->getAreaList(), fn ($a) => $a->zone_name === key($matches)));
+                    $order->fill(['data' => ['area_id' => $area->zone_id, 'area_name' => $area->zone_name ?? 'N/A']]);
+                }
+            } else {
+                $order->fill(['data' => ['area_name' => current(array_filter($order->getAreaList(), fn ($a) => $a->zone_id == $order->data['area_id']))->zone_name ?? 'N/A']]);
+            }
+        });
+    }
+
     public function getDescriptionForEvent(string $eventName): string
     {
         return "The order #{$this->id} has been {$eventName}";
@@ -63,6 +115,11 @@ class Order extends Model
         return substr($pad, 0, 3) . '-' . substr($pad, 3, 3) . '-' . substr($pad, 6, 4);
     }
 
+    public function getConditionAttribute()
+    {
+        return intval($this->data['subtotal']) + intval($this->data['shipping_cost']) - intval($this->data['advanced'] ?? 0) - intval($this->data['discount'] ?? 0);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -88,5 +145,42 @@ class Order extends Model
         return LogOptions::defaults()
             ->logOnlyDirty()
             ->dontLogIfAttributesChangedOnly(['status_at', 'updated_at']);
+    }
+
+    public function getCityList()
+    {
+        $exception = false;
+        $cityList = cache()->remember('pathao_cities', now()->addDay(), function () use (&$exception) {
+            try {
+                return Pathao::area()->city()->data;
+            } catch (\Exception $e) {
+                $exception = true;
+                return [];
+            }
+        });
+
+        if ($exception) cache()->forget('pathao_cities');
+
+        return $cityList;
+    }
+
+    public function getAreaList()
+    {
+        $areaList = [];
+        $exception = false;
+        if ($this->data['city_id'] ?? false) {
+            $areaList = cache()->remember('pathao_areas:' . $this->data['city_id'], now()->addDay(), function () use (&$exception) {
+                try {
+                    return Pathao::area()->zone($this->data['city_id'])->data;
+                } catch (\Exception $e) {
+                    $exception = true;
+                    return [];
+                }
+            });
+        }
+
+        if ($exception) cache()->forget('pathao_areas:' . $this->data['city_id']);
+
+        return $areaList;
     }
 }

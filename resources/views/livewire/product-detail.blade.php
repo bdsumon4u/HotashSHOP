@@ -12,19 +12,19 @@
             </strong>
         </div>
     </div>
-    <div class="product__prices mb-1 {{$selectedVar->selling_price == $selectedVar->price ? '' : 'has-special'}}">
+    <div class="product__prices mb-1 {{($selling = $selectedVar->getPrice($quantity)) == $selectedVar->price ? '' : 'has-special'}}">
         Price:
-        @if($selectedVar->selling_price == $selectedVar->price)
+        @if($selling == $selectedVar->price)
             {!!  theMoney($selectedVar->price)  !!}
         @else
-            <span class="product-card__new-price">{!!  theMoney($selectedVar->selling_price)  !!}</span>
+            <span class="product-card__new-price">{!!  theMoney($selling)  !!}</span>
             <span class="product-card__old-price">{!!  theMoney($selectedVar->price)  !!}</span>
         @endif
     </div>
 
     @foreach($attributes as $attribute)
-    <div class="form-group product__option mb-1">
-        <label class="product__option-label">{{$attribute->name}}</label>
+    <div class="form-group product__option mb-1 d-flex align-items-center" style="column-gap: .5rem;">
+        <label class="product__option-label">{{$attribute->name}}:</label>
         @if (strtolower($attribute->name) == 'color')
         <div class="input-radio-color">
             <div class="input-radio-color__list">
@@ -60,7 +60,7 @@
                     <big>Quantity</big>
                     <div class="input-number product__quantity">
                         <input id="product-quantity"
-                            class="input-number__input form-control" wire:model.defer="quantity"
+                            class="input-number__input form-control" wire:model="quantity"
                             type="number" min="1" max="{{$maxQuantity}}" value="1" readonly
                             style="border: 2px solid"
                         >
@@ -128,6 +128,29 @@
                         @endforeach
                     </div>
                 </div>
+            </div>
+            @endif
+            @if ($selectedVar->wholesale['quantity'])
+            <div class="mt-3">
+                <table class="table table-sm table-bordered">
+                    <thead>
+                        <tr>
+                            <th colspan="2" class="text-center">Wholesale Price</th>
+                        </tr>
+                        <tr>
+                            <th width="50%">Quantity</th>
+                            <th width="50%">Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($selectedVar->wholesale['price'] as $price)
+                        <tr>
+                            <td>{{ $selectedVar->wholesale['quantity'][$loop->index] }}</td>
+                            <td>{!! theMoney($price) !!}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
             @endif
         </form><!-- .product__options / end -->
