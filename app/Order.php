@@ -40,6 +40,14 @@ class Order extends Model
 
     public static function booted()
     {
+        static::retrieved(function (Order $order) {
+            if (empty($order->data['city_name'] ?? '') && !empty($order->data['city_id'] ?? '')) {
+                $order->fill(['data' => ['city_name' => current(array_filter($order->getCityList(), fn ($c) => $c->city_id == $order->data['city_id']))->city_name ?? 'N/A']]);
+                $order->fill(['data' => ['area_name' => current(array_filter($order->getAreaList(), fn ($a) => $a->zone_id == $order->data['area_id']))->zone_name ?? 'N/A']]);
+                $order->save();
+            }
+        });
+
         static::saving(function (Order $order) {
             if (! $order->isDirty('data')) return;
 
