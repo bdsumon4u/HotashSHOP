@@ -19,7 +19,7 @@ fi
     git pull origin $branch --force
 
     # Install dependencies based on lock file
-    composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev --no-progress --no-suggest
+    composer install --no-interaction --prefer-dist --optimize-autoloader --no-progress --no-suggest $(if [ branch != "dev" ]; then echo "--no-dev"; fi)
 
     # Migrate database
     php artisan migrate --force
