@@ -49,7 +49,9 @@ class Order extends Model
         });
 
         static::saving(function (Order $order) {
-            if (! $order->isDirty('data')) return;
+            $order->adjustStock();
+
+            if (!$order->isDirty('data')) return;
 
             $fuse = new \Fuse\Fuse([['area' => $order->address]], [
                 'keys' => ['area'],
@@ -94,6 +96,32 @@ class Order extends Model
                 $order->fill(['data' => ['area_name' => current(array_filter($order->getAreaList(), fn ($a) => $a->zone_id == $order->data['area_id']))->zone_name ?? 'N/A']]);
             }
         });
+    }
+
+    public function adjustStock()
+    {
+        if ($this->exists && !$this->isDirty('status')) return;
+
+        $increment = ['PENDING', 'WAITING', 'RETURNED', 'CANCELLED'];
+        $decrement = ['CONFIRMED', 'INVOICED', 'SHIPPING', 'COMPLETED', 'LOST'];
+
+        $prev = $this->getOriginal('status');
+        $next = $this->getAttribute('status');
+
+        // if both prev and next belongs to same group, then no need to adjust stock
+        if (in_array($prev, $increment) && in_array($next, $increment)) return;
+        if (in_array($prev, $decrement) && in_array($next, $decrement)) return;
+
+        $fact = 1;
+        if (in_array($next, $decrement)) {
+            $fact = -1;
+        }
+
+        $DBproducts = Product::where('should_track', true)->find(array_keys($products = (array)$this->products));
+
+        foreach ($DBproducts as $product) {
+            $product->increment('stock_count', $fact * $products[$product->id]->quantity);
+        }
     }
 
     public function getDescriptionForEvent(string $eventName): string
