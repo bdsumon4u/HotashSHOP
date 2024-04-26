@@ -19,6 +19,13 @@ class GoogleTagManagerMiddleware
         config(['googletagmanager.id' => setting('gtm_id') ?? 'gtm_id']);
         GoogleTagManagerFacade::setId(config('googletagmanager.id'));
 
+        if (!$request->is('checkout')) {
+            $cart = session()->get('cart', []);
+            $kart = session()->get('kart');
+            if (isset($cart[$kart])) unset($cart[$kart]);
+            session()->put('cart', $cart);
+        }
+
         return $next($request);
     }
 }

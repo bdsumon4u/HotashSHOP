@@ -55,7 +55,14 @@ class ProductCard extends Component
 
     public function orderNow()
     {
+        $cart = session()->get('cart', []);
+        $kart = session()->get('kart');
+        if (isset($cart[$kart])) unset($cart[$kart]);
+        session()->put('cart', $cart);
+
         $this->addToCart();
+
+        session()->put('kart', $this->product->id);
 
         return redirect()->route('checkout');
     }
