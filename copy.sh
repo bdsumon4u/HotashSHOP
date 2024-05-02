@@ -97,7 +97,7 @@ ssh -i $ssh_private_key $target_username@$ssh_host "chmod 600 .ssh/$KEY_NAME"
 
 # Transfer database and files from source to target
 mysqldump -u $DB_USERNAME -p$DB_PASSWORD $DB_DATABASE > database_backup.sql
-zip -r -1 -y -9 site_backup.zip .
+zip -r -1 -y -9 site_backup.zip . -x "storage/app/pathao*" "storage/app/mpdf" "storage/debugbar" "storage/framework" "storage/logs"
 scp -i $ssh_private_key site_backup.zip $target_username@$ssh_host:site_backup.zip
 rm site_backup.zip database_backup.sql
 
@@ -108,7 +108,7 @@ ssh -i $ssh_private_key $target_username@$ssh_host "cd $target_root_dir && mysql
 # Update .env file on the target
 scp -i $ssh_private_key .env $target_username@$ssh_host:$target_root_dir/.env
 ssh -i $ssh_private_key $target_username@$ssh_host "sed -i \"s/APP_NAME=.*/APP_NAME='$target_site'/\" $target_root_dir/.env"
-ssh -i $ssh_private_key $target_username@$ssh_host "sed -i 's/APP_DEBUG=.*/APP_DEBUG=true/' $target_root_dir/.env"
+# ssh -i $ssh_private_key $target_username@$ssh_host "sed -i 's/APP_DEBUG=.*/APP_DEBUG=true/' $target_root_dir/.env"
 ssh -i $ssh_private_key $target_username@$ssh_host "sed -i \"s|APP_URL=.*|APP_URL=https://www.$ssh_host|\" $target_root_dir/.env"
 ssh -i $ssh_private_key $target_username@$ssh_host "sed -i \"s/DB_DATABASE=.*/DB_DATABASE=$target_db_dbase/\" $target_root_dir/.env"
 ssh -i $ssh_private_key $target_username@$ssh_host "sed -i \"s/DB_USERNAME=.*/DB_USERNAME=$target_db_uname/\" $target_root_dir/.env"
@@ -120,4 +120,4 @@ ssh -i $ssh_private_key $target_username@$ssh_host "sed -i \"s/MAIL_FROM_ADDRESS
 
 
 # Done
-ssh -i $ssh_private_key $target_username@$ssh_host "cd $target_root_dir && ./server_deploy.sh && rm -rf public/storage && php artisan storage:link && php artisan optimize:clear"
+ssh -i $ssh_private_key $target_username@$ssh_host "cd $target_root_dir && ./server_deploy.sh && rm -rf public/storage storage/app/pathao* && php artisan storage:link && php artisan optimize:clear"
