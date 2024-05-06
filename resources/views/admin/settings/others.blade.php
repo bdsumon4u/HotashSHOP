@@ -127,9 +127,9 @@
             <div class="mt-2 d-flex flex-wrap" style="row-gap: .25rem; column-gap: .75rem;">
                 <div class="checkbox checkbox-secondary">
                     <input type="hidden" name="show_option[topbar_phone]" value="0">
-                    <x-checkbox id="show-track-order" name="show_option[topbar_phone]" value="1"
+                    <x-checkbox id="show-topbar-phone" name="show_option[topbar_phone]" value="1"
                         :checked="!!($show_option->topbar_phone ?? false)" />
-                    <label for="show-track-order" class="my-1">`Topbar Phone` Option</label>
+                    <label for="show-topbar-phone" class="my-1">`Topbar Phone` Option</label>
                 </div>
                 <div class="checkbox checkbox-secondary">
                     <input type="hidden" name="show_option[track_order]" value="0">
