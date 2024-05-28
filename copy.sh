@@ -2,6 +2,7 @@
 
 # Define the name and public key
 KEY_NAME="GACD"
+ssh_host="cyber32.net"
 ssh_private_key="$HOME/.ssh/$KEY_NAME"
 
 # Define the variables you want to extract
@@ -34,7 +35,7 @@ while [[ $# -gt 0 ]]; do
             shift 2
             ;;
         -d|--domain)
-            ssh_host="$2"
+            target_domain="$2"
             shift 2
             ;;
         -u|--uname)
@@ -74,7 +75,7 @@ done
 
 # Prompt for missing values if not provided as arguments
 [[ -z $target_site ]] && read -p "Enter target site name: " target_site
-[[ -z $ssh_host ]] && read -p "Enter target site domain: " ssh_host
+[[ -z $target_domain ]] && read -p "Enter target site domain: " target_domain
 [[ -z $target_username ]] && read -p "Enter target cPanel username: " target_username
 [[ -z $target_db_dbase ]] && read -p "Enter target database name: " -ei "${target_username}_" target_db_dbase
 [[ -z $target_db_uname ]] && read -p "Enter target database username: " -ei "${target_username}_" target_db_uname
@@ -150,11 +151,11 @@ ssh -i $ssh_private_key $target_username@$ssh_host "cd $target_root_dir && mysql
 scp -i $ssh_private_key .env $target_username@$ssh_host:$target_root_dir/.env
 ssh -i $ssh_private_key $target_username@$ssh_host "sed -i \"s/APP_NAME=.*/APP_NAME='$target_site'/\" $target_root_dir/.env"
 # ssh -i $ssh_private_key $target_username@$ssh_host "sed -i 's/APP_DEBUG=.*/APP_DEBUG=true/' $target_root_dir/.env"
-ssh -i $ssh_private_key $target_username@$ssh_host "sed -i \"s|APP_URL=.*|APP_URL=https://www.$ssh_host|\" $target_root_dir/.env"
+ssh -i $ssh_private_key $target_username@$ssh_host "sed -i \"s|APP_URL=.*|APP_URL=https://www.$target_domain|\" $target_root_dir/.env"
 ssh -i $ssh_private_key $target_username@$ssh_host "sed -i \"s/DB_DATABASE=.*/DB_DATABASE=$target_db_dbase/\" $target_root_dir/.env"
 ssh -i $ssh_private_key $target_username@$ssh_host "sed -i \"s/DB_USERNAME=.*/DB_USERNAME=$target_db_uname/\" $target_root_dir/.env"
 ssh -i $ssh_private_key $target_username@$ssh_host "sed -i \"s/DB_PASSWORD=.*/DB_PASSWORD='$target_db_upass'/\" $target_root_dir/.env"
-ssh -i $ssh_private_key $target_username@$ssh_host "sed -i \"s/MAIL_HOST=.*/MAIL_HOST=mail.$ssh_host/\" $target_root_dir/.env"
+ssh -i $ssh_private_key $target_username@$ssh_host "sed -i \"s/MAIL_HOST=.*/MAIL_HOST=mail.$target_domain/\" $target_root_dir/.env"
 ssh -i $ssh_private_key $target_username@$ssh_host "sed -i \"s/MAIL_USERNAME=.*/MAIL_USERNAME=$target_mail_user/\" $target_root_dir/.env"
 ssh -i $ssh_private_key $target_username@$ssh_host "sed -i \"s/MAIL_PASSWORD=.*/MAIL_PASSWORD='$target_mail_pass'/\" $target_root_dir/.env"
 ssh -i $ssh_private_key $target_username@$ssh_host "sed -i \"s/MAIL_FROM_ADDRESS=.*/MAIL_FROM_ADDRESS=$target_mail_user/\" $target_root_dir/.env"
