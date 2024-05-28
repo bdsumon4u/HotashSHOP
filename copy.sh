@@ -154,10 +154,10 @@ ssh -i $ssh_private_key $target_username@$ssh_host "sed -i \"s/APP_NAME=.*/APP_N
 ssh -i $ssh_private_key $target_username@$ssh_host "sed -i \"s|APP_URL=.*|APP_URL=https://www.$target_domain|\" $target_root_dir/.env"
 ssh -i $ssh_private_key $target_username@$ssh_host "sed -i \"s/DB_DATABASE=.*/DB_DATABASE=$target_db_dbase/\" $target_root_dir/.env"
 ssh -i $ssh_private_key $target_username@$ssh_host "sed -i \"s/DB_USERNAME=.*/DB_USERNAME=$target_db_uname/\" $target_root_dir/.env"
-ssh -i $ssh_private_key $target_username@$ssh_host "sed -i \"s/DB_PASSWORD=.*/DB_PASSWORD='$target_db_upass'/\" $target_root_dir/.env"
+ssh -i $ssh_private_key $target_username@$ssh_host "sed -i \"s|DB_PASSWORD=.*|DB_PASSWORD='$(echo $target_db_upass | sed 's/|/\\|/g')'|\" $target_root_dir/.env"
 ssh -i $ssh_private_key $target_username@$ssh_host "sed -i \"s/MAIL_HOST=.*/MAIL_HOST=mail.$target_domain/\" $target_root_dir/.env"
 ssh -i $ssh_private_key $target_username@$ssh_host "sed -i \"s/MAIL_USERNAME=.*/MAIL_USERNAME=$target_mail_user/\" $target_root_dir/.env"
-ssh -i $ssh_private_key $target_username@$ssh_host "sed -i \"s/MAIL_PASSWORD=.*/MAIL_PASSWORD='$target_mail_pass'/\" $target_root_dir/.env"
+ssh -i $ssh_private_key $target_username@$ssh_host "sed -i \"s|MAIL_PASSWORD=.*|MAIL_PASSWORD='$(echo $target_mail_pass | sed 's/|/\\|/g')'|\" $target_root_dir/.env"
 ssh -i $ssh_private_key $target_username@$ssh_host "sed -i \"s/MAIL_FROM_ADDRESS=.*/MAIL_FROM_ADDRESS=$target_mail_user/\" $target_root_dir/.env"
 
 
