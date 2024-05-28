@@ -162,4 +162,9 @@ ssh -i $ssh_private_key $target_username@$ssh_host "sed -i \"s/MAIL_FROM_ADDRESS
 
 
 # Done
-ssh -i $ssh_private_key $target_username@$ssh_host "cd $target_root_dir && ./server_deploy.sh && rm -rf public/storage storage/app/pathao* && php artisan storage:link && php artisan optimize:clear"
+ssh -i $ssh_private_key $target_username@$ssh_host \
+  "cd $target_root_dir && \
+  ./server_deploy.sh && \
+  rm -rf public/storage storage/app/pathao* && \
+  /opt/alt/php74/usr/bin/php artisan storage:link && \
+  /opt/alt/php74/usr/bin/php artisan optimize:clear"

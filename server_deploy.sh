@@ -11,28 +11,28 @@ else
 fi
 
 # Enter maintenance mode
-(php artisan down --message 'The app is being (quickly!) updated. Please try again in a minute.') || true
-# (php artisan down) || true
+(/opt/alt/php74/usr/bin/php artisan down --message 'The app is being (quickly!) updated. Please try again in a minute.') || true
+# (/opt/alt/php74/usr/bin/php artisan down) || true
     # Update codebase
     # git fetch origin production
     # git reset --hard origin/production
     git pull origin $branch --force
 
     # Install dependencies based on lock file
-    composer install --no-interaction --prefer-dist --optimize-autoloader --no-progress --no-suggest $(if [ branch != "dev" ]; then echo "--no-dev"; fi)
+    composer install --no-interaction --prefer-dist --optimize-autoloader --no-progress --ignore-platform-reqs $(if [ branch != "dev" ]; then echo "--no-dev"; fi)
 
     # Migrate database
-    php artisan migrate --force
+    /opt/alt/php74/usr/bin/php artisan migrate --force
 
     # Note: If you're using queue workers, this is the place to restart them.
     # ...
 
     # Clear cache
-    php artisan optimize
+    /opt/alt/php74/usr/bin/php artisan optimize
 
     # Reload PHP to update opcache
     # echo "" | sudo -S service php7.4-fpm reload
 # Exit maintenance mode
-php artisan up
+/opt/alt/php74/usr/bin/php artisan up
 
 echo "Application deployed!"
