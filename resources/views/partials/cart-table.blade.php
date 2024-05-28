@@ -11,7 +11,7 @@
             </tr>
         </thead>
         <tbody class="cart-table__body">
-            @forelse ($cart as $product)
+            @forelse (session()->get('cart', []) as $product)
             <tr class="cart-table__row" data-id="{{$product['id']}}">
                 <td class="cart-table__column cart-table__column--image">
                     <a href="{{route('products.show', $product['slug'])}}">
