@@ -4,44 +4,85 @@
 KEY_NAME="GACD"
 ssh_private_key="$HOME/.ssh/$KEY_NAME"
 
-# Define the path to the .env file
-env_file=".env"
+# Define the variables you want to extract
+variables=("DB_USERNAME" "DB_DATABASE" "DB_PASSWORD")
+# Read the .env file line by line
+while IFS='=' read -r key value; do
+    # Check if the key is one of the variables you want to extract
+    if [[ " ${variables[@]} " =~ " $key " ]]; then
+        # Remove leading/trailing whitespace from the value
+        # value=$(echo "$value" | sed -e 's/^"//' -e 's/"$//' -e "s/^'//" -e "s/'$//")
 
-# Check if the .env file exists
-if [ -f "$env_file" ]; then
-    # Define the variables you want to extract
-    variables=("DB_USERNAME" "DB_DATABASE" "DB_PASSWORD")
-
-    # Read the .env file line by line
-    while IFS='=' read -r key value; do
-        # Check if the key is one of the variables you want to extract
-        if [[ " ${variables[@]} " =~ " $key " ]]; then
-            # Remove leading/trailing whitespace from the value
-            # value=$(echo "$value" | sed -e 's/^"//' -e 's/"$//' -e "s/^'//" -e "s/'$//")
-
-            # Export the key-value pair as shell variables
+        if [[ $value == \"*\" || $value == \'*\' ]]; then
+            export "$key"=$value
+        else
             export "$key"="$value"
         fi
-    done < "$env_file"
-else
-    echo "Error: .env file not found."
-    exit 1
-fi
+    fi
+done < ".env"
 
 # Variables of `source` are now available in the shell
 
-
+# Set default values if not provided as command-line arguments
 default_root_dir="public_html"
-# Prompt for target website details
-read -p "Enter target site name: " target_site
-read -p "Enter target site domain: " ssh_host
-read -p "Enter target cPanel username: " target_username
-read -p "Enter target database name: " -ei "${target_username}_" target_db_dbase
-read -p "Enter target database username: " -ei "${target_username}_" target_db_uname
-read -p "Enter target database password: " target_db_upass
-read -p "Enter support@$ssh_host password: " target_mail_pass
-read -p "Enter target site root directory: " -ei "$default_root_dir" target_root_dir
-echo
+
+# Parse command-line arguments
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -s|--site)
+            target_site="$2"
+            shift 2
+            ;;
+        -d|--domain)
+            ssh_host="$2"
+            shift 2
+            ;;
+        -u|--uname)
+            target_username="$2"
+            shift 2
+            ;;
+        -db|--dbname)
+            target_db_dbase="$2"
+            shift 2
+            ;;
+        -dbu|--dbuser)
+            target_db_uname="$2"
+            shift 2
+            ;;
+        -dbp|--dbpass)
+            target_db_upass="$2"
+            shift 2
+            ;;
+        -mu|--mailuser)
+            target_mail_user="$2"
+            shift 2
+            ;;
+        -mp|--mailpass)
+            target_mail_pass="$2"
+            shift 2
+            ;;
+        -r|--rootdir)
+            target_root_dir="$2"
+            shift 2
+            ;;
+        *)
+            echo "Unknown option: $1"
+            exit 1
+            ;;
+    esac
+done
+
+# Prompt for missing values if not provided as arguments
+[[ -z $target_site ]] && read -p "Enter target site name: " target_site
+[[ -z $ssh_host ]] && read -p "Enter target site domain: " ssh_host
+[[ -z $target_username ]] && read -p "Enter target cPanel username: " target_username
+[[ -z $target_db_dbase ]] && read -p "Enter target database name: " -ei "${target_username}_" target_db_dbase
+[[ -z $target_db_uname ]] && read -p "Enter target database username: " -ei "${target_username}_" target_db_uname
+[[ -z $target_db_upass ]] && read -p "Enter target database password: " target_db_upass
+[[ -z $target_mail_user ]] && read -p "Enter target email address: " target_mail_user
+[[ -z $target_mail_pass ]] && read -p "Enter target email password: " target_mail_pass
+[[ -z $target_root_dir ]] && read -p "Enter target site root directory: " -ei "$default_root_dir" target_root_dir
+
 
 # Function to check if the public key is installed on the target server
 check_public_key_installed() {
@@ -114,9 +155,9 @@ ssh -i $ssh_private_key $target_username@$ssh_host "sed -i \"s/DB_DATABASE=.*/DB
 ssh -i $ssh_private_key $target_username@$ssh_host "sed -i \"s/DB_USERNAME=.*/DB_USERNAME=$target_db_uname/\" $target_root_dir/.env"
 ssh -i $ssh_private_key $target_username@$ssh_host "sed -i \"s/DB_PASSWORD=.*/DB_PASSWORD='$target_db_upass'/\" $target_root_dir/.env"
 ssh -i $ssh_private_key $target_username@$ssh_host "sed -i \"s/MAIL_HOST=.*/MAIL_HOST=mail.$ssh_host/\" $target_root_dir/.env"
-ssh -i $ssh_private_key $target_username@$ssh_host "sed -i \"s/MAIL_USERNAME=.*/MAIL_USERNAME=support@$ssh_host/\" $target_root_dir/.env"
+ssh -i $ssh_private_key $target_username@$ssh_host "sed -i \"s/MAIL_USERNAME=.*/MAIL_USERNAME=$target_mail_user/\" $target_root_dir/.env"
 ssh -i $ssh_private_key $target_username@$ssh_host "sed -i \"s/MAIL_PASSWORD=.*/MAIL_PASSWORD='$target_mail_pass'/\" $target_root_dir/.env"
-ssh -i $ssh_private_key $target_username@$ssh_host "sed -i \"s/MAIL_FROM_ADDRESS=.*/MAIL_FROM_ADDRESS=support@$ssh_host/\" $target_root_dir/.env"
+ssh -i $ssh_private_key $target_username@$ssh_host "sed -i \"s/MAIL_FROM_ADDRESS=.*/MAIL_FROM_ADDRESS=$target_mail_user/\" $target_root_dir/.env"
 
 
 # Done
