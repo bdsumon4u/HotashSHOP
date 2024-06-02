@@ -33,6 +33,13 @@ jobs:
         id: fetch-deployment-details
         run: curl -s https://sites.cyber32.net/api/sites > sites.json
 
+      - name: Debug sites.json content
+        run: |
+          echo "Content of sites.json:"
+          cat sites.json
+          echo "Validating JSON format"
+          jq . sites.json
+
       - name: Deploy to Servers
         run: |
           sites=$(cat sites.json | jq -c '.[]')
