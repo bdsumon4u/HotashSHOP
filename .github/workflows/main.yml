@@ -43,7 +43,7 @@ jobs:
       - name: Deploy to Servers
         run: |
           sites=$(cat sites.json | jq -c '.[]')
-          for site in $sites; do
+          for site in "$sites"; do
             username=$(echo $site | jq -r '.uname')
             deploy_script=$(echo $site | jq -r '.script')
             echo "Deploying to $username"
