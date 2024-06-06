@@ -68,7 +68,7 @@
         }
         .product-card__buttons {
             margin-right: -12px !important;
-            margin-bottom: -12px !important;
+            /* margin-bottom: -12px !important; */
             margin-left: -12px !important;
         }
         .product-card__buttons .btn {
