@@ -31,6 +31,9 @@
                 width: 46%;
                 margin: 8px 6px;
             } */
+            .product-card__buttons .btn {
+                font-size: 0.75rem;
+            }
         }
         @media (max-width: 575px) {
             .mobile-header__search {
