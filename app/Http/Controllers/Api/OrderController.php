@@ -126,7 +126,7 @@ class OrderController extends Controller
 
                     $link = 'https://merchant.pathao.com/tracking?consignment_id=' . ($row->data['consignment_id'] ?? '') . '&phone=' . Str::after($row->phone, '+88');
                 } else if ($row->data['courier'] == 'SteadFast') {
-                    $link = 'https://www.steadfast.com.bd/consignment/' . ($row->data['consignment_id'] ?? '');
+                    $link = 'https://www.steadfast.com.bd/user/consignment/' . ($row->data['consignment_id'] ?? '');
                 }
 
                 if ($cid = $row->data['consignment_id'] ?? false) {
