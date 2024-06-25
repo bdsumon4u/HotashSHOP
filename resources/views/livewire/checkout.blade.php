@@ -112,7 +112,7 @@
                         <label class="form-check-label" for="checkout-terms-mobile">I agree to the <span class="text-info" target="_blank" href="javascript:void(0);">terms and conditions</span>*</label>
                     </div>
                 </div>
-                <button type="button" wire:click="checkout" class="btn btn-primary btn-xl btn-block text-white">কনফার্ম অর্ডার</button>
+                <button type="button" wire:click="checkout" wire:loading.attr="disabled" class="btn btn-primary btn-xl btn-block text-white">কনফার্ম অর্ডার</button>
             </div>
             <div class="card-divider"></div>
             <div class="card-body p-1">
@@ -161,7 +161,7 @@
                             <label class="form-check-label" for="checkout-terms-desktop">I agree to the <span class="text-info" target="_blank" href="javascript:void(0);">terms and conditions</span>*</label>
                         </div>
                     </div>
-                    <button type="button" wire:click="checkout" class="btn btn-primary btn-xl btn-block text-white">কনফার্ম অর্ডার</button>
+                    <button type="button" wire:click="checkout" wire:loading.attr="disabled" class="btn btn-primary btn-xl btn-block text-white">কনফার্ম অর্ডার</button>
                 </div>
             </div>
         </div>
