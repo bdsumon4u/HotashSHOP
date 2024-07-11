@@ -41,7 +41,7 @@ class ApiController extends Controller
             return;
         }
     
-        if (! $order = Order::find($request->merchant_order_id)/*->orWhere('data->consignment_id', $request->consignment_id)*/->first()) return;
+        if (! $order = Order::find($request->merchant_order_id)/*->orWhere('data->consignment_id', $request->consignment_id)->first()*/) return;
     
         // $courier = $request->only([
         //     'consignment_id',
