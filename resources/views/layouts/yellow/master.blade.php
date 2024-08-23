@@ -306,7 +306,9 @@
         </a>
         @endif
         <div class="widget-connect__button-activator" style="background-color: #ff0000;">
-            <div class="widget-connect__button-activator-icon"></div>
+            <div class="widget-connect__button-activator-icon">
+                <i class="far fa-comment-dots"></i>
+            </div>
         </div>
     </div>
     <script type="text/javascript">
