@@ -295,8 +295,12 @@
         }
     @endphp
     <div class="widget-connect widget-connect-right">
-        <a class="widget-connect__button widget-connect__button-telephone button-slide-out" href="tel:{{$company->phone ?? ''}}" data-toggle="tooltip" data-placement="left" title="" target="_blank" data-original-title="Call us"></a>
-        <a class="widget-connect__button widget-connect__button-whatsapp button-slide-out" href="https://wa.me/{{$company->whatsapp ?? ''}}" data-toggle="tooltip" data-placement="left" title="" target="_blank" data-original-title="WhatsApp"></a>
+        @if($phone = phone88($company->phone ?? ''))
+        <a class="widget-connect__button widget-connect__button-telephone button-slide-out" href="tel:{{$phone}}" data-toggle="tooltip" data-placement="left" title="" target="_blank" data-original-title="Call us"></a>
+        @endif
+        @if($phone = phone88($company->whatsapp ?? ''))
+        <a class="widget-connect__button widget-connect__button-whatsapp button-slide-out" href="https://wa.me/{{$phone}}" data-toggle="tooltip" data-placement="left" title="" target="_blank" data-original-title="WhatsApp"></a>
+        @endif
         <div class="widget-connect__button-activator" style="background-color: #ff0000;">
             <div class="widget-connect__button-activator-icon"></div>
         </div>
