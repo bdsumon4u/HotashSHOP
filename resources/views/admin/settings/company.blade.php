@@ -79,7 +79,7 @@
             </div>
             <div class="form-group">
                 <label for="">Messenger Chat Link</label>
-                <x-input type="text" name="company[messenger]" id="messenger-chat-link" :value="$company->messenger ?? null" />
+                <x-input type="text" name="company[messenger]" id="messenger-chat-link" :value="$company->messenger ?? 'https://m.me/'" />
                 <x-error field="company.messenger" />
             </div>
         </div>
