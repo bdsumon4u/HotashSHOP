@@ -77,6 +77,11 @@
                 <x-input type="tel" name="call_for_order" id="call_for_order" :value="$call_for_order ?? null" />
                 <x-error field="call_for_order" />
             </div>
+            <div class="form-group">
+                <label for="">Messenger Chat Link</label>
+                <x-input type="text" name="company[messenger]" id="messenger-chat-link" :value="$company->messenger ?? null" />
+                <x-error field="company.messenger" />
+            </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
