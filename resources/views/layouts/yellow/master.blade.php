@@ -299,7 +299,9 @@
         <a class="widget-connect__button widget-connect__button-telephone button-slide-out" href="tel:{{$phone}}" data-toggle="tooltip" data-placement="left" title="" target="_blank" data-original-title="Call us"></a>
         @endif
         @if($phone = phone88($company->whatsapp ?? ''))
-        <a class="widget-connect__button widget-connect__button-whatsapp button-slide-out" href="https://wa.me/{{$phone}}" data-toggle="tooltip" data-placement="left" title="" target="_blank" data-original-title="WhatsApp"></a>
+        <a class="widget-connect__button widget-connect__button-whatsapp button-slide-out" href="https://wa.me/{{$phone}}" data-toggle="tooltip" data-placement="left" title="" target="_blank" data-original-title="WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
         @endif
         <div class="widget-connect__button-activator" style="background-color: #ff0000;">
             <div class="widget-connect__button-activator-icon"></div>
@@ -314,14 +316,6 @@
             });
         });
     </script>
-    @if($phone)
-    <a
-        href="https://api.whatsapp.com/send?phone={{$phone}}" target="_blank"
-        style="position:fixed;width:60px;height:60px;bottom:40px;right:40px;background-color:#25d366;color:#FFF;border-radius:50px;text-align:center;font-size:30px;box-shadow: 2px 2px 3px #999;z-index:100;"
-    >
-        <i class="fab fa-whatsapp" style="margin-top: 1rem;"></i>
-    </a>
-    @endif
 </body>
 
 </html>
