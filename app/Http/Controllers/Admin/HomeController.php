@@ -35,16 +35,26 @@ class HomeController extends Controller
             $orderQ->where('admin_id', request('staff_id'));
         }
 
+        $productInOrders[] = [];
+
         $products = (clone $orderQ)->get()
             ->whereIn('status', ['CONFIRMED', 'INVOICED', 'SHIPPING'])
-            ->flatMap(fn ($order) => json_decode(json_encode($order->products, JSON_UNESCAPED_UNICODE), true))
-            ->groupBy('id')->map(function ($item) {
-                return [
+            ->flatMap(function ($order) use (&$productInOrders) {
+                $products = json_decode(json_encode($order->products, JSON_UNESCAPED_UNICODE), true);
+
+                foreach ($products as $product) {
+                    $productInOrders[$product['name']][$order->id] = 1 + ($productInOrders[$product['name']][$order->id] ?? 0);
+                }
+
+                return $products;
+            })
+            ->groupBy('id')->mapWithKeys(function ($item, $id) {
+                return [$id => [
                     'name' => $item->random()['name'],
                     'slug' => $item->random()['slug'],
                     'quantity' => $item->sum('quantity'),
                     'total' => $item->sum('total'),
-                ];
+                ]];
             })->sortByDesc('quantity')->toArray();
 
         $data = (clone $orderQ)
@@ -81,6 +91,6 @@ class HomeController extends Controller
         $productsCount = Product::whereNull('parent_id')->count();
         $inactiveProducts = Product::whereIsActive(0)->whereNull('parent_id')->get();
         $lowStockProducts = Product::whereShouldTrack(1)->where('stock_count', '<', 10)->get();
-        return view('admin.dashboard', compact('staffs', 'products', 'productsCount', 'orders', 'amounts', 'inactiveProducts', 'lowStockProducts', 'start', 'end'));
+        return view('admin.dashboard', compact('staffs', 'products', 'productInOrders', 'productsCount', 'orders', 'amounts', 'inactiveProducts', 'lowStockProducts', 'start', 'end'));
     }
 }
