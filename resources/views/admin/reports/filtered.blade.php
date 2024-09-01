@@ -24,7 +24,7 @@
             @endforeach
         </tbody>
         <tfoot>
-            <th class="text-right">Total</th>
+            <th colspan="2" class="text-right">Total</th>
             <th>{{ $orders }}</th>
             <th>{{ $total }}</th>
             <th>{!!theMoney($amount)!!}</th>
