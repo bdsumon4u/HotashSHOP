@@ -10,9 +10,14 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 
 if (! function_exists('categories')) {
-    function categories() {
+    function categories($parent = -1) {
         return Category::with('image')
         ->inRandomOrder()
+        ->when($parent != -1, function ($query) use ($parent) {
+            return is_null($parent)
+                ? $query->whereNull('parent_id')
+                : $query->where('parent_id', $parent);
+        })
         ->get()
         ->map(function ($category) {
             if (!$image = $category->image) {

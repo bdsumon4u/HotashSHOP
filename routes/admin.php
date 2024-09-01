@@ -45,6 +45,7 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
         Route::post('/logout-others/{admin}', 'ApiController@logoutOthers')->name('logout-others');
         Route::get('/customers', 'CustomerController')->name('customers');
         Route::resources([
+            'distributors' => 'DistributorController',
             'staffs'       => 'StaffController',
             'slides'        => 'SlideController',
             'categories'    => 'CategoryController',

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Distributor;
 use App\HomeSection;
 use App\Slide;
 use Illuminate\Http\Request;
@@ -29,6 +30,21 @@ class HomeController extends Controller
         $sections = cache()->rememberForever('homesections', function () {
             return HomeSection::orderBy('order', 'asc')->get();
         });
-        return view('index', compact('slides', 'sections'));
+        return view('lubricant.index', compact('slides', 'sections'));
+    }
+
+    public function distributors()
+    {
+        GoogleTagManagerFacade::set([
+            'event' => 'page_view',
+            'page_type' => 'distributors',
+        ]);
+        $slides = cache()->rememberForever('slides', function () {
+            return Slide::whereIsActive(1)->get();
+        });
+        return view('lubricant.distributors', [
+            'slides' => $slides,
+            'distributors' => Distributor::all(),
+        ]);
     }
 }

@@ -55,11 +55,18 @@ class ComposerServiceProvider extends ServiceProvider
             });
         }
 
+        View::composer('lubricant.*', function ($view) {
+            $view->withMenuItems(cache()->rememberForever('menus:quick-links', function () {
+                return optional(Menu::whereSlug('quick-links')->first())->menuItems ?: new Collection();
+            }));
+        });
+
         View::composer(['layouts.yellow.master',], function ($view) {
             $view->with('categories', Category::nested(10));
         });
 
         $settingsPages = [
+            'lubricant.*',
             'partials.header.*',
             'partials.footer',
             'products.show',

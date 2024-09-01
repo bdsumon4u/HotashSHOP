@@ -173,6 +173,14 @@
                         </a>
                     </li>
 
+                    <li>
+                        <a class="nav-link menu-title link-nav {{ Route::currentRouteName() == 'admin.distributors.index' ? 'active' : '' }}"
+                            href="{{ route('admin.distributors.index') }}">
+                            <i data-feather="users"> </i>
+                            <span>Distributors</span>
+                        </a>
+                    </li>
+
                     <li class="sidebar-title">
                         <h6>Settings</h6>
                     </li>
@@ -201,7 +209,7 @@
                         </a>
                     </li>
 
-                    <li>
+                    <li class="d-none">
                         <a class="nav-link menu-title link-nav {{ request()->is('admin/home-sections*') ? 'active' : '' }}"
                             href="{{ route('admin.home-sections.index') }}">
                             <i data-feather="layers"> </i>
