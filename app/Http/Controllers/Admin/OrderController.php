@@ -128,22 +128,35 @@ class OrderController extends Controller
             $amounts[$status] = $data->total_amount ?? 0;
         }
 
+        $productInOrders[] = [];
+
+        $products = $orderQ
+            ->when($request->status, fn($q) => $q->where('status', $request->status))->get()
+            ->flatMap(function ($order) use (&$productInOrders) {
+                $products = json_decode(json_encode($order->products, JSON_UNESCAPED_UNICODE), true);
+
+                foreach ($products as $product) {
+                    $productInOrders[$product['name']][$order->id] = 1 + ($productInOrders[$product['name']][$order->id] ?? 0);
+                }
+
+                return $products;
+            })
+            ->groupBy('id')->map(function ($item) {
+                return [
+                    'name' => $item->random()['name'],
+                    'slug' => $item->random()['slug'],
+                    'quantity' => $item->sum('quantity'),
+                    'total' => $item->sum('total'),
+                ];
+            })->sortByDesc('quantity')->toArray();
+
         return view('admin.orders.filter', [
             'start' => $start,
             'end' => $end,
             'orders' => $orders,
             'amounts' => $amounts,
-            'products' => $orderQ
-                ->when($request->status, fn ($q) => $q->where('status', $request->status))->get()
-                ->flatMap(fn ($order) => json_decode(json_encode($order->products, JSON_UNESCAPED_UNICODE), true))
-                ->groupBy('id')->map(function ($item) {
-                    return [
-                        'name' => $item->random()['name'],
-                        'slug' => $item->random()['slug'],
-                        'quantity' => $item->sum('quantity'),
-                        'total' => $item->sum('total'),
-                    ];
-                })->sortByDesc('quantity')->toArray(),
+            'products' => $products,
+            'productInOrders' => $productInOrders,
         ]);
     }
 
