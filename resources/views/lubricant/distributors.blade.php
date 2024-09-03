@@ -175,7 +175,6 @@
         </div>
 
 
-        @include('lubricant.slides')
         <div id="mainSiteContent">
             <section class="product area-padding">
                 <div class="custom-container">
@@ -193,12 +192,12 @@
                                         data-src="{{ $distributor->photo }}"
                                         src="#" width="460" height="380" alt="{{$distributor->type}}">
                                     <div class="single-product-content">
-                                        <h3>{{$distributor->shop_name}}</h3>
+                                        <h3 class="d-block">{{$distributor->shop_name}}</h3>
                                         <p class="text-white">{{$distributor->full_name}} - {{$distributor->type}}</p>
                                         <div>
                                             {!! $distributor->address !!}
                                         </div>
-                                        <span class="animated-btn">{{$distributor->phone}}</span>
+                                        <div class="animated-btn">{{$distributor->phone}}</div>
                                     </div>
                                 </a>
                             </div>

@@ -245,8 +245,8 @@
                                         data-src="{{ $category->image_src }}"
                                         src="#" width="460" height="380" alt="{{$category->name}}">
                                     <div class="single-product-content">
-                                        <h3>{{$category->name}}</h3>
-                                        <span class="animated-btn">View Products</span>
+                                        <h3 class="d-block">{{$category->name}}</h3>
+                                        <div class="animated-btn">View Products</div>
                                     </div>
                                 </a>
                             </div>
