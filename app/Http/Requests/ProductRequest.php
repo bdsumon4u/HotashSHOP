@@ -49,6 +49,9 @@ class ProductRequest extends FormRequest
             'additional_images' => 'sometimes|array',
             'desc_img' => 'required|boolean',
             'desc_img_pos' => 'required_if:desc_img,1',
+            'shipping_inside' => 'nullable|integer',
+            'shipping_outside' => 'nullable|integer',
+            'delivery_text' => 'nullable',
         ];
 
         if (!$this->isMethod('POST')) {

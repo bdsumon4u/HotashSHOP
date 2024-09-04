@@ -18,7 +18,7 @@ class Product extends Model
 
     protected $fillable = [
         'brand_id', 'name', 'slug', 'description', 'price', 'selling_price', 'wholesale', 'sku',
-        'should_track', 'stock_count', 'desc_img', 'desc_img_pos', 'is_active',
+        'should_track', 'stock_count', 'desc_img', 'desc_img_pos', 'is_active', 'shipping_inside', 'shipping_outside', 'delivery_text',
     ];
 
     /**
@@ -83,6 +83,18 @@ class Product extends Model
     {
         if (!$this->parent_id) return $this->name;
         return $this->parent->name . ' [' . $this->name . ']';
+    }
+
+    public function getShippingInsideAttribute($value)
+    {
+        if (!$this->parent_id) return $value ?? setting('delivery_charge')->inside_dhaka;
+        return $value ?? $this->parent->shipping_inside ?? setting('delivery_charge')->inside_dhaka;
+    }
+
+    public function getShippingOutsideAttribute($value)
+    {
+        if (!$this->parent_id) return $value ?? setting('delivery_charge')->outside_dhaka;
+        return $value ?? $this->parent->shipping_outside ?? setting('delivery_charge')->outside_dhaka;
     }
 
     public function getCategoryAttribute()

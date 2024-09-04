@@ -130,6 +130,23 @@
                 </div>
             </div>
             @endif
+            <table class="table table-sm table-bordered">
+                <thead>
+                    <tr>
+                        <th colspan="2" class="text-center">Delivery Charge</th>
+                    </tr>
+                    <tr>
+                        <th width="50%">Inside Dhaka</th>
+                        <th width="50%">Outside Dhaka</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{!! theMoney($selectedVar->shipping_inside) !!}</td>
+                        <td>{!! theMoney($selectedVar->shipping_outside) !!}</td>
+                    </tr>
+                </tbody>
+            </table>
             @if ($selectedVar->wholesale['quantity'])
             <div class="mt-3">
                 <table class="table table-sm table-bordered">
@@ -138,8 +155,8 @@
                             <th colspan="2" class="text-center">Wholesale Price</th>
                         </tr>
                         <tr>
-                            <th width="50%">Quantity</th>
-                            <th width="50%">Price</th>
+                            <th width="50%">Min. Quantity</th>
+                            <th width="50%">Unit Price</th>
                         </tr>
                     </thead>
                     <tbody>
