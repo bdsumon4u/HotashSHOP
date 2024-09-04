@@ -26,6 +26,8 @@ class ProductCard extends Component
                 'quantity' => 1,
                 'price' => $this->product->selling_price,
                 'max' => $this->product->should_track ? min($this->product->stock_count, $fraudQuantity) : $fraudQuantity,
+                'shipping_inside' => $this->product->shipping_inside,
+                'shipping_outside' => $this->product->shipping_outside,
             ];
         }
 

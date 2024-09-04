@@ -57,6 +57,8 @@ class ProductDetail extends Component
                 'quantity' => $quantity = min($this->quantity, $this->maxQuantity),
                 'price' => $this->selectedVar->getPrice($quantity),
                 'max' => $this->maxQuantity,
+                'shipping_inside' => $this->selectedVar->shipping_inside,
+                'shipping_outside' => $this->selectedVar->shipping_outside,
             ];
         }
 

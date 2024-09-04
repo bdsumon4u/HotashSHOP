@@ -17,7 +17,9 @@ class ProductController extends Controller
      */
     public function __invoke(Request $request)
     {
-        return DataTables::of($request->has('order') ? Product::whereNull('parent_id')->get() : Product::whereNull('parent_id')->latest('id'))
+        $query = $request->has('order') ? Product::whereNull('parent_id') : Product::whereNull('parent_id')->latest('id');
+
+        return DataTables::eloquent($query)
             ->addIndexColumn()
             ->addColumn('image', function (Product $product) {
                 return '<img src="' . asset(optional($product->base_image)->src) . '" width="100" height="100" />';
