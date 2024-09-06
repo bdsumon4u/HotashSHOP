@@ -106,7 +106,11 @@ class EditOrder extends Component
             'price' => $selling = $product->getPrice($quantity),
             'quantity' => $quantity,
             'total' => $quantity * $selling,
+            'shipping_inside' => $product->shipping_inside,
+            'shipping_outside' => $product->shipping_outside,
         ];
+
+        $this->updatedOrderDataShippingArea('');
 
         $this->search = '';
         $this->dispatchBrowserEvent('notify', ['message' => 'Product added successfully.']);
@@ -116,6 +120,8 @@ class EditOrder extends Component
     {
         $this->selectedProducts[$id]['quantity']++;
         $this->selectedProducts[$id]['total'] = $this->selectedProducts[$id]['quantity'] * $this->selectedProducts[$id]['price'];
+
+        $this->updatedOrderDataShippingArea('');
     }
 
     public function decreaseQuantity($id)
@@ -126,12 +132,28 @@ class EditOrder extends Component
         } else {
             unset($this->selectedProducts[$id]);
         }
+
+        $this->updatedOrderDataShippingArea('');
     }
 
     public function updatedOrderDataShippingArea($value)
     {
+        $shipping_cost = 0;
+        if (! setting('show_option')->productwise_delivery_charge) {
+            $shipping_cost = setting('delivery_charge')->{$this->order->data['shipping_area'] == 'Inside Dhaka' ? 'inside_dhaka' : 'outside_dhaka'} ?? config('services.shipping.' . $this->order->data['shipping_area'], 0);
+        } else {
+            $shipping_cost = collect($this->selectedProducts)->sum(function ($item) {
+                $default = setting('delivery_charge')->{$this->order->data['shipping_area'] == 'Inside Dhaka' ? 'inside_dhaka' : 'outside_dhaka'} ?? config('services.shipping.' . $this->order->data['shipping_area'], 0);
+                if ($this->order->data['shipping_area'] == 'Inside Dhaka') {
+                    return ($item['shipping_inside'] ?? $default) * (setting('show_option')->quantitywise_delivery_charge ? $item['quantity'] : 1);
+                } else {
+                    return ($item['shipping_outside'] ?? $default) * (setting('show_option')->quantitywise_delivery_charge ? $item['quantity'] : 1);
+                }
+            });
+        }
+
         $this->order->fill(['data' => [
-            'shipping_cost' => setting('delivery_charge')->{$this->order->data['shipping_area'] == 'Inside Dhaka' ? 'inside_dhaka' : 'outside_dhaka'} ?? config('services.shipping.' . $this->order->data['shipping_area'], 0),
+            'shipping_cost' => $shipping_cost,
         ]]);
     }
 
