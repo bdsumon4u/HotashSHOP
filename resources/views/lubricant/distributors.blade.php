@@ -53,12 +53,12 @@
     @php $parentCategories = categories(null) @endphp
     <div class="dvLayout">
         <header class="header-area">
-            <div class="container-fluid">
+            <div class="custom-container px-1">
                 <div class="header-wrapper">
                     <div class="hamburger-wrapper">
                         <div class="hamburger"><i class="fa fas fa-bars"></i></div>
                     </div>
-                    <div class="logo">
+                    <div class="logo pl-0">
                         <a href="/"><img
                                 src="{{ asset($logo->desktop ?? '') }}" width="188" height="222"
                                 title="SAAH Traders" alt="SAAH Traders Logo"></a>
@@ -177,7 +177,7 @@
 
         <div id="mainSiteContent">
             <section class="product area-padding">
-                <div class="custom-container">
+                <div class="custom-custom-container">
                     <div class="head-paragraph">
                         <span>*******</span>
                         <h2>Our Distributors</h2>
@@ -206,7 +206,7 @@
                     </div>
                 </div>
             </section>
-            <div class="container area-padding">
+            <div class="custom-container area-padding">
                 <div class="row justify-content-center">
                     <div class="col-lg-10">
                         <div class="area-heading text-center">
@@ -322,7 +322,7 @@
                 </div>
             </div>
             <section class="call-to-action text-center">
-                <div class="container">
+                <div class="custom-container">
                     <h3 class="h2">Get the Full Catalogs</h3>
                     <a class="animated-btn" target="_blank" rel="noopener"
                         href="{{route('products.index')}}"><i
@@ -331,7 +331,7 @@
             </section>
         </div>
         <footer class="footer-area">
-            <div class="container">
+            <div class="custom-container">
                 <div class="row">
                     <div class="col-sm-6 col-lg-3">
                         <div class="footer-item">

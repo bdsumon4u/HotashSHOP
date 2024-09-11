@@ -1,7 +1,7 @@
-<div class="slider-wrapper">
+<div class="slider-wrapper custom-container px-0">
     <div class="homeSlider slider-1 owl-carousel">
         @foreach ($slides as $slide)
-        <div class="item" style="background: url({{ asset($slide->desktop_src) }});background-size:cover;background-repeat:no-repeat;">
+        <div class="item" style="background: url({{ asset($slide->mobile_src) }});background-size:cover;background-repeat:no-repeat;">
             <div class="container slider-content">
                 <div class="row">
                     <div class="col-12">

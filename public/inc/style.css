@@ -1314,7 +1314,7 @@ div#mainSiteContent {
     height: 129px;
     overflow: hidden;
     position: absolute;
-    background: #002776;
+    /* background: #002776; */
 }
 .wefewfe .wave{position:absolute;bottom:0;left:0;width:100%;height:100px;background:url(/images/background/oil_flow_sigma.png);background-size:1000px 100px;}
 .wefewfe .wave.wave1{-webkit-animation:animate 30s linear infinite;animation:animate 30s linear infinite;z-index:1000;opacity:0.6;-webkit-animation-delay:0s;animation-delay:0s;bottom:0;}
@@ -1679,7 +1679,7 @@ textarea:focus {
     /* max-width: 90px; */
     background: rgba(255,255,255,0);
     position: relative;
-    padding: 3px 15px;
+    padding: 7px 15px;
 }
 
 .header-area {
@@ -1688,7 +1688,7 @@ textarea:focus {
     width: 100%;
     z-index: 99;
     position: relative;
-    background: #002776;
+    background: yellow;
 }
 
 .header-area.navbar_fixed {
@@ -1729,6 +1729,7 @@ textarea:focus {
 }
 
 .call-us a {
+    color: #000;
     position: absolute;
     left: 0;
     top: 0;
@@ -1740,13 +1741,13 @@ textarea:focus {
 .call-us-text .f-number {
     font-weight: 600;
     font-size: 18px;
-    color: #fff;
+    color: #000;
 }
 
 .call-us-text span,
 .call-us-text a {
     display: block;
-    color: #fff;
+    color: #000;
     font-size: 16px;
     font-weight: 300;
     transition: all.3s;
@@ -1754,7 +1755,7 @@ textarea:focus {
 
 .call-us:hover .call-us-text span,
 .call-us:hover .call-us-text a {
-    color: #fff;
+    color: #000;
     text-decoration: underline;
 }
 
@@ -1767,7 +1768,7 @@ textarea:focus {
 }
 
 .call-us .icon i {
-    color: #fff;
+    color: #000;
     background: #ff6319;
     padding: 8px;
     border-radius: 4px;
@@ -1885,7 +1886,7 @@ textarea:focus {
 .navbar-light .navbar-nav a.active:after {
     left: 9px;
     top: 26px;
-    color: #fff;
+    color: #000;
     content: '\f015';
     font-weight: 900;
     position: absolute;
@@ -1900,13 +1901,13 @@ textarea:focus {
     }
 
     .navbar-light .navbar-nav a {
-        color: #fff;
-        font-weight: 500;
+        color: #000;
+        font-weight: 600;
         position: relative;
         text-transform: capitalize;
         padding: 26px 9px;
         transition: all 0s;
-        font-size: 15px;
+        font-size: 16px;
     }
 
     .navbar-nav li {
@@ -2192,8 +2193,8 @@ textarea:focus {
     background: #fff;
     width: 100%;
     min-height: calc(100vh - 200px);
-    background-image: -webkit-gradient(linear, left top, right bottom, from(#84cdf1), to(#303992));
-    background-image: linear-gradient(to right bottom, #84cdf1, #303992);
+    /* background-image: -webkit-gradient(linear, left top, right bottom, from(#84cdf1), to(#303992));
+    background-image: linear-gradient(to right bottom, #84cdf1, #303992); */
     z-index: 1;
     position: relative;
 }
@@ -2450,7 +2451,7 @@ ul.right-arrow li::after {
 
 .head-paragraph h2,
 .head-paragraph h1 {
-    color: #032e5b;
+    color: black;
     font-size: 38px;
     line-height: 46px;
     padding-bottom: 16px;
@@ -2915,8 +2916,8 @@ ul.check-mark.col-count-1>li::before {
     padding-right: 35px;
 }
 .accordion .card .btn-link:not(.collapsed) {
-    color: white;
-    background-color: #002776;
+    color: black;
+    background-color: yellow;
 }
 
 .accordion .card .btn-link:hover {
@@ -3004,7 +3005,7 @@ margin-bottom: 25px;
     top: 0;
     width: 100%;
     height: 100%;
-    background: #0027768c;
+    background: #333;
     z-index: -1;
 }
 
@@ -3301,24 +3302,24 @@ ul.check-mark>li::before {
 
 .footer-area {
     z-index: 1;
-    color: #ffffff;
+    color: #000;
     padding-top: 125px;
     position: relative;
     padding-bottom: 20px;
     background-size: auto;
     background-size: cover;
-    background-color: #002776;
+    background-color: yellow;
     background-position: center;
     background-repeat: no-repeat;
     background-image: url(/images/background/sea-abstract-bg.jpg);
 }
 
 .footer-area a {
-    color: #BEBEBE;
+    color: #333;
 }
 
 .footer-area a:hover {
-    color: #fff;
+    color: #000;
 }
 
 .footer-item>a {
@@ -3433,7 +3434,7 @@ ul.check-mark>li::before {
     margin-top: 104px;
 }
 .footer-bottom p {
-    color: #fff;
+    color: #000;
     font-size: 14px;
     font-weight: 300;
     text-align: right;
@@ -3843,7 +3844,7 @@ tr.offday {
 
     .hamburger i {
         font-size: 23px;
-        color: #fff;
+        color: #000;
     }
 
     .custom-menu {
@@ -4068,7 +4069,7 @@ tr.offday {
 
     .slider-wrapper,
     .slider-wrapper .item {
-        min-height: calc(54vh - 80px);
+        min-height: calc(40vh - 80px);
     }
 
     .container.slider-content {
@@ -4262,8 +4263,8 @@ tr.offday {
     }
 
     .logo {
-        max-width: 70px;
-        padding: 17px 7px;
+        max-width: 188px;
+        padding: 3px 7px;
     }
 
     .single-product .single-product-content {
