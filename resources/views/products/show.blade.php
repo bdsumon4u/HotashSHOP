@@ -202,7 +202,7 @@
                     </div>
                     <div id="collapseTwo" class="collapse show" data-parent="#accordion">
                         <div class="card-body p-2">
-                            {!! setting('show_option')->productwise_delivery_charge ? ($product->delivery_text ?? setting('delivery_text')) : setting('delivery_text') !!}
+                            {!! (setting('show_option')->productwise_delivery_charge ?? false) ? ($product->delivery_text ?? setting('delivery_text')) : setting('delivery_text') !!}
                         </div>
                     </div>
                 </div>
