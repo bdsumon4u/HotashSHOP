@@ -30,35 +30,42 @@
             <label for="" class="my-1">Product Grid Button</label>
             <div class="d-flex ml-2">
                 <div class="radio radio-secondary mr-3">
-                    <input type="radio" id="product-grid-add-to-cart" name="show_option[product_grid_button]" value="add_to_cart"
-                        @if(old('show_option.product_grid_button', $show_option->product_grid_button ?? false) == 'add_to_cart') checked @endif />
+                    <input type="radio" id="product-grid-add-to-cart" name="show_option[product_grid_button]"
+                        value="add_to_cart" @if (old('show_option.product_grid_button', $show_option->product_grid_button ?? false) == 'add_to_cart') checked @endif />
                     <label for="product-grid-add-to-cart">`Add To Cart`</label>
                 </div>
                 <div class="radio radio-secondary ml-3">
-                    <input type="radio" id="product-grid-order-now" name="show_option[product_grid_button]" value="order_now"
-                    @if(old('show_option.product_grid_button', $show_option->product_grid_button ?? false) == 'order_now') checked @endif />
+                    <input type="radio" id="product-grid-order-now" name="show_option[product_grid_button]"
+                        value="order_now" @if (old('show_option.product_grid_button', $show_option->product_grid_button ?? false) == 'order_now') checked @endif />
                     <label for="product-grid-order-now">`Order Now`</label>
                 </div>
             </div>
             <label for="" class="my-1 d-inline-flex align-items-center">
                 <span class="mr-1">Product Detail Button(s)</span>
                 <span class="border px-1 d-inline-flex">
-                    <input type="checkbox" id="product_detail_buttons_inline" name="show_option[product_detail_buttons_inline]"
-                        @if(!!old('show_option.product_detail_buttons_inline', $show_option->product_detail_buttons_inline ?? false)) checked @endif />
+                    <input type="checkbox" id="product_detail_buttons_inline"
+                        name="show_option[product_detail_buttons_inline]"
+                        @if (!!old('show_option.product_detail_buttons_inline', $show_option->product_detail_buttons_inline ?? false)) checked @endif />
                     <label for="product_detail_buttons_inline" class="ml-1 mb-0">inline</label>
                 </span>
             </label>
             <div class="d-flex ml-3">
                 <div class="checkbox checkbox-secondary mr-3">
                     <input type="hidden" name="show_option[product_detail_add_to_cart]" value="0">
-                    <x-checkbox id="product-detail-add-to-cart" class="d-none" name="show_option[product_detail_add_to_cart]" value="1"
-                        :checked="!!old('show_option.product_detail_add_to_cart', $show_option->product_detail_add_to_cart ?? false)" />
+                    <x-checkbox id="product-detail-add-to-cart" class="d-none"
+                        name="show_option[product_detail_add_to_cart]" value="1" :checked="!!old(
+                            'show_option.product_detail_add_to_cart',
+                            $show_option->product_detail_add_to_cart ?? false,
+                        )" />
                     <label for="product-detail-add-to-cart" class="m-0">`Add To Cart`</label>
                 </div>
                 <div class="checkbox checkbox-secondary ml-3">
                     <input type="hidden" name="show_option[product_detail_order_now]" value="0">
-                    <x-checkbox id="product-detail-order-now" class="d-none" name="show_option[product_detail_order_now]" value="1"
-                        :checked="!!old('show_option.product_detail_order_now', $show_option->product_detail_order_now ?? false)" />
+                    <x-checkbox id="product-detail-order-now" class="d-none"
+                        name="show_option[product_detail_order_now]" value="1" :checked="!!old(
+                            'show_option.product_detail_order_now',
+                            $show_option->product_detail_order_now ?? false,
+                        )" />
                     <label for="product-detail-order-now" class="m-0">`Order Now`</label>
                 </div>
             </div>
@@ -68,16 +75,16 @@
                 {{-- Enable Productwise Delivery Charge --}}
                 <div class="checkbox checkbox-secondary ml-3">
                     <input type="hidden" name="show_option[productwise_delivery_charge]" value="0">
-                    <x-checkbox id="productwise-delivery-charge" name="show_option[productwise_delivery_charge]" value="1"
-                        :checked="!!($show_option->productwise_delivery_charge ?? false)" />
+                    <x-checkbox id="productwise-delivery-charge" name="show_option[productwise_delivery_charge]"
+                        value="1" :checked="!!($show_option->productwise_delivery_charge ?? (false ?? false))" />
                     <label for="productwise-delivery-charge" class="my-1">Productwise Delivery Charge</label>
                 </div>
 
                 {{-- Enable Quantitywise Delivery Charge --}}
                 <div class="checkbox checkbox-secondary ml-3">
                     <input type="hidden" name="show_option[quantitywise_delivery_charge]" value="0">
-                    <x-checkbox id="quantitywise-delivery-charge" name="show_option[quantitywise_delivery_charge]" value="1"
-                        :checked="!!($show_option->quantitywise_delivery_charge ?? false)" />
+                    <x-checkbox id="quantitywise-delivery-charge" name="show_option[quantitywise_delivery_charge]"
+                        value="1" :checked="!!($show_option->quantitywise_delivery_charge ?? (false ?? false))" />
                     <label for="quantitywise-delivery-charge" class="my-1">Quantitywise Delivery Charge</label>
                 </div>
             </div>
@@ -86,7 +93,7 @@
         <div class="col-md-8">
             <div class="form-group">
                 <label for="">Scroll Text</label>
-                <x-textarea name="scroll_text" id="scroll_text">{{$scroll_text ?? null}}</x-textarea>
+                <x-textarea name="scroll_text" id="scroll_text">{{ $scroll_text ?? null }}</x-textarea>
                 <x-error field="scroll_text" />
             </div>
         </div>
@@ -136,9 +143,10 @@
                 <label for="product-sort">Product Sorted By</label>
                 @php $sorted = $show_option->product_sort ?? false; @endphp
                 <select name="show_option[product_sort]" id="product-sort" class="form-control">
-                    <option value="random" @if($sorted == 'random') selected @endif>Random</option>
-                    <option value="updated_at" @if($sorted == 'updated_at') selected @endif>Last Update</option>
-                    <option value="selling_price" @if($sorted == 'selling_price') selected @endif>Cheap Price</option>
+                    <option value="random" @if ($sorted == 'random') selected @endif>Random</option>
+                    <option value="updated_at" @if ($sorted == 'updated_at') selected @endif>Last Update</option>
+                    <option value="selling_price" @if ($sorted == 'selling_price') selected @endif>Cheap Price
+                    </option>
                 </select>
             </div>
         </div>
@@ -164,8 +172,7 @@
                 </div>
                 <div class="checkbox checkbox-secondary">
                     <input type="hidden" name="services[enabled]" value="0">
-                    <x-checkbox id="services" name="services[enabled]" value="1"
-                        :checked="!!($services->enabled ?? false)" />
+                    <x-checkbox id="services" name="services[enabled]" value="1" :checked="!!($services->enabled ?? false)" />
                     <label for="services" class="my-1">`Services` Section</label>
                 </div>
                 <div class="checkbox checkbox-secondary">
@@ -190,26 +197,28 @@
         </div>
     </div>
     <div class="row">
-        @foreach(config('services.services', []) as $num => $icon)
-        <div class="col-md-6">
-            <div class="input-group">
-                <div class="input-group-prepend mr-1">
-                    <span class="input-group-text">
-                        <svg width="24px" height="24px"><use xlink:href="{{ asset($icon) }}"></use></svg>
-                    </span>
-                </div>
-                <div class="" style="flex: 1;">
-                    <div class="form-group mb-1">
-                        <label for="" class="ml-1">Title</label>
-                        <x-input name="services[{{ $num }}][title]" :value="$services->$num->title ?? ''" />
+        @foreach (config('services.services', []) as $num => $icon)
+            <div class="col-md-6">
+                <div class="input-group">
+                    <div class="input-group-prepend mr-1">
+                        <span class="input-group-text">
+                            <svg width="24px" height="24px">
+                                <use xlink:href="{{ asset($icon) }}"></use>
+                            </svg>
+                        </span>
                     </div>
-                    <div class="form-group mt-2 mb-0">
-                        <label for="" class="ml-1">Detail</label>
-                        <x-input name="services[{{ $num }}][detail]" :value="$services->$num->detail ?? ''" />
+                    <div class="" style="flex: 1;">
+                        <div class="form-group mb-1">
+                            <label for="" class="ml-1">Title</label>
+                            <x-input name="services[{{ $num }}][title]" :value="$services->$num->title ?? ''" />
+                        </div>
+                        <div class="form-group mt-2 mb-0">
+                            <label for="" class="ml-1">Detail</label>
+                            <x-input name="services[{{ $num }}][detail]" :value="$services->$num->detail ?? ''" />
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         @endforeach
     </div>
 </div>

@@ -139,15 +139,15 @@ class EditOrder extends Component
     public function updatedOrderDataShippingArea($value)
     {
         $shipping_cost = 0;
-        if (! setting('show_option')->productwise_delivery_charge) {
+        if (! setting('show_option')->productwise_delivery_charge ?? false) {
             $shipping_cost = setting('delivery_charge')->{$this->order->data['shipping_area'] == 'Inside Dhaka' ? 'inside_dhaka' : 'outside_dhaka'} ?? config('services.shipping.' . $this->order->data['shipping_area'], 0);
         } else {
             $shipping_cost = collect($this->selectedProducts)->sum(function ($item) {
                 $default = setting('delivery_charge')->{$this->order->data['shipping_area'] == 'Inside Dhaka' ? 'inside_dhaka' : 'outside_dhaka'} ?? config('services.shipping.' . $this->order->data['shipping_area'], 0);
                 if ($this->order->data['shipping_area'] == 'Inside Dhaka') {
-                    return ($item['shipping_inside'] ?? $default) * (setting('show_option')->quantitywise_delivery_charge ? $item['quantity'] : 1);
+                    return ($item['shipping_inside'] ?? $default) * (setting('show_option')->quantitywise_delivery_charge ?? false ? $item['quantity'] : 1);
                 } else {
-                    return ($item['shipping_outside'] ?? $default) * (setting('show_option')->quantitywise_delivery_charge ? $item['quantity'] : 1);
+                    return ($item['shipping_outside'] ?? $default) * (setting('show_option')->quantitywise_delivery_charge ?? false ? $item['quantity'] : 1);
                 }
             });
         }
@@ -233,7 +233,7 @@ class EditOrder extends Component
         if (strlen($this->search) > 2) {
             $products = Product::with('variations.options')
                 ->whereNotIn('id', array_keys($this->selectedProducts))
-                ->where(fn ($q) => $q->where('name', 'like', "%$this->search%")->orWhere('sku', $this->search))
+                ->where(fn($q) => $q->where('name', 'like', "%$this->search%")->orWhere('sku', $this->search))
                 ->whereNull('parent_id')
                 ->whereIsActive(1)
                 ->take(5)
