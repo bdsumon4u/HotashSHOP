@@ -305,13 +305,9 @@ class OrderController extends Controller
 
         $data['status'] = $request->status;
         $data['status_at'] = now()->toDateTimeString();
-        $query = Order::whereIn('id', $request->order_id)->where('status', '!=', $request->status);
+        $orders = Order::whereIn('id', $request->order_id)->where('status', '!=', $request->status)->get();
 
-        if ($request->status == 'CONFIRMED') {
-            $orders = $query->get();
-        }
-
-        $query->update($data);
+        $orders->each->update($data);
 
         if ($request->status == 'CONFIRMED') {
             $orders->each(fn ($order) => $order->user->notify(new OrderConfirmed($order)));
