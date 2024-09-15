@@ -162,7 +162,7 @@
                                                     @foreach($optionGroup[$attribute->id] as $option)
                                                     <label>
                                                         <input type="radio" wire:model="options.{{$product->id}}.{{$attribute->id}}" value="{{$option->id}}" class="option-picker">
-                                                        <span>{{$option->name}}</span>
+                                                        <span style="width: auto">{{$option->name}}</span>
                                                     </label>
                                                     @endforeach
                                                 </div>
