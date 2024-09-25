@@ -118,6 +118,9 @@ class EditOrder extends Component
 
     public function increaseQuantity($id)
     {
+        if (!isset($this->selectedProducts[$id])) {
+            return;
+        }
         $this->selectedProducts[$id]['quantity']++;
         $this->selectedProducts[$id]['total'] = $this->selectedProducts[$id]['quantity'] * $this->selectedProducts[$id]['price'];
 
@@ -126,6 +129,9 @@ class EditOrder extends Component
 
     public function decreaseQuantity($id)
     {
+        if (!isset($this->selectedProducts[$id])) {
+            return;
+        }
         if ($this->selectedProducts[$id]['quantity'] > 1) {
             $this->selectedProducts[$id]['quantity']--;
             $this->selectedProducts[$id]['total'] = $this->selectedProducts[$id]['quantity'] * $this->selectedProducts[$id]['price'];
