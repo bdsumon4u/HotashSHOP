@@ -148,7 +148,7 @@
                     </div>
                     <div class="col-sm-12">
                         <div class="form-group">
-                            <x-textarea editor name="delivery_text">{{old('delivery_text', setting('delivery_text'))}}</x-textarea>
+                            <x-textarea editor name="delivery_text">{{old('delivery_text', $product->delivery_text ?? setting('delivery_text'))}}</x-textarea>
                             <x-error field="delivery_text" />
                         </div>
                     </div>
