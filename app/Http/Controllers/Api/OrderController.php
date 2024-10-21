@@ -168,6 +168,11 @@ class OrderController extends Controller
                     ]);
                 }
             })
+            ->addColumn('actions', function (Order $product) {
+                return '<div>
+                    <a href="' . route('admin.orders.destroy', $product) . '" data-action="delete" class="btn btn-block btn-danger">Delete</a>
+                </div>';
+            })
             ->rawColumns(['checkbox', 'id', 'customer', 'products', 'status', 'courier', 'staff', 'created_at', 'actions'])
             ->make(true);
     }

@@ -118,6 +118,9 @@
                                     <th>Courier</th>
                                     <th>Staff</th>
                                     <th width="150">DateTime</th>
+                                    @if(auth()->user()->is('admin'))
+                                    <th width="10">Action</th>
+                                    @endif
                                 </tr>
                                 </thead>
                             </table>
