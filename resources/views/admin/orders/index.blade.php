@@ -207,7 +207,7 @@
                     type: 'num',
                     orderable: false,
                     searchable: false,
-                    targets: -4
+                    targets: -5
                 },
             ],
             processing: true,
@@ -225,6 +225,7 @@
                 { data: 'courier', name: 'courier', sortable: false },
                 { data: 'staff', name: 'admin.name', sortable: false },
                 { data: 'created_at', name: 'created_at' },
+                { data: 'actions' },
             ],
             initComplete: function (settings, json) {
                 window.ordersTotal = json.recordsTotal;
