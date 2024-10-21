@@ -12,6 +12,7 @@ use App\Notifications\User\OrderConfirmed;
 use App\Pathao\Facade\Pathao;
 use App\Product;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 class OrderController extends Controller
@@ -390,7 +391,25 @@ class OrderController extends Controller
             }
             return null;
         }, $products);
-        $order->delete();
+        
+        DB::transaction(function () use ($order) {
+            $phone = $order->phone;
+            $order->delete();
+
+            // update data.is_fraud, data.is_repeat for other orders
+            $orders = Order::where('phone', $phone)->get();
+            // is_fraud
+            $orders->each(function ($order) use ($orders) {
+                // where order_id is less than $order->id and status is CANCELLED or RETURNED
+                $order->update([
+                    'data' => [
+                        'is_fraud' => $orders->where('id', '<', $order->id)->whereIn('status', ['CANCELLED', 'RETURNED'])->count() > 0,
+                        'is_repeat' => $orders->where('id', '<', $order->id)->count() > 0,
+                    ],
+                ]);
+            });
+        });
+
         return request()->expectsJson() ? true : redirect(action([self::class, 'index']))
             ->with('success', 'Order Has Been Deleted.');
     }
