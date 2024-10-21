@@ -207,7 +207,7 @@
                     type: 'num',
                     orderable: false,
                     searchable: false,
-                    targets: -5
+                    targets: @if(auth()->user()->is('admin')) -5 @else -6 @endif
                 },
             ],
             processing: true,
@@ -225,7 +225,9 @@
                 { data: 'courier', name: 'courier', sortable: false },
                 { data: 'staff', name: 'admin.name', sortable: false },
                 { data: 'created_at', name: 'created_at' },
+                @if(auth()->user()->is('admin'))
                 { data: 'actions' },
+                @endif
             ],
             initComplete: function (settings, json) {
                 window.ordersTotal = json.recordsTotal;
@@ -238,7 +240,7 @@
                     var th = $(this.header()).parents('thead').find('tr').eq(1).find('th').eq(i);
                     $(th).empty();
 
-                    if ($.inArray(i, [0, 4, 7]) === -1) {
+                    if ($.inArray(i, [0, 4, 7, 9]) === -1) {
                         var column = this;
                         var input = document.createElement("input");
                         input.classList.add('form-control', 'border-primary');
