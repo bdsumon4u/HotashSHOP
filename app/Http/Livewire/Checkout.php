@@ -140,6 +140,14 @@ class Checkout extends Component
         //     $this->phone = '+880';
         // }
 
+        $default_area = setting('default_area');
+        if ($default_area->inside ?? false) {
+            $this->shipping = 'Inside Dhaka';
+        }
+        if ($default_area->outside ?? false) {
+            $this->shipping = 'Outside Dhaka';
+        }
+
         if ($user = auth('user')->user()) {
             $this->name = $user->name;
             if ($user->phone_number) {
