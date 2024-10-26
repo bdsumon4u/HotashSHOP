@@ -32,7 +32,8 @@
                     <label for="products_page-rows" class="d-flex justify-content-between">
                         <div>Inside Dhaka</div>
                         <div>
-                            <input type="checkbox" name="default_area[inside]" id="delivery-inside" value="true" @if($default_area->inside ?? false) checked @endif>
+                            <input type="hidden" name="default_area[inside]" value="0">
+                            <input type="checkbox" name="default_area[inside]" id="delivery-inside" @if($default_area->inside ?? false) checked @endif>
                             <label class="mb-0 ml-1" for="delivery-inside">Default</label>
                         </div>
                     </label>
@@ -43,7 +44,8 @@
                     <label for="products_page-cols" class="d-flex justify-content-between">
                         <div>Outside Dhaka</div>
                         <div>
-                            <input type="checkbox" name="default_area[outside]" id="delivery-outside" value="true" @if($default_area->outside ?? false) checked @endif>
+                            <input type="hidden" name="default_area[outside]" value="0">
+                            <input type="checkbox" name="default_area[outside]" id="delivery-outside" @if($default_area->outside ?? false) checked @endif>
                             <label class="mb-0 ml-1" for="delivery-outside">Default</label>
                         </div>
                     </label>

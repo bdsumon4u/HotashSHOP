@@ -366,6 +366,51 @@
                 </div>
             </div>
         </div>
+        @if(config('services.courier_report.url') && config('services.courier_report.key'))
+        <div class="card rounded-0 shadow-sm">
+            <div class="card-header p-3">
+                <h5 class="card-title">Courier Report</h5>
+            </div>
+            <div class="card-body p-3">
+                <div class="d-flex flex-wrap" style="column-gap: 1rem;">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Courier</th>
+                                    <th>Total</th>
+                                    <th class="bg-success">Delivered</th>
+                                    <th class="bg-danger">Failed</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach(['Pathao', 'SteadFast', 'RedX', 'PaperFly'] as $provider)
+                                @php($report = $this->courier_report['courierData'][strtolower($provider)])
+                                <tr>
+                                    <th>{{$provider}}</th>
+                                    <td class="font-weight-bold">{{$report['total_parcel']}}</td>
+                                    <td class="font-weight-bold bg-success">{{$report['success_parcel']}}</td>
+                                    <td class="font-weight-bold bg-danger">{{$report['cancelled_parcel']}}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <div style="flex: 1;display: flex;flex-direction: column;justify-content: center;" class="border p-2 font-weight-bold">
+                        @php($summary = $this->courier_report['courierData']['summary'])
+                        <div class="border border-secondary text-center px-3 py-2 my-1">Summary:</div>
+                        <div class="bg-primary px-3 py-1 my-1">Total: {{$summary['total_parcel']}}</div>
+                        <div class="bg-success px-3 py-2 my-1">Delivered: {{$summary['success_parcel']}} ({{$summary['success_ratio']}}%)</div>
+                        <div class="bg-danger px-3 py-2 my-1">Failed: {{$summary['cancelled_parcel']}} ({{100-$summary['success_ratio']}}%)</div>
+                        <div class="d-flex">
+                            <div class="bg-success px-3 py-2 my-1" style="width: {{$summary['success_ratio']}}%; text-wrap: nowrap;" title="Success Rate: {{$summary['success_ratio']}}%">{{$summary['success_ratio']}}%</div>
+                            <div class="bg-danger px-3 py-2 my-1" style="width: {{100-$summary['success_ratio']}}%; text-wrap: nowrap;" title="Failure Rate: {{100-$summary['success_ratio']}}%">{{100-$summary['success_ratio']}}%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
         @endif
     </div>
 </div>

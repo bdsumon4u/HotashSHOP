@@ -293,14 +293,17 @@
             }
             return $phone;
         }
+        $messenger = $company->messenger ?? '';
+        $phone = phone88($company->whatsapp ?? '');
     @endphp
+    @if ($phone && strlen($messenger) > 13)
     <div class="widget-connect widget-connect-right">
-        @if($messenger = $company->messenger ?? '')
+        @if($messenger)
         <a class="widget-connect__button widget-connect__button-telemessenger button-slide-out" style="background: white; color: blue;" href="{{$messenger}}" data-toggle="tooltip" data-placement="left" title="" target="_blank" data-original-title="Messenger">
             <i class="fab fa-facebook-messenger"></i>
         </a>
         @endif
-        @if($phone = phone88($company->whatsapp ?? ''))
+        @if($phone)
         <a class="widget-connect__button widget-connect__button-whatsapp button-slide-out" style="background: white; color: green;" href="https://wa.me/{{$phone}}" data-toggle="tooltip" data-placement="left" title="" target="_blank" data-original-title="WhatsApp">
             <i class="fab fa-whatsapp"></i>
         </a>
@@ -309,6 +312,21 @@
             <div class="widget-connect__button-activator-icon"></div>
         </div>
     </div>
+    @elseif ($phone)
+    <a
+        href="https://api.whatsapp.com/send?phone={{$phone}}" target="_blank"
+        style="position:fixed;width:60px;height:60px;bottom:40px;right:40px;background-color:#25d366;color:#FFF;border-radius:50px;text-align:center;font-size:30px;box-shadow: 2px 2px 3px #999;z-index:100;"
+    >
+        <i class="fab fa-whatsapp" style="margin-top: 1rem;"></i>
+    </a>
+    @elseif (strlen($messenger) > 13)
+    <a
+        href="{{$messenger}}" target="_blank"
+        style="position:fixed;width:60px;height:60px;bottom:40px;right:40px;background-color:#0084ff;color:#FFF;border-radius:50px;text-align:center;font-size:30px;box-shadow: 2px 2px 3px #999;z-index:100;"
+    >
+        <i class="fab fa-facebook-messenger" style="margin-top: 1rem;"></i>
+    </a>
+    @endif
     <script type="text/javascript">
         window.addEventListener('load', function() {
             $(".widget-connect__button-activator-icon").click(function () {
