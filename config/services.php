@@ -74,6 +74,11 @@ return [
     'bdwebs' => [
         'api_key' => env('BDWEBS_API_KEY'),
         'senderid' => env('BDWEBS_SENDERID'),
-    ]
+    ],
+
+    'courier_report' => [
+        'url' => env('COURIER_REPORT_URL'),
+        'key' => env('COURIER_REPORT_KEY'),
+    ],
 
 ];

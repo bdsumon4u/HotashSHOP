@@ -9,6 +9,7 @@ use App\Product;
 use App\User;
 use Fuse\Fuse;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Livewire\Component;
 
@@ -21,6 +22,15 @@ class EditOrder extends Component
     public $search;
 
     public $options = [];
+
+    public function getCourierReportProperty()
+    {
+        return Http::withToken(config('services.courier_report.key'))
+            ->post(config('services.courier_report.url'), [
+                'phone' => $this->order->phone ?? '',
+            ])
+            ->json();
+    }
 
     public function rules()
     {
