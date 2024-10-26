@@ -25,13 +25,28 @@
         </div>
         <div class="col-md-6">
             <div x-show="!free || !all" class="row borderr py-2">
-                <div class="col-md-6 pr-md-0">
-                    <label for="products_page-rows">Inside Dhaka</label>
+                @php
+                    $default_area = setting('default_area');
+                @endphp
+                <div class="col-md-6 pr-md-1">
+                    <label for="products_page-rows" class="d-flex justify-content-between">
+                        <div>Inside Dhaka</div>
+                        <div>
+                            <input type="checkbox" name="default_area[inside]" id="delivery-inside" value="true" @if($default_area->inside ?? false) checked @endif>
+                            <label class="mb-0 ml-1" for="delivery-inside">Default</label>
+                        </div>
+                    </label>
                     <x-input name="delivery_charge[inside_dhaka]" id="delivery_charge-inside_dhaka" :value="$delivery_charge['inside_dhaka'] ?? config('services.shipping')['Inside Dhaka']" />
                     <x-error field="delivery_charge.inside_dhaka" />
                 </div>
-                <div class="col-md-6 pl-md-0">
-                    <label for="products_page-cols">Outside Dhaka</label>
+                <div class="col-md-6 pl-md-1">
+                    <label for="products_page-cols" class="d-flex justify-content-between">
+                        <div>Outside Dhaka</div>
+                        <div>
+                            <input type="checkbox" name="default_area[outside]" id="delivery-outside" value="true" @if($default_area->outside ?? false) checked @endif>
+                            <label class="mb-0 ml-1" for="delivery-outside">Default</label>
+                        </div>
+                    </label>
                     <x-input name="delivery_charge[outside_dhaka]" id="delivery_charge-outside_dhaka" :value="$delivery_charge['outside_dhaka'] ?? config('services.shipping')['Outside Dhaka']" />
                     <x-error field="delivery_charge.outside_dhaka" />
                 </div>

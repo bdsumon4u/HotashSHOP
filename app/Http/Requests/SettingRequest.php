@@ -51,6 +51,7 @@ class SettingRequest extends FormRequest
                 'delivery_charge.outside_dhaka' => 'sometimes|integer',
                 'delivery_text' => 'sometimes',
                 'free_delivery' => 'sometimes',
+                'default_area' => 'required|array',
             ];
         }
 
