@@ -400,7 +400,6 @@
                         @php($summary = $this->courier_report['courierData']['summary'])
                         @php($failure = $summary['success_ratio'] > 0 ? 100 - $summary['success_ratio'] : 0)
                         <div class="border border-secondary text-center px-3 py-1 my-1">Summary:</div>
-                        <div class="bg-primary px-3 py-2 my-1">Total: {{$summary['total_parcel']}}</div>
                         <div class="bg-success px-3 py-2 my-1">Delivered: {{$summary['success_parcel']}} ({{$summary['success_ratio']}}%)</div>
                         <div class="bg-danger px-3 py-2 my-1">Failed: {{$summary['cancelled_parcel']}} ({{$failure}}%)</div>
                         <div class="d-flex">
