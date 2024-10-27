@@ -398,13 +398,14 @@
                     </div>
                     <div style="flex: 1;display: flex;flex-direction: column;justify-content: center;" class="border p-2 font-weight-bold">
                         @php($summary = $this->courier_report['courierData']['summary'])
+                        @php($failure = $summary['success_ratio'] > 0 ? 100 - $summary['success_ratio'] : 0)
                         <div class="border border-secondary text-center px-3 py-2 my-1">Summary:</div>
                         <div class="bg-primary px-3 py-1 my-1">Total: {{$summary['total_parcel']}}</div>
                         <div class="bg-success px-3 py-2 my-1">Delivered: {{$summary['success_parcel']}} ({{$summary['success_ratio']}}%)</div>
-                        <div class="bg-danger px-3 py-2 my-1">Failed: {{$summary['cancelled_parcel']}} ({{100-$summary['success_ratio']}}%)</div>
+                        <div class="bg-danger px-3 py-2 my-1">Failed: {{$summary['cancelled_parcel']}} ({{$failure}}%)</div>
                         <div class="d-flex">
-                            <div class="bg-success px-3 py-2 my-1" style="width: {{$summary['success_ratio']}}%; text-wrap: nowrap;" title="Success Rate: {{$summary['success_ratio']}}%">{{$summary['success_ratio']}}%</div>
-                            <div class="bg-danger px-3 py-2 my-1" style="width: {{100-$summary['success_ratio']}}%; text-wrap: nowrap;" title="Failure Rate: {{100-$summary['success_ratio']}}%">{{100-$summary['success_ratio']}}%</div>
+                            <div class="bg-success px-1 py-2 my-1 text-nowrap w-100 text-center" @if (round($summary['success_ratio']) > 0) style="width: {{$summary['success_ratio']}}% !important;" @endif title="Success Rate: {{$summary['success_ratio']}}%">{{$summary['success_ratio']}}%</div>
+                            <div class="bg-danger px-1 py-2 my-1 text-nowrap w-100 text-center" @if (round($failure) > 0) style="width: {{$failure}}% !important;" @endif title="Failure Rate: {{$failure}}%">{{$failure}}%</div>
                         </div>
                     </div>
                 </div>
